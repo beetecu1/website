@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookDetail from '../../components/books/BookDetail.astro';
+import { getBookBySlug } from '../../i18n/books';
+
+const lang = 'es' as const;
+const book = getBookBySlug('mision-3', lang)!;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  name: book.title[lang],
+  description: book.synopsis[lang],
+  author: { '@type': 'Person', name: 'beetecu', alternateName: 'Elizabeth González' },
+  inLanguage: 'es',
+  ...(book.isbn ? { isbn: book.isbn } : {}),
+};
+---
+
+<BaseLayout title={book.title[lang]} lang={lang} canonicalPath="/libros/mision-3" jsonLd={jsonLd}>
+  <BookDetail book={book} lang={lang} />
+</BaseLayout>

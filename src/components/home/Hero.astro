@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { useTranslations, getLocalizedPath } from '../../i18n/utils';
+import StarDecoration from '../common/StarDecoration.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const booksPath = getLocalizedPath(lang, lang === 'es' ? '/libros' : '/books');
+---
+
+<section class="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-night-900 via-night-950 to-night-950 overflow-hidden">
+  <StarDecoration count={30} />
+
+  <!-- Moon glow -->
+  <div class="absolute top-10 right-10 md:top-16 md:right-24 w-20 h-20 md:w-32 md:h-32 rounded-full bg-gold-300/20 blur-2xl" aria-hidden="true" />
+  <div class="absolute top-12 right-12 md:top-20 md:right-28 w-12 h-12 md:w-20 md:h-20 rounded-full bg-gold-200/30 blur-xl" aria-hidden="true" />
+
+  <div class="relative z-10 text-center px-4 py-16 md:py-24 max-w-3xl mx-auto">
+    <h1 class="font-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gold-400 leading-tight mb-6 drop-shadow-lg">
+      {t('hero.title')}
+    </h1>
+    <p class="text-lg sm:text-xl md:text-2xl text-night-200 mb-10 max-w-2xl mx-auto leading-relaxed">
+      {t('hero.subtitle')}
+    </p>
+    <a
+      href={booksPath}
+      class="inline-block px-8 py-4 bg-gold-500 hover:bg-gold-400 text-night-950 font-bold text-lg rounded-full transition-colors shadow-lg shadow-gold-500/20 hover:shadow-gold-400/30"
+    >
+      {t('hero.cta')}
+    </a>
+  </div>
+</section>

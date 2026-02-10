@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  isbn: string | null;
+  lang: Lang;
+}
+
+const { isbn, lang } = Astro.props;
+const t = useTranslations(lang);
+
+const amazonUrl = isbn
+  ? `https://www.amazon.com/dp/${isbn}`
+  : null;
+---
+
+{amazonUrl ? (
+  <a
+    href={amazonUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center gap-2 px-6 py-3 bg-gold-500 hover:bg-gold-400 text-night-950 font-bold text-base rounded-full transition-colors shadow-lg shadow-gold-500/20"
+  >
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M.045 18.02c.071-.116.187-.124.348-.022 2.344 1.47 4.882 2.204 7.615 2.204 1.864 0 3.674-.392 5.432-1.178.149-.066.29-.133.436-.2.244-.113.393.066.444.178.058.126.021.263-.09.382-.467.503-1.07.857-1.672 1.178-1.822.975-3.826 1.462-6.013 1.462-2.71 0-5.145-.754-7.31-2.263-.148-.104-.193-.241-.19-.341z"/>
+      <path d="M6.394 15.456c.037-.186.186-.258.447-.216.91.164 1.84.248 2.787.248 1.975 0 3.815-.408 5.519-1.224.26-.125.5-.045.582.094.09.147.032.33-.162.5-1.6 1.396-3.8 2.093-6.583 2.093-1.21 0-2.24-.128-3.092-.385-.3-.09-.394-.242-.498-.31z"/>
+      <path d="M12.053 13.468V4.893c0-.593.198-.89.594-.89.163 0 .34.05.527.148l6.252 3.574c.39.222.585.467.585.732 0 .262-.2.484-.594.665l-6.252 3.574c-.192.11-.368.162-.527.162-.396 0-.585-.296-.585-.89z"/>
+    </svg>
+    {t('books.buyOnAmazon')}
+  </a>
+) : (
+  <span class="inline-flex items-center gap-2 px-6 py-3 bg-night-700 text-night-300 font-bold text-base rounded-full cursor-default">
+    {lang === 'es' ? 'Próximamente' : 'Coming soon'}
+  </span>
+)}

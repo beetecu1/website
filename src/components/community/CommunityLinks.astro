@@ -1,0 +1,102 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="grid gap-6 md:grid-cols-3 mt-8">
+
+  <!-- Instagram -->
+  <a
+    href="https://instagram.com/beetecu"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="group block rounded-2xl border border-night-600 bg-night-800/50 p-6 text-center transition hover:border-gold-400 hover:bg-night-700/50"
+  >
+    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-2xl">
+      📸
+    </div>
+    <h3 class="font-title text-xl font-bold text-gold-300 group-hover:text-gold-200">
+      Instagram
+    </h3>
+    <p class="mt-2 text-sm text-night-300">
+      {lang === 'es'
+        ? 'Tips diarios, respiraciones en video y fotos de familias valientes.'
+        : 'Daily tips, breathing videos and photos from brave families.'}
+    </p>
+    <span class="mt-3 inline-block text-sm font-semibold text-gold-400 group-hover:text-gold-300">
+      @beetecu →
+    </span>
+  </a>
+
+  <!-- WhatsApp -->
+  <a
+    href="#"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="group block rounded-2xl border border-night-600 bg-night-800/50 p-6 text-center transition hover:border-gold-400 hover:bg-night-700/50"
+  >
+    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-green-600 text-2xl">
+      💬
+    </div>
+    <h3 class="font-title text-xl font-bold text-gold-300 group-hover:text-gold-200">
+      WhatsApp
+    </h3>
+    <p class="mt-2 text-sm text-night-300">
+      {lang === 'es'
+        ? 'Grupo para familias: comparte experiencias, haz preguntas y apóyate en otros padres.'
+        : 'Family group: share experiences, ask questions and support other parents.'}
+    </p>
+    <span class="mt-3 inline-block text-sm font-semibold text-gold-400 group-hover:text-gold-300">
+      {lang === 'es' ? 'Únete al grupo →' : 'Join the group →'}
+    </span>
+  </a>
+
+  <!-- Email -->
+  <a
+    href="mailto:hola@beetecu.com"
+    class="group block rounded-2xl border border-night-600 bg-night-800/50 p-6 text-center transition hover:border-gold-400 hover:bg-night-700/50"
+  >
+    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gold-600 text-2xl">
+      ✉️
+    </div>
+    <h3 class="font-title text-xl font-bold text-gold-300 group-hover:text-gold-200">
+      {lang === 'es' ? 'Escríbenos' : 'Write to us'}
+    </h3>
+    <p class="mt-2 text-sm text-night-300">
+      {lang === 'es'
+        ? '¿Dudas, sugerencias o simplemente quieres contarnos tu experiencia? Te leemos.'
+        : 'Questions, suggestions, or just want to share your experience? We read everything.'}
+    </p>
+    <span class="mt-3 inline-block text-sm font-semibold text-gold-400 group-hover:text-gold-300">
+      hola@beetecu.com →
+    </span>
+  </a>
+
+</div>
+
+<!-- Newsletter / Misión 2 -->
+<div class="mt-12 rounded-2xl border border-gold-500/30 bg-night-800/60 p-8 text-center">
+  <h3 class="font-title text-2xl font-bold text-gold-400 mb-2">
+    {lang === 'es'
+      ? '¿Quieres saber cuándo sale la Misión 2?'
+      : 'Want to know when Mission 2 comes out?'}
+  </h3>
+  <p class="text-night-200 mb-4">
+    {lang === 'es'
+      ? 'Déjanos tu email y te avisamos. Sin spam, solo novedades de la serie.'
+      : 'Leave your email and we\'ll let you know. No spam, just series updates.'}
+  </p>
+  <a
+    href="mailto:hola@beetecu.com?subject=Avísame%20de%20la%20Misión%202"
+    class="inline-block rounded-full bg-gold-500 px-8 py-3 font-bold text-night-900 transition hover:bg-gold-400"
+  >
+    {lang === 'es' ? 'Quiero que me avisen' : 'Notify me'}
+  </a>
+</div>

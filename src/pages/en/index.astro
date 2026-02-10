@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/home/Hero.astro';
+import SeriesIntro from '../../components/home/SeriesIntro.astro';
+import BookCarousel from '../../components/home/BookCarousel.astro';
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  title="Darkness is no longer scary"
+  lang={lang}
+  canonicalPath="/"
+>
+  <Hero lang={lang} />
+  <SeriesIntro lang={lang} />
+  <BookCarousel lang={lang} />
+</BaseLayout>

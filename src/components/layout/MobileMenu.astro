@@ -1,0 +1,28 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { getNavItems } from '../../i18n/utils';
+import LanguageSwitcher from '../common/LanguageSwitcher.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const navItems = getNavItems(lang);
+---
+
+<div id="mobile-menu" class="hidden md:hidden bg-night-900/98 border-b border-night-700/50">
+  <div class="px-4 py-4 space-y-3">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class="block py-2 px-3 text-base font-semibold text-night-200 hover:text-gold-400 hover:bg-night-800/50 rounded-lg transition-colors"
+      >
+        {item.label}
+      </a>
+    ))}
+    <div class="pt-2 border-t border-night-700/50">
+      <LanguageSwitcher lang={lang} />
+    </div>
+  </div>
+</div>

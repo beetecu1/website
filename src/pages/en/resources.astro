@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+import StarDecoration from '../../components/common/StarDecoration.astro';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+
+const tips = [
+  t('resources.sleepTips.1'),
+  t('resources.sleepTips.2'),
+  t('resources.sleepTips.3'),
+  t('resources.sleepTips.4'),
+  t('resources.sleepTips.5'),
+];
+---
+
+<BaseLayout title={t('resources.title')} lang={lang} canonicalPath="/recursos">
+  <section class="relative py-12 md:py-20">
+    <StarDecoration count={12} />
+    <div class="relative z-10 max-w-4xl mx-auto px-4">
+      <h1 class="font-title text-4xl md:text-5xl font-bold text-gold-400 text-center mb-4">
+        {t('resources.title')}
+      </h1>
+      <p class="text-night-200 text-lg text-center mb-12">
+        {t('resources.subtitle')}
+      </p>
+
+      <!-- Sleep Tips -->
+      <div class="bg-night-800/30 rounded-2xl border border-night-700/30 p-6 md:p-8 mb-8">
+        <h2 class="font-title text-2xl font-bold text-gold-400 mb-6">
+          {t('resources.sleepTips.title')}
+        </h2>
+        <ul class="space-y-4">
+          {tips.map((tip, i) => (
+            <li class="flex items-start gap-3">
+              <span class="flex-shrink-0 w-8 h-8 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center font-bold text-sm">
+                {i + 1}
+              </span>
+              <span class="text-night-200 pt-1">{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Routines placeholder -->
+      <div class="bg-night-800/30 rounded-2xl border border-night-700/30 p-6 md:p-8">
+        <h2 class="font-title text-2xl font-bold text-gold-400 mb-4">
+          {t('resources.routines.title')}
+        </h2>
+        <p class="text-night-300">
+          {t('resources.routines.description')}
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

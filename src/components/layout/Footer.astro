@@ -1,0 +1,20 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const copyright = t('footer.copyright').replace('{year}', String(year));
+---
+
+<footer class="bg-night-900/50 border-t border-night-700/30 mt-auto">
+  <div class="max-w-6xl mx-auto px-4 py-8 text-center">
+    <p class="text-night-300 text-sm">{copyright}</p>
+    <p class="text-night-400 text-xs mt-2">{t('footer.madeWith')}</p>
+  </div>
+</footer>

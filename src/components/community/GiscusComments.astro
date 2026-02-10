@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<div class="giscus-container mt-8">
+  <script
+    is:inline
+    src="https://giscus.app/client.js"
+    data-repo="beetecu1/website"
+    data-repo-id=""
+    data-category="General"
+    data-category-id=""
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="dark_dimmed"
+    data-lang={lang}
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>
+
+<p class="text-night-500 text-xs mt-4 text-center">
+  {lang === 'es'
+    ? 'Los comentarios requieren una cuenta de GitHub. Configuración pendiente.'
+    : 'Comments require a GitHub account. Setup pending.'}
+</p>

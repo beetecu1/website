@@ -1,0 +1,25 @@
+---
+interface Props {
+  count?: number;
+}
+
+const { count = 20 } = Astro.props;
+
+// Generate deterministic star positions
+const stars = Array.from({ length: count }, (_, i) => ({
+  left: `${((i * 37 + 13) % 100)}%`,
+  top: `${((i * 53 + 7) % 100)}%`,
+  size: (i % 3) + 1,
+  delay: `${(i * 0.7) % 5}s`,
+  animation: i % 3 === 0 ? 'animate-twinkle' : i % 3 === 1 ? 'animate-twinkle-slow' : 'animate-twinkle-fast',
+}));
+---
+
+<div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+  {stars.map((star) => (
+    <div
+      class:list={['absolute rounded-full bg-star', star.animation]}
+      style={`left: ${star.left}; top: ${star.top}; width: ${star.size}px; height: ${star.size}px; animation-delay: ${star.delay};`}
+    />
+  ))}
+</div>

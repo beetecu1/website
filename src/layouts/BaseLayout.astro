@@ -1,0 +1,91 @@
+---
+import '@fontsource/baloo-2/400.css';
+import '@fontsource/baloo-2/500.css';
+import '@fontsource/baloo-2/600.css';
+import '@fontsource/baloo-2/700.css';
+import '@fontsource/baloo-2/800.css';
+import '@fontsource/nunito/400.css';
+import '@fontsource/nunito/600.css';
+import '@fontsource/nunito/700.css';
+import '../styles/global.css';
+
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang: Lang;
+  canonicalPath?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, lang, canonicalPath, ogImage, jsonLd } = Astro.props;
+const siteTitle = lang === 'es' ? 'La oscuridad ya no da miedo' : 'Darkness is no longer scary';
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const metaDescription = description ?? (lang === 'es'
+  ? 'Trilogía de libros infantiles que ayuda a los niños de 3-7 años a superar sus miedos nocturnos'
+  : "A trilogy of children's books that helps kids ages 3-7 overcome their nighttime fears");
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentUrl = new URL(Astro.url.pathname, Astro.site);
+const alternateLang = lang === 'es' ? 'en' : 'es';
+
+// Default WebSite JSON-LD
+const defaultJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteTitle,
+  url: Astro.site?.href,
+  inLanguage: lang === 'es' ? 'es-ES' : 'en-US',
+};
+const structuredData = jsonLd ?? defaultJsonLd;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={metaDescription} />
+
+    <title>{fullTitle}</title>
+
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="canonical" href={currentUrl.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl.href} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_US' : 'es_ES'} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!-- hreflang -->
+    {canonicalPath && (
+      <link rel="alternate" hreflang="es" href={new URL(`${base}${canonicalPath}`, Astro.site).href} />
+      <link rel="alternate" hreflang="en" href={new URL(`${base}/en${canonicalPath}`, Astro.site).href} />
+      <link rel="alternate" hreflang="x-default" href={new URL(`${base}${canonicalPath}`, Astro.site).href} />
+    )}
+  </head>
+  <body class="min-h-screen flex flex-col font-body bg-night-950 text-white">
+    <Header lang={lang} />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

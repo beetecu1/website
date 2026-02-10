@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+import { books } from '../../i18n/books';
+import BookCard from '../../components/books/BookCard.astro';
+import StarDecoration from '../../components/common/StarDecoration.astro';
+
+const lang = 'es' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('books.title')} lang={lang} canonicalPath="/libros">
+  <section class="relative py-12 md:py-20">
+    <StarDecoration count={15} />
+    <div class="relative z-10 max-w-6xl mx-auto px-4">
+      <h1 class="font-title text-4xl md:text-5xl font-bold text-gold-400 text-center mb-12">
+        {t('books.title')}
+      </h1>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {books.map((book) => (
+          <BookCard book={book} lang={lang} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
