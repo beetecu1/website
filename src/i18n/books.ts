@@ -26,11 +26,11 @@ export const books: Book[] = [
       en: 'Fear of the dark',
     },
     synopsis: {
-      es: 'Cuando la luz se apaga, un mundo mágico cobra vida. Con una linterna especial como guía, los pequeños descubrirán que el Reino de la Noche está lleno de maravillas por explorar. Una historia que transforma la oscuridad de enemiga a amiga.',
-      en: 'When the lights go out, a magical world comes alive. With a special flashlight as their guide, little ones will discover that the Kingdom of the Night is full of wonders to explore. A story that transforms darkness from foe to friend.',
+      es: 'Daniel y Gabriel, dos mellizos, descubren que las sombras no son "cosas malas" sino formas que cambian cuando mueves la luz. Con la ayuda de Flarina, una dragoncita mensajera del Reino de la Noche, y una linterna como herramienta, aprenderán a mirar, comprobar y transformar lo que asusta. Incluye mini-misiones por niveles (3-7 años), respiración dragón y reto de 7 noches con progreso visible.',
+      en: 'Daniel and Gabriel, twin brothers, discover that shadows aren\'t "bad things" but shapes that change when you move the light. With the help of Flarina, a little dragon messenger from the Kingdom of the Night, and a flashlight as their tool, they\'ll learn to look, check and transform what scares them. Includes leveled mini-missions (ages 3-7), dragon breathing and a 7-night challenge with visible progress.',
     },
     isbn: '9798243436106',
-    coverPlaceholder: '/images/book-1-placeholder.svg',
+    coverPlaceholder: '/images/mision-1/cover.png',
     color: 'from-indigo-600 to-blue-900',
   },
   {

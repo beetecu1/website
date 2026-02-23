@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BookDetail from '../../../components/books/BookDetail.astro';
+import Mission1Content from '../../../components/books/Mission1Content.astro';
 import { getBookBySlug } from '../../../i18n/books';
 
 const lang = 'en' as const;
@@ -18,5 +19,8 @@ const jsonLd = {
 ---
 
 <BaseLayout title={book.title[lang]} lang={lang} canonicalPath="/libros/mision-1" jsonLd={jsonLd}>
-  <BookDetail book={book} lang={lang} />
+  <BookDetail book={book} lang={lang} hideMaterials={true} />
+  <div class="max-w-4xl mx-auto px-4">
+    <Mission1Content lang={lang} />
+  </div>
 </BaseLayout>

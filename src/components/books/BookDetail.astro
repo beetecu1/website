@@ -8,9 +8,10 @@ import MaterialsSection from './MaterialsSection.astro';
 interface Props {
   book: Book;
   lang: Lang;
+  hideMaterials?: boolean;
 }
 
-const { book, lang } = Astro.props;
+const { book, lang, hideMaterials = false } = Astro.props;
 const t = useTranslations(lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const booksPath = getLocalizedPath(lang, lang === 'es' ? '/libros' : '/books');
@@ -76,5 +77,5 @@ const booksPath = getLocalizedPath(lang, lang === 'es' ? '/libros' : '/books');
     </div>
   </div>
 
-  <MaterialsSection lang={lang} />
+  {!hideMaterials && <MaterialsSection lang={lang} />}
 </div>

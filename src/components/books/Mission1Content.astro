@@ -1,0 +1,304 @@
+---
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const es = lang === 'es';
+---
+
+<!-- GALLERY: Peek inside -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Mira dentro del libro' : 'Look inside'}
+  </h2>
+  <p class="text-night-300 mb-8">
+    {es ? 'Ilustraciones a todo color que acompañan cada noche.' : 'Full-color illustrations for every night.'}
+  </p>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {[
+      { src: 'gallery/descubren-linterna.png', alt: es ? 'Daniel y Gabriel descubren la linterna' : 'Daniel and Gabriel discover the flashlight' },
+      { src: 'gallery/sombras-dragon.png', alt: es ? 'Jugando con sombras chinescas' : 'Playing with shadow puppets' },
+      { src: 'gallery/circulo-fuego.png', alt: es ? 'Flarina abre el portal al Reino de la Noche' : 'Flarina opens the portal to the Kingdom of the Night' },
+      { src: 'gallery/estrellas-suelo.png', alt: es ? 'Las estrellas perdidas en el suelo' : 'The lost stars on the ground' },
+      { src: 'gallery/constelacion-dragon.png', alt: es ? 'El dragón de estrellas completo' : 'The complete star dragon' },
+      { src: 'gallery/padre-hijo-sombras.png', alt: es ? 'Jugando a sombras chinescas en familia' : 'Playing shadow puppets as a family' },
+    ].map((img) => (
+      <div class="group relative overflow-hidden rounded-xl border border-night-700/30 bg-night-800/50">
+        <img
+          src={`${base}/images/mision-1/${img.src}`}
+          alt={img.alt}
+          class="w-full aspect-[3/4] object-cover transition group-hover:scale-105"
+          loading="lazy"
+        />
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-night-950/90 to-transparent p-3">
+          <p class="text-xs text-night-200">{img.alt}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-8">
+    {es ? 'Conoce a los personajes' : 'Meet the characters'}
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Flarina -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-1/flarina.png`} alt="Flarina" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Flarina</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Dragoncita mensajera del Reino de la Noche. Pequeñita, naranja como una llama. Trae la linterna y enseña la frase mágica.'
+            : 'Little dragon messenger from the Kingdom of the Night. Tiny, orange like a flame. She brings the flashlight and teaches the magic phrase.'}
+        </p>
+      </div>
+    </div>
+    <!-- Umbrak -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-1/umbrak.png`} alt="Umbrak" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Umbrak</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'El dragón de las sombras buenas. Enorme, dorado como el oro. Ojos amables. Guarda el cielo del Reino de la Noche.'
+            : 'The dragon of good shadows. Huge, golden as gold. Kind eyes. He guards the sky of the Kingdom of the Night.'}
+        </p>
+      </div>
+    </div>
+    <!-- Daniel -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <div class="w-24 h-24 bg-night-700/50 rounded-xl flex-shrink-0 flex items-center justify-center text-4xl">👦</div>
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Daniel</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Mellizo valiente. Le asusta la sombra del oso pero descubre que ÉL tiene el control. Nombra a Don Sombretín y lo expulsa.'
+            : 'Brave twin. Scared of the bear shadow but discovers HE has control. Names Don Sombretín and expels it.'}
+        </p>
+      </div>
+    </div>
+    <!-- Gabriel -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <div class="w-24 h-24 bg-night-700/50 rounded-xl flex-shrink-0 flex items-center justify-center text-4xl">👦</div>
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Gabriel</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Mellizo gracioso. Siempre tiene un comentario que hace reír. Porque cuando te ríes, la sombra pierde importancia.'
+            : 'Funny twin. Always has a comment that makes you laugh. Because when you laugh, the shadow loses its power.'}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDE FOR FAMILIES -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Guía para familias' : 'Guide for families'}
+  </h2>
+  <p class="text-night-400 text-sm mb-8">
+    {es ? 'Lo que sacamos del libro para que fuera más corto. Aquí lo tienes completo.' : 'What we took out of the book to keep it short. Here it is in full.'}
+  </p>
+
+  <div class="space-y-8">
+    <!-- Why fear is normal -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? '¿Por qué les da miedo la oscuridad?' : 'Why are they afraid of the dark?'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p>{es
+          ? 'El miedo a la oscuridad es NORMAL. Es un miedo evolutivo: nuestros antepasados sobrevivieron porque tenían cuidado en la oscuridad. Ese "cuidado" sigue en el cerebro de tu peque.'
+          : 'Fear of the dark is NORMAL. It\'s an evolutionary fear: our ancestors survived because they were careful in the dark. That "caution" is still in your child\'s brain.'}</p>
+        <p>{es ? 'Entre los 3 y 7 años pasa algo especial:' : 'Between ages 3 and 7, something special happens:'}</p>
+        <ul class="list-disc list-inside space-y-1 text-night-300">
+          <li>{es ? 'La imaginación es MUY potente.' : 'Imagination is VERY powerful.'}</li>
+          <li>{es ? 'Todavía no distinguen bien realidad y fantasía.' : 'They still can\'t tell reality from fantasy.'}</li>
+          <li>{es ? 'El cerebro "rellena" lo que no ve con lo que imagina.' : 'The brain "fills in" what it can\'t see with what it imagines.'}</li>
+        </ul>
+        <p class="font-semibold text-night-100">{es
+          ? 'Resultado: la silla se convierte en oso. La cortina en monstruo. El miedo NO es el problema. El problema es no saber qué hacer con él.'
+          : 'Result: the chair becomes a bear. The curtain becomes a monster. Fear is NOT the problem. The problem is not knowing what to do with it.'}</p>
+      </div>
+    </div>
+
+    <!-- Why a flashlight -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? '¿Por qué una linterna?' : 'Why a flashlight?'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p>{es
+          ? 'Porque demuestra VISUALMENTE que el niño tiene control. No es magia. Es física.'
+          : 'Because it VISUALLY demonstrates that the child has control. It\'s not magic. It\'s physics.'}</p>
+        <ol class="list-decimal list-inside space-y-1 text-night-300">
+          <li>{es ? 'El niño ve una sombra que le asusta.' : 'The child sees a shadow that scares them.'}</li>
+          <li>{es ? 'Apunta la linterna.' : 'Points the flashlight.'}</li>
+          <li>{es ? 'La sombra cambia (se encoge, se mueve, desaparece).' : 'The shadow changes (shrinks, moves, disappears).'}</li>
+          <li>{es ? 'Dice la frase: "¡Yo mando con la luz!"' : 'Says the phrase: "I\'m in charge with the light!"'}</li>
+        </ol>
+        <p class="font-semibold text-night-100">{es
+          ? 'El acto de HACER algo rompe el ciclo del miedo. El miedo paraliza. La acción libera.'
+          : 'The act of DOING something breaks the fear cycle. Fear paralyzes. Action liberates.'}</p>
+      </div>
+    </div>
+
+    <!-- Protocol: "There's a monster" -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-gold-500/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? 'Protocolo: "¡Hay un monstruo!"' : 'Protocol: "There\'s a monster!"'}
+      </h3>
+      <div class="text-night-200 space-y-2 text-sm leading-relaxed">
+        <p class="font-semibold text-gold-400">{es ? 'Cuando tu hijo dice que hay algo en la habitación:' : 'When your child says there\'s something in the room:'}</p>
+        <ol class="list-decimal list-inside space-y-2 text-night-200">
+          <li>{es ? 'VALIDA: "Veo que tu cuerpo se asustó. Estoy aquí contigo."' : 'VALIDATE: "I see your body got scared. I\'m here with you."'}</li>
+          <li>{es ? 'HERRAMIENTA: "Coge la linterna. Apunta a la sombra. ¿Qué ves?"' : 'TOOL: "Grab the flashlight. Point at the shadow. What do you see?"'}</li>
+          <li>{es ? 'FRASE JUNTOS: "Es una sombra. Es un dibujo. Yo mando con la luz."' : 'PHRASE TOGETHER: "It\'s a shadow. It\'s a drawing. I\'m in charge with the light."'}</li>
+          <li>{es ? 'NOMBRAR: "¿Cómo se llama esa sombra? Ponle un nombre gracioso."' : 'NAME IT: "What\'s that shadow called? Give it a funny name."'}</li>
+          <li>{es ? 'RESPIRAR: 3 respiraciones de dragón (Flor y Vela para los pequeños).' : 'BREATHE: 3 dragon breaths (Flower and Candle for the little ones).'}</li>
+        </ol>
+        <p class="mt-3 text-night-400 text-xs">{es
+          ? 'Si el miedo es muy intenso o muy frecuente (todas las noches durante semanas), consulta con un profesional.'
+          : 'If the fear is very intense or very frequent (every night for weeks), consult a professional.'}</p>
+      </div>
+    </div>
+
+    <!-- Tough nights script -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? 'Guión para noches difíciles (20 segundos)' : 'Script for tough nights (20 seconds)'}
+      </h3>
+      <div class="space-y-3">
+        <blockquote class="border-l-2 border-gold-500 pl-4 text-night-200 text-sm italic">
+          {es ? '"Veo que tu cuerpo se asustó. Estoy aquí contigo."' : '"I see your body got scared. I\'m here with you."'}
+        </blockquote>
+        <blockquote class="border-l-2 border-gold-500 pl-4 text-night-200 text-sm italic">
+          {es ? '"Probemos una herramienta 20 segundos y luego decidimos."' : '"Let\'s try a tool for 20 seconds and then decide."'}
+        </blockquote>
+        <blockquote class="border-l-2 border-gold-500 pl-4 text-night-200 text-sm italic">
+          {es ? '"No tenemos que ganar hoy. Solo practicar y sentirnos seguros."' : '"We don\'t have to win today. Just practice and feel safe."'}
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Will fear return? -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? '¿Y si el miedo vuelve?' : 'What if fear comes back?'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p class="font-semibold text-night-100">{es ? 'Volverá. Es normal. No significa que la técnica falló.' : 'It will. That\'s normal. It doesn\'t mean the technique failed.'}</p>
+        <p>{es
+          ? 'El cerebro necesita REPETICIÓN para aprender nuevas respuestas. Cada vez que usáis la linterna y la frase, el cerebro aprende: "Cuando veo una sombra, tengo algo que hacer."'
+          : 'The brain needs REPETITION to learn new responses. Every time you use the flashlight and the phrase, the brain learns: "When I see a shadow, I have something to do."'}</p>
+        <p>{es
+          ? 'Con el tiempo, el niño ni siquiera necesitará la linterna. La frase sola bastará. Y después, ni siquiera eso. Habrá internalizado: "Las sombras no son peligrosas."'
+          : 'Over time, the child won\'t even need the flashlight. The phrase alone will be enough. And then, not even that. They\'ll have internalized: "Shadows aren\'t dangerous."'}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHADOW PUPPETS -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Sombras chinescas del libro' : 'Shadow puppets from the book'}
+  </h2>
+  <p class="text-night-300 mb-8">
+    {es ? 'Apuntad la linterna a la pared y haced estas figuras con las manos. El niño descubre: "yo creo las sombras, yo mando."' : 'Point the flashlight at the wall and make these shapes with your hands. The child discovers: "I create the shadows, I\'m in charge."'}
+  </p>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {[
+      { src: 'sombras/pajaro.png', name: es ? 'Pájaro' : 'Bird' },
+      { src: 'sombras/perro.png', name: es ? 'Perro' : 'Dog' },
+      { src: 'sombras/cangrejo.png', name: es ? 'Cangrejo' : 'Crab' },
+      { src: 'sombras/caracol.png', name: es ? 'Caracol' : 'Snail' },
+      { src: 'sombras/unicornio.png', name: es ? 'Unicornio' : 'Unicorn' },
+      { src: 'sombras/dragon.png', name: es ? 'Dragón (como Flarina)' : 'Dragon (like Flarina)' },
+    ].map((img) => (
+      <div class="rounded-xl border border-night-700/30 bg-night-800/50 overflow-hidden">
+        <img
+          src={`${base}/images/mision-1/${img.src}`}
+          alt={img.name}
+          class="w-full aspect-square object-cover"
+          loading="lazy"
+        />
+        <p class="text-center text-sm font-semibold text-gold-300 py-2">{img.name}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- MISSION CARDS -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Mini-misiones por niveles' : 'Mini-missions by level'}
+  </h2>
+  <p class="text-night-300 mb-8">
+    {es ? 'Cada noche elige una. El niño marca su progreso y se siente héroe.' : 'Choose one every night. The child tracks progress and feels like a hero.'}
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {[
+      { src: 'resources/mision-calmante.png', name: es ? 'Misión Calmante' : 'Calming Mission' },
+      { src: 'resources/mision-creativa.png', name: es ? 'Misión Creativa' : 'Creative Mission' },
+      { src: 'resources/mision-valentia.png', name: es ? 'Misión Valentía' : 'Bravery Mission' },
+    ].map((img) => (
+      <div class="rounded-xl border border-night-700/30 bg-night-800/50 overflow-hidden">
+        <img
+          src={`${base}/images/mision-1/${img.src}`}
+          alt={img.name}
+          class="w-full object-cover"
+          loading="lazy"
+        />
+        <p class="text-center text-sm font-semibold text-gold-300 py-3">{img.name}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- PODCAST -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Podcast' : 'Podcast'}
+  </h2>
+  <p class="text-night-300 mb-6">
+    {es ? 'Escucha mientras preparas la rutina de la noche.' : 'Listen while you prepare the bedtime routine.'}
+  </p>
+  <div class="p-8 rounded-2xl bg-night-800/40 border border-night-700/30 text-center">
+    <div class="text-4xl mb-4">🎙️</div>
+    <p class="text-night-300 text-sm">
+      {es
+        ? 'Aquí irá el reproductor del podcast cuando lo subas a Spotify for Podcasters.'
+        : 'The podcast player will go here once you upload to Spotify for Podcasters.'}
+    </p>
+    <!-- Replace this div with the Spotify embed iframe:
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/YOUR_EPISODE_ID" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    -->
+  </div>
+</section>
+
+<!-- MEDAL -->
+<section class="mt-16 mb-8 text-center">
+  <img
+    src={`${base}/images/mision-1/medallon.png`}
+    alt={es ? 'Medallón Misión 1 Cumplida' : 'Mission 1 Complete Medal'}
+    class="w-48 h-48 mx-auto object-contain"
+    loading="lazy"
+  />
+  <h2 class="font-title text-2xl font-bold text-gold-400 mt-4">
+    {es ? '¡Misión 1 cumplida!' : 'Mission 1 complete!'}
+  </h2>
+  <p class="text-night-300 mt-2">
+    {es
+      ? 'Al completar el reto de 7 noches, tu peque gana el Medallón Luz Valiente. Coleccionable de la serie.'
+      : 'After completing the 7-night challenge, your child earns the Brave Light Medal. Series collectible.'}
+  </p>
+</section>
