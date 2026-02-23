@@ -6,33 +6,76 @@ import StarDecoration from '../components/common/StarDecoration.astro';
 const lang = 'es' as const;
 const t = useTranslations(lang);
 
-const tips = [
-  t('resources.sleepTips.1'),
-  t('resources.sleepTips.2'),
-  t('resources.sleepTips.3'),
-  t('resources.sleepTips.4'),
-  t('resources.sleepTips.5'),
+const faqs = [
+  {
+    q: '¿Por qué mi hijo tiene miedo a la oscuridad?',
+    a: 'Es un miedo evolutivo completamente normal entre los 3 y 7 años. A esta edad la imaginación es muy potente y el cerebro todavía no distingue bien realidad y fantasía. Cuando no ve, "rellena" lo que falta con lo que imagina: la silla se convierte en oso, la cortina en monstruo. El miedo no es el problema. El problema es no saber qué hacer con él.',
+  },
+  {
+    q: '¿Por qué decir "no pasa nada" no funciona?',
+    a: 'Porque el adulto "salva" al niño encendiendo la luz. El niño no aprende a salvarse solo. La próxima noche necesitará que el adulto vuelva. Lo que sí funciona es darle una herramienta para que ÉL controle la situación: una linterna que demuestra visualmente que las sombras son solo formas que cambian cuando mueves la luz.',
+  },
+  {
+    q: '¿Cómo ayudo a mi hijo con el miedo a las sombras?',
+    a: 'Dale una linterna pequeña que pueda manejar solo. Cuando vea una sombra que le asuste: 1) Apunta la linterna. 2) La sombra cambia. 3) Dice la frase: "Es una sombra. Es un dibujo. Yo mando con la luz." El acto de HACER algo rompe el ciclo del miedo. El miedo paraliza, la acción libera.',
+  },
+  {
+    q: '¿Qué hago cuando mi hijo dice "hay un monstruo"?',
+    a: '1) Valida: "Veo que tu cuerpo se asustó. Estoy aquí contigo." 2) Herramienta: "Coge la linterna. Apunta a la sombra. ¿Qué ves?" 3) Frase juntos: "Es una sombra. Es un dibujo. Yo mando con la luz." 4) Nombrar: "¿Cómo se llama esa sombra? Ponle un nombre gracioso." 5) Respirar: 3 respiraciones de dragón.',
+  },
+  {
+    q: '¿Qué es la Respiración Dragón?',
+    a: 'Es una técnica de respiración adaptada por edades. Para los más pequeños (3-4 años): "Flor y Vela" — huele la flor (inhala por la nariz) y sopla la vela (exhala por la boca), 3 veces. Para 5-6 años: "Dragón dormido" — inhala 4 segundos, exhala 6 segundos suave. Para 7 años: "Fuego y hielo" — inhala 4s, retén 4s, exhala 6s.',
+  },
+  {
+    q: '¿Y si el miedo vuelve después de usar la técnica?',
+    a: 'Volverá. Es normal. No significa que la técnica falló. El cerebro necesita repetición para aprender nuevas respuestas. Cada vez que usáis la linterna y la frase, el cerebro aprende: "Cuando veo una sombra, tengo algo que hacer." Con el tiempo ni siquiera necesitará la linterna.',
+  },
+  {
+    q: '¿Cómo uso las sombras chinescas para quitar el miedo?',
+    a: 'Apuntad la linterna a una pared y haced figuras con las manos (pájaro, perro, dragón). La pregunta clave es: "Si muevo la luz, ¿qué pasa con la sombra?" Respuesta: cambia. Así el cerebro aprende que sombra = forma, no sombra = peligro. El niño descubre: "yo las creo, yo mando".',
+  },
+  {
+    q: '¿Qué linterna necesito para la técnica?',
+    a: 'Una linterna pequeña que el niño pueda manejar solo. Mejor con luz cálida (menos deslumbrante). Puede decorarla con pegatinas o ponerle nombre. Lo importante: que duerma SIEMPRE en el mismo sitio junto a la cama. La consistencia da seguridad.',
+  },
 ];
+
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
-<BaseLayout title={t('resources.title')} lang={lang} canonicalPath="/recursos">
+<BaseLayout title="Recursos — Miedo a la oscuridad en niños" lang={lang} canonicalPath="/recursos" jsonLd={jsonLdFaq}>
   <section class="relative py-12 md:py-20">
     <StarDecoration count={12} />
     <div class="relative z-10 max-w-4xl mx-auto px-4">
       <h1 class="font-title text-4xl md:text-5xl font-bold text-gold-400 text-center mb-4">
-        {t('resources.title')}
+        Recursos para familias
       </h1>
       <p class="text-night-200 text-lg text-center mb-12">
-        {t('resources.subtitle')}
+        Herramientas prácticas para noches tranquilas
       </p>
 
-      <!-- Sleep Tips -->
+      <!-- Tips -->
       <div class="bg-night-800/30 rounded-2xl border border-night-700/30 p-6 md:p-8 mb-8">
         <h2 class="font-title text-2xl font-bold text-gold-400 mb-6">
-          {t('resources.sleepTips.title')}
+          Tips para la hora de dormir
         </h2>
         <ul class="space-y-4">
-          {tips.map((tip, i) => (
+          {[
+            'Establece una rutina constante cada noche.',
+            'Usa una luz tenue y cálida en la habitación.',
+            'Lee uno de los cuentos juntos antes de dormir.',
+            'Habla sobre los miedos de forma abierta y sin juzgar.',
+            'Celebra cada pequeño avance.',
+          ].map((tip, i) => (
             <li class="flex items-start gap-3">
               <span class="flex-shrink-0 w-8 h-8 bg-gold-500/20 text-gold-400 rounded-full flex items-center justify-center font-bold text-sm">
                 {i + 1}
@@ -43,14 +86,22 @@ const tips = [
         </ul>
       </div>
 
-      <!-- Routines placeholder -->
+      <!-- FAQ Section -->
       <div class="bg-night-800/30 rounded-2xl border border-night-700/30 p-6 md:p-8">
-        <h2 class="font-title text-2xl font-bold text-gold-400 mb-4">
-          {t('resources.routines.title')}
+        <h2 class="font-title text-2xl font-bold text-gold-400 mb-8">
+          Preguntas frecuentes sobre el miedo a la oscuridad
         </h2>
-        <p class="text-night-300">
-          {t('resources.routines.description')}
-        </p>
+        <div class="space-y-6">
+          {faqs.map((faq) => (
+            <details class="group border-b border-night-700/30 pb-6">
+              <summary class="cursor-pointer list-none flex items-start gap-3">
+                <span class="text-gold-400 mt-1 flex-shrink-0 transition group-open:rotate-90">▶</span>
+                <h3 class="font-semibold text-night-100 text-lg">{faq.q}</h3>
+              </summary>
+              <p class="text-night-300 mt-3 ml-8 leading-relaxed">{faq.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </div>
   </section>
