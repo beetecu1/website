@@ -19,4 +19,19 @@ const jsonLd = {
 
 <BaseLayout title={book.title[lang]} lang={lang} canonicalPath="/libros/mision-2" jsonLd={jsonLd}>
   <BookDetail book={book} lang={lang} />
+  <div class="max-w-4xl mx-auto px-4 mb-16">
+    <div class="text-center p-8 md:p-12 rounded-2xl bg-night-800/40 border-2 border-gold-500/30">
+      <div class="text-6xl mb-4">🔑</div>
+      <h2 class="font-title text-3xl font-bold text-gold-400 mb-3">Próximamente</h2>
+      <p class="text-night-200 text-lg max-w-lg mx-auto leading-relaxed">
+        La Misión 2 está en camino. Tu peque aprenderá a dormir solito con una llave mágica que convierte su habitación en un castillo seguro.
+      </p>
+      <p class="text-night-400 text-sm mt-6">
+        ¿Quieres que te avisemos cuando salga?
+      </p>
+      <a href="mailto:hola@beetecu.com?subject=Avísame cuando salga Misión 2" class="inline-block mt-3 px-6 py-3 bg-gold-500/20 text-gold-400 font-bold rounded-xl border border-gold-500/30 hover:bg-gold-500/30 transition">
+        Avísame por email
+      </a>
+    </div>
+  </div>
 </BaseLayout>

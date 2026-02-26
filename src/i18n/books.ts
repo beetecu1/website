@@ -38,19 +38,19 @@ export const books: Book[] = [
     mission: 2,
     slug: { es: 'mision-2', en: 'mission-2' },
     title: {
-      es: 'Las Llaves del Reino de la Noche',
-      en: 'The Keys to the Kingdom of the Night',
+      es: 'La Llave del Castillo',
+      en: 'The Key to the Castle',
     },
     theme: {
       es: 'Dormir solito',
       en: 'Sleeping alone',
     },
     synopsis: {
-      es: 'Llega el momento de un gran paso: dormir solito. Con llaves mágicas que abren puertas a mundos de sueños, los niños aprenderán que su habitación es un lugar seguro y lleno de posibilidades. Una aventura sobre la independencia y la valentía.',
-      en: "It's time for a big step: sleeping alone. With magical keys that open doors to dream worlds, children will learn that their room is a safe place full of possibilities. An adventure about independence and bravery.",
+      es: 'Llega el momento de un gran paso: dormir solito. Con una llave mágica que convierte su habitación en un castillo seguro, los niños aprenderán que su cuarto es un lugar lleno de posibilidades. Una aventura sobre la independencia y la valentía.',
+      en: "It's time for a big step: sleeping alone. With a magical key that turns their room into a safe castle, children will learn that their bedroom is a place full of possibilities. An adventure about independence and bravery.",
     },
     isbn: null,
-    coverPlaceholder: '/images/book-2-placeholder.svg',
+    coverPlaceholder: '/images/mision-2-cover.png',
     color: 'from-purple-600 to-indigo-900',
   },
   {
