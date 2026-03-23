@@ -49,8 +49,8 @@ export const books: Book[] = [
       es: 'Llega el momento de un gran paso: dormir solito. Con una llave mágica que convierte su habitación en un castillo seguro, los niños aprenderán que su cuarto es un lugar lleno de posibilidades. Una aventura sobre la independencia y la valentía.',
       en: "It's time for a big step: sleeping alone. With a magical key that turns their room into a safe castle, children will learn that their bedroom is a place full of possibilities. An adventure about independence and bravery.",
     },
-    isbn: null,
-    coverPlaceholder: '/images/mision-2-cover.png',
+    isbn: '9798249533397',
+    coverPlaceholder: '/images/mision-2/cover.png',
     color: 'from-purple-600 to-indigo-900',
   },
   {

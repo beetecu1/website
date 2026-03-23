@@ -1,0 +1,377 @@
+---
+import type { Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const es = lang === 'es';
+---
+
+<!-- GALLERY: Peek inside -->
+<section class="mt-12">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Mira dentro del libro' : 'Look inside'}
+  </h2>
+  <p class="text-night-300 mb-8">
+    {es ? 'Ilustraciones a todo color que acompañan cada noche.' : 'Full-color illustrations for every night.'}
+  </p>
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {[
+      { src: 'gallery/daniel-solo.png',          alt: es ? 'Daniel solo en su habitación por primera vez' : 'Daniel alone in his room for the first time' },
+      { src: 'gallery/reino-noche.png',          alt: es ? 'La puerta de los tres candados — Daniel en el Reino de la Noche' : 'The door of three locks — Daniel in the Kingdom of Night' },
+      { src: 'gallery/daniel-chispi-foguito.png',alt: es ? 'Daniel con Chispi y Foguito' : 'Daniel with Chispi and Foguito' },
+      { src: 'gallery/umbrak-llave.png',         alt: es ? 'Umbrak entrega la Llave del Castillo a Daniel' : 'Umbrak gives the Castle Key to Daniel' },
+      { src: 'gallery/daniel-duerme.png',        alt: es ? 'Daniel duerme en su castillo' : 'Daniel sleeps in his castle' },
+      { src: 'gallery/papa-roncando.png',        alt: es ? 'El misterio del pasillo: ¡era papá roncando!' : 'The mystery of the hallway: it was Dad snoring!' },
+    ].map((img) => (
+      <div class="group relative overflow-hidden rounded-xl border border-night-700/30 bg-night-800/50">
+        <img
+          src={`${base}/images/mision-2/${img.src}`}
+          alt={img.alt}
+          class="w-full aspect-[3/4] object-cover transition group-hover:scale-105"
+          loading="lazy"
+        />
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-night-950/90 to-transparent p-3">
+          <p class="text-xs text-night-200">{img.alt}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-8">
+    {es ? 'Conoce a los personajes' : 'Meet the characters'}
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Daniel -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-2/daniel.png`} alt="Daniel" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Daniel</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'El capitán del castillo. Esta noche Gabriel duerme en casa de un amigo y Daniel tiene que demostrar que él puede solo. Con valentía y la llave en la mano, aprende que su cuarto es SU espacio.'
+            : 'The captain of the castle. Tonight Gabriel is sleeping at a friend\'s house and Daniel has to prove he can do it alone. With courage and key in hand, he learns his room is HIS space.'}
+        </p>
+      </div>
+    </div>
+    <!-- Sargento Calcetín -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-2/sargento-calcetin.png`} alt="Sargento Calcetín" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">{es ? 'Sargento Calcetín' : 'Sergeant Sock'}</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Un calcetín viejo de rayas con ojos de rotulador y bigote de tirita. Guardián del castillo. Muy serio. Muy valiente. (Huele un poquito a queso viejo, pero no se lo digas.)'
+            : 'An old striped sock with marker-pen eyes and a bandaid mustache. Castle guardian. Very serious. Very brave. (Smells a little like old cheese, but don\'t tell anyone.)'}
+        </p>
+      </div>
+    </div>
+    <!-- Flarina -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-2/flarina.png`} alt="Flarina" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Flarina</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'La dragoncita mensajera del Reino de la Noche vuelve a guiar a Daniel. Su escama brilla en rojo cuando hay una misión. "¿Preparado, capitán?"'
+            : 'The little dragon messenger from the Kingdom of Night returns to guide Daniel. Her scale glows red when there\'s a mission. "Ready, captain?"'}
+        </p>
+      </div>
+    </div>
+    <!-- Trompín -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-2/trompin.png`} alt="Trompín" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Trompín</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Pequeño, con orejas MUY largas y un fuelle en la barriga. Causó el accidente del Gran Farol sin querer. Ojos tristes de perrito. Aprende que los errores se pueden arreglar.'
+            : 'Small, with VERY long ears and a bellows in his belly. He accidentally caused the Great Lantern accident. Sad puppy eyes. He learns that mistakes can be fixed.'}
+        </p>
+      </div>
+    </div>
+    <!-- Chispi -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-2/chispi.png`} alt="Chispi" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Chispi</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Dragoncito bebé azul. Sopla burbujas de lava: ¡PLOP, PLOP! Siempre está haciendo alguna travesura en el Reino de la Noche.'
+            : 'Baby blue dragon. Blows lava bubbles: PLOP, PLOP! Always up to some mischief in the Kingdom of Night.'}
+        </p>
+      </div>
+    </div>
+    <!-- Foguito -->
+    <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <img src={`${base}/images/mision-2/foguito.png`} alt="Foguito" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <div>
+        <h3 class="font-title text-xl font-bold text-gold-300">Foguito</h3>
+        <p class="text-night-300 text-sm mt-1">
+          {es
+            ? 'Dragoncito bebé verde. Intenta comerse las burbujas de Chispi y siempre le explotan en la nariz. "¡ACHÍÍÍÍÍS!" Sale volando cada dos por tres.'
+            : 'Baby green dragon. Tries to eat Chispi\'s bubbles and they always explode on his nose. "ACHOOOO!" He goes flying every other minute.'}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDE FOR FAMILIES -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Guía para familias' : 'Guide for families'}
+  </h2>
+  <p class="text-night-400 text-sm mb-8">
+    {es ? 'Lo que sacamos del libro para que fuera más corto. Aquí lo tienes completo.' : 'What we took out of the book to keep it short. Here it is in full.'}
+  </p>
+
+  <div class="space-y-8">
+    <!-- Why sleeping alone is hard -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? '¿Por qué les cuesta dormir solos?' : 'Why is sleeping alone hard for them?'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p>{es
+          ? 'Sentirse solo no es lo mismo que estar solo. Es echar de menos. Y eso no se quita con lógica — se quita con un ritual que diga: "Estoy en MI sitio."'
+          : 'Feeling lonely is not the same as being alone. It\'s missing someone. And that\'s not fixed with logic — it\'s fixed with a ritual that says: "I\'m in MY place."'}</p>
+        <p>{es ? 'Entre los 3 y 7 años, la separación nocturna puede activar una alarma real:' : 'Between ages 3 and 7, nighttime separation can trigger a real alarm:'}</p>
+        <ul class="list-disc list-inside space-y-1 text-night-300">
+          <li>{es ? 'El cerebro interpreta "estoy solo" como "estoy en peligro".' : 'The brain interprets "I\'m alone" as "I\'m in danger".'}</li>
+          <li>{es ? 'La habitación se siente grande, extraña, diferente sin la persona querida.' : 'The room feels big, strange, different without their loved one.'}</li>
+          <li>{es ? 'Los sonidos de siempre (el reloj, el viento, la tubería) se vuelven amenazas.' : 'Familiar sounds (the clock, the wind, the pipes) become threats.'}</li>
+        </ul>
+        <p class="font-semibold text-night-100">{es
+          ? 'La solución no es "aguantarse". Es darle al cerebro una señal clara: "Estoy seguro. Yo cierro mi castillo."'
+          : 'The solution isn\'t to "tough it out". It\'s giving the brain a clear signal: "I\'m safe. I lock my castle."'}</p>
+      </div>
+    </div>
+
+    <!-- Why a key -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? '¿Por qué una llave?' : 'Why a key?'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p>{es
+          ? 'En el Libro 1, tu peque aprendió a mandar sobre la LUZ. Ahora aprende a mandar sobre su ESPACIO.'
+          : 'In Book 1, your child learned to control LIGHT. Now they learn to control their SPACE.'}</p>
+        <ol class="list-decimal list-inside space-y-1 text-night-300">
+          <li>{es ? 'El niño toca la llave.' : 'The child touches the key.'}</li>
+          <li>{es ? 'Dice la frase mágica.' : 'Says the magic phrase.'}</li>
+          <li>{es ? 'Hace «¡CLIC!» Su cuarto se "cierra". Él decide quién entra.' : 'Goes "CLICK!" Their room is "locked". They decide who enters.'}</li>
+        </ol>
+        <p class="font-semibold text-night-100">{es
+          ? 'No es magia. Es un RITUAL. Y los rituales funcionan porque el cerebro aprende por repetición. La repetición no aburre al cerebro. Lo calma.'
+          : 'It\'s not magic. It\'s a RITUAL. And rituals work because the brain learns through repetition. Repetition doesn\'t bore the brain. It calms it.'}</p>
+        <blockquote class="border-l-2 border-gold-500 pl-4 text-gold-300 font-semibold italic">
+          {es
+            ? '→ Adulto: "Mi cuarto es mi..." → Niño: "¡CASTILLO!" → Juntos: "¡CLIC!"'
+            : '→ Adult: "My room is my..." → Child: "CASTLE!" → Together: "CLICK!"'}
+        </blockquote>
+      </div>
+    </div>
+
+    <!-- Protocol 2AM -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-gold-500/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? 'El protocolo de las 2AM' : 'The 2AM protocol'}
+      </h3>
+      <div class="text-night-200 space-y-2 text-sm leading-relaxed">
+        <p class="font-semibold text-gold-400">{es ? 'Cuando tu hijo se despierta y viene a tu cuarto en mitad de la noche:' : 'When your child wakes up and comes to your room in the middle of the night:'}</p>
+        <ol class="list-decimal list-inside space-y-2 text-night-200">
+          <li>{es ? 'CALMARSE: Respirar juntos. "Estoy aquí. Veo que tu cuerpo se asustó."' : 'CALM DOWN: Breathe together. "I\'m here. I see your body got scared."'}</li>
+          <li>{es ? 'ESCUCHAR BIEN: "¿Qué pasó? ¿Oíste algo? ¿Soñaste algo?"' : 'LISTEN WELL: "What happened? Did you hear something? Did you dream something?"'}</li>
+          <li>{es ? 'COMPROBAR (si es seguro): Si hay un ruido, investigad juntos. Casi siempre tiene explicación.' : 'CHECK (if safe): If there\'s a noise, investigate together. It almost always has an explanation.'}</li>
+          <li>{es ? 'HERRAMIENTA: "Coge la llave. ¿Recuerdas la frase? Tu cuarto sigue siendo tu castillo."' : 'TOOL: "Grab the key. Do you remember the phrase? Your room is still your castle."'}</li>
+          <li>{es ? 'RESPIRAR: 3 respiraciones de dragón juntos antes de volver.' : 'BREATHE: 3 dragon breaths together before going back.'}</li>
+        </ol>
+        <p class="mt-3 text-night-400 text-xs">{es
+          ? 'Si el miedo es muy intenso o muy frecuente (todas las noches durante semanas), consulta con un profesional.'
+          : 'If the fear is very intense or very frequent (every night for weeks), consult a professional.'}</p>
+      </div>
+    </div>
+
+    <!-- Knots bonus -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? 'BONUS: Por qué enseñar un nudo vale oro' : 'BONUS: Why teaching a knot is worth gold'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p class="font-semibold text-night-100">{es ? 'Aprender un nudo no es "manualidades". Es un entrenamiento real para la vida.' : 'Learning a knot isn\'t "arts and crafts". It\'s real life training.'}</p>
+        <p>{es ? 'Cuando tu peque aprende un nudo contigo, pasa esto:' : 'When your child learns a knot with you, this happens:'}</p>
+        <ul class="list-disc list-inside space-y-1 text-night-300">
+          <li>{es ? 'Practica paciencia ("lo intento otra vez").' : 'Practices patience ("I\'ll try again").'}</li>
+          <li>{es ? 'Practica tolerancia a la frustración ("me sale a medias y sigo").' : 'Practices frustration tolerance ("it\'s half-working and I keep going").'}</li>
+          <li>{es ? 'Mejora coordinación (manos, dedos, fuerza suave).' : 'Improves coordination (hands, fingers, gentle strength).'}</li>
+          <li>{es ? 'Aprende que papá/mamá no solo consuela… también enseña.' : 'Learns that mom/dad doesn\'t just comfort… they also teach.'}</li>
+        </ul>
+        <p class="font-semibold text-night-100">{es
+          ? 'La cuerda de la llave se vuelve una prueba física de: "Yo puedo." El niño se acuesta con una sensación de logro, no de pelea.'
+          : 'The key\'s cord becomes a physical proof of: "I can do it." The child goes to bed with a sense of accomplishment, not struggle.'}</p>
+      </div>
+    </div>
+
+    <!-- Will it work every night? -->
+    <div class="p-6 rounded-2xl bg-night-800/40 border border-night-700/30">
+      <h3 class="font-title text-xl font-bold text-gold-300 mb-3">
+        {es ? '¿Funcionará todas las noches?' : 'Will it work every night?'}
+      </h3>
+      <div class="text-night-200 space-y-3 text-sm leading-relaxed">
+        <p class="font-semibold text-night-100">{es ? 'No siempre. Y eso está bien.' : 'Not always. And that\'s okay.'}</p>
+        <p>{es
+          ? 'El cerebro necesita REPETICIÓN para aprender nuevas respuestas. Cada vez que tu peque hace el CLIC, su cuerpo asocia ese sonido con: "Ya está. Mi espacio está cerrado. Puedo relajarme."'
+          : 'The brain needs REPETITION to learn new responses. Every time your child does the CLICK, their body associates that sound with: "That\'s it. My space is locked. I can relax."'}</p>
+        <p>{es
+          ? 'Con el tiempo, ni siquiera necesitará la llave física. La frase sola bastará. Y habrá internalizado: "Mi cuarto es un lugar seguro."'
+          : 'Over time, they won\'t even need the physical key. The phrase alone will be enough. And they\'ll have internalized: "My room is a safe place."'}</p>
+        <blockquote class="border-l-2 border-gold-500 pl-4 text-night-200 text-sm italic">
+          {es ? '"No tenemos que ganar hoy. Solo practicar y sentirnos seguros."' : '"We don\'t have to win today. Just practice and feel safe."'}
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MINI-MISSIONS -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Mini-misiones por niveles' : 'Mini-missions by level'}
+  </h2>
+  <p class="text-night-300 mb-8">
+    {es ? 'Cada noche elige una. El niño marca su progreso y se siente capitán de su castillo.' : 'Choose one every night. The child tracks progress and feels like captain of their castle.'}
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {[
+      { src: 'resources/mision-calmante.png',  name: es ? 'Misión Calmante' : 'Calming Mission' },
+      { src: 'resources/mision-valentia.png',  name: es ? 'Misión Valentía' : 'Bravery Mission' },
+      { src: 'resources/tarjeta-heroe.png',    name: es ? 'Tarjeta de Héroe' : 'Hero Card' },
+    ].map((img) => (
+      <div class="rounded-xl border border-night-700/30 bg-night-800/50 overflow-hidden">
+        <img
+          src={`${base}/images/mision-2/${img.src}`}
+          alt={img.name}
+          class="w-full object-cover"
+          loading="lazy"
+        />
+        <p class="text-center text-sm font-semibold text-gold-300 py-3">{img.name}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- DRAGON BREATHING VIDEOS -->
+<section class="mt-16">
+  <h2 class="font-title text-3xl font-bold text-gold-400 mb-2">
+    {es ? 'Respiración Dragón — Videos' : 'Dragon Breathing — Videos'}
+  </h2>
+  <p class="text-night-300 mb-8">
+    {es
+      ? 'Pon el video a tu peque antes de dormir. Que respire junto al personaje.'
+      : 'Play the video for your child before bed. Let them breathe along with the character.'}
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Level 1: Flor y Vela (3-4 años) -->
+    <div class="rounded-2xl bg-night-800/40 border border-night-700/30 overflow-hidden">
+      <div class="aspect-[9/16] w-full">
+        <iframe
+          src="https://www.youtube.com/embed/rM3V6tIY_UQ"
+          title={es ? 'Respiración Dragón Nivel 1 — Flor y Vela' : 'Dragon Breathing Level 1 — Flower and Candle'}
+          class="w-full h-full"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="p-4">
+        <h3 class="font-title text-lg font-bold text-gold-300">
+          {es ? 'Nivel 1 — Flor y Vela' : 'Level 1 — Flower & Candle'}
+        </h3>
+        <p class="text-night-400 text-xs mt-1">{es ? '3-4 años' : 'Ages 3-4'}</p>
+        <p class="text-night-300 text-sm mt-2">
+          {es
+            ? 'Huele la flor (inhala por la nariz), sopla la vela (exhala por la boca). 3 veces.'
+            : 'Smell the flower (inhale through nose), blow the candle (exhale through mouth). 3 times.'}
+        </p>
+      </div>
+    </div>
+
+    <!-- Level 2: Dragón dormido (5-6 años) -->
+    <div class="rounded-2xl bg-night-800/40 border border-night-700/30 overflow-hidden">
+      <div class="aspect-[9/16] w-full">
+        <iframe
+          src="https://www.youtube.com/embed/yMSdECD0lBU"
+          title={es ? 'Respiración Dragón Nivel 2 — Dragón dormido' : 'Dragon Breathing Level 2 — Sleeping Dragon'}
+          class="w-full h-full"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="p-4">
+        <h3 class="font-title text-lg font-bold text-gold-300">
+          {es ? 'Nivel 2 — Dragón dormido' : 'Level 2 — Sleeping Dragon'}
+        </h3>
+        <p class="text-night-400 text-xs mt-1">{es ? '5-6 años' : 'Ages 5-6'}</p>
+        <p class="text-night-300 text-sm mt-2">
+          {es
+            ? 'Inhala 4 segundos por la nariz, exhala 6 segundos suave como un dragón dormido. 3 veces.'
+            : 'Inhale 4 seconds through nose, exhale 6 seconds gently like a sleeping dragon. 3 times.'}
+        </p>
+      </div>
+    </div>
+
+    <!-- Level 3: Fuego y hielo (7 años) -->
+    <div class="rounded-2xl bg-night-800/40 border border-night-700/30 overflow-hidden">
+      <div class="aspect-[9/16] w-full">
+        <iframe
+          src="https://www.youtube.com/embed/LdVtQ0ccoa8"
+          title={es ? 'Respiración Dragón Nivel 3 — Fuego y hielo' : 'Dragon Breathing Level 3 — Fire & Ice'}
+          class="w-full h-full"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="p-4">
+        <h3 class="font-title text-lg font-bold text-gold-300">
+          {es ? 'Nivel 3 — Fuego y hielo' : 'Level 3 — Fire & Ice'}
+        </h3>
+        <p class="text-night-400 text-xs mt-1">{es ? '7 años' : 'Age 7'}</p>
+        <p class="text-night-300 text-sm mt-2">
+          {es
+            ? 'Inhala 4s, retén 4s, exhala 6s como fuego lento. 3 veces.'
+            : 'Inhale 4s, hold 4s, exhale 6s like slow fire. 3 times.'}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDAL -->
+<section class="mt-16 mb-8 text-center">
+  <img
+    src={`${base}/images/mision-2/medallon.png`}
+    alt={es ? 'Medallón Misión 2 Cumplida' : 'Mission 2 Complete Medal'}
+    class="w-48 h-48 mx-auto object-contain"
+    loading="lazy"
+  />
+  <h2 class="font-title text-2xl font-bold text-gold-400 mt-4">
+    {es ? '¡Misión 2 cumplida!' : 'Mission 2 complete!'}
+  </h2>
+  <p class="text-night-300 mt-2">
+    {es
+      ? 'Al completar el reto de 7 noches, tu peque gana el Medallón Misión 2 Cumplida. Coleccionable de la serie.'
+      : 'After completing the 7-night challenge, your child earns the Mission 2 Complete Medal. Series collectible.'}
+  </p>
+</section>
