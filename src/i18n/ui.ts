@@ -19,7 +19,7 @@ export const ui = {
 
     // Home - Hero
     'hero.title': 'beetecu',
-    'hero.subtitle': 'Libros para niños con miedos nocturnos y adultos con preguntas difíciles.',
+    'hero.subtitle': 'Porque entender lo que sientes es el primer paso para superarlo. Para niños con miedos. Para adultos con preguntas.',
     'hero.cta': 'Ver todos los libros',
 
     // Home - Series Intro
@@ -90,7 +90,7 @@ export const ui = {
 
     // Home - Hero
     'hero.title': 'beetecu',
-    'hero.subtitle': 'Books for children with nighttime fears and adults with difficult questions.',
+    'hero.subtitle': 'Because understanding what you feel is the first step to overcoming it. For children with fears. For adults with questions.',
     'hero.cta': 'See all books',
 
     // Home - Series Intro
