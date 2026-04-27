@@ -4,15 +4,14 @@ import { useTranslations } from '../../i18n/utils';
 
 interface Props {
   isbn: string | null;
+  amazonUrl?: string | null;
   lang: Lang;
 }
 
-const { isbn, lang } = Astro.props;
+const { isbn, amazonUrl: amazonUrlProp, lang } = Astro.props;
 const t = useTranslations(lang);
 
-const amazonUrl = isbn
-  ? `https://www.amazon.com/dp/${isbn}`
-  : null;
+const amazonUrl = amazonUrlProp ?? (isbn ? `https://www.amazon.es/dp/${isbn}` : null);
 ---
 
 {amazonUrl ? (

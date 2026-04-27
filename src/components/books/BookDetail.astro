@@ -45,7 +45,7 @@ const booksPath = getLocalizedPath(lang, lang === 'es' ? '/libros' : '/books');
       </p>
 
       <div class="mt-6">
-        <AmazonButton isbn={book.isbn} lang={lang} />
+        <AmazonButton isbn={book.isbn} amazonUrl={book.amazonUrl} lang={lang} />
       </div>
 
       <div class="mt-8">

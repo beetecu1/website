@@ -8,6 +8,7 @@ export interface Book {
   theme: { es: string; en: string };
   synopsis: { es: string; en: string };
   isbn: string | null;
+  amazonUrl: string | null;
   coverPlaceholder: string;
   color: string;
 }
@@ -30,6 +31,7 @@ export const books: Book[] = [
       en: 'Daniel and Gabriel, twin brothers, discover that shadows aren\'t "bad things" but shapes that change when you move the light. With the help of Flarina, a little dragon messenger from the Kingdom of the Night, and a flashlight as their tool, they\'ll learn to look, check and transform what scares them. Includes leveled mini-missions (ages 3-7), dragon breathing and a 7-night challenge with visible progress.',
     },
     isbn: '9798243436106',
+    amazonUrl: 'https://www.amazon.es/dp/B0GV2D8BJB',
     coverPlaceholder: '/images/mision-1/cover.png',
     color: 'from-indigo-600 to-blue-900',
   },
@@ -49,7 +51,8 @@ export const books: Book[] = [
       es: 'Llega el momento de un gran paso: dormir solito. Con una llave mágica que convierte su habitación en un castillo seguro, los niños aprenderán que su cuarto es un lugar lleno de posibilidades. Una aventura sobre la independencia y la valentía.',
       en: "It's time for a big step: sleeping alone. With a magical key that turns their room into a safe castle, children will learn that their bedroom is a place full of possibilities. An adventure about independence and bravery.",
     },
-    isbn: '9798249533397',
+    isbn: null,
+    amazonUrl: null,
     coverPlaceholder: '/images/mision-2/cover.png',
     color: 'from-purple-600 to-indigo-900',
   },
@@ -58,19 +61,20 @@ export const books: Book[] = [
     mission: 3,
     slug: { es: 'mision-3', en: 'mission-3' },
     title: {
-      es: 'El Lápiz de Sueños y la Clase del Trueno',
-      en: 'The Dream Pencil and the Thunder Class',
+      es: 'El Faro de los Sueños Perdidos',
+      en: 'The Lighthouse of Lost Dreams',
     },
     theme: {
       es: 'Pesadillas',
       en: 'Nightmares',
     },
     synopsis: {
-      es: 'Las pesadillas pueden dar mucho miedo, pero ¿y si pudieras reescribirlas? Con un lápiz mágico de sueños, los niños aprenderán a transformar sus pesadillas en aventuras increíbles. Porque hasta los truenos más fuertes pueden convertirse en música.',
-      en: "Nightmares can be really scary, but what if you could rewrite them? With a magical dream pencil, children will learn to transform their nightmares into incredible adventures. Because even the loudest thunder can become music.",
+      es: 'Daniel se despierta de golpe en mitad de la noche. Las pesadillas hacen eso: dejan el susto pegado aunque el sueño ya haya terminado. Pero ¿y si el sueño fuera tuyo para terminarlo? Con una botella de los sueños y un faro mágico, Daniel y Gabriel descubren que las pesadillas son historias sin terminar — y que el final también les pertenece a ellos.',
+      en: 'Daniel wakes up suddenly in the middle of the night. Nightmares do that — they leave the fright behind even after the dream is over. But what if the dream were yours to finish? With a dream bottle and a magical lighthouse, Daniel and Gabriel discover that nightmares are unfinished stories — and that the ending belongs to them too.',
     },
-    isbn: '9798243436107',
-    coverPlaceholder: '/images/book-3-placeholder.svg',
+    isbn: null,
+    amazonUrl: null,
+    coverPlaceholder: '/images/mision-3/cover.png',
     color: 'from-violet-600 to-purple-900',
   },
 ];
