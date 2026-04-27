@@ -11,20 +11,34 @@ export const ui = {
   es: {
     // Navigation
     'nav.home': 'Inicio',
-    'nav.books': 'Libros',
+    'nav.books': 'Trilogía infantil',
+    'nav.847': '847',
     'nav.about': 'Sobre la autora',
     'nav.resources': 'Recursos',
     'nav.community': 'Comunidad',
 
     // Home - Hero
-    'hero.title': 'La oscuridad ya no da miedo',
-    'hero.subtitle': 'Una trilogía de libros infantiles que ayuda a los más pequeños a superar sus miedos nocturnos',
-    'hero.cta': 'Descubre los libros',
+    'hero.title': 'beetecu',
+    'hero.subtitle': 'Libros para niños con miedos nocturnos y adultos con preguntas difíciles.',
+    'hero.cta': 'Ver todos los libros',
 
     // Home - Series Intro
+    'series.label': 'La trilogía infantil',
     'series.title': 'Tres misiones, tres miedos superados',
     'series.description': 'Cada libro es una misión que guía a los niños de 3 a 7 años a enfrentar un miedo nocturno diferente. Con historias mágicas y herramientas prácticas, los pequeños descubren que la noche puede ser un lugar de aventuras.',
     'series.mission': 'Misión',
+
+    // Book 847
+    'book847.badge': 'Próximamente',
+    'book847.genre': 'Ensayo',
+    'book847.subtitle': '¿Y si yo no soy yo?',
+    'book847.teaser': 'Un ensayo para quien alguna vez se ha pillado a sí mismo haciendo algo habitual, automático, y ha tenido por un segundo la sensación extraña de no saber cuándo empezó a hacerlo así.',
+    'book847.cta': 'Descubrir el libro',
+    'book847.notifyCta': 'Avísame cuando salga',
+    'book847.prologueLabel': 'Extracto del prólogo',
+    'book847.prologue': 'Este libro no es para todo el mundo.\n\nEs para quien alguna vez se ha pillado a sí mismo haciendo algo — algo habitual, algo automático — y ha tenido, por un segundo, la sensación extraña de no saber cuándo empezó a hacerlo así.\n\nEs para quien ha tomado una decisión importante y, al mirarla desde lejos, ha notado que no podría haber salido de otra manera.\n\nEs para quien alguna vez ha intentado cambiar algo de fondo y ha descubierto, con cierta incomodad, que volvía. Siempre al mismo punto. Como si hubiera un radio fijo.\n\nSi ninguna de estas tres cosas te ha pasado, este libro no es para ti.\n\nCiérralo.\n\nSi has dudado antes de cerrarlo, ya tienes la respuesta.',
+    'book847.whatIsIt': '¿De qué va?',
+    'book847.description': 'Un SOC es un centro de operaciones de ciberseguridad. Una sala sin ventanas que monitoriza comportamiento en tiempo real. Detecta anomalías. Clasifica. Predice.\n\n847 usa ese sistema como lente para mirar hacia adentro. ¿Cuánto de lo que crees que eliges es en realidad patrón? ¿Y qué queda cuando lo sabes?\n\nUn ensayo que cruza ciberseguridad, psicología conductual y filosofía. Sin respuestas fáciles. Con las preguntas correctas.',
 
     // Books
     'books.title': 'Los libros',
@@ -68,20 +82,34 @@ export const ui = {
   en: {
     // Navigation
     'nav.home': 'Home',
-    'nav.books': 'Books',
+    'nav.books': "Children's trilogy",
+    'nav.847': '847',
     'nav.about': 'About the author',
     'nav.resources': 'Resources',
     'nav.community': 'Community',
 
     // Home - Hero
-    'hero.title': 'Darkness is no longer scary',
-    'hero.subtitle': "A trilogy of children's books that helps little ones overcome their nighttime fears",
-    'hero.cta': 'Discover the books',
+    'hero.title': 'beetecu',
+    'hero.subtitle': 'Books for children with nighttime fears and adults with difficult questions.',
+    'hero.cta': 'See all books',
 
     // Home - Series Intro
+    'series.label': "Children's trilogy",
     'series.title': 'Three missions, three fears conquered',
     'series.description': 'Each book is a mission that guides children ages 3-7 to face a different nighttime fear. With magical stories and practical tools, little ones discover that the night can be a place of adventure.',
     'series.mission': 'Mission',
+
+    // Book 847
+    'book847.badge': 'Coming soon',
+    'book847.genre': 'Essay',
+    'book847.subtitle': 'What if I am not me?',
+    'book847.teaser': "An essay for anyone who has ever caught themselves doing something habitual, automatic, and felt — just for a second — the strange sensation of not knowing when they started doing it that way.",
+    'book847.cta': 'Discover the book',
+    'book847.notifyCta': 'Notify me when it\'s out',
+    'book847.prologueLabel': 'From the prologue',
+    'book847.prologue': "This book is not for everyone.\n\nIt's for anyone who has ever caught themselves doing something — something habitual, something automatic — and felt, just for a second, the strange sensation of not knowing when they started doing it that way.\n\nIt's for anyone who has made an important decision and, looking at it from a distance, noticed it couldn't have gone any other way.\n\nIt's for anyone who has ever tried to change something at the core — not on the surface, but at the core — and discovered, with a certain discomfort, that they came back. Always to the same point. As if there were a fixed radius.\n\nIf none of these three things have happened to you, this book is not for you.\n\nClose it.\n\nIf you hesitated before closing it, you already have your answer.",
+    'book847.whatIsIt': 'What is it about?',
+    'book847.description': 'A SOC is a Security Operations Center. A windowless room that monitors behavior in real time. Detects anomalies. Classifies. Predicts.\n\n847 uses that system as a lens to look inward. How much of what you think you choose is actually pattern? And what remains when you know?\n\nAn essay crossing cybersecurity, behavioral psychology, and philosophy. No easy answers. The right questions.',
 
     // Books
     'books.title': 'The books',

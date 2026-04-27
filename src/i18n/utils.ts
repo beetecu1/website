@@ -61,6 +61,7 @@ export function getAlternateLanguagePath(currentLang: Lang, currentPath: string)
     '/books/mission-2': '/libros/mision-2',
     '/libros/mision-3': '/books/mission-3',
     '/books/mission-3': '/libros/mision-3',
+    '/847': '/847',
   };
 
   // Normalize route
@@ -78,6 +79,7 @@ export function getNavItems(lang: Lang) {
   const t = useTranslations(lang);
   return [
     { label: t('nav.home'), href: getLocalizedPath(lang, '/') },
+    { label: t('nav.847'), href: getLocalizedPath(lang, '/847') },
     { label: t('nav.books'), href: getLocalizedPath(lang, lang === 'es' ? '/libros' : '/books') },
     { label: t('nav.about'), href: getLocalizedPath(lang, lang === 'es' ? '/sobre-la-autora' : '/about-the-author') },
     { label: t('nav.resources'), href: getLocalizedPath(lang, lang === 'es' ? '/recursos' : '/resources') },
