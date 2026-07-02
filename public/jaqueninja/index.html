@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>JaqueNinja ♟️</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d1117;--card:#161b22;--card2:#21262d;
+  --gold:#ffd700;--ninja:#7c3aed;--ninja2:#a78bfa;
+  --text:#e6edf3;--muted:#8b949e;
+  --correct:#3fb950;--wrong:#f85149;
+  --board-light:#f0d9b5;--board-dark:#b58863;
+  --hi:#aac244;--hi2:#cdd26a;
+}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+#root{width:100%;max-width:480px;min-height:100vh;display:flex;flex-direction:column}
+button{cursor:pointer;border:none;font-family:inherit;transition:transform .1s,opacity .15s}
+button:active{transform:scale(.96)}
+.btn{display:block;width:100%;padding:14px;border-radius:12px;font-size:1rem;font-weight:700;text-align:center}
+.btn-ninja{background:var(--ninja);color:#fff}
+.btn-gold{background:var(--gold);color:#1a1600}
+.btn-card{background:var(--card2);color:var(--text)}
+.btn-sm{padding:8px 16px;border-radius:8px;font-size:.9rem;font-weight:600;display:inline-block;width:auto}
+.screen{flex:1;display:flex;flex-direction:column;padding:16px;gap:12px}
+.screen.center{align-items:center;justify-content:center}
+/* topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card)}
+.topbar h1{font-size:1.2rem;font-weight:800;letter-spacing:.5px}
+/* welcome */
+.welcome-logo{font-size:4rem;text-align:center;margin-bottom:8px}
+.welcome-title{font-size:2rem;font-weight:900;text-align:center;background:linear-gradient(135deg,var(--gold),var(--ninja2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.welcome-sub{text-align:center;color:var(--muted);margin-bottom:8px}
+.profile-card{background:var(--card);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.profile-card:hover{border-color:var(--ninja2)}
+.profile-card .avatar{font-size:3rem}
+.profile-card .pname{font-weight:700;font-size:1.1rem}
+.profile-card .pbelt{font-size:.85rem;color:var(--muted)}
+.profile-card .pcoins{font-size:.85rem;color:var(--gold)}
+.profiles-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* home */
+.belt-card{background:var(--card);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.belt-card:hover{border-color:var(--muted)}
+.belt-card.unlocked{cursor:pointer}
+.belt-card.locked{opacity:.5;cursor:default}
+.belt-card.current{border-color:var(--gold)}
+.belt-card.done{border-color:var(--correct)}
+.belt-icon{font-size:2rem;min-width:40px;text-align:center}
+.belt-info{flex:1}
+.belt-name{font-weight:700;font-size:1rem}
+.belt-desc{font-size:.8rem;color:var(--muted);margin-top:2px}
+.belt-prog{font-size:.8rem;margin-top:4px}
+.prog-bar{height:6px;background:var(--card2);border-radius:3px;margin-top:4px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:var(--ninja2);transition:width .4s}
+.home-header{background:var(--card);border-radius:14px;padding:16px;display:flex;align-items:center;justify-content:space-between}
+.home-avatar{font-size:2.5rem}
+.home-info{}
+.home-name{font-weight:700;font-size:1.1rem}
+.home-belt{font-size:.85rem;color:var(--muted)}
+.home-coins{font-size:.85rem;color:var(--gold);margin-top:2px}
+/* lesson */
+.lesson-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.lesson-belt{font-size:.85rem;color:var(--muted)}
+.lesson-prog{font-size:.85rem;color:var(--gold)}
+.q-card{background:var(--card);border-radius:16px;padding:20px;flex:1;display:flex;flex-direction:column;align-items:center;gap:14px}
+.q-emoji{font-size:3rem;text-align:center}
+.q-text{font-size:1.05rem;font-weight:700;text-align:center;line-height:1.4}
+.q-fact{font-size:.85rem;color:var(--muted);text-align:center;line-height:1.5;padding:8px 0;border-top:1px solid var(--card2);width:100%}
+.opts{width:100%;display:flex;flex-direction:column;gap:8px}
+.opt-btn{background:var(--card2);color:var(--text);border-radius:10px;padding:12px 16px;font-size:.95rem;font-weight:600;text-align:left;border:2px solid transparent;transition:border-color .15s}
+.opt-btn:disabled{cursor:default}
+.opt-btn.sel-correct{background:#1a3a21;border-color:var(--correct);color:var(--correct)}
+.opt-btn.sel-wrong{background:#3a1a1a;border-color:var(--wrong);color:var(--wrong)}
+.opt-btn.reveal-correct{background:#1a3a21;border-color:var(--correct);color:var(--correct)}
+/* board */
+.board-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
+.board-svg-wrap{border-radius:8px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.board-hint{font-size:.85rem;color:var(--muted);text-align:center}
+.board-feedback{font-size:1.1rem;font-weight:700;text-align:center;height:28px}
+.board-feedback.ok{color:var(--correct)}
+.board-feedback.bad{color:var(--wrong)}
+/* yesno */
+.yesno-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.yn-btn{background:var(--card2);border-radius:12px;padding:16px;font-size:1.1rem;font-weight:700;text-align:center;color:var(--text);border:2px solid transparent}
+.yn-btn.si{border-color:var(--correct)}
+.yn-btn.no{border-color:var(--wrong)}
+/* result */
+.result-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px}
+.result-icon{font-size:4rem}
+.result-title{font-size:1.5rem;font-weight:900;text-align:center}
+.result-sub{font-size:1rem;color:var(--muted);text-align:center}
+.result-coins{font-size:1.2rem;font-weight:700;color:var(--gold)}
+.result-stars{font-size:2rem;letter-spacing:4px}
+/* boss */
+.boss-banner{background:linear-gradient(135deg,#7c3aed,#dc2626);border-radius:12px;padding:12px 16px;text-align:center}
+.boss-banner h3{font-size:1rem;font-weight:800}
+.boss-banner p{font-size:.8rem;opacity:.85;margin-top:2px}
+/* streak */
+.streak-badge{display:inline-flex;align-items:center;gap:4px;background:var(--card2);border-radius:20px;padding:4px 10px;font-size:.85rem;font-weight:700}
+/* parent */
+.parent-section{background:var(--card);border-radius:14px;padding:16px}
+.parent-section h3{font-size:1rem;font-weight:700;margin-bottom:10px}
+.weak-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--card2)}
+.weak-item:last-child{border-bottom:none}
+.weak-name{font-size:.9rem}
+.weak-count{font-size:.8rem;color:var(--wrong);font-weight:700}
+/* pin */
+.pin-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;padding:32px 0}
+.pin-input{display:flex;gap:8px}
+.pin-dot{width:16px;height:16px;border-radius:50%;background:var(--card2);transition:background .2s}
+.pin-dot.filled{background:var(--ninja2)}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:200px}
+.pin-key{background:var(--card2);border-radius:10px;padding:14px;font-size:1.2rem;font-weight:700;text-align:center}
+/* animations */
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes fall{0%{top:-10px;opacity:1}100%{top:110vh;opacity:.6}}
+@keyframes belt-in{0%{transform:scale(0) rotate(-20deg);opacity:0}60%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes glow-pulse{0%,100%{filter:drop-shadow(0 0 6px #ffd700)}50%{filter:drop-shadow(0 0 18px #ffd700)}}
+.anim-pop{animation:pop .3s ease}
+.anim-shake{animation:shake .4s ease}
+.anim-belt{animation:belt-in .6s cubic-bezier(.34,1.56,.64,1) forwards}
+.piece-glow{animation:glow-pulse 1s ease infinite}
+/* next btn (fixed bottom) */
+.next-wrap{padding:12px 0 0}
+/* mate1 */
+.mate1-hint{font-size:.85rem;color:var(--gold);text-align:center;font-weight:700}
+/* sensei */
+.sensei-card{background:linear-gradient(135deg,#1a1040,#0d1117);border:1px solid var(--ninja);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.sensei-avatar{font-size:2.2rem;flex-shrink:0}
+.sensei-text{font-size:.88rem;line-height:1.5;color:var(--text)}
+.sensei-name{font-size:.75rem;color:var(--ninja2);font-weight:700;margin-bottom:4px}
+.mission-tag{display:inline-flex;align-items:center;gap:6px;background:var(--card2);border-radius:20px;padding:5px 12px;font-size:.8rem;color:var(--muted);font-style:italic}
+/* daily */
+.daily-card{background:linear-gradient(135deg,#1a1200,#2a1f00);border:2px solid var(--gold);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.daily-star{font-size:2rem}
+.daily-info{}
+.daily-title{font-size:.95rem;font-weight:800;color:var(--gold)}
+.daily-sub{font-size:.8rem;color:var(--muted);margin-top:2px}
+.daily-done{opacity:.6;cursor:default}
+/* duelo */
+.duelo-score{display:flex;justify-content:space-around;background:var(--card);border-radius:12px;padding:12px}
+.duelo-player{text-align:center}
+.duelo-name{font-size:.8rem;color:var(--muted)}
+.duelo-pts{font-size:1.8rem;font-weight:900}
+/* belt-win */
+.belt-win-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center}
+.belt-win-emoji{font-size:5rem;line-height:1}
+.belt-win-title{font-size:1.6rem;font-weight:900}
+.belt-win-sub{font-size:.95rem;color:var(--muted)}
+/* legends */
+.legend-card{background:var(--card);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.legend-card:not(.locked):hover{border-color:var(--gold)}
+.legend-card.locked{opacity:.55;cursor:default}
+.legend-emoji{font-size:2.2rem;min-width:40px;text-align:center}
+.legend-info{flex:1}
+.legend-name{font-weight:700;font-size:.95rem}
+.legend-title{font-size:.8rem;color:var(--ninja2);margin-top:2px}
+.legend-belt{font-size:.75rem;color:var(--muted);margin-top:3px}
+.legend-arrow{font-size:1.4rem;color:var(--muted)}
+.legend-hero{background:var(--card);border-radius:14px;padding:16px;display:flex;gap:14px;align-items:center}
+.legend-hero-emoji{font-size:3.5rem;min-width:56px;text-align:center}
+.legend-hero-name{font-size:1.1rem;font-weight:900}
+.legend-hero-years{font-size:.8rem;color:var(--muted);margin-top:2px}
+.legend-hero-title{font-size:.85rem;color:var(--ninja2);margin-top:4px;font-weight:700}
+.legend-super{background:var(--card2);border-radius:10px;padding:12px 14px;font-size:.88rem;display:flex;flex-direction:column;gap:4px}
+.legend-super-label{font-size:.75rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.legend-section-title{font-size:.8rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.facts-list{display:flex;flex-direction:column;gap:8px}
+.fact-item{background:var(--card);border-radius:10px;padding:12px 14px;font-size:.88rem;line-height:1.5;border-left:3px solid var(--ninja)}
+.legend-quote{font-style:italic;font-size:.9rem;color:var(--muted);text-align:center;padding:4px 8px;border-left:2px solid var(--gold);margin-left:8px}
+.video-wrap{width:100%;display:flex;flex-direction:column;gap:6px}
+.video-label{font-size:.78rem;color:var(--muted);text-align:center}
+/* curiosidad */
+.curiosidad-card{background:linear-gradient(135deg,#0a1a2a,#0d1117);border:1px solid #2563eb;border-radius:14px;padding:14px 16px;display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.curiosidad-icon{font-size:1.6rem;flex-shrink:0}
+.curiosidad-title{font-size:.75rem;color:#60a5fa;font-weight:700;margin-bottom:4px}
+.curiosidad-text{font-size:.85rem;line-height:1.5}
+.curiosidad-attr{font-size:.75rem;color:var(--muted);margin-top:4px}
+/* ruta del gran maestro */
+.ruta-section{background:var(--card);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.ruta-section:hover{border-color:var(--muted)}
+.ruta-section-icon{width:44px;height:44px;border-radius:10px;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.ruta-section-info{flex:1}
+.ruta-section-title{font-weight:700;font-size:.95rem}
+.ruta-content{display:flex;flex-direction:column;gap:14px;font-size:.9rem;line-height:1.6}
+.ruta-content p{color:var(--text)}
+.ruta-content b{color:var(--gold)}
+.ruta-ladder{display:flex;flex-direction:column;gap:2px}
+.ruta-rung{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border-left:4px solid}
+.rung-gm{background:#1a0a2e;border-color:#a78bfa}
+.rung-mi{background:#0a1a2e;border-color:#60a5fa}
+.rung-fm{background:#0a2e1a;border-color:#34d399}
+.rung-cm{background:#2e2a0a;border-color:#fbbf24}
+.rung-club{background:#1a1a1a;border-color:#8b949e}
+.rung-icon{font-size:1.2rem;flex-shrink:0;width:24px;text-align:center}
+.rung-title{font-weight:700;font-size:.88rem}
+.rung-sub{font-size:.78rem;color:var(--muted);margin-top:2px}
+.ruta-fact-list{display:flex;flex-direction:column;gap:8px}
+.ruta-fact{background:var(--card);border-radius:10px;padding:10px 12px;font-size:.85rem;line-height:1.5}
+.ruta-ranking{display:flex;flex-direction:column;gap:8px}
+.ruta-rank-item{display:flex;align-items:flex-start;gap:10px;background:var(--card);border-radius:10px;padding:10px 12px}
+.rank-pos{font-size:1.3rem;flex-shrink:0;min-width:28px}
+.rank-name{font-weight:700;font-size:.88rem}
+.rank-age{font-size:.78rem;color:var(--muted);margin-top:2px}
+.ruta-callout{background:linear-gradient(135deg,#1a1200,#2a1f00);border:1px solid var(--gold);border-radius:10px;padding:12px 14px;font-size:.85rem;line-height:1.5}
+.ruta-path{display:flex;flex-direction:column;gap:0}
+.path-step{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-left:2px solid var(--card2);margin-left:10px;padding-left:16px;position:relative}
+.path-step:last-child{border-color:transparent}
+.path-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;position:absolute;left:-9px;top:14px;box-shadow:0 0 8px currentColor}
+.path-label{font-weight:700;font-size:.88rem;color:var(--text)}
+.path-desc{font-size:.82rem;color:var(--muted);margin-top:3px;line-height:1.5}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+'use strict';
+// ═══════════════════════════════════════════════════════
+//  DATA – BELTS
+// ═══════════════════════════════════════════════════════
+const BELTS=[
+  {id:'blanco',  name:'Cinturón Blanco',   emoji:'⬜',colorA:'#e2e8f0',colorB:'#94a3b8',desc:'El tablero',   minQ:10},
+  {id:'amarillo',name:'Cinturón Amarillo', emoji:'🟡',colorA:'#fbbf24',colorB:'#d97706',desc:'Las piezas',   minQ:10},
+  {id:'verde',   name:'Cinturón Verde',    emoji:'🟢',colorA:'#34d399',colorB:'#059669',desc:'Notación',     minQ:8},
+  {id:'azul',    name:'Cinturón Azul',     emoji:'🔵',colorA:'#60a5fa',colorB:'#2563eb',desc:'Tácticas',     minQ:8},
+  {id:'rojo',    name:'Cinturón Rojo',     emoji:'🔴',colorA:'#f87171',colorB:'#dc2626',desc:'Aperturas',    minQ:6},
+  {id:'negro',   name:'Cinturón Negro',    emoji:'⬛',colorA:'#9ca3af',colorB:'#374151',desc:'¡Gran Maestro!',minQ:6},
+];
+const BELT_IDX={blanco:0,amarillo:1,verde:2,azul:3,rojo:4,negro:5};
+
+// ═══════════════════════════════════════════════════════
+//  DATA – QUESTIONS
+// ═══════════════════════════════════════════════════════
+// Types: mcq (multiple choice), click (tap square), yesno (sí/no on board)
+// topic: used for adaptive weak-area tracking
+
+const BLANCO_Q=[
+  {id:'b01',type:'mcq',topic:'basico',em:'♟️',
+   q:'¿Cuántas casillas tiene un tablero de ajedrez?',
+   opts:['32','48','64','100'],ans:'64',
+   fact:'¡El tablero tiene 8 columnas × 8 filas = 64 casillas!'},
+  {id:'b02',type:'mcq',topic:'basico',em:'📐',
+   q:'¿Cuántas filas (horizontales) tiene el tablero?',
+   opts:['6','7','8','9'],ans:'8',
+   fact:'Las filas se llaman RANGOS y se numeran del 1 al 8.'},
+  {id:'b03',type:'mcq',topic:'basico',em:'📏',
+   q:'¿Con qué se identifican las COLUMNAS del tablero?',
+   opts:['Números 1-8','Letras a-h','Colores','Símbolos'],ans:'Letras a-h',
+   fact:'Las columnas se llaman FILES y van de la a (izquierda del blanco) hasta la h (derecha).'},
+  {id:'b04',type:'mcq',topic:'colores',em:'🎨',
+   q:'¿De qué color es la casilla a1 (esquina abajo-izquierda del blanco)?',
+   opts:['Clara (blanca)','Oscura (negra)','Puede ser cualquiera'],ans:'Oscura (negra)',
+   fact:'¡La esquina a1 siempre es OSCURA! Coloca el tablero con una casilla oscura a tu izquierda.'},
+  {id:'b05',type:'mcq',topic:'colores',em:'⬜',
+   q:'¿De qué color es la casilla h1?',
+   opts:['Clara (blanca)','Oscura (negra)'],ans:'Clara (blanca)',
+   fact:'h1 es clara. Recuerda: las casillas de esquina opuesta al mismo color siempre son distintas.'},
+  {id:'b06',type:'mcq',topic:'colores',em:'🔢',
+   q:'¿Cuántas casillas CLARAS hay en el tablero?',
+   opts:['16','24','32','40'],ans:'32',
+   fact:'¡Exacto! 32 claras y 32 oscuras. El tablero está perfectamente dividido.'},
+  {id:'b07',type:'mcq',topic:'notacion',em:'🗺️',
+   q:'En ajedrez, ¿cómo se llama la casilla que está en la columna "e" y fila "4"?',
+   opts:['4e','e-4','e4','e/4'],ans:'e4',
+   fact:'Se escribe primero la LETRA (columna) y luego el NÚMERO (fila). Siempre: letra + número.'},
+  {id:'b08',type:'mcq',topic:'notacion',em:'📍',
+   q:'¿Qué indica "h8" en un tablero?',
+   opts:['Columna h, fila 8','Fila h, columna 8','La casilla número 88','Un movimiento'],ans:'Columna h, fila 8',
+   fact:'h8 es la esquina arriba-derecha (desde el lado blanco). ¡Es una casilla oscura!'},
+  {id:'b09',type:'click',topic:'click_basico',em:'👆',
+   q:'¡Toca la casilla e4!',target:'e4',
+   fact:'e4 es una de las jugadas de apertura más populares del mundo.'},
+  {id:'b10',type:'click',topic:'click_basico',em:'👆',
+   q:'¡Toca la casilla a1!',target:'a1',
+   fact:'a1 es la esquina inferior izquierda del jugador blanco. ¡Siempre es oscura!'},
+  {id:'b11',type:'click',topic:'click_basico',em:'👆',
+   q:'¡Toca la casilla h8!',target:'h8',
+   fact:'h8 es la esquina superior derecha. ¡La casilla del rey negro al inicio está cerca, en e8!'},
+  {id:'b12',type:'click',topic:'click_basico',em:'👆',
+   q:'¡Toca la casilla d5!',target:'d5',
+   fact:'d5 es el centro del tablero. Las casillas centrales son muy importantes en ajedrez.'},
+  {id:'b13',type:'click',topic:'click_basico',em:'👆',
+   q:'¡Toca la casilla c3!',target:'c3',
+   fact:'c3 es una casilla donde suele ir el caballo blanco en muchas aperturas.'},
+  {id:'b14',type:'click',topic:'click_basico',em:'👆',
+   q:'¡Toca la casilla f6!',target:'f6',
+   fact:'f6 es donde suele ir el caballo negro. ¡El caballo en f6 defiende el centro!'},
+];
+
+const AMARILLO_Q=[
+  {id:'a01',type:'mcq',topic:'piezas_nombre',em:'♘',
+   q:'¿Qué pieza se mueve en forma de "L" (2+1 casillas)?',
+   opts:['El alfil','El caballo','La torre','El rey'],ans:'El caballo',
+   fact:'¡El caballo es la única pieza que puede SALTAR sobre otras! Se mueve 2 casillas en una dirección y 1 en perpendicular.'},
+  {id:'a02',type:'mcq',topic:'piezas_nombre',em:'♗',
+   q:'¿Qué pieza se mueve SOLO en diagonal?',
+   opts:['El rey','La torre','El alfil','El peón'],ans:'El alfil',
+   fact:'El alfil siempre permanece en el mismo color. ¡Cada jugador tiene un alfil de casillas claras y uno de oscuras!'},
+  {id:'a03',type:'mcq',topic:'piezas_nombre',em:'♖',
+   q:'¿Qué pieza se mueve en línea recta (horizontal o vertical)?',
+   opts:['El caballo','El alfil','La torre','El peón'],ans:'La torre',
+   fact:'La torre es muy poderosa en finales. Puede recorrer todo el tablero en una jugada.'},
+  {id:'a04',type:'mcq',topic:'piezas_nombre',em:'♕',
+   q:'¿Qué pieza puede moverse en CUALQUIER dirección y todas las casillas que quiera?',
+   opts:['El rey','El caballo','La torre','La dama'],ans:'La dama',
+   fact:'¡La dama combina los movimientos de la torre y el alfil! Es la pieza más poderosa del tablero.'},
+  {id:'a05',type:'mcq',topic:'piezas_nombre',em:'♔',
+   q:'¿Cuántas casillas se mueve el rey a la vez?',
+   opts:['Todas las que quiera','Solo en diagonal','Una en cualquier dirección','Dos'],ans:'Una en cualquier dirección',
+   fact:'El rey se mueve una casilla en cualquier dirección. ¡Es la pieza más importante! Si lo atrapan, pierdes.'},
+  {id:'a06',type:'mcq',topic:'piezas_nombre',em:'♙',
+   q:'¿En qué dirección avanza el peón?',
+   opts:['Hacia delante o atrás','Solo hacia adelante','En diagonal','En cualquier dirección'],ans:'Solo hacia adelante',
+   fact:'El peón avanza hacia adelante pero captura en DIAGONAL. ¡Y nunca puede retroceder!'},
+  {id:'a07',type:'mcq',topic:'peon_especial',em:'🏃',
+   q:'¿Cuántas casillas puede avanzar un peón en su PRIMER movimiento?',
+   opts:['Solo 1','1 o 2','2 o 3','3'],ans:'1 o 2',
+   fact:'¡Solo en su primer movimiento el peón puede avanzar 2 casillas! Después solo puede avanzar 1.'},
+  {id:'a08',type:'mcq',topic:'valores',em:'💰',
+   q:'¿Cuánto vale un peón? (en puntos)',
+   opts:['1 punto','2 puntos','3 puntos','5 puntos'],ans:'1 punto',
+   fact:'El peón vale 1 punto. Es la pieza menos valiosa, pero ¡8 peones juntos forman un ejército poderoso!'},
+  {id:'a09',type:'mcq',topic:'valores',em:'🐴',
+   q:'¿Cuánto valen el caballo y el alfil?',
+   opts:['1 punto cada uno','3 puntos cada uno','5 puntos cada uno','9 puntos cada uno'],ans:'3 puntos cada uno',
+   fact:'El caballo y el alfil valen 3 puntos. Se llaman "piezas menores".'},
+  {id:'a10',type:'mcq',topic:'valores',em:'🏰',
+   q:'¿Cuánto vale una torre?',
+   opts:['3 puntos','4 puntos','5 puntos','7 puntos'],ans:'5 puntos',
+   fact:'La torre vale 5 puntos. Se llama "pieza mayor". ¡Una torre vale más que un caballo!'},
+  {id:'a11',type:'mcq',topic:'valores',em:'👑',
+   q:'¿Cuánto vale la dama?',
+   opts:['5 puntos','7 puntos','9 puntos','10 puntos'],ans:'9 puntos',
+   fact:'¡La dama vale 9 puntos! Es la pieza más valiosa después del rey (que es infinito porque perderlo significa perder la partida).'},
+  {id:'a12',type:'mcq',topic:'caballo_especial',em:'🦘',
+   q:'¿El caballo puede saltar sobre otras piezas?',
+   opts:['Sí','No','Solo sobre piezas del mismo equipo','Solo si el tablero está vacío'],ans:'Sí',
+   fact:'¡Correcto! El caballo es la ÚNICA pieza que puede saltar. Por eso es tan especial en aperturas y tácticas.'},
+  {id:'a13',type:'mcq',topic:'alfil_especial',em:'🔺',
+   q:'El alfil siempre se queda en casillas...',
+   opts:['Del mismo color','Del color contrario','Puede cambiar de color','Depende de la apertura'],ans:'Del mismo color',
+   fact:'¡El alfil nunca cambia de color! Si empieza en casillas claras, siempre está en casillas claras.'},
+  {id:'a14',type:'mcq',topic:'enroque',em:'🏰↔️',
+   q:'¿Qué movimiento especial mueve al rey 2 casillas y a la torre al mismo tiempo?',
+   opts:['El jaque','El enroque','La coronación','La captura al paso'],ans:'El enroque',
+   fact:'¡El enroque es el único movimiento donde mueves 2 piezas a la vez! Protege al rey llevándolo a un lado.'},
+];
+
+const VERDE_Q=[
+  {id:'v01',type:'mcq',topic:'notacion_basica',em:'📝',
+   q:'En notación algebraica, ¿qué significa "e4"?',
+   opts:['Mover el rey a e4','Mover cualquier pieza a e4','Mover un peón a e4','Mover la reina a e4'],ans:'Mover un peón a e4',
+   fact:'Cuando solo aparece la casilla sin letra de pieza (C, A, T, D, R), se entiende que es un PEÓN.'},
+  {id:'v02',type:'mcq',topic:'notacion_piezas',em:'🔤',
+   q:'En español, ¿qué letra representa al CABALLO en notación?',
+   opts:['K','N','C','Ca'],ans:'C',
+   fact:'En español: C=Caballo, A=Alfil, T=Torre, D=Dama, R=Rey. (En inglés es N de "Knight").'},
+  {id:'v03',type:'mcq',topic:'notacion_piezas',em:'🔡',
+   q:'¿Qué significa "Cf3" en notación española?',
+   opts:['Captura en f3','Caballo a f3','Alfil a f3','Rey a f3'],ans:'Caballo a f3',
+   fact:'C=Caballo, f3=casilla destino. ¡Cf3 es una de las jugadas de apertura más comunes del mundo!'},
+  {id:'v04',type:'mcq',topic:'notacion_especial',em:'✚',
+   q:'¿Qué símbolo indica JAQUE en la notación?',
+   opts:['*','+','!','?'],ans:'+',
+   fact:'El + significa jaque. El ++ (o #) significa jaque mate. ! = buena jugada. ? = mala jugada.'},
+  {id:'v05',type:'mcq',topic:'notacion_especial',em:'✖️',
+   q:'¿Qué símbolo indica una CAPTURA en notación?',
+   opts:['x','c','*','+'],ans:'x',
+   fact:'Ejemplo: "Cxe5" significa "Caballo captura en e5". ¡La x suena como "toma" o "captura"!'},
+  {id:'v06',type:'mcq',topic:'notacion_lectura',em:'📖',
+   q:'¿Qué significa "Dxf7+"?',
+   opts:['Dama a f7 en jaque','Dama captura en f7 dando jaque','Defensa en f7','Dama desde f7'],ans:'Dama captura en f7 dando jaque',
+   fact:'D=Dama, x=captura, f7=casilla, +=jaque. ¡Puedes leer jugadas como un idioma!'},
+  {id:'v07',type:'mcq',topic:'notacion_lectura',em:'👑',
+   q:'¿Qué significa "O-O" en notación?',
+   opts:['El rey ataca','Enroque corto (lado del rey)','Enroque largo (lado de la dama)','Dos torres'],ans:'Enroque corto (lado del rey)',
+   fact:'O-O = enroque corto. O-O-O = enroque largo. ¡Son los únicos movimientos que no usan letras de casilla!'},
+  {id:'v08',type:'mcq',topic:'notacion_especial',em:'♕',
+   q:'Un peón llega al final del tablero. ¿Cómo se indica en notación que se convierte en dama?',
+   opts:['=D','+D','→D','D!'],ans:'=D',
+   fact:'La coronación se escribe con "=". Por ejemplo: e8=D significa peón a e8 y se convierte en Dama.'},
+];
+
+const AZUL_Q=[
+  {id:'az01',type:'mcq',topic:'tactica_jaque',em:'⚡',
+   q:'¿Qué es el JAQUE?',
+   opts:['Ganar la partida','Atacar directamente al rey contrario','Capturar una pieza','Defender al rey'],ans:'Atacar directamente al rey contrario',
+   fact:'En jaque, el oponente DEBE proteger al rey. Puede: mover el rey, bloquear el jaque, o capturar la pieza atacante.'},
+  {id:'az02',type:'mcq',topic:'tactica_mate',em:'♔',
+   q:'¿Qué es el JAQUE MATE?',
+   opts:['Un jaque muy fuerte','El rey está en jaque y no puede escapar','Capturar la dama','Ganar todos los peones'],ans:'El rey está en jaque y no puede escapar',
+   fact:'¡Jaque mate = fin de la partida! El rey está atacado y no hay ningún movimiento legal para salvarlo.'},
+  {id:'az03',type:'mcq',topic:'tactica_horquilla',em:'🍴',
+   q:'¿Qué es una HORQUILLA (fork)?',
+   opts:['Comer con el caballo','Atacar dos piezas enemigas al mismo tiempo con una sola pieza','Un tipo de defensa','Mover el peón al centro'],ans:'Atacar dos piezas enemigas al mismo tiempo con una sola pieza',
+   fact:'¡La horquilla con el caballo es devastadora! El oponente solo puede salvar una pieza; la otra se pierde.'},
+  {id:'az04',type:'mcq',topic:'tactica_clavada',em:'📌',
+   q:'¿Qué es una CLAVADA (pin)?',
+   opts:['Mover una pieza al centro','Una pieza no puede moverse porque dejaría una pieza más valiosa (o el rey) expuesta','Proteger al rey','Bloquear un peón'],ans:'Una pieza no puede moverse porque dejaría una pieza más valiosa (o el rey) expuesta',
+   fact:'Ejemplo: si tu alfil apunta al caballo enemigo que está delante del rey, ¡el caballo está "clavado" y no puede moverse!'},
+  {id:'az05',type:'mcq',topic:'tactica_ataque_doble',em:'⚡⚡',
+   q:'¿En qué táctica el caballo ataca al rey y a la dama al mismo tiempo?',
+   opts:['Clavada','Horquilla del caballo','Rayos X','Zugzwang'],ans:'Horquilla del caballo',
+   fact:'¡La horquilla del caballo es una de las tácticas más poderosas en ajedrez! Si el rey está en jaque, el oponente DEBE mover el rey y pierde la dama.'},
+  {id:'az06',type:'mcq',topic:'tactica_general',em:'🧠',
+   q:'Tienes en jaque al rey enemigo y también atacas a su dama. ¿Qué debe hacer el oponente?',
+   opts:['Puede ignorar el jaque','Debe responder al jaque primero','Puede capturar tu pieza con la dama','Puede mover cualquier pieza'],ans:'Debe responder al jaque primero',
+   fact:'¡En jaque siempre hay que responder al jaque PRIMERO! Por eso la horquilla jaque+dama es tan poderosa: el rey escapa y tú te llevas la dama.'},
+  {id:'az07',type:'mcq',topic:'tactica_material',em:'⚖️',
+   q:'Puedes capturar un caballo (3 pts) con tu alfil (3 pts). Pero después te capturan el alfil. ¿Es un buen intercambio?',
+   opts:['Sí, ganas material','No, es un intercambio igual','Depende de la posición'],ans:'Depende de la posición',
+   fact:'¡Bien pensado! Un intercambio igual en puntos puede ser bueno o malo según la posición. El contexto importa mucho en ajedrez.'},
+  {id:'az08',type:'mcq',topic:'tactica_descubierta',em:'💥',
+   q:'¿Qué es un ATAQUE DESCUBIERTO?',
+   opts:['Atacar sin que nadie lo vea','Mover una pieza para que otra pieza detrás ataque al enemigo','Un jaque al rey','Capturar sin protección'],ans:'Mover una pieza para que otra pieza detrás ataque al enemigo',
+   fact:'¡El ataque descubierto puede ser devastador! Mover la pieza de enfrente puede dar jaque, ganar material, o crear dos amenazas a la vez.'},
+  // ── ERRORES TÁCTICOS ──
+  // az14: dama sale demasiado pronto, caballo la ataca
+  {id:'az14',type:'mcq',topic:'tactica_error',em:'😬',
+   q:'La dama blanca fue a h5 muy pronto. El caballo negro está en f6. ¿Qué le puede hacer?',
+   pieces:[{p:'♔',sq:'e1'},{p:'♕',sq:'h5'},{p:'♙',sq:'e4'},{p:'♚',sq:'e8'},{p:'♟',sq:'e5'},{p:'♞',sq:'f6'}],
+   opts:['Nada, la dama está segura','¡El caballo en f6 puede ir a h5 y capturar la dama!','La dama da jaque mate','El caballo no puede llegar'],
+   ans:'¡El caballo en f6 puede ir a h5 y capturar la dama!',
+   fact:'¡El caballo en f6 salta a h5 y captura la dama gratis! Una dama vale 9 puntos y un caballo solo 3. ¡Sacar la dama demasiado pronto es el error más común de principiante! La dama siempre debe tener protección o una ruta de escape.'},
+  // az15: torre colgada, alfil puede capturarla
+  {id:'az15',type:'mcq',topic:'tactica_error',em:'🪤',
+   q:'La torre blanca está en e5 sin ninguna protección. El alfil negro está en c7. ¿Qué debe hacer el negro?',
+   pieces:[{p:'♔',sq:'g1'},{p:'♖',sq:'e5'},{p:'♚',sq:'g8'},{p:'♝',sq:'c7'}],
+   opts:['El alfil no puede llegar a e5','Capturar la torre con el alfil y ganar 2 puntos','Mover el rey','No pasar nada importante'],
+   ans:'Capturar la torre con el alfil y ganar 2 puntos',
+   fact:'¡El alfil en c7 va en diagonal a e5 y captura la torre gratis! Torre (5 pts) por alfil (3 pts) = +2 puntos para el negro. Una pieza sin protección se llama "colgada". ¡Revisa siempre si tus piezas están protegidas antes de mover!'},
+  // az16: alfil bloquea columna, al moverse da jaque
+  {id:'az16',type:'mcq',topic:'tactica_error',em:'👁️',
+   q:'El alfil blanco está en e4 bloqueando la columna e. Si lo mueve a c6, ¿qué ocurre?',
+   pieces:[{p:'♔',sq:'e1'},{p:'♗',sq:'e4'},{p:'♜',sq:'e8'},{p:'♚',sq:'a8'}],
+   opts:['Es una buena jugada para atacar','La torre negra en e8 da jaque al rey en e1','El alfil en c6 es más fuerte','Nada importante'],
+   ans:'La torre negra en e8 da jaque al rey en e1',
+   fact:'¡El alfil en e4 tapaba la columna e! Al moverse a c6, la torre negra en e8 y el rey blanco en e1 quedan en la misma columna y la torre da jaque. Esto se llama "ataque descubierto". ¡Antes de mover cualquier pieza, comprueba si dejas al rey expuesto!'},
+  // az17: horquilla del caballo negro, ataca rey y dama
+  {id:'az17',type:'mcq',topic:'tactica_error',em:'🍴',
+   q:'El caballo negro puede ir a e4. Desde e4, ¿a qué dos piezas blancas ataca al mismo tiempo?',
+   pieces:[{p:'♔',sq:'d2'},{p:'♕',sq:'c3'},{p:'♞',sq:'f6'},{p:'♚',sq:'g8'}],
+   opts:['Solo al rey','Solo a la dama','Al rey en d2 y a la dama en c3 — ¡horquilla!','A ninguna pieza importante'],
+   ans:'Al rey en d2 y a la dama en c3 — ¡horquilla!',
+   fact:'¡Horquilla perfecta! El caballo salta de f6 a e4. Desde e4 ataca d2 (rey) y c3 (dama) al mismo tiempo. Como el rey está en jaque, las blancas DEBEN moverlo, y el caballo se lleva la dama gratis. ¡Las horquillas del caballo son devastadoras!'},
+  // ── MATE EN 1 PUZZLES ──
+  // Puzzle 1: Qc7-d8# (♔b6 cubre a7+b7, Qd8 cubre toda la 8a fila)
+  {id:'az09',type:'mate1',topic:'mate1',em:'⚡',
+   q:'¡Las blancas juegan! ¿A qué casilla mueve la ♕ para dar JAQUE MATE?',
+   pieces:[{p:'♔',sq:'b6'},{p:'♕',sq:'c7',glow:true},{p:'♚',sq:'a8'}],
+   ans:'d8',
+   fact:'¡Dama a d8! La dama cubre toda la 8ª fila (b8 y c8). El rey blanco en b6 cubre a7 y b7. ¡El rey negro no tiene ninguna escapatoria!'},
+  // Puzzle 2: Rh5-h8# (♔c6 distante, torre al fondo, peones negros bloquean al rey)
+  {id:'az10',type:'mate1',topic:'mate1',em:'⚡',
+   q:'¡Las blancas juegan! ¿A qué casilla mueve la ♖ para dar JAQUE MATE?',
+   pieces:[{p:'♔',sq:'c6'},{p:'♖',sq:'h5',glow:true},{p:'♚',sq:'a8'},{p:'♟',sq:'a7'},{p:'♟',sq:'b7'}],
+   ans:'h8',
+   fact:'¡Torre a h8! La torre controla toda la 8ª fila. El rey negro no puede ir a a7 ni b7 porque sus propios peones lo bloquean. ¡Jaque mate!'},
+  // Puzzle 3: Qg5-h5# (♔f7 cubre g7+g8, Qh5 cubre toda la columna h)
+  {id:'az11',type:'mate1',topic:'mate1',em:'⚡',
+   q:'¡Las blancas juegan! ¿A qué casilla mueve la ♕ para dar JAQUE MATE?',
+   pieces:[{p:'♔',sq:'f7'},{p:'♕',sq:'g5',glow:true},{p:'♚',sq:'h8'}],
+   ans:'h5',
+   fact:'¡Dama a h5! La dama en h5 ataca toda la columna h (h8 en jaque). El rey blanco en f7 cubre g8 y g7. El rey negro está atrapado. ¡Jaque mate!'},
+  // Puzzle 4: Ra7-a8# (rey negro con peones f7,g7,h7 bloqueando)
+  {id:'az12',type:'mate1',topic:'mate1',em:'⚡',
+   q:'¡Las blancas juegan! ¿A qué casilla mueve la ♖ para dar JAQUE MATE?',
+   pieces:[{p:'♔',sq:'e1'},{p:'♖',sq:'a7',glow:true},{p:'♚',sq:'h8'},{p:'♟',sq:'f7'},{p:'♟',sq:'g7'},{p:'♟',sq:'h7'}],
+   ans:'a8',
+   fact:'¡Torre a a8! La torre en a8 controla toda la 8ª fila. El rey negro no puede ir a g7, h7 (propios peones) ni a g8 (cubierto por la torre). ¡Jaque mate!'},
+  // Puzzle 5: Qg4-g8# (♔f7 cubre g8, peones negros bloquean g7+h7)
+  {id:'az13',type:'mate1',topic:'mate1',em:'⚡',
+   q:'¡Las blancas juegan! ¿A qué casilla mueve la ♕ para dar JAQUE MATE?',
+   pieces:[{p:'♔',sq:'f7'},{p:'♕',sq:'g4',glow:true},{p:'♚',sq:'h8'},{p:'♟',sq:'g7'},{p:'♟',sq:'h7'}],
+   ans:'g8',
+   fact:'¡Dama a g8! La dama da jaque en g8. El rey negro no puede capturar la dama porque el rey blanco en f7 la protege. Los peones bloquean g7 y h7. ¡Jaque mate!'},
+];
+
+const ROJO_Q=[
+  {id:'r01',type:'mcq',topic:'principios_apertura',em:'🚀',
+   q:'¿Cuál es el primer principio de las aperturas de ajedrez?',
+   opts:['Mover la dama pronto','Controlar el centro del tablero','Mover todos los peones','Atacar al rey enemigo'],ans:'Controlar el centro del tablero',
+   fact:'El centro (e4, e5, d4, d5) es el territorio más valioso del tablero. ¡Las piezas desde el centro controlan más casillas!'},
+  {id:'r02',type:'mcq',topic:'principios_apertura',em:'⚡',
+   q:'¿Cuáles piezas debes desarrollar primero en la apertura?',
+   opts:['Las torres','Los peones del flanco','Los caballos y alfiles','La dama'],ans:'Los caballos y alfiles',
+   fact:'¡Saca los caballos y alfiles antes que la dama y las torres! Las piezas menores se desarrollan rápido y ocupan buenos puestos.'},
+  {id:'r03',type:'mcq',topic:'principios_apertura',em:'🏰',
+   q:'¿Por qué es importante hacer el enroque pronto?',
+   opts:['Para ganar puntos','Para poner el rey en seguridad','Para atacar','Para mover más piezas'],ans:'Para poner el rey en seguridad',
+   fact:'El enroque pone al rey detrás de los peones, bien protegido. ¡Un rey en el centro puede ser muy peligroso en la apertura!'},
+  {id:'r04',type:'mcq',topic:'apertura_italiana',em:'🇮🇹',
+   q:'En la Apertura Italiana, ¿cuáles son las primeras jugadas blancas?',
+   opts:['e4, Cf3, Ac4','d4, d5, c4','e4, e5, d4','Cf3, g3, Ag2'],ans:'e4, Cf3, Ac4',
+   fact:'¡La Italiana es una de las aperturas más antiguas! e4 controla el centro, Cf3 desarrolla y ataca e5, Ac4 apunta al punto débil f7.'},
+  {id:'r05',type:'mcq',topic:'apertura_general',em:'♟️',
+   q:'¿Qué jugada NO deberías hacer en los primeros movimientos de la partida?',
+   opts:['Mover un peón al centro','Desarrollar un caballo','Mover la dama muy pronto','Enrocar'],ans:'Mover la dama muy pronto',
+   fact:'¡La dama sola puede ser atacada fácilmente! Primero desarrolla caballos y alfiles, luego enroca, y solo entonces activa la dama.'},
+  {id:'r06',type:'mcq',topic:'principios_apertura',em:'🎯',
+   q:'En la apertura, ¿cuántas veces deberías mover la misma pieza?',
+   opts:['Todas las veces que quieras','Solo una vez (salvo necesidad)','Al menos tres veces','Dos veces siempre'],ans:'Solo una vez (salvo necesidad)',
+   fact:'¡Mueve cada pieza una sola vez en la apertura! Mover la misma pieza dos veces es perder un tempo (turno) que el rival puede aprovechar.'},
+];
+
+const NEGRO_Q=[
+  {id:'n01',type:'mcq',topic:'final_basico',em:'👑',
+   q:'¿Cuál es la combinación mínima de piezas para dar jaque mate al rey solo?',
+   opts:['Solo el rey','Rey + peón','Rey + torre','Solo la dama'],ans:'Rey + torre',
+   fact:'¡Rey + Torre pueden dar mate solo! Rey + Dama también. Pero Rey solo, o Rey + alfil, o Rey + caballo NO pueden dar mate sin ayuda.'},
+  {id:'n02',type:'mcq',topic:'final_peon',em:'♙',
+   q:'Un peón llega a la última fila. ¿Qué puede hacer?',
+   opts:['Se queda peón','Se convierte en cualquier pieza que elijas','Solo puede ser dama','Sale del tablero'],ans:'Se convierte en cualquier pieza que elijas',
+   fact:'¡La coronación! Cuando un peón llega al final, se convierte en dama, torre, alfil o caballo. ¡Casi siempre se elige dama!'},
+  {id:'n03',type:'mcq',topic:'estrategia',em:'🧩',
+   q:'¿Qué es el ZUGZWANG?',
+   opts:['Un tipo de apertura','Una situación donde cualquier movimiento empeora tu posición','Un tipo de jaque','Una táctica con dos piezas'],ans:'Una situación donde cualquier movimiento empeora tu posición',
+   fact:'¡Zugzwang es una palabra alemana! En finales de ajedrez, a veces preferiríamos no mover, pero como el turno es obligatorio, cualquier movimiento nos perjudica.'},
+  {id:'n04',type:'mcq',topic:'estrategia',em:'🌟',
+   q:'¿Qué es un peón "pasado"?',
+   opts:['Un peón capturado','Un peón sin peones rivales que lo bloqueen en su columna o adyacentes','Un peón en el centro','Un peón en la última fila'],ans:'Un peón sin peones rivales que lo bloqueen en su columna o adyacentes',
+   fact:'¡Los peones pasados son muy poderosos en los finales! Si no hay peones enemigos que los bloqueen, pueden avanzar hacia la coronación.'},
+  {id:'n05',type:'mcq',topic:'estrategia',em:'♚',
+   q:'En los finales, ¿el rey debe...?',
+   opts:['Quedarse escondido siempre','Mantenerse en el centro','Activarse y participar activamente','Proteger solo los peones'],ans:'Activarse y participar activamente',
+   fact:'¡En el final, el rey se convierte en una pieza fuerte! No hay tantas piezas enemigas que lo amenacen, así que puede avanzar y ayudar.'},
+  {id:'n06',type:'mcq',topic:'historia',em:'🏆',
+   q:'¿Cómo se llama el campeonato más importante del mundo de ajedrez?',
+   opts:['Copa del Mundo','Campeonato Mundial de Ajedrez FIDE','Olimpiada de Ajedrez','Gran Premio'],ans:'Campeonato Mundial de Ajedrez FIDE',
+   fact:'¡La FIDE (Federación Internacional de Ajedrez) organiza el Campeonato Mundial! Magnus Carlsen fue el campeón del mundo durante muchos años.'},
+];
+
+const ALL_QS={blanco:BLANCO_Q,amarillo:AMARILLO_Q,verde:VERDE_Q,azul:AZUL_Q,rojo:ROJO_Q,negro:NEGRO_Q};
+
+// ═══════════════════════════════════════════════════════
+//  LEYENDAS DEL AJEDREZ
+// ═══════════════════════════════════════════════════════
+const LEGENDS=[
+  {
+    id:'capablanca',belt:'blanco',
+    name:'José Raúl Capablanca',years:'1888–1942',flag:'🇨🇺',
+    title:'El Mozart del Ajedrez',emoji:'👑',
+    super:'Elegancia pura — sus jugadas parecen sencillas pero son perfectas',
+    facts:[
+      '¡Aprendió solo a los 4 años! Observó a su padre jugar una partida y al día siguiente ya lo corregía cuando cometía errores.',
+      'Fue Campeón del Mundo durante 6 años (1921–1927) y en ese tiempo perdió solo 34 partidas en toda su carrera.',
+      'Era tan famoso que los presidentes y reyes lo invitaban a jugar. Trabajaba como diplomático de Cuba y usaba el ajedrez como su tarjeta de presentación.',
+      'Una vez jugó 103 partidas simultáneas contra 103 jugadores al mismo tiempo... ¡y ganó 102!',
+    ],
+    quote:'"El ajedrez es algo más que un deporte. Es una forma de pensar."',
+    videoId:'UMFBHkjHHqE',
+    videoLabel:'Capablanca — El Maestro Eterno',
+  },
+  {
+    id:'fischer',belt:'amarillo',
+    name:'Bobby Fischer',years:'1943–2008',flag:'🇺🇸',
+    title:'El Genio Solitario',emoji:'⚡',
+    super:'Preparación obsesiva — estudiaba ajedrez 12 horas al día, todos los días',
+    facts:[
+      'A los 15 años ya era el campeón más joven de los Estados Unidos. ¡Iba al torneo con su mochila de estudiante!',
+      'Retó a 21 jugadores a la vez en una exhibición simultánea, moviéndose de tablero en tablero. Ganó a todos menos uno.',
+      'Para ganar el Campeonato del Mundo en 1972 viajó a Islandia y venció al campeón soviético Boris Spassky. Fue como si un jugador solo ganase a todo un equipo.',
+      'Memorizó miles de partidas de memoria. Podía recitar cualquier jugada de cualquier torneo importante del siglo pasado.',
+    ],
+    quote:'"El ajedrez es la vida."',
+    videoId:'ZTNHpGKFTx4',
+    videoLabel:'Fischer — El americano que venció a los soviéticos',
+  },
+  {
+    id:'kasparov',belt:'verde',
+    name:'Garry Kasparov',years:'1963–presente',flag:'🇷🇺',
+    title:'El Rey del Tablero',emoji:'🔥',
+    super:'Energía y cálculo — veía 15 jugadas por adelantado sin pestañear',
+    facts:[
+      'Fue Campeón del Mundo durante ¡21 años seguidos! Desde los 22 hasta los 43. Ningún otro campeón ha durado tanto.',
+      'En 1997 jugó contra una supercomputadora de IBM llamada "Deep Blue" que calculaba 200 millones de jugadas por segundo. Perdió la serie, pero fue el primer humano en plantarle cara a una máquina así.',
+      'Kasparov estudiaba a sus rivales como un detective. Analizaba su forma de dormir, qué comían, su estado de ánimo... todo le daba información.',
+      'Retirado del ajedrez, ahora enseña al mundo cómo pensar estratégicamente. ¡Hasta habla con presidentes!',
+    ],
+    quote:'"El ajedrez es ante todo una lucha."',
+    videoId:'KF6sLCeBj0s',
+    videoLabel:'Kasparov — 21 años siendo el mejor del mundo',
+  },
+  {
+    id:'polgar',belt:'azul',
+    name:'Judit Polgár',years:'1976–presente',flag:'🇭🇺',
+    title:'La Reina del Ajedrez',emoji:'♛',
+    super:'Valentía táctica — atacaba sin miedo a los mejores jugadores del mundo',
+    facts:[
+      'Su padre László decidió demostrar que cualquier niño puede ser genio si se educa bien. Entrenó a Judit y sus hermanas desde bebés. ¡El experimento funcionó!',
+      'A los 15 años y 5 meses se convirtió en la Gran Maestra más joven de la historia, rompiendo el récord de Bobby Fischer.',
+      'Venció a Kasparov, Karpov y Anand — los tres campeones del mundo del siglo XX. Los tres. Ella sola.',
+      'Nunca quiso jugar en el torneo femenino porque decía: "Quiero medir mi nivel con los mejores, no con las mejores mujeres."',
+    ],
+    quote:'"Todo el mundo puede aprender ajedrez. La diferencia la hace cuánto practicas."',
+    videoId:'l-hh51IjUjo',
+    videoLabel:'Judit Polgár — La mujer que venció a los campeones del mundo',
+  },
+  {
+    id:'magnus',belt:'rojo',
+    name:'Magnus Carlsen',years:'2000–presente',flag:'🇳🇴',
+    title:'El Maestro del Universo',emoji:'🧊',
+    super:'Resistencia infinita — nunca se rinde y convierte posiciones iguales en victorias',
+    facts:[
+      'Empezó a jugar con piezas de Lego antes que con piezas de ajedrez. A los 8 años ya jugaba contra adultos y los vencía.',
+      'A los 13 años jugó contra Kasparov (el mejor del mundo) y le hizo tablas. Kasparov no se lo podía creer.',
+      'Puede jugar al ajedrez... ¡sin ver el tablero! Le dicen las jugadas en voz alta y él las recuerda todas en la cabeza. Se llama ajedrez a ciegas.',
+      'En 2020, durante la pandemia, organizó torneos online para que los ajedrecistas del mundo pudiesen seguir compitiendo. Decenas de millones de personas lo vieron.',
+    ],
+    quote:'"Siempre creo que puedo ganar. Incluso cuando parece imposible."',
+    videoId:'JmDn5ePCCcM',
+    videoLabel:'Magnus Carlsen — El mejor de todos los tiempos',
+  },
+  {
+    id:'morphy',belt:'negro',
+    name:'Paul Morphy',years:'1837–1884',flag:'🇺🇸',
+    title:'El Genio del Siglo XIX',emoji:'🎩',
+    super:'Desarrollo rápido — sacaba todas sus piezas antes que nadie y atacaba sin descanso',
+    facts:[
+      'Aprendió a jugar ajedrez a los 9 años observando a su familia y sin que nadie se lo enseñara. A los 12 ya vencía a los mejores jugadores de Nueva Orleans.',
+      'Viajó a Europa (donde estaban los mejores ajedrecistas) y los venció a todos. Regresó a América como leyenda absoluta. ¡Tenía 21 años!',
+      'Era tan bueno que a veces jugaba dando ventaja a sus rivales: les regalaba piezas al principio y aun así ganaba.',
+      'Vivió 130 años antes que Magnus Carlsen, pero muchos expertos dicen que si hubiera nacido hoy, también sería el mejor del mundo.',
+    ],
+    quote:'"El ajedrez no requiere recompensa. Es suficiente con la belleza del juego."',
+    videoId:'tJLs3sI5bug',
+    videoLabel:'Paul Morphy — El primer genio del ajedrez',
+  },
+];
+
+// Returns facts from all unlocked legends (for curiosidad del día)
+function getUnlockedFacts(pid){
+  const p=data[pid];
+  if(!p)return[];
+  const beltIdx=BELT_IDX[currentBelt(pid)]??0;
+  let facts=[];
+  LEGENDS.forEach((lg,i)=>{
+    if(i<=beltIdx) facts.push(...lg.facts.map(f=>({fact:f,legend:lg.name,emoji:lg.emoji})));
+  });
+  return facts;
+}
+
+function currentBelt(pid){
+  const p=data[pid];
+  if(!p)return'blanco';
+  for(let i=BELTS.length-1;i>=0;i--){
+    const b=BELTS[i];
+    if(p.belts[b.id]?.boss)return b.id;
+  }
+  return'blanco';
+}
+
+function getDailyCuriosidad(pid){
+  const facts=getUnlockedFacts(pid);
+  if(!facts.length)return null;
+  const d=todayStr();
+  const seed=d.split('-').reduce((a,b)=>a*13+parseInt(b),7);
+  return facts[Math.abs(seed)%facts.length];
+}
+
+// ═══════════════════════════════════════════════════════
+//  NARRATIVA — EL DOJO DEL NINJA
+// ═══════════════════════════════════════════════════════
+const DOJO={
+  blanco:{
+    mission:'Misión 1: Aprende el tablero — conoce las 64 casillas',
+    sensei_intro:'El tablero es tu primer dojo, joven ninja. Cada casilla tiene un nombre. Sin conocer el terreno, no hay batalla posible.',
+    sensei_win:'¡Bien hecho! Dominas el tablero como un verdadero ninja. Ahora conocerás a tus guerreros…',
+  },
+  amarillo:{
+    mission:'Misión 2: Conoce a tus 6 guerreros del ajedrez',
+    sensei_intro:'Cada pieza es un guerrero con poderes únicos. El caballo salta, el alfil danza en diagonal, la dama lo conquista todo. ¡Estúdialos bien!',
+    sensei_win:'¡Excelente! Tus guerreros te obedecen. El idioma secreto del ajedrez te espera…',
+  },
+  verde:{
+    mission:'Misión 3: Aprende la notación — el idioma secreto',
+    sensei_intro:'Los ninjas se comunican en código. Las jugadas de ajedrez también. "Cf3", "Dxf7+", "O-O"… pronto leerás partidas como un libro.',
+    sensei_win:'¡Hablas el idioma del ajedrez! Ahora llega lo más emocionante: las tácticas de ataque…',
+  },
+  azul:{
+    mission:'Misión 4: Domina las tácticas — jaque, mate y horquilla',
+    sensei_intro:'El verdadero ninja ve trampas donde otros ven jugadas normales. La horquilla, la clavada, el mate en 1… son tus armas secretas.',
+    sensei_win:'¡Maestro del ataque! Las aperturas son el último secreto que te queda por aprender…',
+  },
+  rojo:{
+    mission:'Misión 5: Aprende las aperturas — empieza con ventaja',
+    sensei_intro:'Un buen inicio es la mitad de la victoria. Las aperturas son como los primeros movimientos de una danza. El que las domina, controla la batalla.',
+    sensei_win:'¡Eres un completo estratega! Solo los finales separan al ninja del Gran Maestro…',
+  },
+  negro:{
+    mission:'Misión 6: Los finales — donde se demuestra la grandeza',
+    sensei_intro:'Pocos ninjas llegan aquí. Los finales de ajedrez son como el último combate del torneo. Solo la mente más fría y precisa triunfa.',
+    sensei_win:'🏆 ¡GRAN MAESTRO NINJA! Has completado el Dojo. Eres digno del Cinturón Negro. Que el ajedrez sea tu compañero de por vida.',
+  },
+};
+
+// ═══════════════════════════════════════════════════════
+//  RETO DIARIO
+// ═══════════════════════════════════════════════════════
+function todayStr(){return new Date().toISOString().slice(0,10);}
+
+function getDailyQ(){
+  // Deterministic pick based on date (same question for everyone each day)
+  const allQs=Object.values(ALL_QS).flat().filter(q=>q.type==='mcq');
+  const d=todayStr();
+  const seed=d.split('-').reduce((a,b)=>a*31+parseInt(b),0);
+  return allQs[Math.abs(seed)%allQs.length];
+}
+
+function isDailyDone(pid){
+  return data[pid]?.daily?.date===todayStr()&&data[pid]?.daily?.done;
+}
+
+// ═══════════════════════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════════════════════
+const KEY='jn_v1';
+const PIN_KEY='jn_pin';
+
+function blankBelt(){return {done:{},weak:{},boss:false,bossScore:0};}
+function blankP(n,e){
+  const bs={};
+  BELTS.forEach(b=>bs[b.id]=blankBelt());
+  return {name:n,emoji:e,belts:bs,coins:0,streak:0,maxStreak:0,daily:{date:'',done:false}};
+}
+function loadData(){
+  try{return JSON.parse(localStorage.getItem(KEY))||{p1:blankP('Ninja 1','🐍'),p2:blankP('Ninja 2','🦊')};}
+  catch(e){return {p1:blankP('Ninja 1','🐍'),p2:blankP('Ninja 2','🦊')};}
+}
+function saveData(){localStorage.setItem(KEY,JSON.stringify(data));}
+let data=loadData();
+
+// ═══════════════════════════════════════════════════════
+//  GAME STATE
+// ═══════════════════════════════════════════════════════
+let gs={
+  screen:'welcome',  // welcome|home|lesson|result|parent
+  pid:null,          // 'p1'|'p2'
+  belt:null,         // belt id
+  mode:'learn',      // 'learn'|'boss'
+  qs:[],             // question pool
+  qi:0,              // current index
+  score:0,
+  wrong:[],          // wrong qids this session
+  streak:0,
+  bossTotal:5,
+  waitNext:false,
+  lastCorrect:null,
+  pinBuffer:'',
+  pinTarget:null,    // callback after pin
+};
+
+function P(){return data[gs.pid];}
+function PB(){return P().belts[gs.belt];}
+
+// ═══════════════════════════════════════════════════════
+//  SVG CHESSBOARD
+// ═══════════════════════════════════════════════════════
+function boardSVG({size=300,highlight=null,piece=null,pieceAt=null,marker=null,pieces=[]}={}){
+  const sq=size/8;
+  let cells='', glowSq=null;
+  // Build piece lookup by square
+  const pieceMap={};
+  if(piece&&pieceAt) pieceMap[pieceAt]={p:piece,glow:false};
+  pieces.forEach(({p,sq:s,glow})=>{pieceMap[s]={p,glow};if(glow)glowSq=s;});
+
+  for(let rank=8;rank>=1;rank--){
+    for(let fi=0;fi<8;fi++){
+      const col=String.fromCharCode(97+fi);
+      const id=`${col}${rank}`;
+      const x=fi*sq, y=(8-rank)*sq;
+      const isLight=(fi+rank)%2===0;
+      let fill=isLight?'#f0d9b5':'#b58863';
+      if(highlight===id)fill='#aac244';
+      if(marker===id)fill='#e06060';
+      if(glowSq===id)fill=isLight?'#ffe066':'#d4a800'; // gold highlight for piece to move
+      const lc=isLight?'#b58863':'#f0d9b5';
+      cells+=`<rect x="${x}" y="${y}" width="${sq}" height="${sq}" fill="${fill}" data-sq="${id}" style="cursor:pointer"/>`;
+      if(rank===1) cells+=`<text x="${x+sq-sq*0.18}" y="${y+sq-sq*0.06}" font-size="${sq*0.22}" fill="${lc}" pointer-events="none" text-anchor="end">${col}</text>`;
+      if(fi===0)   cells+=`<text x="${x+sq*0.05}" y="${y+sq*0.28}" font-size="${sq*0.22}" fill="${lc}" pointer-events="none">${rank}</text>`;
+    }
+  }
+  // Render pieces on top
+  let pieceEls='';
+  Object.entries(pieceMap).forEach(([sqId,{p,glow}])=>{
+    const fi=sqId.charCodeAt(0)-97;
+    const rank=parseInt(sqId[1]);
+    const cx=fi*sq+sq/2, cy=(8-rank)*sq+sq/2;
+    const extra=glow?` class="piece-glow"`:'';
+    pieceEls+=`<text x="${cx}" y="${cy}" font-size="${sq*0.72}" text-anchor="middle" dominant-baseline="central" pointer-events="none" filter="drop-shadow(0 2px 4px rgba(0,0,0,.7))"${extra}>${p}</text>`;
+  });
+  return `<svg id="chessboard" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block">${cells}${pieceEls}</svg>`;
+}
+
+function attachBoardClick(target,onSq){
+  const svg=document.getElementById('chessboard');
+  if(!svg)return;
+  svg.querySelectorAll('rect[data-sq]').forEach(r=>{
+    r.onclick=()=>onSq(r.dataset.sq);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER ROOT
+// ═══════════════════════════════════════════════════════
+function render(html){document.getElementById('root').innerHTML=html;}
+
+// ═══════════════════════════════════════════════════════
+//  SCREEN: WELCOME
+// ═══════════════════════════════════════════════════════
+function showWelcome(){
+  gs.screen='welcome';
+  const {p1,p2}=data;
+  function beltLabel(p){
+    const earned=BELTS.filter(b=>p.belts[b.id]&&p.belts[b.id].boss).map(b=>b.emoji);
+    return earned.length?earned.join(''):'(sin cinturón)';
+  }
+  render(`
+<div class="screen center">
+  <div class="welcome-logo">♟️</div>
+  <div class="welcome-title">JaqueNinja</div>
+  <div class="welcome-sub">¡Aprende ajedrez y conviértete en ninja!</div>
+  <div class="profiles-grid" style="width:100%;margin-top:8px">
+    <div class="profile-card" onclick="selectPlayer('p1')">
+      <div class="avatar">${p1.emoji}</div>
+      <div class="pname">${p1.name}</div>
+      <div class="pbelt">${beltLabel(p1)}</div>
+      <div class="pcoins">🪙 ${p1.coins}</div>
+    </div>
+    <div class="profile-card" onclick="selectPlayer('p2')">
+      <div class="avatar">${p2.emoji}</div>
+      <div class="pname">${p2.name}</div>
+      <div class="pbelt">${beltLabel(p2)}</div>
+      <div class="pcoins">🪙 ${p2.coins}</div>
+    </div>
+  </div>
+  <div style="margin-top:8px">
+    <button class="btn btn-card btn-sm" onclick="showParentPin()">🔒 Padres</button>
+  </div>
+</div>`);
+}
+
+function selectPlayer(pid){
+  gs.pid=pid;
+  showHome();
+}
+
+// ═══════════════════════════════════════════════════════
+//  SCREEN: HOME
+// ═══════════════════════════════════════════════════════
+function showHome(){
+  gs.screen='home';
+  const p=P();
+  // workingBelt = the belt currently being practiced (next after last completed)
+  let workingBelt='blanco';
+  for(let i=0;i<BELTS.length;i++){
+    if(p.belts[BELTS[i].id].boss){
+      workingBelt=i+1<BELTS.length?BELTS[i+1].id:BELTS[i].id;
+    }
+  }
+
+  function beltCard(belt){
+    const idx=BELT_IDX[belt.id];
+    const pb=p.belts[belt.id];
+    const isLocked=idx>0&&!p.belts[BELTS[idx-1].id].boss;
+    const isDone=pb.boss;
+    const isCurrent=belt.id===workingBelt&&!isDone;
+    const qs=ALL_QS[belt.id];
+    const doneCount=Object.keys(pb.done).length;
+    const pct=Math.min(100,Math.round(doneCount/qs.length*100));
+    let cls='belt-card';
+    if(isLocked)cls+=' locked';
+    else if(isDone)cls+=' done';
+    else if(isCurrent)cls+=' current';
+    const onclick=isLocked?'':`onclick="startBelt('${belt.id}')"`;
+    return `<div class="${cls}" ${onclick}>
+      <div class="belt-icon">${isDone?belt.emoji+(idx<BELTS.length-1?'✅':'🏆'):(isLocked?'🔒':belt.emoji)}</div>
+      <div class="belt-info">
+        <div class="belt-name">${belt.name}</div>
+        <div class="belt-desc">${belt.desc}</div>
+        <div class="belt-prog">${isDone?'¡Completado!':isLocked?'Completa el anterior primero':`${doneCount}/${qs.length} preguntas`}</div>
+        ${!isLocked&&!isDone?`<div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>`:''}
+      </div>
+    </div>`;
+  }
+
+  const dojo=DOJO[workingBelt];
+  const dailyDone=isDailyDone(gs.pid);
+  const curiosidad=getDailyCuriosidad(gs.pid);
+  // unlockedCount: based on last COMPLETED belt (same logic as showLegends)
+  const lastDoneIdx=BELTS.reduce((acc,b,i)=>p.belts[b.id]?.boss?i:acc,-1);
+  const unlockedCount=LEGENDS.filter((_,i)=>i<=lastDoneIdx).length;
+
+  const curiosidadHTML=curiosidad?`
+  <div class="curiosidad-card" onclick="showLegends()">
+    <div class="curiosidad-icon">💡</div>
+    <div style="flex:1">
+      <div class="curiosidad-title">CURIOSIDAD DEL DÍA</div>
+      <div class="curiosidad-text">${curiosidad.fact}</div>
+      <div class="curiosidad-attr">— ${curiosidad.emoji} ${curiosidad.legend} · Ver más en el Salón →</div>
+    </div>
+  </div>`:'';
+
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showWelcome()">← Atrás</button>
+  <h1>JaqueNinja</h1>
+  <div class="streak-badge">🔥 ${p.maxStreak||0}</div>
+</div>
+<div class="screen" style="padding-top:12px">
+  <div class="home-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="home-avatar">${p.emoji}</div>
+      <div class="home-info">
+        <div class="home-name">${p.name}</div>
+        <div class="home-coins">🪙 ${p.coins} monedas</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-sm btn-ninja" onclick="startBelt('${workingBelt}')">▶ Practicar</button>
+      <button class="btn-sm btn-gold" onclick="showDuelo()">⚔️ Duelo</button>
+    </div>
+  </div>
+  <div class="sensei-card">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu</div>
+      <div class="sensei-text">${dojo.mission}</div>
+    </div>
+  </div>
+  <div class="daily-card${dailyDone?' daily-done':''}" onclick="${dailyDone?'':'startDaily()'}">
+    <div class="daily-star">⭐</div>
+    <div class="daily-info">
+      <div class="daily-title">Reto del Día</div>
+      <div class="daily-sub">${dailyDone?'¡Completado hoy! Vuelve mañana 🌙':'¡Nueva pregunta de hoy te espera! +10 monedas'}</div>
+    </div>
+  </div>
+  ${curiosidadHTML}
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <button class="btn btn-card" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;font-size:.9rem" onclick="showLegends()">
+      🏛️ Leyendas <span style="color:var(--gold);font-size:.78rem">${unlockedCount}/${LEGENDS.length}</span>
+    </button>
+    <button class="btn btn-card" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;font-size:.9rem" onclick="showRuta()">
+      🗺️ Ruta del GM
+    </button>
+  </div>
+  ${BELTS.map(beltCard).join('')}
+</div>`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  BELT START
+// ═══════════════════════════════════════════════════════
+function startBelt(beltId){
+  gs.belt=beltId;
+  const pb=PB();
+  const qs=ALL_QS[beltId];
+
+  // boss mode if all done or already done? Check if can boss
+  const doneCount=Object.keys(pb.done).length;
+  const minQ=BELTS[BELT_IDX[beltId]].minQ;
+  if(doneCount>=minQ&&!pb.boss){
+    // Show boss prompt
+    showBossPrompt();
+    return;
+  }
+
+  gs.mode='learn';
+  // Build smart pool: weak first, then unseen, then all
+  const weakIds=Object.keys(pb.weak).filter(id=>pb.weak[id]>0);
+  const unseenIds=qs.filter(q=>!pb.done[q.id]&&!pb.weak[q.id]).map(q=>q.id);
+  const seenIds=qs.filter(q=>pb.done[q.id]&&!pb.weak[q.id]).map(q=>q.id);
+  // deduplicate: weak first, then unseen, then seen (no overlaps)
+  const seen=new Set([...weakIds,...unseenIds]);
+  const pool_ordered=[...weakIds,...unseenIds,...seenIds.filter(id=>!seen.has(id))];
+  let pool=shuffle(pool_ordered);
+  // limit to 8
+  pool=pool.slice(0,8);
+  gs.qs=pool.map(id=>qs.find(q=>q.id===id)).filter(Boolean);
+  gs.qi=0;gs.score=0;gs.wrong=[];gs.streak=0;
+  gs.waitNext=false;
+  showQuestion();
+}
+
+function showBossPrompt(){
+  const belt=BELTS[BELT_IDX[gs.belt]];
+  const dojo=DOJO[gs.belt];
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Atrás</button>
+  <h1>Batalla Ninja</h1>
+  <div></div>
+</div>
+<div class="screen center" style="gap:16px">
+  <div style="font-size:4rem">${belt.emoji}⚔️</div>
+  <div class="sensei-card" style="width:100%">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu dice…</div>
+      <div class="sensei-text">"${dojo.sensei_intro}"</div>
+    </div>
+  </div>
+  <div class="boss-banner" style="width:100%">
+    <h3>¡Batalla por el ${belt.name}!</h3>
+    <p>Responde 4 de 5 preguntas para ganar el cinturón</p>
+  </div>
+  <button class="btn btn-gold" onclick="startBoss()">⚔️ ¡Acepto el reto!</button>
+  <button class="btn btn-card" onclick="startBelt_learn()">📚 Repasar antes</button>
+</div>`);
+}
+
+function startBelt_learn(){
+  const pb=PB();
+  const qs=ALL_QS[gs.belt];
+  gs.mode='learn';
+  const all=shuffle(qs.map(q=>q.id));
+  gs.qs=all.slice(0,8).map(id=>qs.find(q=>q.id===id)).filter(Boolean);
+  gs.qi=0;gs.score=0;gs.wrong=[];gs.streak=0;gs.waitNext=false;
+  showQuestion();
+}
+
+function startBoss(){
+  const qs=ALL_QS[gs.belt];
+  gs.mode='boss';
+  gs.qs=shuffle([...qs]).slice(0,5);
+  gs.qi=0;gs.score=0;gs.wrong=[];gs.streak=0;gs.waitNext=false;
+  showQuestion();
+}
+
+// ═══════════════════════════════════════════════════════
+//  SCREEN: QUESTION
+// ═══════════════════════════════════════════════════════
+function showQuestion(){
+  if(gs.qi>=gs.qs.length){endSession();return;}
+  const q=gs.qs[gs.qi];
+  const belt=BELTS[BELT_IDX[gs.belt]];
+  const prog=`${gs.qi+1}/${gs.qs.length}`;
+  const bossBanner=gs.mode==='boss'?`<div class="boss-banner" style="padding:8px 12px"><h3>⚔️ Batalla - ${prog}</h3><p>Necesitas 4/5 para ganar el cinturón</p></div>`:'';
+  const topProg=gs.mode!=='boss'?`<div class="lesson-prog">${prog} · 🔥${gs.streak} · 🪙${gs.score}</div>`:'';
+
+  let body='';
+  if(q.type==='mcq'){
+    body=renderMCQ(q);
+  } else if(q.type==='click'){
+    body=renderClick(q);
+  } else if(q.type==='mate1'){
+    body=renderMate1(q);
+  } else if(q.type==='yesno'){
+    body=renderYesNo(q);
+  }
+
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>${belt.emoji} ${belt.desc}</h1>
+  ${topProg||'<div></div>'}
+</div>
+<div class="screen" style="padding-top:8px">
+  ${bossBanner}
+  <div class="lesson-top">
+    <div class="lesson-belt">${belt.name}</div>
+    <div>${'●'.repeat(gs.qi+1).split('').join('')}</div>
+  </div>
+  ${body}
+</div>`);
+
+  if(q.type==='click'||q.type==='mate1'){
+    attachBoardClick(q.target||q.ans, sq=>handleClickAnswer(sq,q));
+  }
+}
+
+function boardSize(){
+  return Math.min(300,window.innerWidth-48);
+}
+
+function renderMCQ(q){
+  const shuffledOpts=shuffle([...q.opts]);
+  const boardHTML=q.pieces?`<div class="board-wrap"><div class="board-svg-wrap">${boardSVG({size:boardSize(),pieces:q.pieces})}</div></div>`:'';
+  return `<div class="q-card">
+    <div class="q-emoji">${q.em||'❓'}</div>
+    <div class="q-text">${q.q}</div>
+    ${boardHTML}
+    <div class="opts" id="opts">
+      ${shuffledOpts.map((o,i)=>`<button class="opt-btn" id="opt${i}" onclick="handleMCQ(this,'${escQ(o)}','${escQ(q.ans)}','${escQ(q.fact||'')}',${i})">${o}</button>`).join('')}
+    </div>
+    <div id="factbox" style="display:none" class="q-fact"></div>
+    <div class="next-wrap" id="nextwrap" style="display:none">
+      <button class="btn btn-ninja" onclick="nextQ()">Siguiente →</button>
+    </div>
+  </div>`;
+}
+
+function renderClick(q){
+  const sz=boardSize();
+  return `<div class="q-card">
+    <div class="q-emoji">👆</div>
+    <div class="q-text">${q.q}</div>
+    <div class="board-wrap">
+      <div class="board-svg-wrap">${boardSVG({size:sz})}</div>
+      <div class="board-feedback" id="bfeed"></div>
+    </div>
+    <div id="factbox" style="display:none" class="q-fact"></div>
+    <div class="next-wrap" id="nextwrap" style="display:none">
+      <button class="btn btn-ninja" onclick="nextQ()">Siguiente →</button>
+    </div>
+  </div>`;
+}
+
+function renderMate1(q){
+  const sz=boardSize();
+  return `<div class="q-card">
+    <div class="q-emoji">♟️</div>
+    <div class="q-text">${q.q}</div>
+    <div class="mate1-hint">La pieza dorada ✨ es la que debes mover</div>
+    <div class="board-wrap">
+      <div class="board-svg-wrap">${boardSVG({size:sz,pieces:q.pieces||[]})}</div>
+      <div class="board-feedback" id="bfeed"></div>
+    </div>
+    <div id="factbox" style="display:none" class="q-fact"></div>
+    <div class="next-wrap" id="nextwrap" style="display:none">
+      <button class="btn btn-ninja" onclick="nextQ()">Siguiente →</button>
+    </div>
+  </div>`;
+}
+
+function renderYesNo(q){
+  const sz=boardSize();
+  const pieceMap={rey:'♔',dama:'♕',torre:'♖',alfil:'♗',caballo:'♘',peon:'♙'};
+  const pieceUni=q.piece?pieceMap[q.piece]||q.piece:'';
+  const board=q.pieceAt?boardSVG({size:sz,piece:pieceUni,pieceAt:q.pieceAt,marker:q.markerAt}):boardSVG({size:sz});
+  return `<div class="q-card">
+    <div class="q-emoji">${q.em||'🤔'}</div>
+    <div class="q-text">${q.q}</div>
+    ${q.pieceAt||q.markerAt?`<div class="board-wrap"><div class="board-svg-wrap">${board}</div></div>`:''}
+    <div class="yesno-btns" id="ynbtns">
+      <button class="yn-btn si" onclick="handleYN(this,'si','${q.ans}','${escQ(q.fact||'')}')">✅ Sí</button>
+      <button class="yn-btn no" onclick="handleYN(this,'no','${q.ans}','${escQ(q.fact||'')}')">❌ No</button>
+    </div>
+    <div id="factbox" style="display:none" class="q-fact"></div>
+    <div class="next-wrap" id="nextwrap" style="display:none">
+      <button class="btn btn-ninja" onclick="nextQ()">Siguiente →</button>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  ANSWER HANDLERS
+// ═══════════════════════════════════════════════════════
+function handleMCQ(btn,sel,ans,fact,idx){
+  if(gs.waitNext)return;
+  gs.waitNext=true;
+  const correct=sel===ans;
+  // disable all
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>{
+    b.disabled=true;
+    if(b.textContent===ans)b.classList.add('reveal-correct');
+  });
+  btn.classList.remove('reveal-correct');
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  beep(correct);
+  recordAnswer(correct);
+  if(fact){
+    const fb=document.getElementById('factbox');
+    if(fb){fb.style.display='';fb.textContent=fact;}
+  }
+  const nw=document.getElementById('nextwrap');
+  if(nw)nw.style.display='';
+}
+
+function handleClickAnswer(sq,q){
+  if(gs.waitNext)return;
+  const target=q.ans||q.target;
+  const correct=sq===target;
+  gs.waitNext=true;
+  const sz=boardSize();
+  const wrap=document.querySelector('.board-svg-wrap');
+  if(wrap){
+    const pcs=q.pieces||[];
+    if(q.type==='mate1'){
+      // Show pieces in final position (move the glowing piece to destination)
+      const moved=pcs.map(item=>item.glow?{p:item.p,sq:target,glow:false}:item);
+      if(correct) wrap.innerHTML=boardSVG({size:sz,pieces:moved,highlight:target});
+      else{
+        wrap.innerHTML=boardSVG({size:sz,pieces:pcs,highlight:target,marker:sq});
+        wrap.classList.add('anim-shake');
+      }
+    } else {
+      if(correct) wrap.innerHTML=boardSVG({size:sz,highlight:sq});
+      else{
+        wrap.innerHTML=boardSVG({size:sz,highlight:target,marker:sq});
+        wrap.classList.add('anim-shake');
+      }
+    }
+  }
+  beep(correct);
+  const feed=document.getElementById('bfeed');
+  if(feed){feed.textContent=correct?'✅ ¡Correcto! ¡Jaque Mate!':'❌ Esa no era. La casilla correcta está en verde.';feed.className='board-feedback '+(correct?'ok':'bad');}
+  if(q.type!=='mate1'&&!correct){const f2=document.getElementById('bfeed');if(f2)f2.textContent='❌ Esa no era. La correcta está marcada en verde.';}
+  recordAnswer(correct);
+  if(q.fact){
+    const fb=document.getElementById('factbox');
+    if(fb){fb.style.display='';fb.textContent=q.fact;}
+  }
+  const nw=document.getElementById('nextwrap');
+  if(nw)nw.style.display='';
+}
+
+function handleYN(btn,sel,ans,fact){
+  if(gs.waitNext)return;
+  gs.waitNext=true;
+  const correct=sel===ans;
+  document.querySelectorAll('.yn-btn').forEach(b=>b.disabled=true);
+  btn.style.background=correct?'#1a3a21':'#3a1a1a';
+  btn.style.color=correct?'var(--correct)':'var(--wrong)';
+  beep(correct);
+  recordAnswer(correct);
+  if(fact){
+    const fb=document.getElementById('factbox');
+    if(fb){fb.style.display='';fb.textContent=fact;}
+  }
+  const nw=document.getElementById('nextwrap');
+  if(nw)nw.style.display='';
+}
+
+function recordAnswer(correct){
+  const q=gs.qs[gs.qi];
+  const p=P(); const pb=PB();
+  if(correct){
+    gs.score++;
+    gs.streak++;
+    if(gs.streak>p.maxStreak){p.maxStreak=gs.streak;}
+    if(pb.weak[q.id]>0)pb.weak[q.id]=Math.max(0,(pb.weak[q.id]||0)-1);
+    pb.done[q.id]=(pb.done[q.id]||0)+1;
+    p.coins+=2;
+  } else {
+    gs.streak=0;
+    gs.wrong.push(q.id);
+    pb.weak[q.id]=(pb.weak[q.id]||0)+1;
+  }
+  p.streak=gs.streak;
+  saveData();
+}
+
+function nextQ(){
+  gs.qi++;
+  gs.waitNext=false;
+  showQuestion();
+}
+
+// ═══════════════════════════════════════════════════════
+//  END SESSION
+// ═══════════════════════════════════════════════════════
+function endSession(){
+  const total=gs.qs.length;
+  const score=gs.score;
+  const pct=Math.round(score/total*100);
+  const belt=BELTS[BELT_IDX[gs.belt]];
+  const p=P(); const pb=PB();
+
+  let icon='⭐', title='', sub='', bossResult=false;
+
+  if(gs.mode==='boss'){
+    if(score>=4){
+      pb.boss=true;
+      pb.bossScore=score;
+      p.coins+=20;
+      saveData();
+      bossResult=true;
+      // Special belt-win screen
+      const beltWinIdx=BELT_IDX[gs.belt];
+      const nextBeltIdx=beltWinIdx+1;
+      const nextBelt=nextBeltIdx<BELTS.length?BELTS[nextBeltIdx]:null;
+      const dojo=DOJO[gs.belt];
+      const newLegend=LEGENDS[beltWinIdx];
+      setTimeout(()=>{confetti();fanfare();},100);
+      render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>¡Victoria!</h1>
+  <div></div>
+</div>
+<div class="screen" style="align-items:center;text-align:center;gap:14px;padding-top:24px">
+  <div class="belt-win-emoji anim-belt">${belt.emoji}</div>
+  <div class="belt-win-title">¡${belt.name} conseguido!</div>
+  <div class="belt-win-sub">${score}/5 correctas · +20 monedas 🪙</div>
+  <div class="sensei-card" style="width:100%;text-align:left">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu dice…</div>
+      <div class="sensei-text">"${dojo.sensei_win}"</div>
+    </div>
+  </div>
+  ${newLegend?`
+  <div style="background:linear-gradient(135deg,#1a1200,#2a1f00);border:2px solid var(--gold);border-radius:14px;padding:16px;width:100%;text-align:left">
+    <div style="font-size:.75rem;color:var(--gold);font-weight:700;margin-bottom:8px">🔓 ¡NUEVA LEYENDA DESBLOQUEADA!</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:2.5rem">${newLegend.emoji}</div>
+      <div>
+        <div style="font-weight:800;font-size:1rem">${newLegend.flag} ${newLegend.name}</div>
+        <div style="font-size:.82rem;color:var(--ninja2);margin-top:3px">${newLegend.title}</div>
+      </div>
+    </div>
+    <button class="btn btn-gold" style="margin-top:12px" onclick="showLegend('${newLegend.id}')">Conocer su historia →</button>
+  </div>`:''}
+  ${nextBelt?`<div style="font-size:.85rem;color:var(--ninja2)">Siguiente: ${nextBelt.emoji} <b>${nextBelt.name}</b> — ${nextBelt.desc}</div>`:''}
+  <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+    <button class="btn btn-ninja" onclick="showHome()">🏠 Ver mis cinturones</button>
+    <button class="btn btn-card" onclick="startBelt('${gs.belt}')">🔄 Repasar</button>
+  </div>
+</div>`);
+      return;
+    } else {
+      icon='😤';
+      title='¡Casi! Inténtalo de nuevo';
+      sub=`${score}/5 correctas. Necesitabas 4. ¡Tú puedes!`;
+    }
+  } else {
+    if(pct>=80){icon='🌟';title='¡Excelente!';sub=`${score}/${total} correctas (${pct}%)`;p.coins+=5;saveData();beep(true);}
+    else if(pct>=50){icon='👍';title='¡Bien hecho!';sub=`${score}/${total} correctas (${pct}%)`;p.coins+=2;saveData();}
+    else{icon='💪';title='¡Sigue practicando!';sub=`${score}/${total} correctas. Las preguntas falladas volverán.`;}
+  }
+
+  const doneCount=Object.keys(pb.done).length;
+  const minQ=belt.minQ;
+  const canBoss=!pb.boss&&doneCount>=minQ;
+
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>Resultado</h1>
+  <div></div>
+</div>
+<div class="result-wrap">
+  <div class="result-icon anim-pop">${icon}</div>
+  <div class="result-title">${title}</div>
+  <div class="result-sub">${sub}</div>
+  <div class="result-coins">🪙 Total: ${p.coins} monedas</div>
+  <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px">
+    ${canBoss?`<button class="btn btn-gold" onclick="startBoss()">⚔️ Batalla por el ${belt.emoji} cinturón</button>`:''}
+    <button class="btn btn-ninja" onclick="startBelt('${gs.belt}')">🔄 Otra ronda</button>
+    <button class="btn btn-card" onclick="showHome()">🏠 Volver al inicio</button>
+  </div>
+</div>`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  PARENT DASHBOARD
+// ═══════════════════════════════════════════════════════
+function showParentPin(){
+  gs.pinBuffer='';
+  gs.pinTarget='showParent';
+  renderPin('Introduce el PIN de padres (4 dígitos)');
+}
+
+function renderPin(msg){
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showWelcome()">← Atrás</button>
+  <h1>🔒 Padres</h1>
+  <div></div>
+</div>
+<div class="screen center">
+  <div style="font-size:.95rem;color:var(--muted);margin-bottom:4px">${msg}</div>
+  <div class="pin-input" id="pindisp">
+    ${[0,1,2,3].map(i=>`<div class="pin-dot${gs.pinBuffer.length>i?' filled':''}"></div>`).join('')}
+  </div>
+  <div class="pin-keypad">
+    ${[1,2,3,4,5,6,7,8,9,'','0','⌫'].map(k=>`<button class="pin-key btn-card" onclick="pinKey('${k}')">${k}</button>`).join('')}
+  </div>
+  <div id="pinmsg" style="color:var(--wrong);font-size:.9rem;height:20px;margin-top:4px"></div>
+</div>`);
+}
+
+function pinKey(k){
+  if(k==='⌫'){gs.pinBuffer=gs.pinBuffer.slice(0,-1);}
+  else if(gs.pinBuffer.length<4&&k!==''){gs.pinBuffer+=k;}
+  if(gs.pinBuffer.length===4){
+    checkPin();
+    return;
+  }
+  // update dots
+  document.querySelectorAll('.pin-dot').forEach((d,i)=>d.classList.toggle('filled',gs.pinBuffer.length>i));
+}
+
+function checkPin(){
+  const stored=localStorage.getItem(PIN_KEY);
+  if(!stored){
+    // First time: set PIN
+    if(gs.pinBuffer.length===4){
+      localStorage.setItem(PIN_KEY,gs.pinBuffer);
+      showParent();
+    }
+  } else if(gs.pinBuffer===stored){
+    showParent();
+  } else {
+    const msg=document.getElementById('pinmsg');
+    if(msg)msg.textContent='PIN incorrecto. Inténtalo de nuevo.';
+    gs.pinBuffer='';
+    document.querySelectorAll('.pin-dot').forEach(d=>d.classList.remove('filled'));
+  }
+}
+
+function showParent(){
+  const {p1,p2}=data;
+  function playerSection(pid,p){
+    const weakTopics={};
+    BELTS.forEach(b=>{
+      const pb=p.belts[b.id];
+      Object.entries(pb.weak||{}).forEach(([qid,cnt])=>{
+        if(cnt>0){
+          const q=ALL_QS[b.id]?.find(x=>x.id===qid);
+          if(q){
+            const k=`${b.name}: ${q.topic||q.id}`;
+            weakTopics[k]=(weakTopics[k]||0)+cnt;
+          }
+        }
+      });
+    });
+    const weakArr=Object.entries(weakTopics).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const beltsDone=BELTS.filter(b=>p.belts[b.id].boss).map(b=>`${b.emoji} ${b.name}`);
+    return `
+    <div class="parent-section">
+      <h3>${p.emoji} ${p.name}</h3>
+      <div style="font-size:.85rem;color:var(--muted);margin-bottom:8px">🪙 ${p.coins} monedas · 🔥 Racha máx: ${p.maxStreak}</div>
+      <div style="font-size:.85rem;margin-bottom:6px"><b>Cinturones ganados:</b> ${beltsDone.length?beltsDone.join(', '):'Ninguno aún'}</div>
+      ${weakArr.length?`<div style="font-size:.85rem;font-weight:700;margin-bottom:4px">Temas a reforzar:</div>
+        ${weakArr.map(([k,v])=>`<div class="weak-item"><span class="weak-name">${k}</span><span class="weak-count">${v} error${v>1?'es':''}</span></div>`).join('')}`
+      :'<div style="font-size:.85rem;color:var(--correct)">¡Sin errores repetidos! 🎉</div>'}
+    </div>`;
+  }
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showWelcome()">← Atrás</button>
+  <h1>Panel de Padres</h1>
+  <div></div>
+</div>
+<div class="screen">
+  <div style="font-size:.85rem;color:var(--muted);text-align:center">Progreso y áreas débiles de cada jugador</div>
+  ${playerSection('p1',p1)}
+  ${playerSection('p2',p2)}
+  <div class="parent-section">
+    <h3>⚙️ Ajustes</h3>
+    <button class="btn btn-card" style="margin-top:4px" onclick="resetPinConfirm()">🔑 Cambiar PIN</button>
+    <button class="btn btn-card" style="margin-top:8px" onclick="resetDataConfirm()">🗑️ Borrar todo el progreso</button>
+  </div>
+</div>`);
+}
+
+function resetPinConfirm(){
+  if(confirm('¿Cambiar el PIN de padres? Se pedirá uno nuevo.')){
+    localStorage.removeItem(PIN_KEY);
+    gs.pinBuffer='';
+    renderPin('Escribe un nuevo PIN de 4 dígitos');
+  }
+}
+function resetDataConfirm(){
+  if(confirm('⚠️ ¿Borrar TODO el progreso? Esto no se puede deshacer.')){
+    localStorage.removeItem(KEY);
+    data=loadData();
+    showWelcome();
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  RUTA DEL GRAN MAESTRO
+// ═══════════════════════════════════════════════════════
+const RUTA_SECTIONS=[
+  {
+    id:'titulos',
+    emoji:'🏅',
+    title:'Los títulos del ajedrez',
+    color:'#7c3aed',
+    content:`
+<p>La federación mundial de ajedrez (FIDE) tiene títulos oficiales. Son para toda la vida — una vez que los ganas, nadie te los quita.</p>
+<div class="ruta-ladder">
+  <div class="ruta-rung rung-gm">
+    <span class="rung-icon">♟️</span>
+    <div>
+      <div class="rung-title">Gran Maestro (GM)</div>
+      <div class="rung-sub">El título más alto. Solo ~1.800 personas en todo el mundo. Elo ≥ 2500.</div>
+    </div>
+  </div>
+  <div class="ruta-rung rung-mi">
+    <span class="rung-icon">🔵</span>
+    <div>
+      <div class="rung-title">Maestro Internacional (MI)</div>
+      <div class="rung-sub">Paso previo al GM. Elo ≥ 2400. Hay unos 4.000 en el mundo.</div>
+    </div>
+  </div>
+  <div class="ruta-rung rung-fm">
+    <span class="rung-icon">🟢</span>
+    <div>
+      <div class="rung-title">Maestro FIDE (FM)</div>
+      <div class="rung-sub">Elo ≥ 2300. Ya eres de los mejores de tu país.</div>
+    </div>
+  </div>
+  <div class="ruta-rung rung-cm">
+    <span class="rung-icon">🟡</span>
+    <div>
+      <div class="rung-title">Candidato a Maestro (CM)</div>
+      <div class="rung-sub">Elo ≥ 2200. Llevas años de práctica seria.</div>
+    </div>
+  </div>
+  <div class="ruta-rung rung-club">
+    <span class="rung-icon">⬜</span>
+    <div>
+      <div class="rung-title">Jugador de club</div>
+      <div class="rung-sub">Elo ~1000–1800. Juegas en torneos locales y te diviertes. ¡Aquí empezáis vosotros!</div>
+    </div>
+  </div>
+</div>`,
+  },
+  {
+    id:'elo',
+    emoji:'📊',
+    title:'¿Qué es el Elo?',
+    color:'#2563eb',
+    content:`
+<p>El <b>Elo</b> es el sistema de puntuación que usa el ajedrez para medir tu nivel. Lo inventó el matemático húngaro <b>Arpad Elo</b> en 1960.</p>
+<div class="ruta-fact-list">
+  <div class="ruta-fact">🆕 <b>Empiezas con 1000 puntos</b> cuando te registras en la FIDE por primera vez.</div>
+  <div class="ruta-fact">📈 <b>Ganas puntos</b> al vencer a rivales, especialmente si son más fuertes que tú.</div>
+  <div class="ruta-fact">📉 <b>Pierdes puntos</b> si perdes contra alguien más débil — así que ¡mejor no confiarse!</div>
+  <div class="ruta-fact">⚖️ Si dos jugadores con el mismo Elo juegan, <b>las tablas no cambian nada</b>.</div>
+  <div class="ruta-fact">👑 Magnus Carlsen llegó al <b>Elo 2882</b> — el más alto de la historia.</div>
+  <div class="ruta-fact">🌍 Hay <b>más de 300.000</b> jugadores con Elo oficial en el mundo.</div>
+</div>`,
+  },
+  {
+    id:'gm_joven',
+    emoji:'⚡',
+    title:'Los GMs más jóvenes de la historia',
+    color:'#d97706',
+    content:`
+<p>Para ser Gran Maestro necesitas ganar <b>3 "normas GM"</b> en torneos internacionales y llegar a Elo 2500. ¡Algunos lo consiguen antes de los 14 años!</p>
+<div class="ruta-ranking">
+  <div class="ruta-rank-item">
+    <span class="rank-pos">🥇</span>
+    <div>
+      <div class="rank-name">Abhimanyu Mishra 🇺🇸</div>
+      <div class="rank-age">12 años, 4 meses y 25 días (2021) — el más joven de la historia</div>
+    </div>
+  </div>
+  <div class="ruta-rank-item">
+    <span class="rank-pos">🥈</span>
+    <div>
+      <div class="rank-name">Sergey Karjakin 🇷🇺</div>
+      <div class="rank-age">12 años y 7 meses (2002) — tuvo el récord 19 años</div>
+    </div>
+  </div>
+  <div class="ruta-rank-item">
+    <span class="rank-pos">🥉</span>
+    <div>
+      <div class="rank-name">Gukesh D 🇮🇳</div>
+      <div class="rank-age">12 años y 7 meses (2019) — hoy es Campeón del Mundo (2024)</div>
+    </div>
+  </div>
+  <div class="ruta-rank-item">
+    <span class="rank-pos">4️⃣</span>
+    <div>
+      <div class="rank-name">Magnus Carlsen 🇳🇴</div>
+      <div class="rank-age">13 años y 4 meses (2004) — luego fue el mejor del mundo</div>
+    </div>
+  </div>
+  <div class="ruta-rank-item">
+    <span class="rank-pos">5️⃣</span>
+    <div>
+      <div class="rank-name">Bobby Fischer 🇺🇸</div>
+      <div class="rank-age">15 años (1958) — ¡tuvo el récord durante 44 años!</div>
+    </div>
+  </div>
+</div>
+<div class="ruta-callout">💡 Vosotros tenéis 8 años. Abhimanyu Mishra empezó con piezas de plástico de bebé. Si practicáis en serio, en 4 años podríais ir a vuestro primer torneo oficial.</div>`,
+  },
+  {
+    id:'torneos',
+    emoji:'🏆',
+    title:'¿Cómo son los torneos?',
+    color:'#059669',
+    content:`
+<p>Los torneos de ajedrez son como olimpiadas de la mente. Hay torneos para todos los niveles — desde tu colegio hasta el Campeonato del Mundo.</p>
+<div class="ruta-fact-list">
+  <div class="ruta-fact">🏫 <b>Torneos de colegio</b> — el primer paso. Se juegan en tu ciudad o comunidad.</div>
+  <div class="ruta-fact">🇪🇸 <b>Campeonato de España sub-8, sub-10, sub-12…</b> — compites contra niños de tu edad de todo el país.</div>
+  <div class="ruta-fact">🌍 <b>Olimpiada de Ajedrez</b> — como los Juegos Olímpicos, pero de ajedrez. Cada país manda su equipo. Se celebra cada 2 años.</div>
+  <div class="ruta-fact">♟️ <b>Campeonato del Mundo</b> — 14 partidas, dos jugadores solos frente a frente. Puede durar 3 semanas.</div>
+  <div class="ruta-fact">⏱️ En torneos hay un <b>reloj de ajedrez</b> — cada jugador tiene un tiempo límite para hacer todas sus jugadas.</div>
+  <div class="ruta-fact">🤝 Al acabar siempre se da la mano — el ajedrez enseña <b>respeto</b> al rival.</div>
+</div>`,
+  },
+  {
+    id:'camino',
+    emoji:'🗺️',
+    title:'Tu camino al Gran Maestro',
+    color:'#dc2626',
+    content:`
+<p>Nadie nace siendo Gran Maestro. Todos empezaron donde vosotros estáis ahora. Este es el camino:</p>
+<div class="ruta-path">
+  <div class="path-step">
+    <div class="path-dot" style="background:#94a3b8"></div>
+    <div>
+      <div class="path-label">Ahora mismo 🎯</div>
+      <div class="path-desc">Aprendéis las reglas, las piezas y las primeras tácticas. JaqueNinja es vuestro entrenador.</div>
+    </div>
+  </div>
+  <div class="path-step">
+    <div class="path-dot" style="background:#fbbf24"></div>
+    <div>
+      <div class="path-label">1–2 años</div>
+      <div class="path-desc">Primer torneo del colegio. Jugáis contra otros niños. El nervio es parte de la aventura.</div>
+    </div>
+  </div>
+  <div class="path-step">
+    <div class="path-dot" style="background:#34d399"></div>
+    <div>
+      <div class="path-label">3–5 años</div>
+      <div class="path-desc">Club de ajedrez, torneo provincial. Vuestro Elo empieza a subir. Estudiáis aperturas.</div>
+    </div>
+  </div>
+  <div class="path-step">
+    <div class="path-dot" style="background:#60a5fa"></div>
+    <div>
+      <div class="path-label">5–8 años</div>
+      <div class="path-desc">Campeonato autonómico o nacional sub-12. Un entrenador analiza vuestras partidas.</div>
+    </div>
+  </div>
+  <div class="path-step">
+    <div class="path-dot" style="background:#f87171"></div>
+    <div>
+      <div class="path-label">8–12 años</div>
+      <div class="path-desc">Torneos internacionales. Primera "norma" de Maestro. El mundo del ajedrez os conoce.</div>
+    </div>
+  </div>
+  <div class="path-step">
+    <div class="path-dot" style="background:#ffd700"></div>
+    <div>
+      <div class="path-label">¡Gran Maestro! 🏆</div>
+      <div class="path-desc">3 normas GM + Elo 2500. Lo conseguís en un torneo europeo o mundial. El día más importante de vuestra carrera.</div>
+    </div>
+  </div>
+</div>
+<div class="ruta-callout">🥷 <b>Sensei Ryu dice:</b> "El ajedrez no se aprende en un día, pero cada partida te hace mejor. La constancia es el secreto de todos los grandes maestros."</div>`,
+  },
+];
+
+function showRuta(){
+  const sections=RUTA_SECTIONS.map(s=>`
+  <div class="ruta-section" onclick="showRutaSection('${s.id}')">
+    <div class="ruta-section-icon" style="background:${s.color}22;border-color:${s.color}">${s.emoji}</div>
+    <div class="ruta-section-info">
+      <div class="ruta-section-title">${s.title}</div>
+    </div>
+    <div class="legend-arrow" style="color:${s.color}">›</div>
+  </div>`).join('');
+
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>🗺️ Ruta del GM</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:10px">
+  <div class="sensei-card">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu</div>
+      <div class="sensei-text">"¿Quieres saber qué es un Gran Maestro y cómo se llega a serlo? Aquí está todo lo que necesitas conocer, joven ninja."</div>
+    </div>
+  </div>
+  ${sections}
+</div>`);
+}
+
+function showRutaSection(id){
+  const s=RUTA_SECTIONS.find(x=>x.id===id);
+  if(!s)return;
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showRuta()">← Ruta GM</button>
+  <h1>${s.emoji} ${s.title.split(' ').slice(0,3).join(' ')}</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:14px">
+  <div class="ruta-content">${s.content}</div>
+  <button class="btn btn-ninja" onclick="showRuta()">← Volver</button>
+</div>`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  HALL OF LEGENDS
+// ═══════════════════════════════════════════════════════
+function showLegends(){
+  const p=P();
+  const beltIdx=BELT_IDX[currentBelt(gs.pid)]??0;
+  const cards=LEGENDS.map((lg,i)=>{
+    const unlocked=i<=beltIdx;
+    if(unlocked){
+      return `<div class="legend-card" onclick="showLegend('${lg.id}')">
+        <div class="legend-emoji">${lg.emoji}</div>
+        <div class="legend-info">
+          <div class="legend-name">${lg.flag} ${lg.name}</div>
+          <div class="legend-title">${lg.title}</div>
+          <div class="legend-belt">${BELTS[i].emoji} ${BELTS[i].name}</div>
+        </div>
+        <div class="legend-arrow">›</div>
+      </div>`;
+    } else {
+      return `<div class="legend-card locked">
+        <div class="legend-emoji">🔒</div>
+        <div class="legend-info">
+          <div class="legend-name" style="color:var(--muted)">???</div>
+          <div class="legend-title" style="color:var(--muted)">Gana el ${BELTS[i].name} para desbloquear</div>
+          <div class="legend-belt">${BELTS[i].emoji} ${BELTS[i].name}</div>
+        </div>
+      </div>`;
+    }
+  }).join('');
+
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>🏛️ Salón de Leyendas</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:10px">
+  <div class="sensei-card">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu</div>
+      <div class="sensei-text">"Conocer a los grandes maestros que vinieron antes que tú es parte de tu entrenamiento. Sus historias son lecciones."</div>
+    </div>
+  </div>
+  <button class="btn btn-card" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px" onclick="showRuta()">
+    🗺️ ¿Cómo me convierto en Gran Maestro? →
+  </button>
+  ${cards}
+</div>`);
+}
+
+function showLegend(id){
+  const lg=LEGENDS.find(l=>l.id===id);
+  if(!lg)return;
+  const facts=lg.facts.map(f=>`<div class="fact-item">💡 ${f}</div>`).join('');
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showLegends()">← Leyendas</button>
+  <h1>${lg.flag} Leyenda</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:14px">
+  <div class="legend-hero">
+    <div class="legend-hero-emoji">${lg.emoji}</div>
+    <div>
+      <div class="legend-hero-name">${lg.name}</div>
+      <div class="legend-hero-years">${lg.flag} ${lg.years}</div>
+      <div class="legend-hero-title">${lg.title}</div>
+    </div>
+  </div>
+
+  <div class="legend-super">
+    <span class="legend-super-label">⚡ Superpoder</span>
+    <span>${lg.super}</span>
+  </div>
+
+  <div class="legend-section-title">📖 Chascarrillos y curiosidades</div>
+  <div class="facts-list">${facts}</div>
+
+  <div class="legend-quote">"${lg.quote}"</div>
+
+  <div class="legend-section-title">🎬 Vídeo</div>
+  <div class="video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/${lg.videoId}?rel=0&modestbranding=1"
+      title="${lg.videoLabel}"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none">
+    </iframe>
+    <div class="video-label">${lg.videoLabel}</div>
+  </div>
+
+  <button class="btn btn-ninja" onclick="showLegends()">← Volver al Salón</button>
+</div>`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  RETO DIARIO
+// ═══════════════════════════════════════════════════════
+function startDaily(){
+  if(isDailyDone(gs.pid)){showHome();return;}
+  const q=getDailyQ();
+  gs.belt='blanco'; // fake belt for context (won't save progress to a belt)
+  gs.mode='daily';
+  gs.qs=[q];gs.qi=0;gs.score=0;gs.wrong=[];gs.streak=0;gs.waitNext=false;
+  showDailyQuestion(q);
+}
+
+function showDailyQuestion(q){
+  const p=P();
+  let body='';
+  if(q.type==='mcq'){
+    const opts=shuffle([...q.opts]);
+    body=`<div class="opts" id="opts">
+      ${opts.map((o,i)=>`<button class="opt-btn" id="opt${i}" onclick="handleDailyMCQ(this,'${escQ(o)}','${escQ(q.ans)}','${escQ(q.fact||'')}')">${o}</button>`).join('')}
+    </div>`;
+  }
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>⭐ Reto del Día</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:12px">
+  <div class="sensei-card">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu — Reto de hoy</div>
+      <div class="sensei-text">Una pregunta especial cada día. ¡Demuestra que practicas aunque no tengas tiempo para una sesión completa!</div>
+    </div>
+  </div>
+  <div class="q-card">
+    <div class="q-emoji">${q.em||'⭐'}</div>
+    <div class="q-text">${q.q}</div>
+    ${q.pieces?`<div class="board-wrap"><div class="board-svg-wrap">${boardSVG({size:boardSize(),pieces:q.pieces})}</div></div>`:''}
+    ${body}
+    <div id="factbox" style="display:none" class="q-fact"></div>
+    <div class="next-wrap" id="nextwrap" style="display:none">
+      <button class="btn btn-gold" onclick="endDaily(${q.ans===undefined?'true':'undefined'})">Ver resultado →</button>
+    </div>
+  </div>
+</div>`);
+}
+
+function handleDailyMCQ(btn,sel,ans,fact){
+  if(btn.disabled)return;
+  document.querySelectorAll('.opt-btn').forEach(b=>{b.disabled=true;if(b.textContent===ans)b.classList.add('reveal-correct');});
+  const correct=sel===ans;
+  btn.classList.remove('reveal-correct');
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  beep(correct);
+  if(fact){const fb=document.getElementById('factbox');if(fb){fb.style.display='';fb.textContent=fact;}}
+  const nw=document.getElementById('nextwrap');
+  if(nw){
+    nw.style.display='';
+    nw.querySelector('button').onclick=()=>endDaily(correct);
+  }
+}
+
+function endDaily(correct){
+  const p=P();
+  p.daily={date:todayStr(),done:true};
+  if(correct){p.coins+=10;beep(true);}
+  saveData();
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>⭐ Reto del Día</h1>
+  <div></div>
+</div>
+<div class="result-wrap">
+  <div class="result-icon anim-pop">${correct?'⭐':'💪'}</div>
+  <div class="result-title">${correct?'¡Reto superado!':'¡Sigue intentándolo!'}</div>
+  <div class="result-sub">${correct?'+10 monedas bonus 🪙':'Mañana habrá un reto nuevo. ¡Vuelve!'}</div>
+  <div class="sensei-card" style="width:100%">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu</div>
+      <div class="sensei-text">${correct?'"¡Excelente, joven ninja! La constancia diaria es el secreto de los grandes maestros."':'"No te desanimes. Cada error es una lección. Mañana tendrás otra oportunidad."'}</div>
+    </div>
+  </div>
+  <button class="btn btn-ninja" onclick="showHome()">🏠 Volver al Dojo</button>
+</div>`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  DUELO 1v1
+// ═══════════════════════════════════════════════════════
+let duel={qs:[],qi:0,scores:{p1:0,p2:0},turn:'p1',belt:'blanco'};
+
+function showDuelo(){
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Atrás</button>
+  <h1>⚔️ Modo Duelo</h1>
+  <div></div>
+</div>
+<div class="screen center" style="gap:16px">
+  <div style="font-size:3rem">⚔️</div>
+  <div style="font-size:1.1rem;font-weight:800;text-align:center">${data.p1.emoji} ${data.p1.name}<br><span style="color:var(--muted)">vs</span><br>${data.p2.emoji} ${data.p2.name}</div>
+  <div style="font-size:.9rem;color:var(--muted);text-align:center">Cada ninja responde las mismas preguntas.<br>Gana quien acierte más.</div>
+  <div style="font-size:.9rem;color:var(--muted)">Elige el cinturón:</div>
+  <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+    ${BELTS.map(b=>`<button class="btn btn-card" onclick="startDuelo('${b.id}')">${b.emoji} ${b.name} — ${b.desc}</button>`).join('')}
+  </div>
+</div>`);
+}
+
+function startDuelo(beltId){
+  const qs=shuffle([...ALL_QS[beltId]]).slice(0,6);
+  duel={qs,qi:0,scores:{p1:0,p2:0},turn:'p1',belt:beltId};
+  showDuelQuestion();
+}
+
+function showDuelQuestion(){
+  if(duel.qi>=duel.qs.length){endDuelo();return;}
+  const q=duel.qs[duel.qi];
+  const p=data[duel.turn];
+  const belt=BELTS[BELT_IDX[duel.belt]];
+  const prog=`${duel.qi+1}/${duel.qs.length}`;
+  let qbody='';
+  if(q.type==='mcq'){
+    const opts=shuffle([...q.opts]);
+    qbody=`<div class="opts" id="opts">
+      ${opts.map((o,i)=>`<button class="opt-btn" onclick="handleDuelMCQ(this,'${escQ(o)}','${escQ(q.ans)}')">${o}</button>`).join('')}
+    </div>`;
+  } else if(q.type==='yesno'){
+    qbody=`<div class="yesno-btns" id="ynbtns">
+      <button class="yn-btn si" onclick="handleDuelYN(this,'si','${q.ans}')">✅ Sí</button>
+      <button class="yn-btn no" onclick="handleDuelYN(this,'no','${q.ans}')">❌ No</button>
+    </div>`;
+  } else if(q.type==='click'||q.type==='mate1'){
+    const sz=Math.min(260,window.innerWidth-48);
+    qbody=`<div class="board-wrap">
+      <div class="board-svg-wrap" id="duelboard">${boardSVG({size:sz,pieces:q.pieces||[]})}</div>
+      <div class="board-feedback" id="bfeed"></div>
+    </div>`;
+  }
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">✕ Salir</button>
+  <h1>⚔️ Duelo</h1>
+  <div style="font-size:.85rem;color:var(--gold)">${prog}</div>
+</div>
+<div class="screen" style="padding-top:8px;gap:10px">
+  <div class="duelo-score">
+    <div class="duelo-player">
+      <div class="duelo-name">${data.p1.emoji} ${data.p1.name}</div>
+      <div class="duelo-pts" style="color:${duel.turn==='p1'?'var(--gold)':'var(--muted)'}">${duel.scores.p1}</div>
+    </div>
+    <div style="font-size:1.5rem;align-self:center">⚔️</div>
+    <div class="duelo-player">
+      <div class="duelo-name">${data.p2.emoji} ${data.p2.name}</div>
+      <div class="duelo-pts" style="color:${duel.turn==='p2'?'var(--gold)':'var(--muted)'}">${duel.scores.p2}</div>
+    </div>
+  </div>
+  <div style="background:var(--ninja);border-radius:10px;padding:8px 14px;text-align:center;font-weight:700;font-size:.95rem">
+    Turno de ${p.emoji} ${p.name}
+  </div>
+  <div class="q-card">
+    <div class="q-emoji">${q.em||'❓'}</div>
+    <div class="q-text">${q.q}</div>
+    ${qbody}
+    <div id="duel-next" style="display:none;width:100%;margin-top:8px">
+      <button class="btn btn-ninja" onclick="duelNext()">Siguiente →</button>
+    </div>
+  </div>
+</div>`);
+  if(q.type==='click'||q.type==='mate1'){
+    const target=q.ans||q.target;
+    const svg=document.getElementById('chessboard');
+    if(svg)svg.querySelectorAll('rect[data-sq]').forEach(r=>{
+      r.onclick=()=>handleDuelClick(r.dataset.sq,q);
+    });
+  }
+}
+
+function handleDuelMCQ(btn,sel,ans){
+  if(btn.disabled)return;
+  document.querySelectorAll('.opt-btn').forEach(b=>{b.disabled=true;if(b.textContent===ans)b.classList.add('reveal-correct');});
+  const correct=sel===ans;
+  btn.classList.remove('reveal-correct');
+  btn.classList.add(correct?'sel-correct':'sel-wrong');
+  beep(correct);
+  if(correct)duel.scores[duel.turn]++;
+  const nxt=document.getElementById('duel-next');if(nxt)nxt.style.display='';
+}
+
+function handleDuelClick(sq,q){
+  const target=q.ans||q.target;
+  const correct=sq===target;
+  beep(correct);
+  if(correct)duel.scores[duel.turn]++;
+  const feed=document.getElementById('bfeed');
+  if(feed){feed.textContent=correct?'✅ ¡Correcto!':'❌ Incorrecto';feed.className='board-feedback '+(correct?'ok':'bad');}
+  const nxt=document.getElementById('duel-next');if(nxt)nxt.style.display='';
+  // re-attach nothing (just show next btn)
+  const svg=document.getElementById('chessboard');
+  if(svg)svg.querySelectorAll('rect[data-sq]').forEach(r=>r.onclick=null);
+}
+
+function handleDuelYN(btn,sel,ans){
+  if(btn.disabled)return;
+  document.querySelectorAll('.yn-btn').forEach(b=>b.disabled=true);
+  const correct=sel===ans;
+  btn.style.background=correct?'#1a3a21':'#3a1a1a';
+  btn.style.color=correct?'var(--correct)':'var(--wrong)';
+  beep(correct);
+  if(correct)duel.scores[duel.turn]++;
+  const nxt=document.getElementById('duel-next');if(nxt)nxt.style.display='';
+}
+
+function duelNext(){
+  // Switch turns or advance question
+  if(duel.turn==='p1'){
+    duel.turn='p2';
+    showDuelQuestion(); // same question, other player
+  } else {
+    duel.turn='p1';
+    duel.qi++;
+    showDuelQuestion(); // next question
+  }
+}
+
+function endDuelo(){
+  const {p1,p2}=duel.scores;
+  const winner=p1>p2?'p1':p2>p1?'p2':null;
+  const wp=winner?data[winner]:null;
+  if(winner){confetti();fanfare();}
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>⚔️ Fin del Duelo</h1>
+  <div></div>
+</div>
+<div class="result-wrap">
+  <div class="result-icon anim-pop">${winner?wp.emoji:'🤝'}</div>
+  <div class="result-title">${winner?`¡${wp.name} gana!`:'¡Empate!'}</div>
+  <div class="duelo-score" style="width:100%">
+    <div class="duelo-player">
+      <div class="duelo-name">${data.p1.emoji} ${data.p1.name}</div>
+      <div class="duelo-pts" style="color:${p1>p2?'var(--gold)':'var(--muted)'}">${p1} pts</div>
+    </div>
+    <div style="font-size:1.5rem;align-self:center">⚔️</div>
+    <div class="duelo-player">
+      <div class="duelo-name">${data.p2.emoji} ${data.p2.name}</div>
+      <div class="duelo-pts" style="color:${p2>p1?'var(--gold)':'var(--muted)'}">${p2} pts</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:8px">
+    <button class="btn btn-gold" onclick="showDuelo()">⚔️ Revancha</button>
+    <button class="btn btn-card" onclick="showHome()">🏠 Inicio</button>
+  </div>
+</div>`);
+}
+
+// ═══════════════════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════════════════
+function shuffle(a){
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+function escQ(s){return (s||'').replace(/'/g,'&#39;').replace(/"/g,'&quot;');}
+
+function beep(correct){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.type=correct?'sine':'square';
+    osc.frequency.value=correct?880:200;
+    gain.gain.value=0.18;
+    osc.start();
+    if(correct){
+      osc.frequency.setValueAtTime(880,ctx.currentTime);
+      osc.frequency.setValueAtTime(1100,ctx.currentTime+0.12);
+    }
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+(correct?0.3:0.25));
+    osc.stop(ctx.currentTime+(correct?0.3:0.25));
+  }catch(e){}
+}
+
+function fanfare(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const notes=[523,659,784,1047];
+    notes.forEach((freq,i)=>{
+      const osc=ctx.createOscillator();
+      const gain=ctx.createGain();
+      osc.connect(gain);gain.connect(ctx.destination);
+      osc.type='sine';osc.frequency.value=freq;
+      gain.gain.value=0.18;
+      const t=ctx.currentTime+i*0.13;
+      osc.start(t);
+      gain.gain.setValueAtTime(0.18,t);
+      gain.gain.exponentialRampToValueAtTime(0.001,t+0.35);
+      osc.stop(t+0.35);
+    });
+  }catch(e){}
+}
+
+function confetti(){
+  const colors=['#ffd700','#7c3aed','#a78bfa','#3fb950','#60a5fa','#f85149','#fb923c'];
+  for(let i=0;i<70;i++){
+    const el=document.createElement('div');
+    const size=6+Math.random()*8;
+    el.style.cssText=`
+      position:fixed;width:${size}px;height:${size}px;border-radius:${Math.random()>0.5?'50%':'2px'};
+      background:${colors[i%colors.length]};
+      left:${Math.random()*100}%;top:-12px;
+      animation:fall ${1.2+Math.random()*1.8}s ease-in forwards;
+      animation-delay:${Math.random()*0.8}s;
+      transform:rotate(${Math.random()*360}deg);
+      pointer-events:none;z-index:9999;opacity:1`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),3500);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════
+showWelcome();
+</script>
+</body>
+</html>
