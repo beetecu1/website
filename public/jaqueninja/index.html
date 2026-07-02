@@ -565,8 +565,8 @@ const LEGENDS=[
       'Memorizó miles de partidas de memoria. Podía recitar cualquier jugada de cualquier torneo importante del siglo pasado.',
     ],
     quote:'"El ajedrez es la vida."',
-    videoId:'ZTNHpGKFTx4',
-    videoLabel:'Fischer — El americano que venció a los soviéticos',
+    videoId:'XcISWtK2mUs',
+    videoLabel:'Bobby Fischer — Biografía, Estilo y Curiosidades',
   },
   {
     id:'kasparov',belt:'verde',
@@ -580,8 +580,8 @@ const LEGENDS=[
       'Retirado del ajedrez, ahora enseña al mundo cómo pensar estratégicamente. ¡Hasta habla con presidentes!',
     ],
     quote:'"El ajedrez es ante todo una lucha."',
-    videoId:'KF6sLCeBj0s',
-    videoLabel:'Kasparov — 21 años siendo el mejor del mundo',
+    videoId:'d47AnzSK3ZA',
+    videoLabel:'Karpov vs Kasparov — El ajedrez y la caída de la URSS',
   },
   {
     id:'polgar',belt:'azul',
@@ -595,8 +595,8 @@ const LEGENDS=[
       'Nunca quiso jugar en el torneo femenino porque decía: "Quiero medir mi nivel con los mejores, no con las mejores mujeres."',
     ],
     quote:'"Todo el mundo puede aprender ajedrez. La diferencia la hace cuánto practicas."',
-    videoId:'l-hh51IjUjo',
-    videoLabel:'Judit Polgár — La mujer que venció a los campeones del mundo',
+    videoId:'sTNNUhqd9IM',
+    videoLabel:'Judit Polgár — Una vida dedicada al ajedrez (BBVA)',
   },
   {
     id:'magnus',belt:'rojo',
@@ -610,8 +610,8 @@ const LEGENDS=[
       'En 2020, durante la pandemia, organizó torneos online para que los ajedrecistas del mundo pudiesen seguir compitiendo. Decenas de millones de personas lo vieron.',
     ],
     quote:'"Siempre creo que puedo ganar. Incluso cuando parece imposible."',
-    videoId:'JmDn5ePCCcM',
-    videoLabel:'Magnus Carlsen — El mejor de todos los tiempos',
+    videoId:'p9j9DOK-nNo',
+    videoLabel:'Magnus Carlsen — El Mozart del Ajedrez',
   },
   {
     id:'morphy',belt:'negro',
@@ -625,8 +625,8 @@ const LEGENDS=[
       'Vivió 130 años antes que Magnus Carlsen, pero muchos expertos dicen que si hubiera nacido hoy, también sería el mejor del mundo.',
     ],
     quote:'"El ajedrez no requiere recompensa. Es suficiente con la belleza del juego."',
-    videoId:'tJLs3sI5bug',
-    videoLabel:'Paul Morphy — El primer genio del ajedrez',
+    videoId:'gdWe84_3Yzk',
+    videoLabel:'La Leyenda de Paul Morphy — El Primer Niño Prodigio',
   },
 ];
 
@@ -944,6 +944,9 @@ function showHome(){
     </button>
     <button class="btn btn-card" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;font-size:.9rem" onclick="showRuta()">
       🗺️ Ruta del GM
+    </button>
+    <button class="btn btn-card" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;font-size:.9rem;grid-column:1/-1" onclick="showVideos()">
+      📺 Videos Ninja <span style="color:#60a5fa;font-size:.78rem">🇬🇧 en inglés</span>
     </button>
   </div>
   ${BELTS.map(beltCard).join('')}
@@ -1644,6 +1647,122 @@ const RUTA_SECTIONS=[
 <div class="ruta-callout">🥷 <b>Sensei Ryu dice:</b> "El ajedrez no se aprende en un día, pero cada partida te hace mejor. La constancia es el secreto de todos los grandes maestros."</div>`,
   },
 ];
+
+// ═══════════════════════════════════════════════════════
+//  VIDEOS NINJA (English for kids)
+// ═══════════════════════════════════════════════════════
+const NINJA_VIDEOS=[
+  {
+    id:'chesskid_rules',
+    emoji:'♟️',
+    title:'How to Play Chess',
+    channel:'ChessKid (Chess.com)',
+    desc:'Las reglas completas explicadas para niños por el canal oficial de Chess.com para pequeños. ¡Perfecto para repasar en inglés!',
+    level:'⬜ Principiante',
+    videoId:'YdnvlntAQH8',
+  },
+  {
+    id:'kids_animated',
+    emoji:'🎨',
+    title:'Chess Animated for Beginners',
+    channel:'Kids Academy',
+    desc:'Serie animada con dibujos animados que explica cada pieza y cada regla de forma muy visual y divertida.',
+    level:'⬜ Principiante',
+    videoId:'e1YAxMdUsag',
+  },
+  {
+    id:'chess6min',
+    emoji:'⏱️',
+    title:'Chess in 6 Minutes for Kids',
+    channel:'Chess Vibes',
+    desc:'Aprende todo lo básico del ajedrez en solo 6 minutos. Ideal para repasar rápido antes de jugar.',
+    level:'⬜ Principiante',
+    videoId:'AOE6-ltbN2o',
+  },
+  {
+    id:'gotham_beginner',
+    emoji:'🎓',
+    title:'The Ultimate Beginner Guide',
+    channel:'GothamChess (IM Levy Rozman)',
+    desc:'Levy Rozman, uno de los mejores profesores de ajedrez de YouTube, explica desde cero cómo jugar bien. Un poco más largo pero muy claro.',
+    level:'🟡 Principiante+',
+    videoId:'OCSbzArwB10',
+  },
+  {
+    id:'chess3d',
+    emoji:'🧊',
+    title:'Chess for Children — Learn the Basics',
+    channel:'VIDS for KIDS',
+    desc:'Vídeo en 3D que muestra el tablero y las piezas moviéndose. Muy visual, ideal para entender cómo se mueve cada pieza.',
+    level:'⬜ Principiante',
+    videoId:'5oH9kfcLPHQ',
+  },
+];
+
+function showVideos(){
+  const cards=NINJA_VIDEOS.map(v=>`
+  <div class="ruta-section" onclick="showVideo('${v.id}')">
+    <div class="ruta-section-icon" style="background:#0a1a2e;border-color:#60a5fa">${v.emoji}</div>
+    <div class="ruta-section-info">
+      <div class="ruta-section-title">${v.title}</div>
+      <div style="font-size:.78rem;color:var(--muted);margin-top:2px">${v.channel} · ${v.level}</div>
+    </div>
+    <div class="legend-arrow" style="color:#60a5fa">›</div>
+  </div>`).join('');
+
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showHome()">← Inicio</button>
+  <h1>📺 Videos Ninja</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:10px">
+  <div class="sensei-card">
+    <div class="sensei-avatar">🥷</div>
+    <div>
+      <div class="sensei-name">Sensei Ryu</div>
+      <div class="sensei-text">"Ver a otros jugar y explicar es parte del entrenamiento. Estos vídeos están en inglés — así practicáis dos cosas a la vez: ajedrez e inglés."</div>
+    </div>
+  </div>
+  <div style="background:var(--card2);border-radius:10px;padding:10px 14px;font-size:.82rem;color:var(--muted)">
+    🇬🇧 Vídeos en inglés — escucha las palabras del ajedrez: <b>king, queen, rook, bishop, knight, pawn, check, checkmate</b>
+  </div>
+  ${cards}
+</div>`);
+}
+
+function showVideo(id){
+  const v=NINJA_VIDEOS.find(x=>x.id===id);
+  if(!v)return;
+  render(`
+<div class="topbar">
+  <button class="btn-sm btn-card" onclick="showVideos()">← Videos</button>
+  <h1>${v.emoji} Video</h1>
+  <div></div>
+</div>
+<div class="screen" style="padding-top:8px;gap:14px">
+  <div>
+    <div style="font-weight:800;font-size:1.05rem">${v.title}</div>
+    <div style="font-size:.8rem;color:var(--ninja2);margin-top:4px">${v.channel}</div>
+    <div style="font-size:.78rem;background:var(--card2);display:inline-block;padding:3px 10px;border-radius:20px;margin-top:6px">${v.level}</div>
+  </div>
+  <div class="video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/${v.videoId}?rel=0&modestbranding=1"
+      title="${v.title}"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none">
+    </iframe>
+  </div>
+  <div class="ruta-fact-list">
+    <div class="ruta-fact">📖 ${v.desc}</div>
+    <div class="ruta-fact">🇬🇧 <b>Palabras clave en inglés:</b> king (rey), queen (dama), rook (torre), bishop (alfil), knight (caballo), pawn (peón), check (jaque), checkmate (jaque mate)</div>
+  </div>
+  <button class="btn btn-ninja" onclick="showVideos()">← Volver a Videos</button>
+</div>`);
+}
 
 function showRuta(){
   const sections=RUTA_SECTIONS.map(s=>`
