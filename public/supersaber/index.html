@@ -458,14 +458,30 @@ const ACHS = [
 const SHOP_ITEMS = [
   {em:'🦁', nm:'León',      pr:100},
   {em:'🐯', nm:'Tigre',     pr:100},
+  {em:'🐼', nm:'Panda',     pr:100},
+  {em:'🦊', nm:'Zorro',     pr:100},
   {em:'🐸', nm:'Rana',      pr:200},
   {em:'🦋', nm:'Mariposa',  pr:200},
+  {em:'🐢', nm:'Tortuga',   pr:200},
+  {em:'🦉', nm:'Búho',      pr:200},
   {em:'🐉', nm:'Dragón',    pr:350},
   {em:'🤖', nm:'Robot',     pr:350},
+  {em:'🐺', nm:'Lobo',      pr:350},
+  {em:'🐙', nm:'Pulpo',     pr:350},
   {em:'🦄', nm:'Unicornio', pr:500},
   {em:'🚀', nm:'Cohete',    pr:500},
+  {em:'🦈', nm:'Tiburón',   pr:500},
+  {em:'🦅', nm:'Águila',    pr:500},
   {em:'⭐', nm:'Estrella',  pr:750},
-  {em:'👑', nm:'Corona',    pr:999}
+  {em:'🦖', nm:'Dinosaurio',pr:750},
+  {em:'🐬', nm:'Delfín',    pr:750},
+  {em:'👑', nm:'Corona',    pr:999},
+  {em:'🥷', nm:'Ninja',     pr:999},
+  {em:'🧙', nm:'Mago',      pr:999},
+  {em:'🦸', nm:'Superhéroe',pr:1500},
+  {em:'👽', nm:'Alienígena',pr:1500},
+  {em:'🏆', nm:'Campeón',   pr:2000},
+  {em:'💎', nm:'Diamante',  pr:2000}
 ];
 
 /* ══════════════════════════════════════
@@ -481,7 +497,12 @@ const MATH_LVS = [
   {id:7, nm:'Tablas ×7, ×8, ×9',    em:'🧮', df:4, ds:'Las tablas más difíciles',          tp:'mult', p:{tables:[7,8,9],   n:10}},
   {id:8, nm:'Problemas difíciles ✨',em:'🏆', df:5, ds:'Problemas de varios pasos',         tp:'prob', p:{diff:'hard'}},
   {id:9, nm:'Fracciones 🍕',        em:'🍕', df:3, ds:'Entiende y representa fracciones',    tp:'frac', p:{}},
-  {id:10,nm:'Medidas y tiempo ⏱️',  em:'📏', df:3, ds:'Cm, kg, litros, horas y minutos',     tp:'med',  p:{}}
+  {id:10,nm:'Medidas y tiempo ⏱️',  em:'📏', df:3, ds:'Cm, kg, litros, horas y minutos',     tp:'med',  p:{}},
+  {id:11,nm:'División',             em:'➗', df:4, ds:'Reparte en partes iguales, sin resto', tp:'div',  p:{tables:[2,3,4,5,10],n:10}},
+  {id:12,nm:'Dinero y números grandes 💶',em:'💶',df:4,ds:'Euros, céntimos y números hasta el millar',tp:'prob',p:{diff:'money'}},
+  {id:13,nm:'Sumas y restas con 3 cifras 🔢',em:'🔢',df:4,ds:'Números hasta 999, como en 5º de primaria',tp:'calc',p:{ops:['add','sub'],mx:999,carry:true,n:10}},
+  {id:14,nm:'Tablas ×11, ×12 y por 2 cifras ✖️',em:'✖️',df:5,ds:'Multiplicación avanzada de dos cifras',tp:'mult',p:{tables:[11,12,15,20,25],n:10}},
+  {id:15,nm:'División con divisores grandes ➗',em:'➗',df:5,ds:'Divide entre números del 6 al 12',tp:'div',p:{tables:[6,7,8,9,11,12],n:10}}
 ];
 const LANG_LVS = [
   {id:1, nm:'La B y la V',          em:'🔤', df:1, ds:'Palabras con B o V',                tp:'comp', p:{f:'bv'}},
@@ -494,7 +515,8 @@ const LANG_LVS = [
   {id:8, nm:'Lectura experta ✨',   em:'🏆', df:5, ds:'Textos con inferencias',             tp:'lect', p:{diff:'hard'}},
   {id:9, nm:'Sinónimos y antónimos',em:'🔄', df:2, ds:'Palabras con significado igual o contrario', tp:'sinan',p:{}},
   {id:10,nm:'Tipos de palabras 📝', em:'🏷️', df:3, ds:'Sustantivos, verbos y adjetivos',    tp:'tippal',p:{}},
-  {id:11,nm:'Acentuación 📣',       em:'´',  df:4, ds:'Palabras agudas, llanas y esdrújulas',tp:'acent', p:{}}
+  {id:11,nm:'Acentuación 📣',       em:'´',  df:4, ds:'Palabras agudas, llanas y esdrújulas',tp:'acent', p:{}},
+  {id:12,nm:'Género y número',      em:'♀️♂️',df:3, ds:'Masculino, femenino, singular y plural',tp:'genus', p:{}}
 ];
 const LOGIC_LVS=[
   {id:1,nm:'¿Qué no pertenece?',  em:'🚫',df:2,ds:'Encuentra el intruso del grupo',         tp:'grp',   p:{}},
@@ -570,7 +592,9 @@ const GEO_SVG={
   rec:`<svg viewBox="0 0 160 160"><rect x="8" y="40" width="144" height="80" fill="#6EE7B7" stroke="#059669" stroke-width="4" rx="3"/></svg>`,
   cir:`<svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="67" fill="#FCA5A5" stroke="#DC2626" stroke-width="4"/></svg>`,
   pen:`<svg viewBox="0 0 160 160"><polygon points="80,6 148,56 122,138 38,138 12,56" fill="#FCD34D" stroke="#D97706" stroke-width="4"/></svg>`,
-  hex:`<svg viewBox="0 0 160 160"><polygon points="80,4 140,40 140,120 80,156 20,120 20,40" fill="#F9A8D4" stroke="#DB2777" stroke-width="4"/></svg>`
+  hex:`<svg viewBox="0 0 160 160"><polygon points="80,4 140,40 140,120 80,156 20,120 20,40" fill="#F9A8D4" stroke="#DB2777" stroke-width="4"/></svg>`,
+  oct:`<svg viewBox="0 0 160 160"><polygon points="80,10 129.5,30.5 150,80 129.5,129.5 80,150 30.5,129.5 10,80 30.5,30.5" fill="#C4B5FD" stroke="#7C3AED" stroke-width="4"/></svg>`,
+  rom:`<svg viewBox="0 0 160 160"><polygon points="80,30 150,80 80,130 10,80" fill="#FDBA74" stroke="#EA580C" stroke-width="4"/></svg>`
 };
 const geoQ=[
   {sh:'tri',q:'¿Cuántos lados\ntiene el triángulo?',ans:'3',opts:['2','3','4','5']},
@@ -591,6 +615,15 @@ const geoQ=[
   {sh:'pen',q:'¿Cómo se llama\nesta figura?',ans:'Pentágono',opts:['Pentágono','Hexágono','Cuadrado','Triángulo']},
   {sh:'rec',q:'¿Cómo se llama\nesta figura?',ans:'Rectángulo',opts:['Cuadrado','Triángulo','Rectángulo','Círculo']},
   {sh:'cir',q:'¿Cómo se llama\nesta figura?',ans:'Círculo',opts:['Óvalo','Círculo','Esfera','Elipse']}
+,
+  {"sh":"oct","q":"¿Cuántos lados\ntiene el octógono?","ans":"8","opts":["6","7","8","9"]},
+  {"sh":"oct","q":"¿Cómo se llama\nesta figura?","ans":"Octógono","opts":["Hexágono","Heptágono","Octógono","Eneágono"]},
+  {"sh":"rom","q":"¿Cómo se llama esta figura\nde 4 lados iguales sin ángulos rectos?","ans":"Rombo","opts":["Cuadrado","Rombo","Rectángulo","Trapecio"]},
+  {"sh":"rom","q":"¿Cuántos lados\ntiene el rombo?","ans":"4","opts":["3","4","5","6"]},
+  {"sh":"rec","q":"¿Qué tipo de ángulo forman\nlas esquinas del rectángulo?","ans":"Recto (90°)","opts":["Recto (90°)","Agudo (menos de 90°)","Obtuso (más de 90°)","No tiene ángulos"]},
+  {"sh":"tri","q":"Un triángulo con sus\n3 lados iguales se llama:","ans":"Equilátero","opts":["Equilátero","Isósceles","Escaleno","Rectángulo"]},
+  {"sh":"pen","q":"¿Cuántas diagonales\ntiene un pentágono?","ans":"5","opts":["3","5","6","10"]},
+  {"sh":"hex","q":"¿Cuántas diagonales\ntiene un hexágono?","ans":"9","opts":["6","9","12","15"]}
 ];
 const logicQ=[
   {q:'2, 4, 6, 8, ___',hint:'Se suma 2 cada vez',ans:'10',opts:['8','9','10','11']},
@@ -617,6 +650,15 @@ const logicQ=[
   {q:'Ana nació en 2016.\n¿Cuántos años tiene en 2026?',hint:'2026 − 2016 = ?',ans:'10',opts:['8','9','10','11']},
   {q:'3 estuches con\n7 lápices cada uno.\n¿Cuántos lápices hay?',hint:'3 × 7 = ?',ans:'21',opts:['18','21','24','10']},
   {q:'Empiezo con 50€, gasto 15€\ny luego gano 10€.\n¿Cuánto tengo ahora?',hint:'50 − 15 + 10 = ?',ans:'45€',opts:['35€','40€','45€','55€']}
+,
+  {"q":"3, 6, 12, 24, ___","hint":"Cada número es el doble del anterior","ans":"48","opts":["36","40","48","30"]},
+  {"q":"1, 4, 9, 16, ___","hint":"Son los cuadrados: 1×1, 2×2, 3×3, 4×4...","ans":"25","opts":["20","24","25","30"]},
+  {"q":"2, 3, 5, 8, 13, ___","hint":"Cada número es la suma de los dos anteriores","ans":"21","opts":["18","20","21","24"]},
+  {"q":"Un lápiz cuesta 2€ más\nque una goma. La goma cuesta 3€.\n¿Cuánto cuestan los dos juntos?","hint":"Lápiz = 3+2 = 5€, total = 5+3","ans":"8€","opts":["5€","6€","8€","10€"]},
+  {"q":"Pablo es 4 años mayor\nque su hermana. Ella tiene 9 años.\n¿Cuántos tendrá Pablo cuando ella cumpla 15?","hint":"La diferencia de edad siempre es 4 años","ans":"19","opts":["13","15","19","23"]},
+  {"q":"En una granja hay el triple\nde gallinas que de vacas.\nSi hay 8 vacas, ¿cuántas gallinas hay?","hint":"8 × 3 = ?","ans":"24","opts":["16","20","24","32"]},
+  {"q":"Un depósito se llena a\n5 litros por minuto.\n¿Cuántos litros habrá en 12 minutos?","hint":"5 × 12 = ?","ans":"60 litros","opts":["50 litros","55 litros","60 litros","65 litros"]},
+  {"q":"Si hoy es día 3 y un examen\nes en 9 días, ¿qué día\ndel mes será el examen?","hint":"3 + 9 = ?","ans":"Día 12","opts":["Día 9","Día 11","Día 12","Día 13"]}
 ];
 const compQ=[
   {w:'HA_LAR',m:'B',o:['B','V','P','M'],f:'HABLAR', r:'hablar → con B',t:'bv'},
@@ -658,7 +700,24 @@ const compQ=[
   {w:'A_ÍTO', m:'H',o:['H','J','G','A'],f:'HÁBITO', r:'hábito → con H', t:'h'},
   {w:'_ABICHUELA',m:'H',o:['H','J','G','A'],f:'HABICHUELA',r:'habichuela → con H',t:'h'},
   {w:'_ILO',  m:'H',o:['H','I','J','G'],f:'HILO',   r:'hilo → con H',   t:'h'},
-  {w:'_UMO',  m:'H',o:['H','U','J','G'],f:'HUMO',   r:'humo → con H',   t:'h'}
+  {w:'_UMO',  m:'H',o:['H','U','J','G'],f:'HUMO',   r:'humo → con H',   t:'h'},
+  {"w":"TA_LA","m":"B","o":["B","V","P","D"],"f":"TABLA","r":"tabla → con B","t":"bv"},
+  {"w":"NIE_E","m":"V","o":["B","V","F","P"],"f":"NIEVE","r":"nieve → con V","t":"bv"},
+  {"w":"LLA_E","m":"V","o":["B","V","D","P"],"f":"LLAVE","r":"llave → con V","t":"bv"},
+  {"w":"PO_RE","m":"B","o":["B","V","P","D"],"f":"POBRE","r":"pobre → con B","t":"bv"},
+  {"w":"NUE_O","m":"V","o":["B","V","F","P"],"f":"NUEVO","r":"nuevo → con V","t":"bv"},
+  {"w":"_UESO","m":"H","o":["H","U","J","G"],"f":"HUESO","r":"hueso → con H","t":"h"},
+  {"w":"_OSPITAL","m":"H","o":["H","O","J","G"],"f":"HOSPITAL","r":"hospital → con H","t":"h"},
+  {"w":"_ISTORIA","m":"H","o":["H","I","J","G"],"f":"HISTORIA","r":"historia → con H","t":"h"},
+  {"w":"_UERTO","m":"H","o":["H","U","J","G"],"f":"HUERTO","r":"huerto → con H","t":"h"},
+  {"w":"A_ORA","m":"H","o":["H","J","G","A"],"f":"AHORA","r":"ahora → con H","t":"h"},
+
+  {"w":"GO_IERNO","m":"B","o":["B","V","P","D"],"f":"GOBIERNO","r":"gobierno → con B","t":"bv"},
+  {"w":"_OLCÁN","m":"V","o":["B","V","F","P"],"f":"VOLCÁN","r":"volcán → con V","t":"bv"},
+  {"w":"CERE_RO","m":"B","o":["B","V","P","D"],"f":"CEREBRO","r":"cerebro → con B","t":"bv"},
+  {"w":"VE_ÍCULO","m":"H","o":["H","J","G","V"],"f":"VEHÍCULO","r":"vehículo → con H","t":"h"},
+  {"w":"_ORIZONTE","m":"H","o":["H","O","J","G"],"f":"HORIZONTE","r":"horizonte → con H","t":"h"},
+  {"w":"PRO_IBIDO","m":"H","o":["H","J","G","B"],"f":"PROHIBIDO","r":"prohibido → con H","t":"h"}
 ];
 const anaQ=[
   {sc:'O-L-S',    ans:'SOL',    hint:'La estrella del día ☀️',len:3},
@@ -699,6 +758,15 @@ const anaQ=[
   {sc:'A-T-N-A-L-P',ans:'PLANTA', hint:'Tiene raíces, tallo y hojas 🌱',len:6},
   {sc:'A-N-A-Ñ-A-M',ans:'MAÑANA', hint:'Antes del mediodía ☀️',len:6},
   {sc:'A-J-A-N-R-A-N',ans:'NARANJA',hint:'Fruta cítrica de color naranja 🍊',len:7}
+,
+  {"sc":"E-N-E-L-T-E-F-A","ans":"ELEFANTE","hint":"El animal terrestre más grande 🐘","len":8},
+  {"sc":"S-M-A-A-P-R-I-O","ans":"MARIPOSA","hint":"Antes fue una oruga 🦋","len":8},
+  {"sc":"R-C-O-L-D-O-C-O-I","ans":"COCODRILO","hint":"Vive en ríos y tiene muchos dientes 🐊","len":9},
+  {"sc":"T-C-L-I-I-C-E-A-B","ans":"BICICLETA","hint":"Vehículo de dos ruedas que se pedalea 🚲","len":9},
+  {"sc":"O-D-R-A-D-R-E-N-O","ans":"ORDENADOR","hint":"Lo usamos para escribir y jugar 💻","len":9},
+  {"sc":"D-I-N-I-O-O-R-S-A-U","ans":"DINOSAURIO","hint":"Reptil gigante que ya no existe 🦕","len":10},
+  {"sc":"A-C-O-D-E-R-I-L-N-A","ans":"CALENDARIO","hint":"Muestra los días, meses y años 📅","len":10},
+  {"sc":"V-T-E-L-O-S-I-E-N-I","ans":"TELEVISIÓN","hint":"Aparato para ver programas y películas 📺","len":10}
 ];
 const errQ=[
   {ps:['El sol brilla','oy','muy fuerte.'],          ei:1,co:'hoy',    ru:'HOY se escribe con H'},
@@ -750,7 +818,30 @@ const errQ=[
   // ──── PUNTUACIÓN ────
   {ps:['Cómo te llamas','?'],                          ei:0,co:'¿Cómo te llamas?',ru:'Las preguntas en español llevan signos de interrogación al principio (¿) y al final (?)'},
   {ps:['Qué día tan bonito','!'],                       ei:0,co:'¡Qué día tan bonito!',ru:'Las exclamaciones llevan signos de exclamación al principio (¡) y al final (!)'},
-  {ps:['Compré manzanas','peras','y uvas en el mercado.'],ei:1,co:'peras,',ru:'Se usa una coma para separar los elementos de una lista'}
+  {ps:['Compré manzanas','peras','y uvas en el mercado.'],ei:1,co:'peras,',ru:'Se usa una coma para separar los elementos de una lista'},
+  {"ps":["El caballo come ","ierba"," del campo."],"ei":1,"co":"hierba","ru":"HIERBA se escribe con H (hie-)"},
+  {"ps":["Para el desayuno quiero un ","uevo"," frito."],"ei":1,"co":"huevo","ru":"HUEVO se escribe con H (hue-)"},
+  {"ps":["A Pablo le gusta ","escrivir"," cuentos."],"ei":1,"co":"escribir","ru":"ESCRIBIR se escribe con B"},
+  {"ps":["Ayer ","iva"," al parque con mi madre."],"ei":1,"co":"iba","ru":"Los verbos en -ABA/-IBA (pretérito imperfecto) se escriben con B"},
+  {"ps":["Los peces necesitan agua para ","bibir","."],"ei":1,"co":"vivir","ru":"VIVIR se escribe con V"},
+  {"ps":["Hace mucho frío en ","imbierno","."],"ei":1,"co":"invierno","ru":"Antes de V siempre va N (nunca M): INVIERNO"},
+  {"ps":["Hoy va a caer mucha ","yuvia"," por la tarde."],"ei":1,"co":"lluvia","ru":"LLUVIA se escribe con LL"},
+  {"ps":["La ","gayina"," pone huevos cada día."],"ei":1,"co":"gallina","ru":"GALLINA se escribe con LL"},
+  {"ps":["Este dibujo es un buen ","egemplo","."],"ei":1,"co":"ejemplo","ru":"EJEMPLO se escribe con J"},
+  {"ps":["Los ","jemelos"," se parecen muchísimo."],"ei":1,"co":"gemelos","ru":"GEMELOS se escribe con G (ge- suena como je-)"},
+  {"ps":["El monstruo del cuento era muy ","jigante","."],"ei":1,"co":"gigante","ru":"GIGANTE se escribe con G (gi- suena como ji-)"},
+  {"ps":["Usamos un ","enbudo"," para llenar la botella."],"ei":1,"co":"embudo","ru":"Antes de B y P siempre va M (nunca N): EMBUDO"},
+
+  {"ps":["Yo ","se"," que la respuesta es correcta."],"ei":1,"co":"sé","ru":"SÉ (del verbo saber) lleva tilde para diferenciarse de SE (pronombre)"},
+  {"ps":["¿","Tu"," vienes a la fiesta del sábado?"],"ei":1,"co":"Tú","ru":"TÚ (pronombre personal) lleva tilde; TU (posesivo, como \"tu casa\") no"},
+  {"ps":["Quiero comer ","mas"," pasteles, por favor."],"ei":1,"co":"más","ru":"MÁS (cantidad) lleva tilde; MAS (equivale a \"pero\") no"},
+  {"ps":["Cuando le pregunté si venía, me dijo que ","si","."],"ei":1,"co":"sí","ru":"SÍ (afirmación) lleva tilde; SI (condicional, \"si llueve...\") no"},
+  {"ps":["Tiene que ","a ver"," mucha gente en el concierto."],"ei":1,"co":"haber","ru":"HABER (verbo, indica que existe algo) no debe confundirse con A VER (mirar)"},
+  {"ps":["Los niños fueron a ","botar"," en las elecciones del colegio."],"ei":1,"co":"votar","ru":"VOTAR (elegir) se escribe con V; BOTAR es saltar una pelota"},
+  {"ps":["Todavía no ha llegado; ","aun"," está de camino."],"ei":1,"co":"aún","ru":"AÚN (todavía) lleva tilde; AUN (incluso) no"},
+  {"ps":["Mi ","avuelo"," cuenta historias geniales de su juventud."],"ei":1,"co":"abuelo","ru":"ABUELO se escribe con B"},
+  {"ps":["El profesor dio una buena ","esplicación"," del tema nuevo."],"ei":1,"co":"explicación","ru":"Después de EX viene PLI: EXPLICACIÓN"},
+  {"ps":["El corredor saltó el último ","opstáculo"," de la carrera."],"ei":1,"co":"obstáculo","ru":"OBSTÁCULO se escribe con B"}
 ];
 const dictQ=[
   {w:'sol',    s:'El sol brilla fuerte.',         easy:true},
@@ -789,7 +880,33 @@ const dictQ=[
   {w:'río',    s:'El río pasa por el pueblo.',      easy:false},
   {w:'ladró',  s:'El perro ladró toda la noche.',   easy:false},
   {w:'águila', s:'El águila vuela muy alto.',       easy:false},
-  {w:'cárcel', s:'El ladrón fue a la cárcel.',      easy:false}
+  {w:'cárcel', s:'El ladrón fue a la cárcel.',      easy:false},
+  {"w":"jirafa","s":"La jirafa tiene el cuello muy largo.","easy":false},
+  {"w":"cangrejo","s":"El cangrejo camina de lado por la playa.","easy":false},
+  {"w":"jardín","s":"El jardín tiene muchas flores de colores.","easy":false},
+  {"w":"cohete","s":"El cohete despega hacia el espacio.","easy":false},
+  {"w":"ardilla","s":"La ardilla salta de rama en rama.","easy":false},
+  {"w":"yogur","s":"Me gusta merendar un yogur de fresa.","easy":false},
+  {"w":"zanahoria","s":"La zanahoria es naranja y muy crujiente.","easy":false},
+  {"w":"invierno","s":"En invierno hace mucho frío.","easy":false},
+  {"w":"tambor","s":"El tambor suena muy fuerte en el desfile.","easy":false},
+  {"w":"envase","s":"El envase de cristal es muy frágil.","easy":false},
+  {"w":"jueves","s":"Hoy es jueves y hace sol.","easy":false},
+  {"w":"hormiga","s":"La hormiga es un insecto muy trabajador.","easy":false},
+  {"w":"paraguas","s":"El paraguas me protege de la lluvia.","easy":false},
+  {"w":"guitarra","s":"Mi hermana toca la guitarra todas las tardes.","easy":false},
+  {"w":"jabón","s":"Me lavo las manos con jabón.","easy":false},
+
+  {"w":"excursión","s":"El colegio organiza una excursión a la montaña.","easy":false},
+  {"w":"aeropuerto","s":"Fuimos al aeropuerto a recoger a la abuela.","easy":false},
+  {"w":"obedecer","s":"Es importante obedecer las normas de seguridad.","easy":false},
+  {"w":"exagerar","s":"No hace falta exagerar tanto la historia.","easy":false},
+  {"w":"kilómetro","s":"El pueblo está a un kilómetro del colegio.","easy":false},
+  {"w":"inteligente","s":"Ese perro es muy inteligente y aprende rápido.","easy":false},
+  {"w":"vehículo","s":"Aparcaron el vehículo delante de la casa.","easy":false},
+  {"w":"bicicleta","s":"Aprendí a montar en bicicleta el año pasado.","easy":false},
+  {"w":"murciélago","s":"El murciélago solo sale de noche.","easy":false},
+  {"w":"extraordinario","s":"Fue un espectáculo extraordinario de verdad.","easy":false}
 ];
 
 const probQ=[
@@ -834,7 +951,53 @@ const probQ=[
   {prb:'En un colegio hay 320 alumnos repartidos en 8 clases iguales.',q:'¿Cuántos alumnos hay en cada clase?',ans:'40',opts:['32','36','40','45'],diff:'hard'},
   {prb:'Un avión vuela a 800 km por hora durante 3 horas.',q:'¿Cuántos kilómetros recorre en total?',ans:'2.400 km',opts:['1.600 km','2.100 km','2.400 km','2.700 km'],diff:'hard'},
   {prb:'María tiene el doble de edad que su hermano. Su hermano tiene 9 años.',q:'¿Cuántos años tendrá María dentro de 5 años?',ans:'23',opts:['18','19','23','27'],diff:'hard'},
-  {prb:'Un huerto tiene 6 filas de 15 tomateras cada una. Se secan 22 tomateras.',q:'¿Cuántas tomateras siguen sanas?',ans:'68',opts:['58','68','78','88'],diff:'hard'}
+  {prb:'Un huerto tiene 6 filas de 15 tomateras cada una. Se secan 22 tomateras.',q:'¿Cuántas tomateras siguen sanas?',ans:'68',opts:['58','68','78','88'],diff:'hard'},
+  // ──── DINERO Y NÚMEROS GRANDES ────
+  {prb:'Una piruleta cuesta 1€ y quieres comprar 4.',q:'¿Cuánto dinero necesitas?',ans:'4€',opts:['3€','4€','5€','8€'],diff:'money'},
+  {prb:'Tienes un billete de 10€ y compras un cuaderno de 6€.',q:'¿Cuánto dinero te queda?',ans:'4€',opts:['3€','4€','5€','16€'],diff:'money'},
+  {prb:'Un bocadillo cuesta 2€50 y un zumo cuesta 1€50.',q:'¿Cuánto pagas por los dos juntos?',ans:'4€',opts:['3€','3€50','4€','5€'],diff:'money'},
+  {prb:'Tienes 3 monedas de 2€ y 2 monedas de 1€.',q:'¿Cuánto dinero tienes en total?',ans:'8€',opts:['6€','7€','8€','10€'],diff:'money'},
+  {prb:'Un juguete cuesta 15€ y tienes 20€.',q:'¿Cuánto dinero te sobra?',ans:'5€',opts:['3€','5€','7€','35€'],diff:'money'},
+  {prb:'Compras 3 helados que cuestan 2€ cada uno.',q:'¿Cuánto pagas en total?',ans:'6€',opts:['5€','6€','8€','9€'],diff:'money'},
+  {prb:'Tienes 100 céntimos.',q:'¿A cuántos euros equivalen?',ans:'1€',opts:['1€','10€','0,1€','100€'],diff:'money'},
+  {prb:'El número 4.582 tiene varias cifras.',q:'¿Cuál es la cifra de las centenas?',ans:'5',opts:['4','5','8','2'],diff:'money'},
+  {prb:'El número 7.309.',q:'¿Cuál es la cifra de las unidades de millar?',ans:'7',opts:['7','3','0','9'],diff:'money'},
+  {prb:'Ordena de menor a mayor: 3.201, 3.021, 3.210.',q:'¿Cuál es el número MÁS PEQUEÑO?',ans:'3.021',opts:['3.201','3.021','3.210','Son iguales'],diff:'money'},
+  {prb:'Comparamos 5.678 y 5.687.',q:'¿Cuál de los dos números es mayor?',ans:'5.687',opts:['5.678','5.687','Son iguales','No se puede saber'],diff:'money'},
+  {prb:'El número 2.940.',q:'¿Cómo se lee este número?',ans:'Dos mil novecientos cuarenta',opts:['Dos mil novecientos cuarenta','Veinte mil novecientos cuarenta','Dos mil cuatrocientos noventa','Novecientos cuarenta mil'],diff:'money'},
+  {prb:'Tienes un billete de 5€ y quieres pagar algo de 5€ exactos.',q:'¿Cuánto cambio (vuelta) recibes?',ans:'0€',opts:['0€','1€','5€','10€'],diff:'money'},
+  {prb:'Cada cromo cuesta 50 céntimos y compras 4 cromos.',q:'¿Cuánto pagas en total?',ans:'2€',opts:['1€','2€','4€','20€'],diff:'money'},
+  {prb:'El número 6.005.',q:'¿Cuántas centenas tiene este número (cifra de centenas)?',ans:'0',opts:['0','6','5','60'],diff:'money'},
+  {prb:'Redondea 3.847 a la centena más cercana.',q:'¿Cuál es el resultado?',ans:'3.800',opts:['3.800','3.900','3.850','4.000'],diff:'money'},
+  {"prb":"Lucía tiene 27 canicas y su hermano le da 16 más.","q":"¿Cuántas canicas tiene ahora?","ans":"43","opts":["37","41","43","47"],"diff":"easy"},
+  {"prb":"En la clase hay 31 alumnos y llegan 4 nuevos.","q":"¿Cuántos alumnos hay ahora?","ans":"35","opts":["33","34","35","40"],"diff":"easy"},
+  {"prb":"Un granjero tiene 68 huevos y vende 29.","q":"¿Cuántos huevos le quedan?","ans":"39","opts":["35","39","43","49"],"diff":"easy"},
+  {"prb":"Hay 90 caramelos repartidos en bolsas de 9.","q":"¿Cuántas bolsas se pueden llenar?","ans":"10","opts":["8","10","11","18"],"diff":"easy"},
+  {"prb":"Un estuche cuesta 4€. Marcos compra 6 estuches.","q":"¿Cuánto paga en total?","ans":"24€","opts":["20€","22€","24€","30€"],"diff":"easy"},
+  {"prb":"Elena tiene 45 cromos. Su amiga le regala 3 sobres con 5 cromos cada uno.","q":"¿Cuántos cromos tiene Elena ahora?","ans":"60","opts":["55","57","60","65"],"diff":"easy"},
+  {"prb":"En el gallinero hay 8 filas con 7 huevos cada una.","q":"¿Cuántos huevos hay en total?","ans":"56","opts":["48","55","56","65"],"diff":"easy"},
+  {"prb":"Un tren lleva 96 pasajeros. En la estación bajan 37 y suben 12.","q":"¿Cuántos pasajeros lleva ahora?","ans":"71","opts":["58","68","71","84"],"diff":"easy"},
+  {"prb":"Rocío tiene 3 cajas con 12 rotuladores cada una.","q":"¿Cuántos rotuladores tiene en total?","ans":"36","opts":["24","30","36","39"],"diff":"easy"},
+  {"prb":"Un cine tiene 140 butacas. Se venden 58 entradas por la mañana y 47 por la tarde.","q":"¿Cuántas butacas quedan libres?","ans":"35","opts":["25","35","45","55"],"diff":"hard"},
+  {"prb":"Diego reparte 96 caramelos entre 8 amigos por igual.","q":"¿Cuántos caramelos recibe cada amigo?","ans":"12","opts":["8","10","12","16"],"diff":"hard"},
+  {"prb":"Una granja tiene 6 cajas con 24 huevos cada una. Se rompen 18 huevos.","q":"¿Cuántos huevos quedan en buen estado?","ans":"126","opts":["102","126","144","150"],"diff":"hard"},
+  {"prb":"Un autobús escolar hace 4 viajes al día llevando 32 niños en cada viaje.","q":"¿Cuántos niños transporta en total al día?","ans":"128","opts":["96","124","128","160"],"diff":"hard"},
+  {"prb":"Marta ahorra 12€ cada semana durante 5 semanas y luego gasta 25€ en un juego.","q":"¿Cuánto dinero le queda?","ans":"35€","opts":["25€","35€","45€","60€"],"diff":"hard"},
+  {"prb":"Una pastelería hace 18 tartas cada día durante 6 días. Vende 84 tartas.","q":"¿Cuántas tartas le quedan sin vender?","ans":"24","opts":["20","24","28","44"],"diff":"hard"},
+  {"prb":"Un almacén tiene 210 cajas. Reparte 15 cajas a cada uno de 9 camiones.","q":"¿Cuántas cajas quedan en el almacén?","ans":"75","opts":["60","75","90","150"],"diff":"hard"},
+  {"prb":"En un colegio hay 7 clases con 26 alumnos cada una. Faltan 11 alumnos ese día.","q":"¿Cuántos alumnos han ido a clase?","ans":"171","opts":["160","171","182","193"],"diff":"hard"},
+  {"prb":"Un jardinero planta 8 filas de 15 flores. Se marchitan 23 flores.","q":"¿Cuántas flores quedan bien?","ans":"97","opts":["74","97","105","120"],"diff":"hard"},
+
+  {"prb":"Un estadio tiene 3 gradas con 250 asientos cada una. Se venden 680 entradas.","q":"¿Cuántos asientos quedan libres?","ans":"70","opts":["50","70","90","120"],"diff":"hard"},
+  {"prb":"Una fábrica produce 45 juguetes cada hora durante 8 horas al día.","q":"¿Cuántos juguetes produce en un día?","ans":"360","opts":["320","352","360","405"],"diff":"hard"},
+  {"prb":"Marta compra 3 paquetes de 24 folios cada uno y reparte 50 folios entre sus compañeros.","q":"¿Cuántos folios le quedan?","ans":"22","opts":["12","22","32","50"],"diff":"hard"},
+  {"prb":"Un depósito de agua tiene 500 litros. Cada día se usan 35 litros.","q":"¿Cuántos litros quedarán después de 6 días?","ans":"290","opts":["255","290","325","360"],"diff":"hard"},
+  {"prb":"En una librería hay 18 estanterías con 45 libros cada una.","q":"¿Cuántos libros hay en total?","ans":"810","opts":["765","792","810","900"],"diff":"hard"},
+  {"prb":"Un autobús recorre 65 km cada hora durante 3 horas y luego 40 km más sin parar.","q":"¿Cuántos km ha recorrido en total?","ans":"235","opts":["195","210","235","300"],"diff":"hard"},
+  {"prb":"Una empresa reparte 972 caramelos entre 12 cajas por igual.","q":"¿Cuántos caramelos hay en cada caja?","ans":"81","opts":["72","78","81","93"],"diff":"hard"},
+  {"prb":"Sergio ahorra 15€ cada mes durante 8 meses y luego gasta 65€ en una bicicleta de segunda mano.","q":"¿Cuánto dinero le queda?","ans":"55€","opts":["40€","55€","70€","120€"],"diff":"hard"},
+  {"prb":"Un huerto tiene 24 filas con 16 tomateras cada una. Una helada estropea 90 tomateras.","q":"¿Cuántas tomateras quedan sanas?","ans":"294","opts":["270","294","318","384"],"diff":"hard"},
+  {"prb":"Un cine ofrece 8 sesiones al día con 120 espectadores cada una, pero un día se cancelan 2 sesiones.","q":"¿A cuántos espectadores afectó la cancelación ese día?","ans":"240","opts":["120","200","240","360"],"diff":"hard"}
 ];
 
 const lectQ=[
@@ -922,7 +1085,19 @@ const lectQ=[
   {txt:'Hace miles de años, en la Prehistoria, los seres humanos no sabían escribir ni cultivar la tierra. Se desplazaban de un lugar a otro siguiendo a los animales que cazaban, y recolectaban frutos y plantas silvestres. Vivían en cuevas o refugios sencillos y usaban herramientas de piedra. Con el tiempo, aprendieron a cultivar y a criar animales, y dejaron de moverse tanto: así nacieron los primeros pueblos.',
    q:'¿De qué material eran las herramientas de los humanos prehistóricos?',ans:'De piedra',opts:['De metal','De piedra','De plástico','De madera solamente'],diff:'hard'},
   {txt:'Hace miles de años, en la Prehistoria, los seres humanos no sabían escribir ni cultivar la tierra. Se desplazaban de un lugar a otro siguiendo a los animales que cazaban, y recolectaban frutos y plantas silvestres. Vivían en cuevas o refugios sencillos y usaban herramientas de piedra. Con el tiempo, aprendieron a cultivar y a criar animales, y dejaron de moverse tanto: así nacieron los primeros pueblos.',
-   q:'¿Cuál es la idea principal de este texto?',ans:'Cómo vivían los humanos en la Prehistoria y cómo cambiaron',opts:['Cómo vivían los humanos en la Prehistoria y cómo cambiaron','Describir un animal prehistórico','Contar la historia de un cazador famoso','Explicar cómo se hace el pan'],diff:'hard'}
+   q:'¿Cuál es la idea principal de este texto?',ans:'Cómo vivían los humanos en la Prehistoria y cómo cambiaron',opts:['Cómo vivían los humanos en la Prehistoria y cómo cambiaron','Describir un animal prehistórico','Contar la historia de un cazador famoso','Explicar cómo se hace el pan'],diff:'hard'},
+  {"txt":"Lucía va al mercado con su abuela los sábados. Compran frutas frescas, verduras y a veces flores para decorar la casa. A Lucía le gusta oler las fresas antes de comprarlas.","q":"¿Con quién va Lucía al mercado?","ans":"Con su abuela","opts":["Con su madre","Con su abuela","Con su hermano","Sola"],"diff":"easy"},
+  {"txt":"Lucía va al mercado con su abuela los sábados. Compran frutas frescas, verduras y a veces flores para decorar la casa. A Lucía le gusta oler las fresas antes de comprarlas.","q":"¿Qué le gusta hacer a Lucía con las fresas?","ans":"Olerlas antes de comprarlas","opts":["Comerlas en el mercado","Olerlas antes de comprarlas","Pintarlas","Contarlas"],"diff":"easy"},
+  {"txt":"Las abejas son insectos muy importantes para la naturaleza. Vuelan de flor en flor recogiendo un líquido dulce llamado néctar. Mientras se mueven, transportan polen de una flor a otra, y así ayudan a que nazcan nuevas plantas y frutos. Sin las abejas, muchos alimentos que comemos no existirían.","q":"¿Qué recogen las abejas de las flores?","ans":"Néctar","opts":["Agua","Néctar","Miel ya hecha","Semillas"],"diff":"medium"},
+  {"txt":"Las abejas son insectos muy importantes para la naturaleza. Vuelan de flor en flor recogiendo un líquido dulce llamado néctar. Mientras se mueven, transportan polen de una flor a otra, y así ayudan a que nazcan nuevas plantas y frutos. Sin las abejas, muchos alimentos que comemos no existirían.","q":"¿Qué transportan las abejas de una flor a otra?","ans":"Polen","opts":["Polen","Hojas","Agua","Tierra"],"diff":"medium"},
+  {"txt":"Las abejas son insectos muy importantes para la naturaleza. Vuelan de flor en flor recogiendo un líquido dulce llamado néctar. Mientras se mueven, transportan polen de una flor a otra, y así ayudan a que nazcan nuevas plantas y frutos. Sin las abejas, muchos alimentos que comemos no existirían.","q":"¿Por qué son importantes las abejas según el texto?","ans":"Porque ayudan a que nazcan nuevas plantas y frutos","opts":["Porque hacen mucho ruido","Porque ayudan a que nazcan nuevas plantas y frutos","Porque son de color amarillo","Porque viven en árboles"],"diff":"medium"},
+
+  {"txt":"El Sistema Solar está formado por el Sol y ocho planetas que giran a su alrededor. Mercurio es el planeta más cercano al Sol y también el más pequeño, mientras que Júpiter es el más grande de todos. La Tierra es el único planeta conocido donde existe vida, gracias a su distancia perfecta del Sol, que permite que el agua exista en estado líquido. Muchos científicos investigan si hay vida en otros planetas o lunas del universo.","q":"¿Por qué se dice que la Tierra está a una distancia \"perfecta\" del Sol?","ans":"Porque permite que el agua exista en estado líquido","opts":["Porque es el planeta más grande","Porque permite que el agua exista en estado líquido","Porque está más cerca que Mercurio","Porque no tiene luna"],"diff":"hard"},
+  {"txt":"El Sistema Solar está formado por el Sol y ocho planetas que giran a su alrededor. Mercurio es el planeta más cercano al Sol y también el más pequeño, mientras que Júpiter es el más grande de todos. La Tierra es el único planeta conocido donde existe vida, gracias a su distancia perfecta del Sol, que permite que el agua exista en estado líquido. Muchos científicos investigan si hay vida en otros planetas o lunas del universo.","q":"¿Qué diferencia hay entre Mercurio y Júpiter según el texto?","ans":"Mercurio es el más pequeño y cercano al Sol; Júpiter es el más grande","opts":["Mercurio es el más grande; Júpiter el más pequeño","Mercurio es el más pequeño y cercano al Sol; Júpiter es el más grande","Los dos son del mismo tamaño","Júpiter está más cerca del Sol que Mercurio"],"diff":"hard"},
+  {"txt":"El Sistema Solar está formado por el Sol y ocho planetas que giran a su alrededor. Mercurio es el planeta más cercano al Sol y también el más pequeño, mientras que Júpiter es el más grande de todos. La Tierra es el único planeta conocido donde existe vida, gracias a su distancia perfecta del Sol, que permite que el agua exista en estado líquido. Muchos científicos investigan si hay vida en otros planetas o lunas del universo.","q":"¿Qué se puede deducir sobre por qué los científicos buscan vida en otros lugares?","ans":"Porque no saben con certeza si la Tierra es el único lugar con vida","opts":["Porque ya saben que hay vida en Marte","Porque no saben con certeza si la Tierra es el único lugar con vida","Porque quieren mudarse a otro planeta","Porque el Sol se va a apagar pronto"],"diff":"hard"},
+  {"txt":"Un volcán se forma cuando el magma, roca fundida que está bajo la superficie de la Tierra, encuentra una grieta y sale al exterior en forma de lava. No todos los volcanes están activos: algunos llevan miles de años sin entrar en erupción y se llaman volcanes durmientes, aunque podrían despertar en el futuro. Alrededor de los volcanes suele haber tierra muy fértil, por lo que mucha gente vive cerca de ellos a pesar del peligro.","q":"¿Por qué vive gente cerca de los volcanes a pesar del peligro?","ans":"Porque la tierra alrededor suele ser muy fértil","opts":["Porque no saben que es peligroso","Porque la tierra alrededor suele ser muy fértil","Porque los volcanes nunca entran en erupción","Porque el gobierno los obliga a vivir allí"],"diff":"hard"},
+  {"txt":"Un volcán se forma cuando el magma, roca fundida que está bajo la superficie de la Tierra, encuentra una grieta y sale al exterior en forma de lava. No todos los volcanes están activos: algunos llevan miles de años sin entrar en erupción y se llaman volcanes durmientes, aunque podrían despertar en el futuro. Alrededor de los volcanes suele haber tierra muy fértil, por lo que mucha gente vive cerca de ellos a pesar del peligro.","q":"¿Qué significa que un volcán esté \"durmiente\"?","ans":"Que lleva mucho tiempo sin erupcionar pero podría hacerlo","opts":["Que ha desaparecido para siempre","Que lleva mucho tiempo sin erupcionar pero podría hacerlo","Que nunca ha tenido una erupción","Que solo entra en erupción de noche"],"diff":"hard"},
+  {"txt":"Un volcán se forma cuando el magma, roca fundida que está bajo la superficie de la Tierra, encuentra una grieta y sale al exterior en forma de lava. No todos los volcanes están activos: algunos llevan miles de años sin entrar en erupción y se llaman volcanes durmientes, aunque podrían despertar en el futuro. Alrededor de los volcanes suele haber tierra muy fértil, por lo que mucha gente vive cerca de ellos a pesar del peligro.","q":"¿Qué es la lava según el texto?","ans":"Magma que ha salido al exterior del volcán","opts":["Roca fundida que está bajo la superficie sin salir","Magma que ha salido al exterior del volcán","Un tipo de piedra fría","El humo que sale del volcán"],"diff":"hard"}
 ];
 
 /* ══════════════════════════════════════
@@ -931,76 +1106,47 @@ const lectQ=[
    hay que unir pistas para deducirla)
 ══════════════════════════════════════ */
 const detectQ=[
-  // ──── FÁCILES ────
-  {txt:'María se puso el paraguas y las botas de agua antes de salir de casa.',
-   q:'¿Qué tiempo hace probablemente afuera?',ans:'Está lloviendo',opts:['Hace mucho sol','Está lloviendo','Hace mucho frío y nieva','Hay niebla'],diff:'easy'},
-  {txt:'María se puso el paraguas y las botas de agua antes de salir de casa.',
-   q:'¿Por qué se puso María esa ropa?',ans:'Para no mojarse con la lluvia',opts:['Para no mojarse con la lluvia','Porque hacía mucho calor','Para hacer deporte','Porque iba a nadar'],diff:'easy'},
-  {txt:'Pedro llegó a casa con la ropa llena de barro y trayendo un balón bajo el brazo.',
-   q:'¿Qué se puede deducir sobre lo que hizo Pedro?',ans:'Estuvo jugando al fútbol en el barro',opts:['Estuvo jugando al fútbol en el barro','Estuvo leyendo en la biblioteca','Estuvo durmiendo la siesta','Estuvo pintando un cuadro'],diff:'easy'},
-  {txt:'Pedro llegó a casa con la ropa llena de barro y trayendo un balón bajo el brazo.',
-   q:'¿Qué debería hacer Pedro antes de sentarse en el sofá?',ans:'Cambiarse de ropa porque está sucia',opts:['Cambiarse de ropa porque está sucia','Ponerse más barro','Guardar el balón en la nevera','Nada, puede sentarse igual'],diff:'easy'},
-  {txt:'El perro de Sofía movía la cola muy rápido y ladraba mientras saltaba a su alrededor al verla llegar.',
-   q:'¿Cómo se siente el perro?',ans:'Contento y emocionado',opts:['Contento y emocionado','Triste y asustado','Cansado y aburrido','Enfadado'],diff:'easy'},
-  {txt:'El perro de Sofía movía la cola muy rápido y ladraba mientras saltaba a su alrededor al verla llegar.',
-   q:'¿Qué relación tienen probablemente Sofía y el perro?',ans:'Son dueña y mascota que se quieren',opts:['Son dueña y mascota que se quieren','No se conocen de nada','El perro le tiene miedo','Son desconocidos'],diff:'easy'},
-  {txt:'Los alumnos entraron en clase con los paraguas goteando y el pelo empapado.',
-   q:'¿Qué tiempo hacía cuando llegaron al colegio?',ans:'Llovía',opts:['Hacía sol','Llovía','Nevaba','Hacía viento seco'],diff:'easy'},
-  {txt:'Marcos apagó la luz de su habitación, se tapó con la manta y cerró los ojos.',
-   q:'¿Qué va a hacer Marcos?',ans:'Dormir',opts:['Dormir','Bañarse','Desayunar','Salir a jugar'],diff:'easy'},
-  {txt:'En la mesa había un pastel con velas encendidas y globos de colores por toda la habitación.',
-   q:'¿Qué se está celebrando probablemente?',ans:'Un cumpleaños',opts:['Un cumpleaños','Un examen','Un funeral','Un día normal de colegio'],diff:'easy'},
-  {txt:'En la mesa había un pastel con velas encendidas y globos de colores por toda la habitación.',
-   q:'¿Qué pasará justo después de que canten "Cumpleaños feliz"?',ans:'Soplarán las velas',opts:['Soplarán las velas','Se irán todos a dormir','Empezarán a llover','Apagarán los globos'],diff:'easy'},
-  {txt:'Cuando Laura llegó al parque, todos los columpios y toboganes estaban ocupados por otros niños.',
-   q:'¿Qué se puede deducir sobre el parque en ese momento?',ans:'Había mucha gente y estaba muy concurrido',opts:['Había mucha gente y estaba muy concurrido','El parque estaba completamente vacío','Estaba cerrado por obras','Era de noche y no había nadie'],diff:'easy'},
-  {txt:'Cuando Ana abrió la nevera, vio que no quedaba ni una gota de leche.',
-   q:'¿Qué necesita hacer la familia de Ana?',ans:'Ir a comprar leche',opts:['Ir a comprar leche','Tirar la nevera','Beber agua en vez de leche para siempre','Llamar a un electricista'],diff:'easy'},
-  {txt:'Iván bostezaba sin parar y se le cerraban los ojos mientras hacía los deberes por la tarde.',
-   q:'¿Qué se puede deducir sobre Iván?',ans:'Tiene mucho sueño',opts:['Tiene mucho sueño','Está muy emocionado','Tiene mucha hambre','Está muy asustado'],diff:'easy'},
-  {txt:'El helado de Carla se derritió tan rápido que le chorreaba por toda la mano.',
-   q:'¿Qué tiempo hacía probablemente ese día?',ans:'Mucho calor',opts:['Mucho calor','Mucho frío','Estaba nevando','Había granizo'],diff:'easy'},
-  {txt:'Cuando el timbre del recreo sonó, todos los niños dejaron los lápices y salieron corriendo al patio.',
-   q:'¿Qué se puede deducir sobre cómo se sienten los niños con el recreo?',ans:'Les gusta mucho y lo esperan con ganas',opts:['Les gusta mucho y lo esperan con ganas','Odian el recreo','Prefieren seguir estudiando','Tienen miedo del patio'],diff:'easy'},
-  {txt:'Rubén sopló y sopló, pero no consiguió apagar ni una sola vela del pastel.',
-   q:'¿Qué se puede deducir sobre las velas?',ans:'Eran velas de broma que no se apagan',opts:['Eran velas de broma que no se apagan','No había ninguna vela encendida','Rubén no tenía boca','El pastel estaba congelado'],diff:'easy'},
-  // ──── MEDIOS ────
-  {txt:'Cuando el profesor anunció el examen sorpresa, varios alumnos se quejaron y otros se pusieron nerviosos, pero Marta sonrió tranquila y sacó su lápiz.',
-   q:'¿Qué se puede deducir sobre Marta?',ans:'Había estudiado y se sentía preparada',opts:['Había estudiado y se sentía preparada','No sabía que había examen','Odiaba los exámenes','Se iba a marchar de clase'],diff:'medium'},
-  {txt:'El campo llevaba tres semanas sin lluvia y las plantas del huerto empezaban a ponerse amarillas y a doblarse hacia el suelo.',
-   q:'¿Qué necesitan urgentemente las plantas del huerto?',ans:'Agua, deben ser regadas',opts:['Agua, deben ser regadas','Más sol','Menos tierra','Ser cortadas'],diff:'medium'},
-  {txt:'Javier revisó su mochila dos veces, miraba el reloj cada minuto y caminaba de un lado a otro cerca de la puerta.',
-   q:'¿Cómo se siente Javier probablemente?',ans:'Nervioso porque cree que va a llegar tarde',opts:['Nervioso porque cree que va a llegar tarde','Muy tranquilo y relajado','Aburrido sin nada que hacer','Con mucho sueño'],diff:'medium'},
-  {txt:'La tienda de la esquina tenía las persianas bajadas y un cartel colgado que decía "Cerrado por vacaciones hasta el 1 de septiembre".',
-   q:'¿Cuándo podremos volver a comprar en esa tienda?',ans:'A partir del 1 de septiembre',opts:['A partir del 1 de septiembre','Nunca más','Mañana mismo','Solo los domingos'],diff:'medium'},
-  {txt:'Los bomberos llegaron rápidamente a la calle y se veía humo negro saliendo de una ventana del segundo piso.',
-   q:'¿Qué está pasando probablemente en el edificio?',ans:'Hay un incendio',opts:['Hay un incendio','Están cocinando pan','Es un desfile de bomberos','Están limpiando cristales'],diff:'medium'},
-  {txt:'Al destapar la olla, salió un vapor con mucho olor a ajo y tomate, y la abuela removía con una cuchara de madera.',
-   q:'¿Qué está preparando la abuela probablemente?',ans:'Una salsa o guiso de tomate',opts:['Una salsa o guiso de tomate','Un helado','Una tarta fría','Un batido de fresa'],diff:'medium'},
-  {txt:'Diego llevaba puesto el bañador, las chanclas y una toalla al hombro cuando salió de casa con sus padres un sábado de julio.',
-   q:'¿A dónde va probablemente Diego?',ans:'A la piscina o a la playa',opts:['A la piscina o a la playa','Al colegio','A una boda','A esquiar en la montaña'],diff:'medium'},
-  {txt:'El jarrón de cristal apareció roto en el suelo del salón, y el gato de la casa estaba sentado justo al lado, sobre la estantería.',
-   q:'¿Qué es lo más probable que haya pasado?',ans:'El gato tiró el jarrón desde la estantería',opts:['El gato tiró el jarrón desde la estantería','El jarrón se rompió solo sin motivo','Vino un ladrón y lo rompió','El jarrón nunca existió'],diff:'medium'},
-  {txt:'Todos los paraguas de la tienda se habían vendido en una sola mañana, algo que no pasaba desde hacía meses.',
-   q:'¿Qué se puede deducir sobre el pronóstico del tiempo esos días?',ans:'Se esperaba lluvia intensa',opts:['Se esperaba lluvia intensa','Se esperaba una ola de calor','Iba a nevar en verano','No cambiaría el tiempo'],diff:'medium'},
-  // ──── DIFÍCILES ────
-  {txt:'Tres amigos hablan de cuándo llegaron al parque. Pol dice que llegó antes que Marc. Marc dice que llegó antes que Nuria. Nuria dice que fue la última en llegar.',
-   q:'¿En qué orden llegaron al parque, del primero al último?',ans:'Pol, Marc y Nuria',opts:['Pol, Marc y Nuria','Nuria, Marc y Pol','Marc, Pol y Nuria','Nuria, Pol y Marc'],diff:'hard'},
-  {txt:'Tres amigos hablan de cuándo llegaron al parque. Pol dice que llegó antes que Marc. Marc dice que llegó antes que Nuria. Nuria dice que fue la última en llegar.',
-   q:'¿Quién llegó primero de los tres?',ans:'Pol',opts:['Pol','Marc','Nuria','Los tres a la vez'],diff:'hard'},
-  {txt:'En una excavación arqueológica se encontraron vasijas de barro rotas, semillas quemadas y huesos de animales pequeños, todo alrededor de un círculo de piedras ennegrecidas.',
-   q:'¿Qué actividad realizaban probablemente las personas en ese lugar?',ans:'Cocinaban alimentos alrededor de una hoguera',opts:['Cocinaban alimentos alrededor de una hoguera','Nadaban en un río','Dormían bajo el agua','Construían barcos'],diff:'hard'},
-  {txt:'En una excavación arqueológica se encontraron vasijas de barro rotas, semillas quemadas y huesos de animales pequeños, todo alrededor de un círculo de piedras ennegrecidas.',
-   q:'¿Qué pista indica que allí se usaba fuego?',ans:'Las piedras ennegrecidas y las semillas quemadas',opts:['Las piedras ennegrecidas y las semillas quemadas','Las vasijas de barro','Los huesos de animales','El tamaño del círculo'],diff:'hard'},
-  {txt:'Elena ahorró 2€ cada semana durante 5 semanas para comprarse un cómic de 12€. El día que fue a comprarlo, descubrió que estaba rebajado a 8€.',
-   q:'¿Cuánto dinero le sobró a Elena después de comprar el cómic?',ans:'2€',opts:['0€','2€','4€','8€'],diff:'hard'},
-  {txt:'Elena ahorró 2€ cada semana durante 5 semanas para comprarse un cómic de 12€. El día que fue a comprarlo, descubrió que estaba rebajado a 8€.',
-   q:'¿Cuánto dinero tenía ahorrado Elena antes de entrar en la tienda?',ans:'10€',opts:['8€','10€','12€','2€'],diff:'hard'},
-  {txt:'El detective encontró la ventana de la cocina abierta, huellas pequeñas de patas llenas de barro que iban hasta la nevera, y ni rastro del gato de la casa por ningún lado.',
-   q:'¿Qué es lo más probable que haya ocurrido?',ans:'El gato entró por la ventana y buscó comida en la cocina',opts:['El gato entró por la ventana y buscó comida en la cocina','Un ladrón humano robó la nevera entera','La ventana se abrió sola sin motivo','El gato aprendió a cocinar'],diff:'hard'},
-  {txt:'El detective encontró la ventana de la cocina abierta, huellas pequeñas de patas llenas de barro que iban hasta la nevera, y ni rastro del gato de la casa por ningún lado.',
-   q:'¿Qué pista descarta que haya sido una persona adulta?',ans:'Las huellas son pequeñas y de patas, no de zapatos',opts:['Las huellas son pequeñas y de patas, no de zapatos','La ventana estaba cerrada','No había ninguna huella','El gato dejó una nota'],diff:'hard'}
-];
+  {"txt":"Cuando Diego llegó a casa, encontró la mesa puesta con cuatro platos, pero en la cocina solo estaba su madre preparando la comida.","q":"¿Qué se puede deducir sobre lo que va a pasar?","ans":"Van a venir más personas a comer","opts":["Van a venir más personas a comer","La madre va a comer en cuatro platos distintos","Van a tirar los platos sobrantes","No va a venir nadie más"],"diff":"easy"},
+  {"txt":"Cuando Diego llegó a casa, encontró la mesa puesta con cuatro platos, pero en la cocina solo estaba su madre preparando la comida.","q":"¿Cuántas personas más, aparte de Diego y su madre, se esperan para comer?","ans":"Dos personas más","opts":["Ninguna más","Una persona más","Dos personas más","Cuatro personas más"],"diff":"easy"},
+  {"txt":"En el cine, las luces se apagaron poco a poco y todo el mundo dejó de hablar y miró hacia la pantalla.","q":"¿Qué va a pasar justo después?","ans":"Va a empezar la película","opts":["Va a empezar la película","Van a encender las luces otra vez","Va a empezar el descanso","Todos se van a ir a casa"],"diff":"easy"},
+  {"txt":"En el cine, las luces se apagaron poco a poco y todo el mundo dejó de hablar y miró hacia la pantalla.","q":"¿Por qué dejó de hablar la gente?","ans":"Porque la película estaba a punto de comenzar","opts":["Porque la película estaba a punto de comenzar","Porque se quedaron sin voz","Porque el cine se quedó sin sonido","Porque alguien les mandó callar por el móvil"],"diff":"easy"},
+  {"txt":"Roberto entró en la cocina, olió algo quemado y vio humo saliendo del horno, aunque no se veía ningún fuego.","q":"¿Qué es lo más probable que haya pasado?","ans":"Se ha quemado la comida dentro del horno","opts":["Se ha quemado la comida dentro del horno","Hay un incendio grande en toda la casa","El horno ha explotado","No ha pasado nada especial"],"diff":"easy"},
+  {"txt":"Roberto entró en la cocina, olió algo quemado y vio humo saliendo del horno, aunque no se veía ningún fuego.","q":"¿Qué debería hacer Roberto primero?","ans":"Apagar el horno y sacar la comida quemada","opts":["Apagar el horno y sacar la comida quemada","Encender más fuego","Esperar a que se queme del todo","Cerrar la cocina con llave"],"diff":"easy"},
+  {"txt":"Cuando Elena llegó al colegio muy temprano, la puerta principal estaba cerrada con llave y no se veía a ningún otro niño por la calle.","q":"¿Qué se puede deducir sobre la hora a la que llegó Elena?","ans":"Llegó antes de que abrieran el colegio","opts":["Llegó antes de que abrieran el colegio","Llegó tarde y todos ya estaban dentro","Es fin de semana y no hay colegio","El colegio se ha mudado de sitio"],"diff":"easy"},
+  {"txt":"Cuando Elena llegó al colegio muy temprano, la puerta principal estaba cerrada con llave y no se veía a ningún otro niño por la calle.","q":"¿Qué debería hacer Elena mientras espera?","ans":"Esperar tranquila cerca de la puerta hasta que abran","opts":["Esperar tranquila cerca de la puerta hasta que abran","Volver corriendo a su casa sin decir nada","Saltar la valla del colegio","Irse a jugar muy lejos de allí"],"diff":"easy"},
+  {"txt":"Antes de la carrera, Carlos se puso las zapatillas más ligeras que tenía y estiró las piernas durante varios minutos junto a la línea de salida.","q":"¿Qué se puede deducir sobre la actitud de Carlos hacia la carrera?","ans":"Se está preparando en serio porque quiere hacerlo bien","opts":["Se está preparando en serio porque quiere hacerlo bien","No le importa nada el resultado","Se ha olvidado de que hay una carrera","Prefiere no participar en la carrera"],"diff":"easy"},
+  {"txt":"Antes de la carrera, Carlos se puso las zapatillas más ligeras que tenía y estiró las piernas durante varios minutos junto a la línea de salida.","q":"¿Por qué se estira las piernas antes de correr?","ans":"Para evitar lesiones y correr mejor","opts":["Para evitar lesiones y correr mejor","Porque le pican las piernas","Para perder tiempo antes de empezar","Porque no sabe qué hacer"],"diff":"easy"},
+  {"txt":"El termómetro de la farmacia marcaba 3 grados, y por la ventana se veían las ramas de los árboles completamente peladas, sin ninguna hoja.","q":"¿En qué estación del año están probablemente?","ans":"En invierno","opts":["En invierno","En primavera","En verano","En otoño, recién empezado"],"diff":"easy"},
+  {"txt":"El termómetro de la farmacia marcaba 3 grados, y por la ventana se veían las ramas de los árboles completamente peladas, sin ninguna hoja.","q":"¿Qué ropa sería más adecuada llevar en ese momento?","ans":"Abrigo, bufanda y guantes","opts":["Abrigo, bufanda y guantes","Bañador y chanclas","Una simple camiseta de manga corta","Solo unas gafas de sol"],"diff":"easy"},
+  {"txt":"En la biblioteca, un cartel decía \"Silencio, por favor\" y todos los niños leían sentados sin hacer ningún ruido, algunos incluso susurrando si necesitaban hablar.","q":"¿Qué pasaría si alguien empezara a gritar en ese lugar?","ans":"Los demás se molestarían porque rompería las normas del lugar","opts":["Los demás se molestarían porque rompería las normas del lugar","A nadie le importaría en absoluto","Todos empezarían a gritar también","Le darían un premio por ser valiente"],"diff":"easy"},
+  {"txt":"En la biblioteca, un cartel decía \"Silencio, por favor\" y todos los niños leían sentados sin hacer ningún ruido, algunos incluso susurrando si necesitaban hablar.","q":"¿Por qué susurran los niños si necesitan hablar?","ans":"Para no molestar a los demás lectores","opts":["Para no molestar a los demás lectores","Porque se han quedado sin voz","Porque está prohibido hablar en cualquier lugar","Porque tienen mucho sueño"],"diff":"easy"},
+  {"txt":"La panadería tenía una larga fila de gente esperando en la puerta, y desde la calle ya se olía a pan recién hecho saliendo del horno.","q":"¿Por qué hay tanta gente esperando en la puerta?","ans":"Porque acaba de salir pan recién hecho y todos lo quieren","opts":["Porque acaba de salir pan recién hecho y todos lo quieren","Porque la panadería está cerrada","Porque reparten pan gratis todos los días","Porque hay una fiesta en la calle"],"diff":"easy"},
+  {"txt":"La panadería tenía una larga fila de gente esperando en la puerta, y desde la calle ya se olía a pan recién hecho saliendo del horno.","q":"¿Qué se puede deducir sobre el pan de esa panadería?","ans":"Debe de estar muy rico, porque atrae a mucha gente","opts":["Debe de estar muy rico, porque atrae a mucha gente","Nadie quiere comprarlo","Está pasado y nadie lo quiere","Es el único pan que existe en el mundo"],"diff":"easy"},
+  {"txt":"Cuando el profesor anunció el examen sorpresa, varios alumnos se quejaron y otros se pusieron nerviosos, pero Marta sonrió tranquila y sacó su lápiz.","q":"¿Qué se puede deducir sobre Marta?","ans":"Había estudiado y se sentía preparada","opts":["Había estudiado y se sentía preparada","No sabía que había examen","Odiaba los exámenes","Se iba a marchar de clase"],"diff":"medium"},
+  {"txt":"El campo llevaba tres semanas sin lluvia y las plantas del huerto empezaban a ponerse amarillas y a doblarse hacia el suelo.","q":"¿Qué necesitan urgentemente las plantas del huerto?","ans":"Agua, deben ser regadas","opts":["Agua, deben ser regadas","Más sol","Menos tierra","Ser cortadas"],"diff":"medium"},
+  {"txt":"Javier revisó su mochila dos veces, miraba el reloj cada minuto y caminaba de un lado a otro cerca de la puerta.","q":"¿Cómo se siente Javier probablemente?","ans":"Nervioso porque cree que va a llegar tarde","opts":["Nervioso porque cree que va a llegar tarde","Muy tranquilo y relajado","Aburrido sin nada que hacer","Con mucho sueño"],"diff":"medium"},
+  {"txt":"La tienda de la esquina tenía las persianas bajadas y un cartel colgado que decía \"Cerrado por vacaciones hasta el 1 de septiembre\".","q":"¿Cuándo podremos volver a comprar en esa tienda?","ans":"A partir del 1 de septiembre","opts":["A partir del 1 de septiembre","Nunca más","Mañana mismo","Solo los domingos"],"diff":"medium"},
+  {"txt":"Los bomberos llegaron rápidamente a la calle y se veía humo negro saliendo de una ventana del segundo piso.","q":"¿Qué está pasando probablemente en el edificio?","ans":"Hay un incendio","opts":["Hay un incendio","Están cocinando pan","Es un desfile de bomberos","Están limpiando cristales"],"diff":"medium"},
+  {"txt":"Al destapar la olla, salió un vapor con mucho olor a ajo y tomate, y la abuela removía con una cuchara de madera.","q":"¿Qué está preparando la abuela probablemente?","ans":"Una salsa o guiso de tomate","opts":["Una salsa o guiso de tomate","Un helado","Una tarta fría","Un batido de fresa"],"diff":"medium"},
+  {"txt":"Diego llevaba puesto el bañador, las chanclas y una toalla al hombro cuando salió de casa con sus padres un sábado de julio.","q":"¿A dónde va probablemente Diego?","ans":"A la piscina o a la playa","opts":["A la piscina o a la playa","Al colegio","A una boda","A esquiar en la montaña"],"diff":"medium"},
+  {"txt":"El jarrón de cristal apareció roto en el suelo del salón, y el gato de la casa estaba sentado justo al lado, sobre la estantería.","q":"¿Qué es lo más probable que haya pasado?","ans":"El gato tiró el jarrón desde la estantería","opts":["El gato tiró el jarrón desde la estantería","El jarrón se rompió solo sin motivo","Vino un ladrón y lo rompió","El jarrón nunca existió"],"diff":"medium"},
+  {"txt":"Todos los paraguas de la tienda se habían vendido en una sola mañana, algo que no pasaba desde hacía meses.","q":"¿Qué se puede deducir sobre el pronóstico del tiempo esos días?","ans":"Se esperaba lluvia intensa","opts":["Se esperaba lluvia intensa","Se esperaba una ola de calor","Iba a nevar en verano","No cambiaría el tiempo"],"diff":"medium"},
+  {"txt":"Tres amigos hablan de cuándo llegaron al parque. Pol dice que llegó antes que Marc. Marc dice que llegó antes que Nuria. Nuria dice que fue la última en llegar.","q":"¿En qué orden llegaron al parque, del primero al último?","ans":"Pol, Marc y Nuria","opts":["Pol, Marc y Nuria","Nuria, Marc y Pol","Marc, Pol y Nuria","Nuria, Pol y Marc"],"diff":"hard"},
+  {"txt":"Tres amigos hablan de cuándo llegaron al parque. Pol dice que llegó antes que Marc. Marc dice que llegó antes que Nuria. Nuria dice que fue la última en llegar.","q":"¿Quién llegó primero de los tres?","ans":"Pol","opts":["Pol","Marc","Nuria","Los tres a la vez"],"diff":"hard"},
+  {"txt":"En una excavación arqueológica se encontraron vasijas de barro rotas, semillas quemadas y huesos de animales pequeños, todo alrededor de un círculo de piedras ennegrecidas.","q":"¿Qué actividad realizaban probablemente las personas en ese lugar?","ans":"Cocinaban alimentos alrededor de una hoguera","opts":["Cocinaban alimentos alrededor de una hoguera","Nadaban en un río","Dormían bajo el agua","Construían barcos"],"diff":"hard"},
+  {"txt":"En una excavación arqueológica se encontraron vasijas de barro rotas, semillas quemadas y huesos de animales pequeños, todo alrededor de un círculo de piedras ennegrecidas.","q":"¿Qué pista indica que allí se usaba fuego?","ans":"Las piedras ennegrecidas y las semillas quemadas","opts":["Las piedras ennegrecidas y las semillas quemadas","Las vasijas de barro","Los huesos de animales","El tamaño del círculo"],"diff":"hard"},
+  {"txt":"Elena ahorró 2€ cada semana durante 5 semanas para comprarse un cómic de 12€. El día que fue a comprarlo, descubrió que estaba rebajado a 8€.","q":"¿Cuánto dinero le sobró a Elena después de comprar el cómic?","ans":"2€","opts":["0€","2€","4€","8€"],"diff":"hard"},
+  {"txt":"Elena ahorró 2€ cada semana durante 5 semanas para comprarse un cómic de 12€. El día que fue a comprarlo, descubrió que estaba rebajado a 8€.","q":"¿Cuánto dinero tenía ahorrado Elena antes de entrar en la tienda?","ans":"10€","opts":["8€","10€","12€","2€"],"diff":"hard"},
+  {"txt":"El detective encontró la ventana de la cocina abierta, huellas pequeñas de patas llenas de barro que iban hasta la nevera, y ni rastro del gato de la casa por ningún lado.","q":"¿Qué es lo más probable que haya ocurrido?","ans":"El gato entró por la ventana y buscó comida en la cocina","opts":["El gato entró por la ventana y buscó comida en la cocina","Un ladrón humano robó la nevera entera","La ventana se abrió sola sin motivo","El gato aprendió a cocinar"],"diff":"hard"},
+  {"txt":"El detective encontró la ventana de la cocina abierta, huellas pequeñas de patas llenas de barro que iban hasta la nevera, y ni rastro del gato de la casa por ningún lado.","q":"¿Qué pista descarta que haya sido una persona adulta?","ans":"Las huellas son pequeñas y de patas, no de zapatos","opts":["Las huellas son pequeñas y de patas, no de zapatos","La ventana estaba cerrada","No había ninguna huella","El gato dejó una nota"],"diff":"hard"}
+,
+  {"txt":"Cuatro amigos comparan su altura. Diego es más alto que Sara. Sara es más alta que Iván. Marta es más alta que Diego.","q":"¿Quién es el más alto de los cuatro amigos?","ans":"Marta","opts":["Diego","Marta","Sara","Iván"],"diff":"hard"},
+  {"txt":"Cuatro amigos comparan su altura. Diego es más alto que Sara. Sara es más alta que Iván. Marta es más alta que Diego.","q":"¿Quién es el más bajo de los cuatro amigos?","ans":"Iván","opts":["Diego","Marta","Sara","Iván"],"diff":"hard"},
+  {"txt":"En una tienda hay tres juguetes: un coche, un robot y una pelota. El robot cuesta el doble que la pelota. El coche cuesta 5€ más que el robot. La pelota cuesta 6€.","q":"¿Cuánto cuesta el robot?","ans":"12€","opts":["6€","10€","12€","17€"],"diff":"hard"},
+  {"txt":"En una tienda hay tres juguetes: un coche, un robot y una pelota. El robot cuesta el doble que la pelota. El coche cuesta 5€ más que el robot. La pelota cuesta 6€.","q":"¿Cuánto cuesta el coche?","ans":"17€","opts":["12€","15€","17€","22€"],"diff":"hard"},
+  {"txt":"El detective sabe que el ladrón mide más de 1,70 m, tiene el pelo corto y no llevaba gafas ese día. Pedro mide 1,65 m y tiene el pelo largo. Ana mide 1,75 m, pelo corto, y no llevaba gafas. Luis mide 1,80 m, pelo corto, pero llevaba gafas ese día.","q":"Según las pistas, ¿quién es el ladrón?","ans":"Ana","opts":["Pedro","Ana","Luis","Ninguno de los tres"],"diff":"hard"},
+  {"txt":"El detective sabe que el ladrón mide más de 1,70 m, tiene el pelo corto y no llevaba gafas ese día. Pedro mide 1,65 m y tiene el pelo largo. Ana mide 1,75 m, pelo corto, y no llevaba gafas. Luis mide 1,80 m, pelo corto, pero llevaba gafas ese día.","q":"¿Qué pista descarta a Pedro como sospechoso?","ans":"Su estatura es menor de 1,70 m y tiene el pelo largo","opts":["Su estatura es menor de 1,70 m y tiene el pelo largo","Llevaba gafas ese día","Es demasiado alto","No estaba en la ciudad"],"diff":"hard"}
+];;
 
 /* ══════════════════════════════════════
    NUEVOS CONTENIDOS: LÓGICA Y CURIOSIDAD
@@ -1052,6 +1198,15 @@ const grpQ=[
   {q:'¿Cuál NO es un tipo de roca?',items:['Granito 🪨','Mármol 🪨','Caliza 🪨','Plástico ♻️'],ans:'Plástico ♻️',reason:'El plástico es un material fabricado por el ser humano, no una roca natural ♻️'},
   {q:'¿Cuál NO se usa para escribir?',items:['Lápiz ✏️','Bolígrafo 🖊️','Tiza 🖍️','Cuchara 🥄'],ans:'Cuchara 🥄',reason:'La cuchara sirve para comer, no para escribir 🥄'},
   {q:'¿Cuál NO es capital de un país?',items:['Madrid 🇪🇸','París 🇫🇷','Roma 🇮🇹','Barcelona 🇪🇸'],ans:'Barcelona 🇪🇸',reason:'Barcelona es una ciudad importante de España, pero la capital es Madrid 🇪🇸'}
+,
+  {"q":"¿Cuál NO es un mamífero?","items":["Delfín 🐬","Tiburón 🦈","Ballena 🐳","Foca 🦭"],"ans":"Tiburón 🦈","reason":"El tiburón es un pez con branquias; los demás son mamíferos marinos que respiran aire 🦈"},
+  {"q":"¿Cuál NO es un ave?","items":["Pingüino 🐧","Murciélago 🦇","Avestruz 🐦","Búho 🦉"],"ans":"Murciélago 🦇","reason":"El murciélago es un mamífero volador, no un ave 🦇"},
+  {"q":"¿Cuál NO es un número primo?","items":["7","11","9","13"],"ans":"9","reason":"9 = 3×3, tiene más divisores que 1 y él mismo; los demás solo son divisibles por 1 y por sí mismos"},
+  {"q":"¿Cuál NO es un planeta del Sistema Solar actualmente?","items":["Marte 🔴","Plutón","Júpiter","Venus"],"ans":"Plutón","reason":"Plutón fue reclasificado como planeta enano en 2006; ya no es un planeta oficial"},
+  {"q":"¿Cuál NO es un anfibio?","items":["Rana 🐸","Sapo","Salamandra","Lagarto 🦎"],"ans":"Lagarto 🦎","reason":"El lagarto es un reptil, no un anfibio 🦎"},
+  {"q":"¿Cuál NO es un instrumento de cuerda?","items":["Guitarra 🎸","Violín 🎻","Trompeta 🎺","Arpa"],"ans":"Trompeta 🎺","reason":"La trompeta es un instrumento de viento, no de cuerda 🎺"},
+  {"q":"¿Cuál NO es un poliedro?","items":["Cubo","Esfera ⚽","Pirámide","Prisma"],"ans":"Esfera ⚽","reason":"La esfera no tiene caras planas ni aristas, así que no es un poliedro ⚽"},
+  {"q":"¿Cuál NO es un país europeo?","items":["Francia 🇫🇷","Egipto 🇪🇬","Italia 🇮🇹","Alemania 🇩🇪"],"ans":"Egipto 🇪🇬","reason":"Egipto está en África, no en Europa 🇪🇬"}
 ];
 
 // SEQ — Ordenar secuencias (rank 1=primero, 4=último)
@@ -1173,6 +1328,15 @@ const seqQ=[
      {txt:'Luego, las espigas de trigo crecieron doradas y altas.',rank:3},
      {txt:'Finalmente, recogió el trigo para hacer harina y pan.',rank:4}],
    hint:'Hay que sembrar antes de que las plantas crezcan'}
+,
+  {"q":"Ordena de la etapa más antigua a la más reciente:","items":[{"txt":"🪨 Edad de Piedra","rank":1},{"txt":"🏰 Edad Media","rank":2},{"txt":"🏭 Revolución Industrial","rank":3},{"txt":"💻 Era Digital","rank":4}],"hint":"La Edad de Piedra fue la primera de todas"},
+  {"q":"Ordena los planetas del más cercano\nal Sol al más lejano:","items":[{"txt":"☀️ Mercurio","rank":1},{"txt":"🌕 Venus","rank":2},{"txt":"🌍 Tierra","rank":3},{"txt":"🔴 Marte","rank":4}],"hint":"Mercurio es el planeta más cercano al Sol"},
+  {"q":"Ordena de la unidad de tiempo\nmás corta a la más larga:","items":[{"txt":"⏱️ Segundo","rank":1},{"txt":"⏰ Minuto","rank":2},{"txt":"🕐 Hora","rank":3},{"txt":"📅 Día","rank":4}],"hint":"60 segundos = 1 minuto, 60 minutos = 1 hora"},
+  {"q":"Ordena de la unidad de longitud\nmás corta a la más larga:","items":[{"txt":"📏 Milímetro","rank":1},{"txt":"📏 Centímetro","rank":2},{"txt":"📏 Metro","rank":3},{"txt":"🗺️ Kilómetro","rank":4}],"hint":"El milímetro es la unidad más pequeña de las cuatro"},
+  {"q":"Ordena estos números\nde menor a mayor:","items":[{"txt":"12","rank":1},{"txt":"45","rank":2},{"txt":"78","rank":3},{"txt":"99","rank":4}],"hint":"Compara las cifras de las decenas primero"},
+  {"q":"Ordena las fases del\nciclo del agua:","items":[{"txt":"☀️ Evaporación","rank":1},{"txt":"☁️ Condensación","rank":2},{"txt":"🌧️ Precipitación","rank":3},{"txt":"🌊 Escorrentía","rank":4}],"hint":"El agua se evapora, luego forma nubes, luego cae y luego fluye"},
+  {"q":"Ordena los pasos para\npreparar una receta sencilla:","items":[{"txt":"🛒 Reunir los ingredientes","rank":1},{"txt":"🥣 Mezclarlos","rank":2},{"txt":"🔥 Cocinarlos","rank":3},{"txt":"🍽️ Servir el plato","rank":4}],"hint":"Primero hay que tener los ingredientes listos"},
+  {"q":"Ordena las etapas de\nla vida humana:","items":[{"txt":"👶 Bebé","rank":1},{"txt":"🧒 Niño","rank":2},{"txt":"🧑 Adolescente","rank":3},{"txt":"🧓 Adulto mayor","rank":4}],"hint":"Empieza por la etapa justo después de nacer"}
 ];
 
 // SUDOKU 4×4  (0=casilla vacía)
@@ -1247,6 +1411,8 @@ const sopaQ=[
   {nm:'El Clima',em:'🌦️',size:7,
    words:['LLUVIA','NIEVE','VIENTO','SOL','NUBE'],
    placements:[{w:'LLUVIA',r:0,c:0,dir:'h'},{w:'NIEVE',r:2,c:0,dir:'h'},{w:'VIENTO',r:4,c:0,dir:'h'},{w:'SOL',r:6,c:0,dir:'h'},{w:'NUBE',r:6,c:3,dir:'h'}]}
+,
+  {"nm":"Animales marinos","em":"🐠","size":9,"words":["TORTUGA","DELFIN","TIBURON","PULPO","BALLENA","MEDUSA"],"placements":[{"w":"TORTUGA","r":0,"c":0,"dir":"h"},{"w":"DELFIN","r":1,"c":0,"dir":"h"},{"w":"TIBURON","r":2,"c":0,"dir":"h"},{"w":"PULPO","r":3,"c":0,"dir":"h"},{"w":"BALLENA","r":4,"c":0,"dir":"h"},{"w":"MEDUSA","r":5,"c":0,"dir":"h"}]}
 ];
 
 // CURIOSIDAD — preguntas con links a YouTube o búsqueda web
@@ -1480,6 +1646,17 @@ const curioQ=[
    yt:'https://www.youtube.com/results?search_query=que+es+el+adn+explicacion+ni%C3%B1os',
    opts:['La sangre','El ADN','El plasma','La saliva'],ans:1,
    fact:'¡El ADN! Es como un libro de instrucciones que le dice a tu cuerpo de qué color serán tus ojos, tu altura y muchas otras cosas. ¡Lo heredas de tus padres! 🧬'}
+,
+  {"cat":"animals","em":"🐆","q":"¿Cuál es el animal terrestre más rápido del mundo?","search":"animal terrestre mas rapido del mundo","yt":"https://www.youtube.com/results?search_query=guepardo%20velocidad%20documental%20ni%C3%B1os","opts":["El guepardo","El caballo","El avestruz","El galgo"],"ans":0,"fact":"¡El guepardo puede alcanzar 110-120 km/h en carrera corta! Aunque solo aguanta esa velocidad unos 20-30 segundos."},
+  {"cat":"animals","em":"🐢","q":"¿Cuántos años puede vivir una tortuga gigante de Galápagos?","search":"cuantos años vive una tortuga gigante de galapagos","yt":"https://www.youtube.com/results?search_query=tortuga%20gigante%20galapagos%20documental%20ni%C3%B1os","opts":["50 años","100 años","Más de 150 años","20 años"],"ans":2,"fact":"¡Algunas tortugas gigantes de Galápagos han vivido documentadamente más de 150 e incluso 190 años!"},
+  {"cat":"space","em":"☀️","q":"¿Cuánto tarda la luz del Sol en llegar a la Tierra?","search":"cuanto tarda la luz del sol en llegar a la tierra","yt":"https://www.youtube.com/results?search_query=velocidad%20de%20la%20luz%20sol%20tierra%20documental%20ni%C3%B1os","opts":["8 minutos","1 segundo","1 hora","1 día"],"ans":0,"fact":"La luz viaja tan rápido (300.000 km/s) que tarda solo unos 8 minutos y 20 segundos en recorrer los 150 millones de km hasta la Tierra."},
+  {"cat":"space","em":"⭐","q":"¿Cuál es la estrella más cercana a la Tierra después del Sol?","search":"estrella mas cercana a la tierra despues del sol","yt":"https://www.youtube.com/results?search_query=proxima%20centauri%20documental%20ni%C3%B1os","opts":["Próxima Centauri","La Estrella Polar","Sirio","Betelgeuse"],"ans":0,"fact":"Próxima Centauri está a 4,24 años luz. ¡Aun así, con la tecnología actual tardaríamos miles de años en llegar!"},
+  {"cat":"science","em":"💧","q":"¿Qué porcentaje del cuerpo humano es agua aproximadamente?","search":"que porcentaje del cuerpo humano es agua","yt":"https://www.youtube.com/results?search_query=cuerpo%20humano%20agua%20porcentaje%20documental%20ni%C3%B1os","opts":["25%","50%","60%","90%"],"ans":2,"fact":"¡Aproximadamente el 60% del cuerpo humano es agua! En los bebés el porcentaje es aún mayor."},
+  {"cat":"geo","em":"🇷🇺","q":"¿Cuál es el país más grande del mundo por superficie?","search":"pais mas grande del mundo por superficie","yt":"https://www.youtube.com/results?search_query=pais%20mas%20grande%20del%20mundo%20documental%20ni%C3%B1os","opts":["Rusia","Canadá","China","Estados Unidos"],"ans":0,"fact":"Rusia ocupa más del 11% de toda la tierra habitada del planeta y abarca 11 zonas horarias distintas."},
+  {"cat":"geo","em":"🌊","q":"¿Cuál es el punto más profundo de los océanos?","search":"punto mas profundo de los oceanos","yt":"https://www.youtube.com/results?search_query=fosa%20de%20las%20marianas%20documental%20ni%C3%B1os","opts":["La Fosa de las Marianas","El Mar Muerto","El Golfo de México","El Estrecho de Gibraltar"],"ans":0,"fact":"La Fosa de las Marianas alcanza casi 11.000 metros de profundidad. ¡Si metiéramos el Everest ahí, no sobresaldría!"},
+  {"cat":"science","em":"🦴","q":"¿Cuántos huesos tiene un bebé recién nacido, aproximadamente (más que un adulto)?","search":"cuantos huesos tiene un bebe recien nacido","yt":"https://www.youtube.com/results?search_query=huesos%20bebe%20recien%20nacido%20documental%20ni%C3%B1os","opts":["206","270","300","350"],"ans":2,"fact":"¡Los bebés nacen con unos 300 huesos! Muchos se van fusionando con el tiempo hasta quedar en los 206 huesos de un adulto."},
+  {"cat":"animals","em":"🐦‍⬛","q":"¿Qué animal es capaz de recordar caras humanas durante años?","search":"que animal recuerda caras humanas","yt":"https://www.youtube.com/results?search_query=cuervos%20memoria%20caras%20humanas%20documental%20ni%C3%B1os","opts":["El cuervo","El hámster","La tortuga","El pez de colores"],"ans":0,"fact":"¡Los cuervos pueden recordar una cara humana durante años, y hasta avisan a otros cuervos si esa persona les hizo algo malo!"},
+  {"cat":"space","em":"🌕","q":"¿Cómo se llama cuando la Luna se ve completamente roja durante un eclipse lunar?","search":"por que la luna se ve roja en un eclipse","yt":"https://www.youtube.com/results?search_query=luna%20de%20sangre%20eclipse%20lunar%20documental%20ni%C3%B1os","opts":["Luna de sangre","Superluna","Luna azul","Luna negra"],"ans":0,"fact":"Se llama \"Luna de sangre\" porque la luz del Sol atraviesa la atmósfera de la Tierra y solo llega a la Luna la luz rojiza, igual que en un atardecer."}
 ];
 
 /* ══════════════════════════════════════
@@ -1515,7 +1692,23 @@ const fracQ=[
   {sh:2,tot:6, q:'¿Qué fracción es equivalente a 1/3?',ans:'2/6',opts:['1/6','2/6','3/6','4/6']},
   {sh:3,tot:3, q:'¿Qué fracción representa el entero completo?',ans:'3/3',opts:['1/3','2/3','3/3','3/4']},
   {sh:0,tot:4, q:'¿Qué fracción representa que no hay ninguna parte coloreada?',ans:'0/4',opts:['0/4','1/4','4/4','4/0']},
-  {sh:7,tot:8, q:'¿Qué fracción está en morado?',ans:'7/8', opts:['5/8','6/8','7/8','8/8']}
+  {sh:7,tot:8, q:'¿Qué fracción está en morado?',ans:'7/8', opts:['5/8','6/8','7/8','8/8']},
+  {"sh":1,"tot":6,"q":"¿Qué fracción está en morado?","ans":"1/6","opts":["1/6","1/5","1/4","2/6"]},
+  {"sh":5,"tot":6,"q":"¿Qué fracción está en morado?","ans":"5/6","opts":["4/6","5/6","5/5","1/6"]},
+  {"sh":1,"tot":8,"q":"¿Qué fracción está en morado?","ans":"1/8","opts":["1/8","1/7","2/8","1/4"]},
+  {"sh":3,"tot":8,"q":"¿Qué fracción está en morado?","ans":"3/8","opts":["3/8","3/5","1/8","5/8"]},
+  {"sh":2,"tot":5,"q":"¿Qué fracción está en morado?","ans":"2/5","opts":["2/5","3/5","2/4","1/5"]},
+  {"sh":4,"tot":5,"q":"¿Qué fracción está en morado?","ans":"4/5","opts":["4/5","1/5","3/5","4/4"]},
+  {"sh":3,"tot":10,"q":"¿Qué fracción está en morado?","ans":"3/10","opts":["3/10","1/10","7/10","3/7"]},
+
+  {"sh":2,"tot":4,"q":"¿Cuál es la fracción equivalente más simple?","ans":"1/2","opts":["1/2","2/4","1/4","3/4"]},
+  {"sh":3,"tot":6,"q":"¿Cuál es la fracción equivalente más simple?","ans":"1/2","opts":["1/2","1/3","3/6","2/3"]},
+  {"sh":4,"tot":8,"q":"¿Cuál es la fracción equivalente más simple?","ans":"1/2","opts":["1/2","1/4","4/8","3/4"]},
+  {"sh":2,"tot":6,"q":"¿Cuál es la fracción equivalente más simple?","ans":"1/3","opts":["1/3","2/6","1/2","2/3"]},
+  {"sh":6,"tot":8,"q":"¿Cuál es la fracción equivalente más simple?","ans":"3/4","opts":["3/4","6/8","1/4","2/4"]},
+  {"sh":4,"tot":10,"q":"¿Cuál es la fracción equivalente más simple?","ans":"2/5","opts":["2/5","4/10","1/5","3/5"]},
+  {"sh":5,"tot":10,"q":"¿Cuál es la fracción equivalente más simple?","ans":"1/2","opts":["1/2","5/10","1/5","2/5"]},
+  {"sh":9,"tot":12,"q":"¿Cuál es la fracción equivalente más simple?","ans":"3/4","opts":["3/4","9/12","2/3","1/4"]}
 ];
 
 /* ══════════════════════════════════════
@@ -1551,7 +1744,23 @@ const medQ=[
   {q:'¿Qué unidad usas para pesar una carta que envías por correo?',ans:'Gramos',opts:['Gramos','Kilogramos','Toneladas','Litros'],hint:'Una carta pesa muy poco'},
   {q:'Tengo 3 botellas de 1,5 litros cada una.\n¿Cuántos litros tengo en total?',ans:'4,5 litros',opts:['3 litros','4 litros','4,5 litros','6 litros'],hint:'3 × 1,5 = 4,5'},
   {q:'¿Cuántos días tiene el mes de febrero en un año bisiesto?',ans:'29 días',opts:['28 días','29 días','30 días','31 días'],hint:'Cada 4 años febrero tiene un día extra'},
-  {q:'Si un tren sale a las 14:20 y tarda 45 minutos,\n¿a qué hora llega?',ans:'15:05',opts:['14:45','15:00','15:05','15:20'],hint:'14:20 + 45 min = 15:05'}
+  {q:'Si un tren sale a las 14:20 y tarda 45 minutos,\n¿a qué hora llega?',ans:'15:05',opts:['14:45','15:00','15:05','15:20'],hint:'14:20 + 45 min = 15:05'},
+  {"q":"¿Cuántos minutos hay en 1 hora?","ans":"60 min","opts":["30 min","45 min","60 min","100 min"],"hint":"Una hora completa tiene 60 minutos"},
+  {"q":"¿Cuántos milímetros hay en 1 centímetro?","ans":"10 mm","opts":["1 mm","10 mm","100 mm","1.000 mm"],"hint":"Mili- significa milésima parte"},
+  {"q":"¿Cuántos mililitros hay en 1 litro?","ans":"1.000 ml","opts":["10 ml","100 ml","1.000 ml","10.000 ml"],"hint":"Mili- significa milésima parte"},
+  {"q":"¿Cuántos gramos hay en medio kilogramo?","ans":"500 g","opts":["50 g","250 g","500 g","750 g"],"hint":"Medio kilo es la mitad de 1.000 g"},
+  {"q":"¿Cuántos segundos hay en 1 minuto?","ans":"60 s","opts":["10 s","30 s","60 s","100 s"],"hint":"Un minuto tiene 60 segundos"},
+  {"q":"¿Cuántos días tiene una semana?","ans":"7 días","opts":["5 días","6 días","7 días","10 días"],"hint":"Lunes, martes, miércoles, jueves, viernes, sábado y domingo"},
+  {"q":"¿Cuántos meses tiene un año?","ans":"12 meses","opts":["10 meses","11 meses","12 meses","13 meses"],"hint":"De enero a diciembre"},
+
+  {"q":"Un rectángulo mide 5 cm de largo y 3 cm de ancho.\n¿Cuál es su perímetro?","ans":"16 cm","opts":["8 cm","15 cm","16 cm","30 cm"],"hint":"Perímetro = suma de los 4 lados: 5+3+5+3"},
+  {"q":"Un cuadrado tiene lados de 4 cm.\n¿Cuál es su perímetro?","ans":"16 cm","opts":["4 cm","8 cm","16 cm","20 cm"],"hint":"Perímetro del cuadrado = lado × 4"},
+  {"q":"Un rectángulo tiene 4 cm de base y 3 cm de altura.\n¿Cuál es su área?","ans":"12 cm²","opts":["7 cm²","12 cm²","14 cm²","24 cm²"],"hint":"Área del rectángulo = base × altura"},
+  {"q":"¿Cuántos centilitros hay en 1 litro?","ans":"100 cl","opts":["10 cl","100 cl","1.000 cl","10.000 cl"],"hint":"Centi- significa centésima parte"},
+  {"q":"¿Cuántos metros hay en 5 kilómetros?","ans":"5.000 m","opts":["50 m","500 m","5.000 m","50.000 m"],"hint":"1 km = 1.000 m, así que 5 km = 5 × 1.000"},
+  {"q":"Medio litro son ___ mililitros.","ans":"500 ml","opts":["5 ml","50 ml","500 ml","5.000 ml"],"hint":"1 litro = 1.000 ml, la mitad es 500 ml"},
+  {"q":"¿Cuántos gramos son 2 kilogramos y medio?","ans":"2.500 g","opts":["250 g","2.005 g","2.500 g","25.000 g"],"hint":"2,5 kg = 2.000 g + 500 g"},
+  {"q":"Un año bisiesto tiene ___ días.","ans":"366 días","opts":["360 días","365 días","366 días","367 días"],"hint":"Cada 4 años, febrero tiene 29 días en vez de 28"}
 ];
 
 /* ══════════════════════════════════════
@@ -1588,7 +1797,26 @@ const sinanQ=[
   {tp:'ant',q:'¿Cuál es el antónimo de RICO?',ans:'Pobre',opts:['Adinerado','Pobre','Millonario','Acaudalado']},
   {tp:'sin',q:'¿Cuál es un sinónimo de PEQUEÑO?',ans:'Diminuto',opts:['Enorme','Gigante','Diminuto','Amplio']},
   {tp:'ant',q:'¿Cuál es el antónimo de FUERTE?',ans:'Débil',opts:['Robusto','Potente','Débil','Firme']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de TRISTE?',ans:'Apenado',opts:['Feliz','Apenado','Contento','Alegre']}
+  {tp:'sin',q:'¿Cuál es un sinónimo de TRISTE?',ans:'Apenado',opts:['Feliz','Apenado','Contento','Alegre']},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de FEO?","ans":"Horrible","opts":["Bonito","Horrible","Grande","Suave"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ANCHO?","ans":"Estrecho","opts":["Largo","Estrecho","Corto","Grueso"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de BUENO?","ans":"Estupendo","opts":["Malo","Estupendo","Triste","Lento"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de OSCURO?","ans":"Claro","opts":["Negro","Claro","Gris","Nublado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de GRITAR?","ans":"Chillar","opts":["Susurrar","Chillar","Callar","Dormir"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CERCA?","ans":"Lejos","opts":["Aquí","Lejos","Dentro","Encima"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de AYUDAR?","ans":"Colaborar","opts":["Colaborar","Pelear","Esconder","Correr"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DULCE?","ans":"Salado","opts":["Rico","Salado","Frío","Blando"]},
+
+  {"tp":"sin","q":"¿Cuál es un sinónimo de GENEROSO?","ans":"Desprendido","opts":["Egoísta","Desprendido","Tacaño","Perezoso"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de HONESTO?","ans":"Mentiroso","opts":["Sincero","Mentiroso","Amable","Valiente"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CURIOSO?","ans":"Preguntón","opts":["Aburrido","Preguntón","Tímido","Cansado"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de PRUDENTE?","ans":"Imprudente","opts":["Cuidadoso","Imprudente","Amable","Tranquilo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de VALIOSO?","ans":"Preciado","opts":["Barato","Preciado","Inútil","Común"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ANTIGUO?","ans":"Moderno","opts":["Viejo","Moderno","Usado","Roto"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ABUNDANTE?","ans":"Numeroso","opts":["Escaso","Numeroso","Pequeño","Vacío"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ESCASO?","ans":"Abundante","opts":["Poco","Abundante","Raro","Difícil"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de TÍMIDO?","ans":"Vergonzoso","opts":["Valiente","Vergonzoso","Alegre","Fuerte"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ATREVIDO?","ans":"Cobarde","opts":["Valiente","Cobarde","Curioso","Amable"]}
 ];
 
 /* ══════════════════════════════════════
@@ -1622,6 +1850,44 @@ const tippalQ=[
   {w:'DULCE',   ans:'Adjetivo',   opts:['Adjetivo','Sustantivo','Verbo','Pronombre'],hint:'Describe un sabor'},
   {w:'ELLOS',   ans:'Pronombre',  opts:['Pronombre','Adjetivo','Sustantivo','Verbo'],hint:'Sustituye a un grupo del que se habla'},
   {w:'MUCHO',   ans:'Adverbio',   opts:['Adjetivo','Adverbio','Sustantivo','Verbo'], hint:'Indica cantidad de una acción'}
+,
+  {"w":"DESPACIO","ans":"Adverbio","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Indica cómo se hace algo (modo)"},
+  {"w":"TÚ","ans":"Pronombre","opts":["Sustantivo","Pronombre","Adjetivo","Artículo"],"hint":"Sustituye al nombre de la persona que escucha"},
+  {"w":"LOS","ans":"Artículo","opts":["Sustantivo","Verbo","Artículo","Pronombre"],"hint":"Acompaña a un sustantivo plural masculino"},
+  {"w":"CORAJE","ans":"Sustantivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Nombra una cualidad o sentimiento"},
+  {"w":"VOLAR","ans":"Verbo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Indica una acción"},
+  {"w":"ENORME","ans":"Adjetivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Describe el tamaño de algo"}
+];
+
+/* ══════════════════════════════════════
+   CONTENT: GÉNERO Y NÚMERO
+══════════════════════════════════════ */
+const genusQ=[
+  {w:'NIÑO',      ans:'Masculino singular', opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Un solo niño: "EL niño"'},
+  {w:'NIÑAS',     ans:'Femenino plural',    opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varias niñas: "LAS niñas"'},
+  {w:'GATO',      ans:'Masculino singular', opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Un solo gato: "EL gato"'},
+  {w:'GATAS',     ans:'Femenino plural',    opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varias gatas: "LAS gatas"'},
+  {w:'FLOR',      ans:'Femenino singular',  opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Una sola flor: "LA flor"'},
+  {w:'FLORES',    ans:'Femenino plural',    opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varias flores: "LAS flores"'},
+  {w:'LIBROS',    ans:'Masculino plural',   opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varios libros: "LOS libros"'},
+  {w:'MESA',      ans:'Femenino singular',  opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Una sola mesa: "LA mesa"'},
+  {w:'PERROS',    ans:'Masculino plural',   opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varios perros: "LOS perros"'},
+  {w:'CASA',      ans:'Femenino singular',  opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Una sola casa: "LA casa"'},
+  {w:'ÁRBOLES',   ans:'Masculino plural',   opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varios árboles: "LOS árboles"'},
+  {w:'MANO',      ans:'Femenino singular',  opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'¡Ojo! Aunque termina en O, es femenina: "LA mano"'},
+  {w:'DÍA',       ans:'Masculino singular', opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'¡Ojo! Aunque termina en A, es masculino: "EL día"'},
+  {w:'LÁPICES',   ans:'Masculino plural',   opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varios lápices: "LOS lápices"'},
+  {w:'ABEJAS',    ans:'Femenino plural',    opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varias abejas: "LAS abejas"'},
+  {w:'SOL',       ans:'Masculino singular', opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Un solo sol: "EL sol"'},
+  {w:'ESTRELLAS', ans:'Femenino plural',    opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varias estrellas: "LAS estrellas"'},
+  {w:'PAPELES',   ans:'Masculino plural',   opts:['Masculino singular','Masculino plural','Femenino singular','Femenino plural'], hint:'Varios papeles: "LOS papeles"'}
+,
+  {"w":"MAPA","ans":"Masculino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en A, es masculino: \"EL mapa\""},
+  {"w":"PROBLEMA","ans":"Masculino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en A, es masculino: \"EL problema\""},
+  {"w":"PLANETA","ans":"Masculino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en A, es masculino: \"EL planeta\""},
+  {"w":"CLIMA","ans":"Masculino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en A, es masculino: \"EL clima\""},
+  {"w":"MOTO","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en O, es femenina: \"LA moto\""},
+  {"w":"FOTO","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en O, es femenina: \"LA foto\""}
 ];
 
 /* ══════════════════════════════════════
@@ -1662,6 +1928,15 @@ const analogQ=[
   {q:'🌡️ Termómetro → Mide temperatura\n⚖️ Balanza → ?',ans:'Mide el peso',opts:['Mide temperatura','Mide el peso','Mide el tiempo','Mide la distancia'],hint:'¿Qué mide cada instrumento?'},
   {q:'🐫 Camello → Joroba con grasa\n🐘 Elefante → ?',ans:'Trompa para agarrar y beber',opts:['Joroba con grasa','Trompa para agarrar y beber','Alas para volar','Caparazón duro'],hint:'¿Qué característica especial tiene cada animal?'},
   {q:'📖 Egipto → Pirámides\n🏛️ Grecia → ?',ans:'Templos y el Partenón',opts:['Pirámides','Templos y el Partenón','Coliseo romano','Muralla China'],hint:'¿Qué monumento antiguo asociamos a cada civilización?'}
+,
+  {"q":"🐛 Oruga → 🦋 Mariposa\n🥚 Huevo → ?","ans":"🐔 Pollo","opts":["🍳 Tortilla","🐔 Pollo","🥚 Cáscara","🍗 Muslo"],"hint":"¿En qué se transforma cada cosa al crecer?"},
+  {"q":"☀️ Día → 🌙 Noche\n😄 Feliz → ?","ans":"😢 Triste","opts":["😴 Cansado","😢 Triste","😡 Enfadado","😨 Asustado"],"hint":"Busca el sentimiento contrario"},
+  {"q":"🔥 Fuego → 💨 Humo\n🌧️ Lluvia → ?","ans":"🌊 Charco","opts":["☀️ Sol","🌊 Charco","❄️ Nieve","🔥 Fuego"],"hint":"¿Qué se forma como consecuencia?"},
+  {"q":"🐝 Abeja → 🍯 Miel\n🐄 Vaca → ?","ans":"🥛 Leche","opts":["🥩 Carne","🥛 Leche","🧀 Queso","🐮 Ternero"],"hint":"¿Qué producto principal nos da cada animal?"},
+  {"q":"📖 Autor → 📚 Libro\n🎨 Pintor → ?","ans":"🖼️ Cuadro","opts":["🖌️ Pincel","🖼️ Cuadro","🎭 Teatro","📷 Foto"],"hint":"¿Qué obra crea cada artista?"},
+  {"q":"🌱 Semilla → 🌳 Árbol\n🐣 Cría → ?","ans":"🐦 Adulto","opts":["🥚 Huevo","🐦 Adulto","🪺 Nido","🍃 Hoja"],"hint":"¿En qué se convierte con el tiempo?"},
+  {"q":"❄️ Frío → 🧥 Abrigo\n☀️ Calor → ?","ans":"🩳 Bañador","opts":["🧤 Guantes","🩳 Bañador","🧣 Bufanda","🥾 Botas"],"hint":"¿Qué ropa usamos según el clima?"},
+  {"q":"🔑 Llave → 🔒 Candado\n🎫 Entrada → ?","ans":"🎬 Cine","opts":["🚪 Puerta","🎬 Cine","💰 Dinero","📱 Móvil"],"hint":"¿Para qué sirve cada cosa?"}
 ];
 
 /* ══════════════════════════════════════
@@ -1746,6 +2021,15 @@ const matrixQ=[
   {q:'¿Qué emoji completa la cuadrícula?',
    grid:[['💧','☁️','🌧️'],['💧','☁️','🌧️'],['💧','☁️','?']],
    ans:'🌧️',opts:['💧','☁️','🌧️','⛈️'],hint:'El ciclo del agua se repite en cada fila'}
+,
+  {"grid":[["1","3","5"],["2","4","6"],["3","5","?"]],"ans":"7","opts":["6","7","8","9"],"hint":"Cada fila suma 2 al pasar de columna en columna"},
+  {"grid":[["1","2","3"],["2","4","6"],["4","8","?"]],"ans":"12","opts":["10","11","12","16"],"hint":"Cada fila sigue el patrón n, 2n, 3n"},
+  {"grid":[["1","2","4"],["2","4","8"],["3","6","?"]],"ans":"12","opts":["9","10","12","18"],"hint":"Cada fila sigue el patrón n, 2n, 4n"},
+  {"grid":[["3","4","7"],["5","2","7"],["6","1","?"]],"ans":"7","opts":["5","6","7","8"],"hint":"Las dos primeras columnas suman la tercera"},
+  {"grid":[["2","7","12"],["4","9","14"],["6","11","?"]],"ans":"16","opts":["14","15","16","18"],"hint":"Cada fila sigue el patrón a, a+5, a+10"},
+  {"grid":[["2","3","5"],["5","6","8"],["7","8","?"]],"ans":"10","opts":["9","10","11","12"],"hint":"Cada fila sigue el patrón n, n+1, n+3"},
+  {"grid":[["3","6","9"],["12","15","18"],["21","24","?"]],"ans":"27","opts":["25","26","27","30"],"hint":"Es la tabla del 3, en orden: 1×3, 2×3, 3×3..."},
+  {"grid":[["3","5","8"],["4","6","10"],["5","7","?"]],"ans":"12","opts":["11","12","13","14"],"hint":"Cada fila sigue el patrón a, b, a+b"}
 ];
 
 /* ══════════════════════════════════════
@@ -1923,6 +2207,17 @@ const cienQ=[
    ans:'Prehistoria, Edad Antigua, Edad Media, Edad Moderna, Edad Contemporánea',
    opts:['Edad Media, Prehistoria, Edad Antigua, Edad Moderna, Edad Contemporánea','Prehistoria, Edad Antigua, Edad Media, Edad Moderna, Edad Contemporánea','Edad Antigua, Prehistoria, Edad Media, Edad Contemporánea, Edad Moderna','Edad Contemporánea, Edad Moderna, Edad Media, Edad Antigua, Prehistoria'],
    fact:'La historia se divide en 5 grandes etapas. ¡Estamos viviendo la Edad Contemporánea, que empezó con la Revolución Francesa en 1789!'}
+,
+  {"cat":"body","em":"🫘","q":"¿Cuál es la función principal de los riñones?","ans":"Filtrar la sangre y producir la orina","opts":["Bombear la sangre","Filtrar la sangre y producir la orina","Digerir los alimentos","Controlar el pensamiento"],"fact":"Los riñones filtran unos 180 litros de sangre al día, eliminando las sustancias de desecho en forma de orina."},
+  {"cat":"body","em":"🍽️","q":"¿Cómo se llama el líquido ácido que ayuda a digerir la comida en el estómago?","ans":"Jugo gástrico","opts":["Saliva","Jugo gástrico","Bilis","Sudor"],"fact":"El jugo gástrico es tan ácido que podría dañar otros tejidos, pero el estómago tiene una mucosa protectora especial."},
+  {"cat":"animals","em":"🔗","q":"¿Qué es una cadena alimentaria?","ans":"El orden en que unos seres vivos se alimentan de otros","opts":["El orden en que unos seres vivos se alimentan de otros","Una cadena de metal para atar animales","El lugar donde comen los animales","Un tipo de collar para perros"],"fact":"Por ejemplo: la hierba alimenta al conejo, el conejo alimenta al zorro. Cada eslabón depende del anterior."},
+  {"cat":"animals","em":"🦴","q":"¿Cuál es la principal diferencia entre un vertebrado y un invertebrado?","ans":"El vertebrado tiene columna vertebral y el invertebrado no","opts":["El vertebrado tiene columna vertebral y el invertebrado no","El invertebrado siempre es más grande","El vertebrado vive solo en el agua","No hay ninguna diferencia real"],"fact":"Los insectos, gusanos y pulpos son invertebrados; los peces, aves, mamíferos, reptiles y anfibios son vertebrados."},
+  {"cat":"plants","em":"🍂","q":"¿Qué son los descomponedores en un ecosistema?","ans":"Seres vivos que descomponen restos de plantas y animales muertos","opts":["Animales que cazan a otros","Plantas que crecen muy rápido","Seres vivos que descomponen restos de plantas y animales muertos","Rocas que se desgastan con el agua"],"fact":"Los hongos y muchas bacterias son descomponedores: devuelven nutrientes al suelo para que puedan crecer nuevas plantas."},
+  {"cat":"spain","em":"🏙️","q":"¿Cuál es la segunda ciudad más poblada de España?","ans":"Barcelona","opts":["Barcelona","Valencia","Sevilla","Bilbao"],"fact":"Madrid es la más poblada, seguida de Barcelona, la capital de Cataluña."},
+  {"cat":"spain","em":"⛰️","q":"¿Qué cordillera separa España de Francia?","ans":"Los Pirineos","opts":["Los Pirineos","Sierra Nevada","Los Andes","Los Alpes"],"fact":"Los Pirineos se extienden a lo largo de toda la frontera entre España y Francia, y también tocan Andorra."},
+  {"cat":"history","em":"🏛️","q":"¿Qué imperio construyó una extensa red de calzadas por toda Europa, incluida Hispania?","ans":"El Imperio Romano","opts":["El Imperio Romano","El Imperio Egipcio","El Imperio Inca","El Imperio Griego"],"fact":"Los romanos construyeron miles de kilómetros de calzadas tan bien hechas que algunas se siguen usando como base de carreteras actuales."},
+  {"cat":"history","em":"𓁹","q":"¿Cómo se llama el sistema de escritura con dibujos que usaban los antiguos egipcios?","ans":"Jeroglíficos","opts":["Jeroglíficos","Alfabeto latino","Cuneiforme","Runas"],"fact":"Los jeroglíficos egipcios usaban dibujos y símbolos para representar sonidos e ideas; se descifraron gracias a la Piedra de Rosetta."},
+  {"cat":"body","em":"🦵","q":"¿Cuál es el hueso más largo del cuerpo humano?","ans":"El fémur (en el muslo)","opts":["El fémur (en el muslo)","El húmero (en el brazo)","La tibia (en la pierna)","La clavícula"],"fact":"El fémur puede medir más de la cuarta parte de la altura total de una persona."}
 ];
 
 /* ══════════════════════════════════════
@@ -1958,7 +2253,21 @@ const acentQ=[
   {w:'TELÉFONO',sl:'te-LÉ-fo-no',ans:'Esdrújula',opts:['Aguda','Llana','Esdrújula'],rule:'Acento en la ANTEPENÚLTIMA sílaba. ¡Las esdrújulas SIEMPRE llevan tilde!'},
   {w:'MATEMÁTICAS',sl:'ma-te-MÁ-ti-cas',ans:'Esdrújula',opts:['Aguda','Llana','Esdrújula'],rule:'Acento en la ANTEPENÚLTIMA sílaba. ¡Las esdrújulas SIEMPRE llevan tilde!'},
   {w:'ÁGUILA',  sl:'Á-gui-la',  ans:'Esdrújula', opts:['Aguda','Llana','Esdrújula'],rule:'Acento en la ANTEPENÚLTIMA sílaba. ¡Las esdrújulas SIEMPRE llevan tilde!'},
-  {w:'ÚLTIMO',  sl:'ÚL-ti-mo',  ans:'Esdrújula', opts:['Aguda','Llana','Esdrújula'],rule:'Acento en la ANTEPENÚLTIMA sílaba. ¡Las esdrújulas SIEMPRE llevan tilde!'}
+  {w:'ÚLTIMO',  sl:'ÚL-ti-mo',  ans:'Esdrújula', opts:['Aguda','Llana','Esdrújula'],rule:'Acento en la ANTEPENÚLTIMA sílaba. ¡Las esdrújulas SIEMPRE llevan tilde!'},
+  {"w":"ESCUELA","sl":"es-CUE-la","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la PENÚLTIMA sílaba. Termina en vocal → NO lleva tilde."},
+  {"w":"JAMÓN","sl":"ja-MÓN","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la ÚLTIMA sílaba. Termina en N → lleva tilde."},
+  {"w":"PLÁTANO","sl":"PLÁ-ta-no","ans":"Esdrújula","opts":["Aguda","Llana","Esdrújula"],"rule":"Esdrújula: acento en la ANTEPENÚLTIMA sílaba. Siempre lleva tilde."},
+  {"w":"CAMINO","sl":"ca-MI-no","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la PENÚLTIMA sílaba. Termina en vocal → NO lleva tilde."},
+  {"w":"CÁMARA","sl":"CÁ-ma-ra","ans":"Esdrújula","opts":["Aguda","Llana","Esdrújula"],"rule":"Esdrújula: acento en la ANTEPENÚLTIMA sílaba. Siempre lleva tilde."},
+
+  {"w":"PAÍS","sl":"pa-ÍS","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"PAÍS es AGUDA (acento en ÍS). Aunque las agudas terminadas en S no suelen llevar tilde, aquí hay un HIATO (a-í) que obliga a ponerla."},
+  {"w":"MARÍA","sl":"ma-RÍ-a","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"MARÍA es LLANA (acento en RÍ). Termina en vocal, pero el HIATO (a-í) exige tilde igualmente."},
+  {"w":"CÉSPED","sl":"CÉS-ped","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la PENÚLTIMA sílaba. Termina en D (no vocal, N o S) → por eso SÍ lleva tilde."},
+  {"w":"ÁNGEL","sl":"ÁN-gel","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la PENÚLTIMA sílaba. Termina en L (no vocal, N o S) → por eso SÍ lleva tilde."},
+  {"w":"HÉROE","sl":"HÉ-ro-e","ans":"Esdrújula","opts":["Aguda","Llana","Esdrújula"],"rule":"Esdrújula: acento en la ANTEPENÚLTIMA sílaba. Siempre lleva tilde."},
+  {"w":"CANCIÓN","sl":"can-CIÓN","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la ÚLTIMA sílaba. Termina en N → lleva tilde."},
+  {"w":"SÁBADO","sl":"SÁ-ba-do","ans":"Esdrújula","opts":["Aguda","Llana","Esdrújula"],"rule":"Esdrújula: acento en la ANTEPENÚLTIMA sílaba. Siempre lleva tilde."},
+  {"w":"MENÚ","sl":"me-NÚ","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la ÚLTIMA sílaba. Termina en vocal → lleva tilde."}
 ];
 
 /* ══════════════════════════════════════
@@ -2024,6 +2333,15 @@ const crossQ=[
    fact:'El Imperio romano llegó a abarcar territorios de tres continentes: Europa, África y Asia.'},
   {em:'🖨️',cat:'Historia',q:'Invento del siglo XV que permitió copiar libros mucho más rápido que a mano.',ans:'IMPRENTA',
    fact:'Gutenberg inventó la imprenta de tipos móviles hacia el año 1450.'}
+,
+  {"em":"🦕","cat":"Animales","q":"Reptil gigante prehistórico que vivió hace millones de años y ya está extinto.","ans":"DINOSAURIO","fact":"Los dinosaurios se extinguieron hace unos 66 millones de años, probablemente por el impacto de un gran asteroide."},
+  {"em":"🌌","cat":"Espacio","q":"Enorme conjunto de miles de millones de estrellas, planetas y polvo, como la Vía Láctea.","ans":"GALAXIA","fact":"Se calcula que existen más de 100.000 millones de galaxias en el universo observable."},
+  {"em":"🔬","cat":"Ciencia","q":"Instrumento que sirve para ver cosas demasiado pequeñas para el ojo humano.","ans":"MICROSCOPIO","fact":"Con un microscopio potente se pueden ver bacterias, ¡seres vivos formados por una sola célula!"},
+  {"em":"🔺","cat":"Historia","q":"Construcción de forma triangular que los antiguos egipcios usaban como tumba para los faraones.","ans":"PIRAMIDE","fact":"La Gran Pirámide de Guiza fue el edificio más alto del mundo durante casi 3.800 años."},
+  {"em":"🧊","cat":"Geografía","q":"Gran masa de hielo que se forma con nieve acumulada durante muchísimos años y se mueve muy despacio.","ans":"GLACIAR","fact":"Los glaciares contienen alrededor del 70% del agua dulce de todo el planeta."},
+  {"em":"🔭","cat":"Ciencia","q":"Instrumento que sirve para observar objetos muy lejanos, como planetas y estrellas.","ans":"TELESCOPIO","fact":"El telescopio espacial Hubble lleva más de 30 años enviando imágenes del universo desde fuera de la atmósfera."},
+  {"em":"🐧","cat":"Geografía","q":"Continente helado situado en el polo sur de la Tierra, donde viven los pingüinos.","ans":"ANTARTIDA","fact":"En la Antártida se han registrado temperaturas de hasta -89°C, ¡las más bajas jamás medidas en la Tierra!"},
+  {"em":"🍎","cat":"Ciencia","q":"Fuerza invisible que atrae los objetos hacia el centro de la Tierra y nos mantiene sobre el suelo.","ans":"GRAVEDAD","fact":"En la Luna la gravedad es 6 veces menor que en la Tierra, por eso los astronautas dan saltos tan grandes."}
 ];
 
 /* ══════════════════════════════════════
@@ -2154,6 +2472,13 @@ const exploraQ=[
    opts:['Para no ensuciarte las manos','Porque debajo viven insectos y pequeños animales que necesitan ese refugio húmedo y oscuro','Porque las piedras se rompen si no las devuelves','No es importante, se puede dejar donde sea'],
    ans:'Porque debajo viven insectos y pequeños animales que necesitan ese refugio húmedo y oscuro',diff:'hard',
    dato:'Debajo de las piedras se crea un pequeño ecosistema húmedo y protegido: un cambio simple como no devolverla en su sitio puede afectar a muchos bichitos.'}
+,
+  {"mission":"Observa un árbol con hojas anchas cerca de casa y fíjate si tiene corteza rugosa.","q":"¿Por qué los árboles tienen anillos en el tronco cuando los cortan?","ans":"Porque crecen un anillo nuevo cada año, y así se puede saber su edad","opts":["Porque son decorativos","Porque crecen un anillo nuevo cada año, y así se puede saber su edad","Porque los pájaros los dibujan","Porque indican si va a llover"],"diff":"medium","dato":"Cada anillo representa un año de crecimiento: los anillos anchos indican años con buena lluvia y los finos, años secos."},
+  {"mission":"Busca una lombriz de tierra después de que haya llovido, en tierra húmeda del jardín.","q":"¿Por qué las lombrices son tan importantes para la tierra del jardín?","ans":"Porque airean la tierra y la hacen más fértil al moverse por ella","opts":["Porque airean la tierra y la hacen más fértil al moverse por ella","Porque se comen a otros insectos dañinos","Porque atraen a los pájaros","No sirven para nada especial"],"diff":"medium","dato":"Charles Darwin estudió las lombrices durante años y las llamó \"los arados de la naturaleza\" por cómo mejoran el suelo."},
+  {"mission":"Observa el musgo que crece en piedras o troncos de zonas húmedas y con poca luz.","q":"¿Por qué el musgo suele crecer más en el lado norte de árboles y piedras (en el hemisferio norte)?","ans":"Porque ese lado recibe menos luz solar directa y se mantiene más húmedo","opts":["Porque ese lado recibe menos luz solar directa y se mantiene más húmedo","Porque el viento siempre sopla del norte","Porque los pájaros lo plantan ahí","Porque el norte es más frío en todo el mundo"],"diff":"medium","dato":"Esta pista se usaba antiguamente para orientarse en el bosque, ¡aunque no siempre es un método 100% fiable!"},
+  {"mission":"Fíjate en una colonia de hormigas trabajando y observa si algunas parecen más grandes que otras.","q":"Además de la reina, ¿qué otro tipo especial de hormiga puede haber en un hormiguero grande?","ans":"Hormigas soldado, más grandes, que defienden el hormiguero","opts":["Hormigas soldado, más grandes, que defienden el hormiguero","Hormigas voladoras que solo existen en cuentos","No hay ningún otro tipo, todas son iguales","Hormigas que se convierten en abejas"],"diff":"medium","dato":"En algunas especies, las hormigas soldado tienen mandíbulas enormes especializadas solo en defender la colonia."},
+  {"mission":"Observa una piña de pino cerrada y otra abierta si encuentras alguna en el suelo.","q":"¿Por qué las piñas de pino se abren cuando hace calor y se cierran con la humedad?","ans":"Para proteger las semillas de la humedad y liberarlas cuando hace buen tiempo para germinar","opts":["Para proteger las semillas de la humedad y liberarlas cuando hace buen tiempo para germinar","Porque tienen frío","Es solo decoración, no tiene ninguna función","Porque las tocan los pájaros"],"diff":"medium","dato":"Las escamas de la piña actúan casi como un higrómetro natural, abriéndose y cerrándose según la humedad del aire."},
+  {"mission":"Busca nubes en el cielo y observa su forma: unas parecen algodón y otras láminas planas.","q":"¿Qué tipo de nubes suelen anunciar tormenta, con forma de gran torre o yunque?","ans":"Los cumulonimbos","opts":["Los cumulonimbos","Los cirros","Los estratos","Las nubes nunca anuncian nada"],"diff":"medium","dato":"Un cumulonimbo puede alcanzar más de 12 km de altura, ¡más alto que el Everest!"}
 ];
 
 /* ══════════════════════════════════════
@@ -2205,6 +2530,13 @@ const creativeQ=[
    tip:'Piensa en cómo se gana, qué está permitido y qué no.'},
   {cat:'solve',em:'🔋',prompt:'Si se fuera la luz en tu casa durante toda una tarde, sin móviles ni tele, ¿qué 3 cosas harías para no aburrirte?',
    tip:'Piensa en juegos, actividades o historias que no necesiten electricidad.'}
+,
+  {"cat":"solve","em":"🧩","prompt":"Imagina que tienes que diseñar una ciudad completamente nueva en la Luna. ¿Qué tres problemas tendrías que resolver primero y cómo lo harías?","tip":"Piensa en el aire para respirar, la comida y la gravedad."},
+  {"cat":"invent","em":"🦾","prompt":"Inventa una máquina que ayude a resolver un problema real de tu colegio o de tu casa. ¿Cómo funciona?","tip":"Puede ser tan sencilla o tan loca como quieras."},
+  {"cat":"imagine","em":"🕰️","prompt":"Si pudieras hablar con alguien de hace 200 años, ¿qué le explicarías del mundo de hoy que más le costaría creer?","tip":"Piensa en los móviles, internet, los aviones..."},
+  {"cat":"solve","em":"⚖️","prompt":"Dos amigos quieren el último trozo de pizza y ninguno quiere compartir. Inventa 3 formas justas de decidir quién se lo queda.","tip":"Piensa en formas que a los dos les parezcan justas."},
+  {"cat":"describe","em":"🌍","prompt":"Si tuvieras que explicarle a un extraterrestre qué es la amistad, ¿qué le dirías con tus propias palabras?","tip":"Usa ejemplos de tu propia vida."},
+  {"cat":"imagine","em":"📚","prompt":"Imagina que los libros de tu biblioteca cobran vida por la noche. ¿Qué crees que harían y con quién se llevarían mejor?","tip":"Piensa en personajes de cuentos que conozcas."}
 ];
 
 /* ══════════════════════════════════════
@@ -2286,6 +2618,15 @@ const vocabQ=[
   {cat:'curiopal',em:'🔊',q:'¿Cómo se llama a las palabras que imitan un sonido, como "guau", "miau" o "boom"?',
    ans:'Onomatopeyas',opts:['Onomatopeyas','Metáforas','Sinónimos','Diminutivos'],
    fact:'Las onomatopeyas representan sonidos con letras: el perro hace "guau", el gato "miau" y una explosión suena "boom".'}
+,
+  {"cat":"etim","em":"🏫","q":"¿De qué palabra latina viene \"escuela\"?","ans":"De \"schola\", que significaba tiempo libre para aprender","opts":["De \"schola\", que significaba tiempo libre para aprender","Del árabe \"iskola\"","De \"escudo\", porque protege el saber","No tiene ningún origen conocido"],"fact":"En la antigua Grecia, \"skholé\" significaba precisamente el tiempo libre dedicado al estudio y al ocio."},
+  {"cat":"etim","em":"🦖","q":"¿De dónde viene la palabra \"dinosaurio\"?","ans":"Del griego \"deinos\" (terrible) y \"sauros\" (lagarto)","opts":["Del griego \"deinos\" (terrible) y \"sauros\" (lagarto)","Del latín \"dino\" (grande)","De un apellido de un científico","Del japonés antiguo"],"fact":"El nombre lo inventó el científico Richard Owen en 1842: significa literalmente \"lagarto terrible\"."},
+  {"cat":"expr","em":"🧵","q":"¿Qué significa la expresión \"no dar puntada sin hilo\"?","ans":"Que alguien hace todo con una intención o motivo detrás","opts":["Que alguien hace todo con una intención o motivo detrás","Que alguien es muy mal cosiendo","Que alguien nunca termina nada","Que alguien es muy generoso"],"fact":"Viene del mundo de la costura: cada puntada (acción) tiene su hilo (razón) detrás."},
+  {"cat":"expr","em":"🏠","q":"¿Qué significa \"tirar la casa por la ventana\"?","ans":"Gastar mucho dinero de golpe, sin ahorrar, para una ocasión especial","opts":["Gastar mucho dinero de golpe, sin ahorrar, para una ocasión especial","Mudarse de casa muy rápido","Tener una casa muy pequeña","Estar enfadado con la familia"],"fact":"Se dice que viene de una antigua costumbre de lanzar objetos por la ventana al ganar la lotería."},
+  {"cat":"curiopal","em":"🏦","q":"¿Cómo se llama una palabra con varios significados distintos, como \"banco\" (para sentarse o para el dinero)?","ans":"Palabra polisémica","opts":["Palabra polisémica","Palabra sinónima","Palabra antónima","Palabra compuesta"],"fact":"El español tiene miles de palabras polisémicas; el contexto de la frase ayuda a saber qué significado se usa."},
+  {"cat":"curiopal","em":"☔","q":"¿Cómo se llama una palabra formada por la unión de otras dos, como \"paraguas\" (para + aguas)?","ans":"Palabra compuesta","opts":["Palabra compuesta","Palabra derivada","Palabra primitiva","Palabra homófona"],"fact":"Otros ejemplos de palabras compuestas son \"sacapuntas\", \"rascacielos\" y \"correcaminos\"."},
+  {"cat":"expr","em":"✋","q":"¿Qué significa la expresión \"tener mano de santo\"?","ans":"Tener mucha habilidad para curar o arreglar cosas rápidamente","opts":["Tener mucha habilidad para curar o arreglar cosas rápidamente","Ser muy religioso","Tener las manos muy limpias","Ser torpe con las manos"],"fact":"Se usa mucho para hablar de remedios que funcionan muy rápido, \"como por milagro\"."},
+  {"cat":"curiopal","em":"📜","q":"¿Cómo se llama el estudio del origen y la historia de las palabras?","ans":"Etimología","opts":["Etimología","Gramática","Ortografía","Fonética"],"fact":"Gracias a la etimología sabemos que muchas palabras españolas vienen del latín, del árabe o del griego."}
 ];
 
 /* ══════════════════════════════════════
@@ -2368,6 +2709,13 @@ const geolocQ=[
   {cat:'spain',em:'🌍',q:'España comparte la península ibérica con otro país. ¿Cuál es?',
    ans:'Portugal',opts:['Portugal','Francia','Italia','Marruecos'],
    fact:'España y Portugal comparten la península ibérica, con Portugal al oeste.'}
+,
+  {"cat":"local","em":"⚖️","q":"Humanes de Mohernando pertenece al partido judicial de una ciudad cercana. ¿Cuál es?","ans":"Guadalajara","opts":["Guadalajara","Azuqueca de Henares","Sigüenza","Molina de Aragón"],"fact":"El partido judicial de Guadalajara agrupa a numerosos municipios de la Campiña del Henares y sus alrededores."},
+  {"cat":"clm","em":"🏞️","q":"¿Cómo se llama el terreno llano y elevado, típico de la Alcarria, separado por valles profundos?","ans":"Páramo","opts":["Páramo","Delta","Estuario","Fiordo"],"fact":"Los páramos de la Alcarria están formados por rocas calizas y suelen tener encinares y campos de cultivo."},
+  {"cat":"clm","em":"🍯","q":"¿Qué producto tradicional de la comarca de la Alcarria es muy famoso en toda España?","ans":"La miel","opts":["La miel","Las naranjas","Los plátanos","La sal"],"fact":"La Denominación de Origen \"Miel de La Alcarria\" es una de las más reconocidas y antiguas de España, protegida desde 1986."},
+  {"cat":"spain","em":"🗣️","q":"¿Cuál es la lengua cooficial que se habla en Galicia?","ans":"El gallego","opts":["El gallego","El euskera","El catalán","El valenciano"],"fact":"El gallego es muy parecido al portugués, ya que ambos derivan del antiguo gallego-portugués medieval."},
+  {"cat":"spain","em":"🌊","q":"¿Cómo se llama el fenómeno por el que sube y baja el nivel del mar cada día en las costas?","ans":"La marea","opts":["La marea","El monzón","El tsunami","La corriente"],"fact":"Las mareas están causadas principalmente por la atracción gravitatoria de la Luna sobre los océanos."},
+  {"cat":"spain","em":"🏔️","q":"¿Cómo se llama la cordillera situada en el centro de España que atraviesa Madrid?","ans":"El Sistema Central","opts":["El Sistema Central","Los Pirineos","Sierra Nevada","Los Picos de Europa"],"fact":"El Sistema Central incluye la Sierra de Guadarrama, muy cerca de Madrid, y también se extiende hacia Ávila y Salamanca."}
 ];
 
 /* ══════════════════════════════════════
@@ -2381,7 +2729,7 @@ const ATTN_PAIRS=[['🟢','🟩'],['🔵','🟦'],['🔴','🟥'],['🟡','🟨'
    STATE
 ══════════════════════════════════════ */
 function blankT(){ return {unlocked:1,done:{}}; }
-function blankWeak(){ return {comp:{},ana:{},err:{},dict:{},geo:{},logic:{},calc:{},prob:{},lect:{},grp:{},seq:{},curio:{},frac:{},med:{},sinan:{},tippal:{},analog:{},matrix:{},cien:{},acent:{},detect:{},cross:{},explora:{},creative:{},vocab:{},geoloc:{}}; }
+function blankWeak(){ return {comp:{},ana:{},err:{},dict:{},geo:{},logic:{},calc:{},prob:{},lect:{},grp:{},seq:{},curio:{},frac:{},med:{},sinan:{},tippal:{},analog:{},matrix:{},cien:{},acent:{},detect:{},cross:{},explora:{},creative:{},vocab:{},geoloc:{},genus:{}}; }
 function blankP(n,e){ return {name:n,emoji:e,math:blankT(),lang:blankT(),logic:blankT(),curio:blankT(),cien:blankT(),detect:blankT(),explora:blankT(),creative:blankT(),vocab:blankT(),geoloc:blankT(),memoria:blankT(),coins:0,earned:0,maxStreak:0,hadPerfect:false,achievements:[],avatars:[e],weak:blankWeak(),creativeLog:[]}; }
 
 function loadProfiles(){
@@ -2396,6 +2744,7 @@ function loadProfiles(){
         if(!d[id].weak.creative)d[id].weak.creative={};
         if(!d[id].weak.vocab)d[id].weak.vocab={};
         if(!d[id].weak.geoloc)d[id].weak.geoloc={};
+        if(!d[id].weak.genus)d[id].weak.genus={};
         if(!d[id].detect)d[id].detect={unlocked:1,done:{}};
         if(!d[id].explora)d[id].explora={unlocked:1,done:{}};
         if(!d[id].creative)d[id].creative={unlocked:1,done:{}};
@@ -2412,7 +2761,7 @@ function loadProfiles(){
       const d=JSON.parse(s);
       ['p1','p2'].forEach(id=>{
         if(!d[id].weak)d[id].weak=blankWeak();
-        ['comp','ana','err','dict','geo','logic','calc','prob','lect','grp','seq','curio','frac','med','sinan','tippal','analog','matrix','cien','acent','detect','cross','explora','creative','vocab','geoloc'].forEach(t=>{if(!d[id].weak[t])d[id].weak[t]={};});
+        ['comp','ana','err','dict','geo','logic','calc','prob','lect','grp','seq','curio','frac','med','sinan','tippal','analog','matrix','cien','acent','detect','cross','explora','creative','vocab','geoloc','genus'].forEach(t=>{if(!d[id].weak[t])d[id].weak[t]={};});
         if(!d[id].logic)d[id].logic={unlocked:1,done:{}};
         if(!d[id].curio)d[id].curio={unlocked:1,done:{}};
         if(!d[id].cien)d[id].cien={unlocked:1,done:{}};
@@ -2719,7 +3068,7 @@ function lvlWeak(track, lv){
   const p=P(); if(!p.weak) return 0;
   const w=p.weak;
   if(lv.tp==='calc'){const c=w.calc||{};return (c[`${lv.id}_add`]>0?1:0)+(c[`${lv.id}_sub`]>0?1:0);}
-  if(lv.tp==='mult'){const c=w.calc||{};return Object.keys(c).filter(k=>k.startsWith(`${lv.id}_`)).length;}
+  if(lv.tp==='mult'||lv.tp==='div'){const c=w.calc||{};return Object.keys(c).filter(k=>k.startsWith(`${lv.id}_`)).length;}
   if(lv.tp==='geo') return Object.keys(w.geo||{}).length;
   if(lv.tp==='logic') return Object.keys(w.logic||{}).length;
   if(lv.tp==='comp'){const rel=lv.p.f==='all'?compQ:compQ.filter(x=>x.t===lv.p.f);const wk=new Set(Object.keys(w.comp||{}));return rel.filter(x=>wk.has(x.w)).length;}
@@ -2736,6 +3085,7 @@ function lvlWeak(track, lv){
   if(lv.tp==='med')    return Object.keys(w.med||{}).length;
   if(lv.tp==='sinan')  return Object.keys(w.sinan||{}).length;
   if(lv.tp==='tippal') return Object.keys(w.tippal||{}).length;
+  if(lv.tp==='genus') return Object.keys(w.genus||{}).length;
   if(lv.tp==='analog') return Object.keys(w.analog||{}).length;
   if(lv.tp==='matrix') return Object.keys(w.matrix||{}).length;
   if(lv.tp==='cien'){const rel=lv.p.cat==='all'?cienQ:cienQ.filter(x=>x.cat===lv.p.cat);const wk=new Set(Object.keys(w.cien||{}));return rel.filter(x=>wk.has(x.q.slice(0,20))).length;}
@@ -2936,6 +3286,18 @@ function genMult(tables){
     if(w!==ans&&w>0)wr.add(w);
   }
   return {a:t,b:n,op:'×',ans:String(ans),opts:shuffle([ans,...wr].map(String)),_opType:'mult'};
+}
+function genDiv(tables){
+  const t=tables[Math.floor(Math.random()*tables.length)]; // divisor
+  const n=Math.floor(Math.random()*9)+2; // 2 to 10 (cociente)
+  const dividend=t*n;
+  const wr=new Set();
+  while(wr.size<3){
+    const off=Math.floor(Math.random()*3)+1;
+    const w=Math.random()>.5?n+off:Math.max(1,n-off);
+    if(w!==n&&w>0)wr.add(w);
+  }
+  return {a:dividend,b:t,op:'÷',ans:String(n),opts:shuffle([n,...wr].map(String)),_opType:'div'};
 }
 
 /* ══════════════════════════════════════
@@ -3410,6 +3772,9 @@ function startLv(track,id){
   } else if(lv.tp==='mult'){
     const probs=Array.from({length:lv.p.n},()=>genMult(lv.p.tables));
     ST.gs={...base,probs,total:lv.p.n,idx:0}; renderMult();
+  } else if(lv.tp==='div'){
+    const probs=Array.from({length:lv.p.n},()=>genDiv(lv.p.tables));
+    ST.gs={...base,probs,total:lv.p.n,idx:0}; renderDiv();
   } else if(lv.tp==='prob'){
     const all=probQ.filter(x=>x.diff===lv.p.diff);
     const pool=smartPool('prob',all,x=>x.prb.slice(0,18),x=>x.q.slice(0,30));
@@ -3467,6 +3832,9 @@ function startLv(track,id){
   } else if(lv.tp==='tippal'){
     const pool=smartPool('tippal',tippalQ,x=>x.w,x=>x.w);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderTippal();
+  } else if(lv.tp==='genus'){
+    const pool=smartPool('genus',genusQ,x=>x.w,x=>x.w);
+    ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderGenus();
   } else if(lv.tp==='analog'){
     const pool=smartPool('analog',analogQ,x=>x.q.slice(0,20),x=>x.ans);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderAnalog();
@@ -3582,6 +3950,34 @@ function ansMult(sel){
   if(!ok) gs.newErrors=(gs.newErrors||[]).concat([`${p.a}×${p.b}`]);
   if(ok){onCorrect();showFb(true,`${p.a} × ${p.b} = ${p.ans} ✅`,()=>nextOrEnd(renderMult),ST.gs.streak);}
   else{onWrong();showFb(false,`${p.a} × ${p.b} = ${p.ans}`,()=>nextOrEnd(renderMult),0);}
+}
+
+/* ══════════════════════════════════════
+   GAME: DIVISIÓN
+══════════════════════════════════════ */
+function renderDiv(){
+  const gs=ST.gs, p=gs.probs[gs.idx];
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'math',`Nivel ${gs.lvId}`)}
+  <div class="gw">
+    ${progRow()}
+    <div class="qc">
+      <div class="ql">¿Cuánto es?</div>
+      <div class="qb">${p.a} ${p.op} ${p.b} = ?</div>
+      <div class="opts">${p.opts.map(o=>`<button class="opt" onclick="ansDiv('${o}')">${o}</button>`).join('')}</div>
+    </div>
+  </div>`);
+}
+function ansDiv(sel){
+  const gs=ST.gs; if(gs.lock)return; gs.lock=true;
+  const p=gs.probs[gs.idx], ok=sel===p.ans;
+  document.querySelectorAll('.opt').forEach(b=>{
+    if(b.textContent===p.ans)b.classList.add('ok');
+    else if(b.textContent===sel&&!ok)b.classList.add('no');
+  });
+  markW('calc',`${gs.lvId}_${p._opType}`,ok);
+  if(!ok) gs.newErrors=(gs.newErrors||[]).concat([`${p.a}÷${p.b}`]);
+  if(ok){onCorrect();showFb(true,`${p.a} ÷ ${p.b} = ${p.ans} ✅`,()=>nextOrEnd(renderDiv),ST.gs.streak);}
+  else{onWrong();showFb(false,`${p.a} ÷ ${p.b} = ${p.ans}`,()=>nextOrEnd(renderDiv),0);}
 }
 
 /* ══════════════════════════════════════
@@ -4554,6 +4950,36 @@ function ansTippal(idx){
   trackResult(item,ok);
   if(ok){onCorrect();showFb(true,`✅ "${item.w}" es un ${item.ans.toLowerCase()} — ${item.hint}`,()=>nextOrEnd(renderTippal),ST.gs.streak);}
   else{onWrong();showFb(false,`"${item.w}" es un ${item.ans.toLowerCase()} — ${item.hint}`,()=>nextOrEnd(renderTippal),0);}
+}
+
+/* ══════════════════════════════════════
+   GAME: GÉNERO Y NÚMERO
+══════════════════════════════════════ */
+function renderGenus(){
+  const gs=ST.gs, item=gs.probs[gs.idx];
+  const opts=gs.curOpts=shuffle([...item.opts]);
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'lang',`Nivel ${gs.lvId}`)}
+  <div class="gw">
+    ${progRow()}
+    <div class="qc" style="gap:14px">
+      ${item._wk?'<span class="repaso-tag">💪 Repasando</span>':''}
+      <div class="ql">♀️♂️ ¿Género y número de esta palabra?</div>
+      <div class="tippal-word">${item.w}</div>
+      <div class="tip">💡 ${item.hint}</div>
+      <div class="opts">${opts.map((o,i)=>`<button class="opt" onclick="ansGenus(${i})" style="font-size:13px">${o}</button>`).join('')}</div>
+    </div>
+  </div>`);
+}
+function ansGenus(idx){
+  const gs=ST.gs; if(gs.lock)return; gs.lock=true;
+  const item=gs.probs[gs.idx], sel=gs.curOpts[idx], ok=sel===item.ans;
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    if(gs.curOpts[i]===item.ans)b.classList.add('ok');
+    else if(i===idx&&!ok)b.classList.add('no');
+  });
+  trackResult(item,ok);
+  if(ok){onCorrect();showFb(true,`✅ "${item.w}" es ${item.ans.toLowerCase()} — ${item.hint}`,()=>nextOrEnd(renderGenus),ST.gs.streak);}
+  else{onWrong();showFb(false,`"${item.w}" es ${item.ans.toLowerCase()} — ${item.hint}`,()=>nextOrEnd(renderGenus),0);}
 }
 
 /* ══════════════════════════════════════
