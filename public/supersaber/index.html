@@ -624,6 +624,13 @@ const geoQ=[
   {"sh":"tri","q":"Un triángulo con sus\n3 lados iguales se llama:","ans":"Equilátero","opts":["Equilátero","Isósceles","Escaleno","Rectángulo"]},
   {"sh":"pen","q":"¿Cuántas diagonales\ntiene un pentágono?","ans":"5","opts":["3","5","6","10"]},
   {"sh":"hex","q":"¿Cuántas diagonales\ntiene un hexágono?","ans":"9","opts":["6","9","12","15"]}
+,
+  {"sh":"tri","q":"Un triángulo con dos lados iguales\ny uno distinto se llama:","ans":"Isósceles","opts":["Equilátero","Isósceles","Escaleno","Rectángulo"]},
+  {"sh":"tri","q":"Un triángulo con sus 3 lados\ndistintos se llama:","ans":"Escaleno","opts":["Equilátero","Isósceles","Escaleno","Rectángulo"]},
+  {"sh":"sq","q":"¿Cuántos ejes de simetría\ntiene un cuadrado?","ans":"4","opts":["1","2","4","8"]},
+  {"sh":"cir","q":"¿Cómo se llama la línea recta\nque pasa por el centro de un\ncírculo de lado a lado?","ans":"Diámetro","opts":["Radio","Diámetro","Cuerda","Tangente"]},
+  {"sh":"rom","q":"¿Cuántos ejes de simetría\ntiene un rombo?","ans":"2","opts":["1","2","4","0"]},
+  {"sh":"hex","q":"Si divides un hexágono en\ntriángulos desde un solo vértice,\n¿cuántos triángulos se forman?","ans":"4","opts":["3","4","5","6"]}
 ];
 const logicQ=[
   {q:'2, 4, 6, 8, ___',hint:'Se suma 2 cada vez',ans:'10',opts:['8','9','10','11']},
@@ -659,6 +666,13 @@ const logicQ=[
   {"q":"En una granja hay el triple\nde gallinas que de vacas.\nSi hay 8 vacas, ¿cuántas gallinas hay?","hint":"8 × 3 = ?","ans":"24","opts":["16","20","24","32"]},
   {"q":"Un depósito se llena a\n5 litros por minuto.\n¿Cuántos litros habrá en 12 minutos?","hint":"5 × 12 = ?","ans":"60 litros","opts":["50 litros","55 litros","60 litros","65 litros"]},
   {"q":"Si hoy es día 3 y un examen\nes en 9 días, ¿qué día\ndel mes será el examen?","hint":"3 + 9 = ?","ans":"Día 12","opts":["Día 9","Día 11","Día 12","Día 13"]}
+,
+  {"q":"5, 10, 20, 40, ___","hint":"Cada número es el doble del anterior","ans":"80","opts":["60","70","80","90"]},
+  {"q":"64, 32, 16, ___","hint":"Cada número es la mitad del anterior","ans":"8","opts":["4","6","8","10"]},
+  {"q":"Un coche recorre 80 km en 1 hora.\n¿Cuántos km recorrerá en 3 horas\na la misma velocidad?","hint":"80 × 3 = ?","ans":"240","opts":["160","200","240","280"]},
+  {"q":"Beatriz tiene el triple de\naños que su primo. Su primo\ntiene 7 años. ¿Cuántos tiene Beatriz?","hint":"7 × 3 = ?","ans":"21","opts":["14","17","21","24"]},
+  {"q":"Un depósito tiene 200 litros y\nse vacía a 25 litros por hora.\n¿Cuántas horas tardará en vaciarse?","hint":"200 ÷ 25 = ?","ans":"8","opts":["5","6","8","10"]},
+  {"q":"Tengo el doble de canicas que\nmi hermana. Ella tiene 18.\n¿Cuántas canicas tenemos entre los dos?","hint":"Yo tengo 18×2=36, entre los dos: 36+18","ans":"54","opts":["36","45","54","72"]}
 ];
 const compQ=[
   {w:'HA_LAR',m:'B',o:['B','V','P','M'],f:'HABLAR', r:'hablar → con B',t:'bv'},
@@ -718,6 +732,13 @@ const compQ=[
   {"w":"VE_ÍCULO","m":"H","o":["H","J","G","V"],"f":"VEHÍCULO","r":"vehículo → con H","t":"h"},
   {"w":"_ORIZONTE","m":"H","o":["H","O","J","G"],"f":"HORIZONTE","r":"horizonte → con H","t":"h"},
   {"w":"PRO_IBIDO","m":"H","o":["H","J","G","B"],"f":"PROHIBIDO","r":"prohibido → con H","t":"h"}
+,
+  {"w":"Á_BOL","m":"B","o":["B","V","P","D"],"f":"ÁRBOL","r":"árbol → con B","t":"bv"},
+  {"w":"_UELO","m":"V","o":["B","V","F","P"],"f":"VUELO","r":"vuelo → con V","t":"bv"},
+  {"w":"SA_ROSO","m":"B","o":["B","V","P","D"],"f":"SABROSO","r":"sabroso → con B","t":"bv"},
+  {"w":"ALCO_OL","m":"H","o":["H","O","J","G"],"f":"ALCOHOL","r":"alcohol → con H","t":"h"},
+  {"w":"ZANA_ORIA","m":"H","o":["H","J","G","Z"],"f":"ZANAHORIA","r":"zanahoria → con H","t":"h"},
+  {"w":"BÚ_O","m":"H","o":["H","J","G","B"],"f":"BÚHO","r":"búho → con H","t":"h"}
 ];
 const anaQ=[
   {sc:'O-L-S',    ans:'SOL',    hint:'La estrella del día ☀️',len:3},
@@ -767,6 +788,13 @@ const anaQ=[
   {"sc":"D-I-N-I-O-O-R-S-A-U","ans":"DINOSAURIO","hint":"Reptil gigante que ya no existe 🦕","len":10},
   {"sc":"A-C-O-D-E-R-I-L-N-A","ans":"CALENDARIO","hint":"Muestra los días, meses y años 📅","len":10},
   {"sc":"V-T-E-L-O-S-I-E-N-I","ans":"TELEVISIÓN","hint":"Aparato para ver programas y películas 📺","len":10}
+,
+  {"sc":"S-R-I-G-A-O-L","ans":"GIRASOL","hint":"Flor amarilla que gira para mirar al Sol 🌻","len":7},
+  {"sc":"T-R-E-R-M-O-T-M-E-O","ans":"TERMÓMETRO","hint":"Sirve para medir la temperatura 🌡️","len":10},
+  {"sc":"C-S-I-A-O-E-A-R-C-L-S","ans":"RASCACIELOS","hint":"Edificio altísimo de una gran ciudad 🏙️","len":11},
+  {"sc":"A-N-T-S-U-A-A-S-P-C","ans":"SACAPUNTAS","hint":"Sirve para afilar los lápices ✏️","len":10},
+  {"sc":"R-E-O-P-B-C-Z-M-A-E-S-A","ans":"ROMPECABEZAS","hint":"Puzle de piezas que hay que encajar 🧩","len":12},
+  {"sc":"O-I-T-N-R-E-D-A-V-L","ans":"VENTILADOR","hint":"Aparato que mueve el aire para dar fresco 🌀","len":10}
 ];
 const errQ=[
   {ps:['El sol brilla','oy','muy fuerte.'],          ei:1,co:'hoy',    ru:'HOY se escribe con H'},
@@ -842,6 +870,15 @@ const errQ=[
   {"ps":["Mi ","avuelo"," cuenta historias geniales de su juventud."],"ei":1,"co":"abuelo","ru":"ABUELO se escribe con B"},
   {"ps":["El profesor dio una buena ","esplicación"," del tema nuevo."],"ei":1,"co":"explicación","ru":"Después de EX viene PLI: EXPLICACIÓN"},
   {"ps":["El corredor saltó el último ","opstáculo"," de la carrera."],"ei":1,"co":"obstáculo","ru":"OBSTÁCULO se escribe con B"}
+,
+  {"ps":["No sé ","donde"," está mi mochila."],"ei":1,"co":"dónde","ru":"DÓNDE interrogativo/exclamativo lleva tilde"},
+  {"ps":["No entiendo ","que"," quieres decir."],"ei":1,"co":"qué","ru":"QUÉ interrogativo lleva tilde"},
+  {"ps":["Dime ","como"," se hace esto."],"ei":1,"co":"cómo","ru":"CÓMO interrogativo lleva tilde"},
+  {"ps":["Mañana ","bamos"," de excursión."],"ei":1,"co":"vamos","ru":"VAMOS (del verbo IR) se escribe con V"},
+  {"ps":["Había mucha ","jente"," en el concierto."],"ei":1,"co":"gente","ru":"GENTE se escribe con G (ge- suena como je-)"},
+  {"ps":["Apunté la cita en mi ","ajenda","."],"ei":1,"co":"agenda","ru":"AGENDA se escribe con G"},
+  {"ps":["Voy a ","recivir"," un regalo mañana."],"ei":1,"co":"recibir","ru":"RECIBIR se escribe con B"},
+  {"ps":["No hace falta ","esagerar"," tanto."],"ei":1,"co":"exagerar","ru":"EXAGERAR se escribe con X (EX-)"}
 ];
 const dictQ=[
   {w:'sol',    s:'El sol brilla fuerte.',         easy:true},
@@ -907,6 +944,15 @@ const dictQ=[
   {"w":"bicicleta","s":"Aprendí a montar en bicicleta el año pasado.","easy":false},
   {"w":"murciélago","s":"El murciélago solo sale de noche.","easy":false},
   {"w":"extraordinario","s":"Fue un espectáculo extraordinario de verdad.","easy":false}
+,
+  {"w":"vergüenza","s":"Le dio vergüenza hablar delante de toda la clase.","easy":false},
+  {"w":"inmediatamente","s":"Salió de casa inmediatamente después de la llamada.","easy":false},
+  {"w":"responsabilidad","s":"Cuidar del perro es su responsabilidad.","easy":false},
+  {"w":"excepcional","s":"Fue un partido excepcional, el mejor del año.","easy":false},
+  {"w":"ferrocarril","s":"El ferrocarril conecta las dos ciudades en dos horas.","easy":false},
+  {"w":"quiosco","s":"Compramos el periódico en el quiosco de la esquina.","easy":false},
+  {"w":"circunstancia","s":"No pudo venir por una circunstancia especial.","easy":false},
+  {"w":"aproximadamente","s":"Llegaremos aproximadamente a las cinco de la tarde.","easy":false}
 ];
 
 const probQ=[
@@ -998,6 +1044,15 @@ const probQ=[
   {"prb":"Sergio ahorra 15€ cada mes durante 8 meses y luego gasta 65€ en una bicicleta de segunda mano.","q":"¿Cuánto dinero le queda?","ans":"55€","opts":["40€","55€","70€","120€"],"diff":"hard"},
   {"prb":"Un huerto tiene 24 filas con 16 tomateras cada una. Una helada estropea 90 tomateras.","q":"¿Cuántas tomateras quedan sanas?","ans":"294","opts":["270","294","318","384"],"diff":"hard"},
   {"prb":"Un cine ofrece 8 sesiones al día con 120 espectadores cada una, pero un día se cancelan 2 sesiones.","q":"¿A cuántos espectadores afectó la cancelación ese día?","ans":"240","opts":["120","200","240","360"],"diff":"hard"}
+,
+  {"prb":"Un supermercado recibe 15 cajas de refrescos con 24 latas cada una.","q":"¿Cuántas latas de refresco hay en total?","ans":"360","opts":["336","345","360","384"],"diff":"hard"},
+  {"prb":"Un club de fútbol tiene 8 equipos con 16 jugadores cada uno.","q":"¿Cuántos jugadores hay en total?","ans":"128","opts":["112","120","128","144"],"diff":"hard"},
+  {"prb":"Una biblioteca compra 240 libros nuevos y los reparte en partes iguales entre 12 estanterías.","q":"¿Cuántos libros hay en cada estantería?","ans":"20","opts":["15","18","20","25"],"diff":"hard"},
+  {"prb":"Un tren lleva 9 vagones con 45 asientos cada uno. Viajan 372 personas.","q":"¿Cuántos asientos quedan libres?","ans":"33","opts":["23","33","43","66"],"diff":"hard"},
+  {"prb":"Una fábrica de juguetes produce 125 muñecos cada día durante 6 días, pero 47 salen defectuosos.","q":"¿Cuántos muñecos en buen estado se han fabricado?","ans":"703","opts":["656","703","750","797"],"diff":"hard"},
+  {"prb":"Laura compra 4 cajas con 18 rotuladores cada una y regala 25 a su clase.","q":"¿Cuántos rotuladores le quedan?","ans":"47","opts":["29","47","65","72"],"diff":"hard"},
+  {"prb":"Un cine tiene 15 filas con 22 butacas cada una. Se venden 287 entradas.","q":"¿Cuántas butacas quedan libres?","ans":"43","opts":["33","43","53","86"],"diff":"hard"},
+  {"prb":"Un ciclista recorre 18 km cada hora durante 4 horas y luego 25 km más.","q":"¿Cuántos km ha recorrido en total?","ans":"97","opts":["72","79","97","115"],"diff":"hard"}
 ];
 
 const lectQ=[
@@ -1098,6 +1153,13 @@ const lectQ=[
   {"txt":"Un volcán se forma cuando el magma, roca fundida que está bajo la superficie de la Tierra, encuentra una grieta y sale al exterior en forma de lava. No todos los volcanes están activos: algunos llevan miles de años sin entrar en erupción y se llaman volcanes durmientes, aunque podrían despertar en el futuro. Alrededor de los volcanes suele haber tierra muy fértil, por lo que mucha gente vive cerca de ellos a pesar del peligro.","q":"¿Por qué vive gente cerca de los volcanes a pesar del peligro?","ans":"Porque la tierra alrededor suele ser muy fértil","opts":["Porque no saben que es peligroso","Porque la tierra alrededor suele ser muy fértil","Porque los volcanes nunca entran en erupción","Porque el gobierno los obliga a vivir allí"],"diff":"hard"},
   {"txt":"Un volcán se forma cuando el magma, roca fundida que está bajo la superficie de la Tierra, encuentra una grieta y sale al exterior en forma de lava. No todos los volcanes están activos: algunos llevan miles de años sin entrar en erupción y se llaman volcanes durmientes, aunque podrían despertar en el futuro. Alrededor de los volcanes suele haber tierra muy fértil, por lo que mucha gente vive cerca de ellos a pesar del peligro.","q":"¿Qué significa que un volcán esté \"durmiente\"?","ans":"Que lleva mucho tiempo sin erupcionar pero podría hacerlo","opts":["Que ha desaparecido para siempre","Que lleva mucho tiempo sin erupcionar pero podría hacerlo","Que nunca ha tenido una erupción","Que solo entra en erupción de noche"],"diff":"hard"},
   {"txt":"Un volcán se forma cuando el magma, roca fundida que está bajo la superficie de la Tierra, encuentra una grieta y sale al exterior en forma de lava. No todos los volcanes están activos: algunos llevan miles de años sin entrar en erupción y se llaman volcanes durmientes, aunque podrían despertar en el futuro. Alrededor de los volcanes suele haber tierra muy fértil, por lo que mucha gente vive cerca de ellos a pesar del peligro.","q":"¿Qué es la lava según el texto?","ans":"Magma que ha salido al exterior del volcán","opts":["Roca fundida que está bajo la superficie sin salir","Magma que ha salido al exterior del volcán","Un tipo de piedra fría","El humo que sale del volcán"],"diff":"hard"}
+,
+  {"txt":"El cerebro humano es el órgano que controla todo el cuerpo. Está conectado a cada parte a través de una red de nervios que envían señales eléctricas a una velocidad asombrosa. Gracias a esta red, cuando tocamos algo caliente, el cerebro recibe la información y ordena retirar la mano en solo una fracción de segundo, mucho antes de que seamos conscientes del dolor.","q":"¿Cómo se comunica el cerebro con el resto del cuerpo?","ans":"A través de una red de nervios que envían señales eléctricas","opts":["A través de la sangre únicamente","A través de una red de nervios que envían señales eléctricas","Por medio de ondas de sonido","No se comunica, actúa solo"],"diff":"hard"},
+  {"txt":"El cerebro humano es el órgano que controla todo el cuerpo. Está conectado a cada parte a través de una red de nervios que envían señales eléctricas a una velocidad asombrosa. Gracias a esta red, cuando tocamos algo caliente, el cerebro recibe la información y ordena retirar la mano en solo una fracción de segundo, mucho antes de que seamos conscientes del dolor.","q":"Según el texto, ¿qué ocurre antes: retirar la mano o sentir el dolor conscientemente?","ans":"Retirar la mano ocurre antes","opts":["Sentir el dolor ocurre antes","Retirar la mano ocurre antes","Ocurren exactamente al mismo tiempo","El texto no lo explica"],"diff":"hard"},
+  {"txt":"El cerebro humano es el órgano que controla todo el cuerpo. Está conectado a cada parte a través de una red de nervios que envían señales eléctricas a una velocidad asombrosa. Gracias a esta red, cuando tocamos algo caliente, el cerebro recibe la información y ordena retirar la mano en solo una fracción de segundo, mucho antes de que seamos conscientes del dolor.","q":"¿Por qué el texto dice que la velocidad de los nervios es \"asombrosa\"?","ans":"Porque el cuerpo reacciona incluso antes de ser consciente del peligro","opts":["Porque el cerebro pesa muy poco","Porque el cuerpo reacciona incluso antes de ser consciente del peligro","Porque los nervios son de color blanco","Porque el cerebro nunca se cansa"],"diff":"hard"},
+  {"txt":"En la Antigua Grecia, la ciudad de Atenas creó un sistema de gobierno llamado democracia, palabra que significa \"gobierno del pueblo\". Sin embargo, no todos podían participar: solo los hombres libres considerados ciudadanos podían votar, mientras que las mujeres, los esclavos y los extranjeros quedaban excluidos. Aun con estas limitaciones, fue una idea revolucionaria que influyó en muchos gobiernos actuales.","q":"¿Qué significa la palabra \"democracia\"?","ans":"Gobierno del pueblo","opts":["Gobierno de un rey","Gobierno del pueblo","Gobierno de los dioses","Gobierno militar"],"diff":"hard"},
+  {"txt":"En la Antigua Grecia, la ciudad de Atenas creó un sistema de gobierno llamado democracia, palabra que significa \"gobierno del pueblo\". Sin embargo, no todos podían participar: solo los hombres libres considerados ciudadanos podían votar, mientras que las mujeres, los esclavos y los extranjeros quedaban excluidos. Aun con estas limitaciones, fue una idea revolucionaria que influyó en muchos gobiernos actuales.","q":"¿Quiénes NO podían votar en la democracia ateniense?","ans":"Las mujeres, los esclavos y los extranjeros","opts":["Solo los niños","Las mujeres, los esclavos y los extranjeros","Nadie, todos podían votar","Solo los ancianos"],"diff":"hard"},
+  {"txt":"En la Antigua Grecia, la ciudad de Atenas creó un sistema de gobierno llamado democracia, palabra que significa \"gobierno del pueblo\". Sin embargo, no todos podían participar: solo los hombres libres considerados ciudadanos podían votar, mientras que las mujeres, los esclavos y los extranjeros quedaban excluidos. Aun con estas limitaciones, fue una idea revolucionaria que influyó en muchos gobiernos actuales.","q":"¿Por qué el texto llama a la democracia ateniense una \"idea revolucionaria\" a pesar de sus limitaciones?","ans":"Porque influyó en muchos gobiernos actuales, a pesar de no incluir a todos","opts":["Porque incluía a absolutamente todas las personas","Porque influyó en muchos gobiernos actuales, a pesar de no incluir a todos","Porque terminó rápidamente","Porque no tuvo ninguna importancia después"],"diff":"hard"}
 ];
 
 /* ══════════════════════════════════════
@@ -1146,6 +1208,17 @@ const detectQ=[
   {"txt":"En una tienda hay tres juguetes: un coche, un robot y una pelota. El robot cuesta el doble que la pelota. El coche cuesta 5€ más que el robot. La pelota cuesta 6€.","q":"¿Cuánto cuesta el coche?","ans":"17€","opts":["12€","15€","17€","22€"],"diff":"hard"},
   {"txt":"El detective sabe que el ladrón mide más de 1,70 m, tiene el pelo corto y no llevaba gafas ese día. Pedro mide 1,65 m y tiene el pelo largo. Ana mide 1,75 m, pelo corto, y no llevaba gafas. Luis mide 1,80 m, pelo corto, pero llevaba gafas ese día.","q":"Según las pistas, ¿quién es el ladrón?","ans":"Ana","opts":["Pedro","Ana","Luis","Ninguno de los tres"],"diff":"hard"},
   {"txt":"El detective sabe que el ladrón mide más de 1,70 m, tiene el pelo corto y no llevaba gafas ese día. Pedro mide 1,65 m y tiene el pelo largo. Ana mide 1,75 m, pelo corto, y no llevaba gafas. Luis mide 1,80 m, pelo corto, pero llevaba gafas ese día.","q":"¿Qué pista descarta a Pedro como sospechoso?","ans":"Su estatura es menor de 1,70 m y tiene el pelo largo","opts":["Su estatura es menor de 1,70 m y tiene el pelo largo","Llevaba gafas ese día","Es demasiado alto","No estaba en la ciudad"],"diff":"hard"}
+,
+  {"txt":"Ana, Bruno y Clara tienen cada uno una mascota distinta (perro, gato o pez) y una fruta favorita distinta (manzana, plátano o pera). Ana no tiene perro. A quien tiene gato le gusta la manzana. Bruno tiene pez. A Clara no le gusta el plátano.","q":"¿Qué mascota tiene Ana?","ans":"Gato","opts":["Perro","Gato","Pez","Ninguna"],"diff":"hard"},
+  {"txt":"Ana, Bruno y Clara tienen cada uno una mascota distinta (perro, gato o pez) y una fruta favorita distinta (manzana, plátano o pera). Ana no tiene perro. A quien tiene gato le gusta la manzana. Bruno tiene pez. A Clara no le gusta el plátano.","q":"¿Qué fruta le gusta a Clara?","ans":"Pera","opts":["Manzana","Plátano","Pera","Ninguna"],"diff":"hard"},
+  {"txt":"Ana, Bruno y Clara tienen cada uno una mascota distinta (perro, gato o pez) y una fruta favorita distinta (manzana, plátano o pera). Ana no tiene perro. A quien tiene gato le gusta la manzana. Bruno tiene pez. A Clara no le gusta el plátano.","q":"¿Qué fruta le gusta a Bruno?","ans":"Plátano","opts":["Manzana","Plátano","Pera","Ninguna"],"diff":"hard"},
+  {"txt":"Tres hermanos —Marcos, Nuria y Pablo— nacieron en meses distintos (enero, marzo, julio) y cada uno practica un deporte distinto (natación, fútbol, tenis). Marcos no nació en enero. El que nació en julio juega al tenis. Nuria practica natación. Pablo no nació en marzo. Marcos no juega al tenis.","q":"¿En qué mes nació Pablo?","ans":"Julio","opts":["Enero","Marzo","Julio","Ninguno"],"diff":"hard"},
+  {"txt":"Tres hermanos —Marcos, Nuria y Pablo— nacieron en meses distintos (enero, marzo, julio) y cada uno practica un deporte distinto (natación, fútbol, tenis). Marcos no nació en enero. El que nació en julio juega al tenis. Nuria practica natación. Pablo no nació en marzo. Marcos no juega al tenis.","q":"¿Qué deporte practica Marcos?","ans":"Fútbol","opts":["Natación","Fútbol","Tenis","Ninguno"],"diff":"hard"},
+  {"txt":"Tres hermanos —Marcos, Nuria y Pablo— nacieron en meses distintos (enero, marzo, julio) y cada uno practica un deporte distinto (natación, fútbol, tenis). Marcos no nació en enero. El que nació en julio juega al tenis. Nuria practica natación. Pablo no nació en marzo. Marcos no juega al tenis.","q":"¿En qué mes nació Nuria?","ans":"Enero","opts":["Enero","Marzo","Julio","Ninguno"],"diff":"hard"},
+  {"txt":"Hay 3 cajas de distinto peso: A, B y C. La caja A pesa 3 kg más que la B. La caja C pesa el doble que la B. La caja B pesa 4 kg.","q":"¿Cuánto pesa la caja A?","ans":"7 kg","opts":["4 kg","7 kg","8 kg","11 kg"],"diff":"hard"},
+  {"txt":"Hay 3 cajas de distinto peso: A, B y C. La caja A pesa 3 kg más que la B. La caja C pesa el doble que la B. La caja B pesa 4 kg.","q":"¿Cuál es la caja más pesada de las tres?","ans":"La caja C","opts":["La caja A","La caja B","La caja C","Pesan igual"],"diff":"hard"},
+  {"txt":"En una carrera de tres corredores, Elena no quedó ni primera ni última. Diego quedó justo después de Elena. Marcos quedó primero.","q":"¿Quién quedó en segundo lugar?","ans":"Elena","opts":["Marcos","Elena","Diego","Nadie"],"diff":"hard"},
+  {"txt":"En una carrera de tres corredores, Elena no quedó ni primera ni última. Diego quedó justo después de Elena. Marcos quedó primero.","q":"¿Quién quedó último?","ans":"Diego","opts":["Marcos","Elena","Diego","Empate"],"diff":"hard"}
 ];;
 
 /* ══════════════════════════════════════
@@ -1207,6 +1280,13 @@ const grpQ=[
   {"q":"¿Cuál NO es un instrumento de cuerda?","items":["Guitarra 🎸","Violín 🎻","Trompeta 🎺","Arpa"],"ans":"Trompeta 🎺","reason":"La trompeta es un instrumento de viento, no de cuerda 🎺"},
   {"q":"¿Cuál NO es un poliedro?","items":["Cubo","Esfera ⚽","Pirámide","Prisma"],"ans":"Esfera ⚽","reason":"La esfera no tiene caras planas ni aristas, así que no es un poliedro ⚽"},
   {"q":"¿Cuál NO es un país europeo?","items":["Francia 🇫🇷","Egipto 🇪🇬","Italia 🇮🇹","Alemania 🇩🇪"],"ans":"Egipto 🇪🇬","reason":"Egipto está en África, no en Europa 🇪🇬"}
+,
+  {"q":"¿Cuál NO es un idioma oficial de la ONU?","items":["Inglés","Esperanto","Francés","Chino"],"ans":"Esperanto","reason":"El esperanto es un idioma creado artificialmente; no es uno de los 6 idiomas oficiales de la ONU."},
+  {"q":"¿Cuál NO es un número al cuadrado (cuadrado perfecto)?","items":["16","25","20","36"],"ans":"20","reason":"20 no resulta de multiplicar un número por sí mismo; 16=4×4, 25=5×5, 36=6×6."},
+  {"q":"¿Cuál NO es una capa de la Tierra?","items":["Corteza","Manto","Núcleo","Atmósfera"],"ans":"Atmósfera","reason":"La atmósfera es la capa de gases que rodea la Tierra por fuera; las otras tres son capas internas del planeta."},
+  {"q":"¿Cuál NO es un tipo de nube?","items":["Cúmulo","Estrato","Cirro","Meteoro"],"ans":"Meteoro","reason":"Un meteoro es un fenómeno luminoso en el cielo (como una estrella fugaz), no un tipo de nube."},
+  {"q":"¿Cuál NO es una parte de una planta?","items":["Raíz","Tallo","Pétalo","Branquia"],"ans":"Branquia","reason":"Las branquias son un órgano respiratorio de peces y otros animales acuáticos, no una parte de las plantas."},
+  {"q":"¿Cuál NO es un múltiplo de 6?","items":["12","18","20","24"],"ans":"20","reason":"20 no se puede dividir exactamente entre 6; 12=6×2, 18=6×3, 24=6×4."}
 ];
 
 // SEQ — Ordenar secuencias (rank 1=primero, 4=último)
@@ -1337,6 +1417,13 @@ const seqQ=[
   {"q":"Ordena las fases del\nciclo del agua:","items":[{"txt":"☀️ Evaporación","rank":1},{"txt":"☁️ Condensación","rank":2},{"txt":"🌧️ Precipitación","rank":3},{"txt":"🌊 Escorrentía","rank":4}],"hint":"El agua se evapora, luego forma nubes, luego cae y luego fluye"},
   {"q":"Ordena los pasos para\npreparar una receta sencilla:","items":[{"txt":"🛒 Reunir los ingredientes","rank":1},{"txt":"🥣 Mezclarlos","rank":2},{"txt":"🔥 Cocinarlos","rank":3},{"txt":"🍽️ Servir el plato","rank":4}],"hint":"Primero hay que tener los ingredientes listos"},
   {"q":"Ordena las etapas de\nla vida humana:","items":[{"txt":"👶 Bebé","rank":1},{"txt":"🧒 Niño","rank":2},{"txt":"🧑 Adolescente","rank":3},{"txt":"🧓 Adulto mayor","rank":4}],"hint":"Empieza por la etapa justo después de nacer"}
+,
+  {"q":"Ordena de la nota musical\nmás grave a la más aguda:","items":[{"txt":"🎵 Do","rank":1},{"txt":"🎵 Mi","rank":2},{"txt":"🎵 Sol","rank":3},{"txt":"🎵 Si","rank":4}],"hint":"En la escala musical, Do es la primera nota"},
+  {"q":"Ordena las fases de la Luna\nen el orden en que ocurren:","items":[{"txt":"🌑 Luna nueva","rank":1},{"txt":"🌓 Cuarto creciente","rank":2},{"txt":"🌕 Luna llena","rank":3},{"txt":"🌗 Cuarto menguante","rank":4}],"hint":"Empieza cuando no se ve nada de Luna"},
+  {"q":"Ordena del recipiente más\npequeño al más grande:","items":[{"txt":"🥄 Cucharadita","rank":1},{"txt":"🥛 Vaso","rank":2},{"txt":"🏺 Jarra","rank":3},{"txt":"🛁 Bañera","rank":4}],"hint":"La cucharadita es la más pequeña de las cuatro"},
+  {"q":"Ordena de la velocidad\nmás lenta a la más rápida:","items":[{"txt":"🐌 Caracol","rank":1},{"txt":"🚶 Persona caminando","rank":2},{"txt":"🚗 Coche","rank":3},{"txt":"✈️ Avión","rank":4}],"hint":"El caracol es el más lento de los cuatro"},
+  {"q":"Ordena estos números\nde mayor a menor:","items":[{"txt":"95","rank":1},{"txt":"60","rank":2},{"txt":"34","rank":3},{"txt":"8","rank":4}],"hint":"Compara primero la cifra de las decenas"},
+  {"q":"Ordena los pasos del ciclo\nde vida de una mariposa:","items":[{"txt":"🥚 Huevo","rank":1},{"txt":"🐛 Oruga","rank":2},{"txt":"🛡️ Crisálida","rank":3},{"txt":"🦋 Mariposa adulta","rank":4}],"hint":"Empieza por el huevo"}
 ];
 
 // SUDOKU 4×4  (0=casilla vacía)
@@ -1657,6 +1744,15 @@ const curioQ=[
   {"cat":"science","em":"🦴","q":"¿Cuántos huesos tiene un bebé recién nacido, aproximadamente (más que un adulto)?","search":"cuantos huesos tiene un bebe recien nacido","yt":"https://www.youtube.com/results?search_query=huesos%20bebe%20recien%20nacido%20documental%20ni%C3%B1os","opts":["206","270","300","350"],"ans":2,"fact":"¡Los bebés nacen con unos 300 huesos! Muchos se van fusionando con el tiempo hasta quedar en los 206 huesos de un adulto."},
   {"cat":"animals","em":"🐦‍⬛","q":"¿Qué animal es capaz de recordar caras humanas durante años?","search":"que animal recuerda caras humanas","yt":"https://www.youtube.com/results?search_query=cuervos%20memoria%20caras%20humanas%20documental%20ni%C3%B1os","opts":["El cuervo","El hámster","La tortuga","El pez de colores"],"ans":0,"fact":"¡Los cuervos pueden recordar una cara humana durante años, y hasta avisan a otros cuervos si esa persona les hizo algo malo!"},
   {"cat":"space","em":"🌕","q":"¿Cómo se llama cuando la Luna se ve completamente roja durante un eclipse lunar?","search":"por que la luna se ve roja en un eclipse","yt":"https://www.youtube.com/results?search_query=luna%20de%20sangre%20eclipse%20lunar%20documental%20ni%C3%B1os","opts":["Luna de sangre","Superluna","Luna azul","Luna negra"],"ans":0,"fact":"Se llama \"Luna de sangre\" porque la luz del Sol atraviesa la atmósfera de la Tierra y solo llega a la Luna la luz rojiza, igual que en un atardecer."}
+,
+  {"cat":"animals","em":"🦎","q":"¿Qué animal puede perder la cola para escapar de un depredador y luego regenerarla?","search":"animal que regenera la cola","yt":"https://www.youtube.com/results?search_query=lagartija%20regenera%20cola%20documental%20ni%C3%B1os","opts":["La lagartija","El perro","El águila","El delfín"],"ans":0,"fact":"La cola se separa por un punto especial del esqueleto y sigue moviéndose sola para distraer al depredador, ¡mientras la lagartija escapa!"},
+  {"cat":"space","em":"🪐","q":"¿Cuál es el planeta con más lunas conocidas del Sistema Solar?","search":"planeta con mas lunas del sistema solar","yt":"https://www.youtube.com/results?search_query=lunas%20de%20saturno%20documental%20ni%C3%B1os","opts":["Saturno","Marte","Venus","Mercurio"],"ans":0,"fact":"Saturno tiene más de 140 lunas confirmadas, y los astrónomos siguen descubriendo más cada año."},
+  {"cat":"science","em":"⚛️","q":"¿Qué elemento químico es el más abundante en todo el universo?","search":"elemento mas abundante del universo","yt":"https://www.youtube.com/results?search_query=hidrogeno%20elemento%20mas%20abundante%20documental%20ni%C3%B1os","opts":["El hidrógeno","El oxígeno","El carbono","El hierro"],"ans":0,"fact":"El hidrógeno forma alrededor del 75% de toda la materia del universo, incluyendo la mayoría de las estrellas."},
+  {"cat":"animals","em":"🦆","q":"¿Cuál es el mamífero que pone huevos en lugar de tener crías vivas?","search":"mamifero que pone huevos","yt":"https://www.youtube.com/results?search_query=ornitorrinco%20pone%20huevos%20documental%20ni%C3%B1os","opts":["El ornitorrinco","El koala","El canguro","El erizo"],"ans":0,"fact":"El ornitorrinco es uno de los pocos mamíferos que pone huevos, ¡y además los machos tienen veneno en las patas!"},
+  {"cat":"geo","em":"🧊","q":"¿Cuál es el desierto más grande y frío del mundo?","search":"desierto mas grande y frio del mundo","yt":"https://www.youtube.com/results?search_query=antartida%20desierto%20mas%20grande%20documental%20ni%C3%B1os","opts":["La Antártida","El Sahara","El Gobi","El Atacama"],"ans":0,"fact":"Aunque parezca raro, la Antártida es un desierto porque llueve o nieva muy poco. ¡Es incluso más grande que el Sahara!"},
+  {"cat":"volcan","em":"🌊","q":"¿Cómo se llama un volcán que entra en erupción bajo el mar y puede llegar a crear una isla nueva?","search":"volcan submarino crea islas","yt":"https://www.youtube.com/results?search_query=volcan%20submarino%20nueva%20isla%20documental%20ni%C3%B1os","opts":["Volcán submarino","Tsunami","Arrecife","Géiser"],"ans":0,"fact":"Con el tiempo, la lava acumulada de un volcán submarino puede sobresalir del agua y formar una isla completamente nueva."},
+  {"cat":"science","em":"✋","q":"¿Cuántos huesos tiene aproximadamente la mano humana, incluida la muñeca?","search":"cuantos huesos tiene la mano humana","yt":"https://www.youtube.com/results?search_query=huesos%20de%20la%20mano%20humana%20documental%20ni%C3%B1os","opts":["14","20","27","33"],"ans":2,"fact":"¡27 huesos en cada mano! Por eso las manos son tan flexibles y pueden hacer movimientos tan precisos."},
+  {"cat":"space","em":"💫","q":"¿Qué es exactamente un \"año luz\"?","search":"que es un año luz","yt":"https://www.youtube.com/results?search_query=que%20es%20un%20a%C3%B1o%20luz%20explicado%20documental%20ni%C3%B1os","opts":["La distancia que recorre la luz en un año","El tiempo que tarda la luz en un año","Un año con más días de lo normal","La velocidad de la luz"],"ans":0,"fact":"Un año luz mide unos 9,5 billones de kilómetros. Se usa para medir distancias enormes en el espacio, ¡no el tiempo!"}
 ];
 
 /* ══════════════════════════════════════
@@ -1709,6 +1805,13 @@ const fracQ=[
   {"sh":4,"tot":10,"q":"¿Cuál es la fracción equivalente más simple?","ans":"2/5","opts":["2/5","4/10","1/5","3/5"]},
   {"sh":5,"tot":10,"q":"¿Cuál es la fracción equivalente más simple?","ans":"1/2","opts":["1/2","5/10","1/5","2/5"]},
   {"sh":9,"tot":12,"q":"¿Cuál es la fracción equivalente más simple?","ans":"3/4","opts":["3/4","9/12","2/3","1/4"]}
+,
+  {"sh":1,"tot":4,"q":"Si sumas esta fracción más otra igual (1/4 + 1/4), ¿cuánto obtienes?","ans":"2/4","opts":["1/4","2/4","2/8","3/4"]},
+  {"sh":1,"tot":6,"q":"Si sumas esta fracción dos veces más (1/6 + 1/6 + 1/6), ¿cuánto obtienes?","ans":"3/6","opts":["1/6","2/6","3/6","6/6"]},
+  {"sh":2,"tot":8,"q":"Si sumas esta fracción más otra igual (2/8 + 2/8), ¿cuánto obtienes?","ans":"4/8","opts":["2/8","4/8","6/8","8/8"]},
+  {"sh":1,"tot":3,"q":"Si sumas esta fracción más otra igual (1/3 + 1/3), ¿cuánto obtienes?","ans":"2/3","opts":["1/3","2/3","2/6","3/3"]},
+  {"sh":3,"tot":10,"q":"Si sumas esta fracción más otra igual (3/10 + 3/10), ¿cuánto obtienes?","ans":"6/10","opts":["3/10","5/10","6/10","9/10"]},
+  {"sh":2,"tot":5,"q":"Si sumas esta fracción más otra igual (2/5 + 2/5), ¿cuánto obtienes?","ans":"4/5","opts":["2/5","3/5","4/5","4/10"]}
 ];
 
 /* ══════════════════════════════════════
@@ -1761,6 +1864,13 @@ const medQ=[
   {"q":"Medio litro son ___ mililitros.","ans":"500 ml","opts":["5 ml","50 ml","500 ml","5.000 ml"],"hint":"1 litro = 1.000 ml, la mitad es 500 ml"},
   {"q":"¿Cuántos gramos son 2 kilogramos y medio?","ans":"2.500 g","opts":["250 g","2.005 g","2.500 g","25.000 g"],"hint":"2,5 kg = 2.000 g + 500 g"},
   {"q":"Un año bisiesto tiene ___ días.","ans":"366 días","opts":["360 días","365 días","366 días","367 días"],"hint":"Cada 4 años, febrero tiene 29 días en vez de 28"}
+,
+  {"q":"Un maratón mide 42 kilómetros aproximadamente.\n¿Cuántos metros son?","ans":"42.000 m","opts":["420 m","4.200 m","42.000 m","420.000 m"],"hint":"1 km = 1.000 m, así que 42 km = 42 × 1.000"},
+  {"q":"Un tren sale a las 14:00 y el viaje\ndura 2 horas y media. ¿A qué hora llega?","ans":"16:30","opts":["16:00","16:30","17:00","15:30"],"hint":"14:00 + 2:30 = ?"},
+  {"q":"Un cuadrado tiene un perímetro\nde 20 cm. ¿Cuánto mide cada lado?","ans":"5 cm","opts":["4 cm","5 cm","10 cm","20 cm"],"hint":"Perímetro ÷ 4 = lado"},
+  {"q":"Un rectángulo tiene 20 cm² de área\ny 4 cm de base. ¿Cuánto mide su altura?","ans":"5 cm","opts":["4 cm","5 cm","8 cm","16 cm"],"hint":"Área ÷ base = altura"},
+  {"q":"¿Cuántos gramos hay en\nun cuarto de kilogramo?","ans":"250 g","opts":["25 g","100 g","250 g","500 g"],"hint":"1 kg = 1.000 g, la cuarta parte es 250 g"},
+  {"q":"Un siglo, ¿cuántos años son?","ans":"100 años","opts":["10 años","50 años","100 años","1.000 años"],"hint":"\"Siglo\" viene del latín y significa 100 años"}
 ];
 
 /* ══════════════════════════════════════
@@ -1817,6 +1927,15 @@ const sinanQ=[
   {"tp":"ant","q":"¿Cuál es el antónimo de ESCASO?","ans":"Abundante","opts":["Poco","Abundante","Raro","Difícil"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de TÍMIDO?","ans":"Vergonzoso","opts":["Valiente","Vergonzoso","Alegre","Fuerte"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de ATREVIDO?","ans":"Cobarde","opts":["Valiente","Cobarde","Curioso","Amable"]}
+,
+  {"tp":"sin","q":"¿Cuál es un sinónimo de JUSTO?","ans":"Equitativo","opts":["Injusto","Equitativo","Cruel","Parcial"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de AMABLE?","ans":"Grosero","opts":["Simpático","Grosero","Educado","Alegre"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ORDENADO?","ans":"Meticuloso","opts":["Desordenado","Meticuloso","Sucio","Rápido"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de TRANQUILO?","ans":"Nervioso","opts":["Calmado","Nervioso","Feliz","Cansado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de VIEJO (para una persona)?","ans":"Anciano","opts":["Joven","Anciano","Fuerte","Bajo"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CLARO?","ans":"Oscuro","opts":["Brillante","Oscuro","Transparente","Limpio"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de PODEROSO?","ans":"Fuerte","opts":["Débil","Fuerte","Pequeño","Lento"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de EDUCADO?","ans":"Maleducado","opts":["Amable","Maleducado","Simpático","Cortés"]}
 ];
 
 /* ══════════════════════════════════════
@@ -1857,6 +1976,13 @@ const tippalQ=[
   {"w":"CORAJE","ans":"Sustantivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Nombra una cualidad o sentimiento"},
   {"w":"VOLAR","ans":"Verbo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Indica una acción"},
   {"w":"ENORME","ans":"Adjetivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Describe el tamaño de algo"}
+,
+  {"w":"RÁPIDO","ans":"Adjetivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Describe cómo es algo o alguien"},
+  {"w":"SIEMPRE","ans":"Adverbio","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Indica cuándo ocurre algo (tiempo)"},
+  {"w":"ELLA","ans":"Pronombre","opts":["Sustantivo","Pronombre","Adjetivo","Artículo"],"hint":"Sustituye el nombre de una persona o cosa"},
+  {"w":"UNOS","ans":"Artículo","opts":["Sustantivo","Verbo","Artículo","Pronombre"],"hint":"Acompaña a un sustantivo plural, de forma indeterminada"},
+  {"w":"TERNURA","ans":"Sustantivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Nombra un sentimiento"},
+  {"w":"FRÁGIL","ans":"Adjetivo","opts":["Sustantivo","Verbo","Adjetivo","Adverbio"],"hint":"Describe una cualidad: que se rompe fácilmente"}
 ];
 
 /* ══════════════════════════════════════
@@ -1888,6 +2014,13 @@ const genusQ=[
   {"w":"CLIMA","ans":"Masculino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en A, es masculino: \"EL clima\""},
   {"w":"MOTO","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en O, es femenina: \"LA moto\""},
   {"w":"FOTO","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"¡Ojo! Aunque termina en O, es femenina: \"LA foto\""}
+,
+  {"w":"AGUA","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"Es femenina, aunque se diga \"EL agua\" (por sonar mejor ante la A tónica). En plural: LAS aguas"},
+  {"w":"ÁGUILA","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"Es femenina, aunque se diga \"EL águila\" por la misma razón que \"el agua\". En plural: LAS águilas"},
+  {"w":"HACHA","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"Es femenina, aunque se diga \"EL hacha\" por empezar con A tónica. En plural: LAS hachas"},
+  {"w":"ALMA","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"Es femenina, aunque se diga \"EL alma\" por empezar con A tónica. En plural: LAS almas"},
+  {"w":"ANCLA","ans":"Femenino singular","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"Es femenina, aunque se diga \"EL ancla\" por empezar con A tónica. En plural: LAS anclas"},
+  {"w":"AGUAS","ans":"Femenino plural","opts":["Masculino singular","Masculino plural","Femenino singular","Femenino plural"],"hint":"Plural de \"agua\": aquí sí se usa LAS, sin ninguna excepción: LAS aguas"}
 ];
 
 /* ══════════════════════════════════════
@@ -1937,6 +2070,13 @@ const analogQ=[
   {"q":"🌱 Semilla → 🌳 Árbol\n🐣 Cría → ?","ans":"🐦 Adulto","opts":["🥚 Huevo","🐦 Adulto","🪺 Nido","🍃 Hoja"],"hint":"¿En qué se convierte con el tiempo?"},
   {"q":"❄️ Frío → 🧥 Abrigo\n☀️ Calor → ?","ans":"🩳 Bañador","opts":["🧤 Guantes","🩳 Bañador","🧣 Bufanda","🥾 Botas"],"hint":"¿Qué ropa usamos según el clima?"},
   {"q":"🔑 Llave → 🔒 Candado\n🎫 Entrada → ?","ans":"🎬 Cine","opts":["🚪 Puerta","🎬 Cine","💰 Dinero","📱 Móvil"],"hint":"¿Para qué sirve cada cosa?"}
+,
+  {"q":"🎵 Nota → 🎼 Partitura\n🔤 Letra → ?","ans":"📖 Libro","opts":["✏️ Lápiz","📖 Libro","🎨 Pintura","📱 Móvil"],"hint":"¿Dónde se agrupan muchas de estas unidades pequeñas?"},
+  {"q":"🌱 Planta → 🌻 Flor\n👶 Bebé → ?","ans":"🧑 Adulto","opts":["🍼 Biberón","🧑 Adulto","🎈 Globo","🛏️ Cuna"],"hint":"¿En qué se convierte con el tiempo?"},
+  {"q":"🔨 Martillo → 🔧 Herramienta\n🍎 Manzana → ?","ans":"🍇 Fruta","opts":["🍇 Fruta","🥕 Verdura","🥩 Carne","🧀 Queso"],"hint":"¿A qué categoría pertenece cada cosa?"},
+  {"q":"❤️ Corazón → 🩸 Bombea sangre\n🫁 Pulmones → ?","ans":"💨 Respiran","opts":["💨 Respiran","🍽️ Digieren","🧠 Piensan","👂 Oyen"],"hint":"¿Qué función tiene cada órgano?"},
+  {"q":"🐺 Lobo → 🐕 Perro\n🐈 Gato salvaje → ?","ans":"🐱 Gato doméstico","opts":["🐱 Gato doméstico","🐭 Ratón","🐦 Pájaro","🐟 Pez"],"hint":"¿Cuál es la versión domesticada de cada animal salvaje?"},
+  {"q":"📏 Regla → Medir longitud\n⚖️ Báscula → ?","ans":"Medir el peso","opts":["Medir el peso","Medir el tiempo","Medir la temperatura","Medir el sonido"],"hint":"¿Para qué sirve cada instrumento?"}
 ];
 
 /* ══════════════════════════════════════
@@ -2030,6 +2170,13 @@ const matrixQ=[
   {"grid":[["2","3","5"],["5","6","8"],["7","8","?"]],"ans":"10","opts":["9","10","11","12"],"hint":"Cada fila sigue el patrón n, n+1, n+3"},
   {"grid":[["3","6","9"],["12","15","18"],["21","24","?"]],"ans":"27","opts":["25","26","27","30"],"hint":"Es la tabla del 3, en orden: 1×3, 2×3, 3×3..."},
   {"grid":[["3","5","8"],["4","6","10"],["5","7","?"]],"ans":"12","opts":["11","12","13","14"],"hint":"Cada fila sigue el patrón a, b, a+b"}
+,
+  {"grid":[["5","10","15"],["6","12","18"],["7","14","?"]],"ans":"21","opts":["20","21","22","28"],"hint":"Cada fila sigue el patrón n, 2n, 3n"},
+  {"grid":[["10","8","6"],["9","7","5"],["8","6","?"]],"ans":"4","opts":["2","3","4","5"],"hint":"Cada fila resta 2 en cada columna"},
+  {"grid":[["2","5","8"],["3","6","9"],["4","7","?"]],"ans":"10","opts":["9","10","11","12"],"hint":"Cada fila sigue el patrón a, a+3, a+6"},
+  {"grid":[["1","1","2"],["2","2","4"],["3","3","?"]],"ans":"6","opts":["4","5","6","9"],"hint":"La tercera columna es el doble de las dos primeras"},
+  {"grid":[["4","8","12"],["5","10","15"],["6","12","?"]],"ans":"18","opts":["16","17","18","24"],"hint":"Cada fila sigue el patrón n, 2n, 3n"},
+  {"grid":[["9","7","5"],["8","6","4"],["7","5","?"]],"ans":"3","opts":["1","2","3","4"],"hint":"Cada fila resta 2 en cada columna"}
 ];
 
 /* ══════════════════════════════════════
@@ -2218,6 +2365,15 @@ const cienQ=[
   {"cat":"history","em":"🏛️","q":"¿Qué imperio construyó una extensa red de calzadas por toda Europa, incluida Hispania?","ans":"El Imperio Romano","opts":["El Imperio Romano","El Imperio Egipcio","El Imperio Inca","El Imperio Griego"],"fact":"Los romanos construyeron miles de kilómetros de calzadas tan bien hechas que algunas se siguen usando como base de carreteras actuales."},
   {"cat":"history","em":"𓁹","q":"¿Cómo se llama el sistema de escritura con dibujos que usaban los antiguos egipcios?","ans":"Jeroglíficos","opts":["Jeroglíficos","Alfabeto latino","Cuneiforme","Runas"],"fact":"Los jeroglíficos egipcios usaban dibujos y símbolos para representar sonidos e ideas; se descifraron gracias a la Piedra de Rosetta."},
   {"cat":"body","em":"🦵","q":"¿Cuál es el hueso más largo del cuerpo humano?","ans":"El fémur (en el muslo)","opts":["El fémur (en el muslo)","El húmero (en el brazo)","La tibia (en la pierna)","La clavícula"],"fact":"El fémur puede medir más de la cuarta parte de la altura total de una persona."}
+,
+  {"cat":"body","em":"👂","q":"¿Qué parte del oído nos ayuda a mantener el equilibrio?","ans":"El oído interno","opts":["El tímpano","El oído interno","La oreja","El oído externo"],"fact":"Dentro del oído interno hay unos canales llenos de líquido que detectan el movimiento de la cabeza y ayudan a no marearnos."},
+  {"cat":"animals","em":"🐻","q":"¿Qué es un animal omnívoro?","ans":"El que come tanto plantas como otros animales","opts":["El que solo come plantas","El que solo come carne","El que come tanto plantas como otros animales","El que no come nada"],"fact":"Los osos, los cerdos y los seres humanos son ejemplos de animales omnívoros."},
+  {"cat":"plants","em":"🌼","q":"¿Cómo se llama la parte de la flor que produce el polen?","ans":"El estambre","opts":["El pistilo","El estambre","El pétalo","El sépalo"],"fact":"El estambre es el órgano masculino de la flor; el polen que produce viaja hasta el pistilo, el órgano femenino."},
+  {"cat":"plants","em":"🥕","q":"¿Qué tipo de raíz tiene una sola raíz principal gruesa, como la zanahoria?","ans":"Raíz pivotante","opts":["Raíz pivotante","Raíz fibrosa","Raíz aérea","Raíz adventicia"],"fact":"La raíz pivotante crece hacia abajo buscando agua profunda; por eso la zanahoria almacena tanto alimento en ella."},
+  {"cat":"spain","em":"🌊","q":"¿Qué río pasa por la ciudad de Zaragoza?","ans":"El Ebro","opts":["El Ebro","El Tajo","El Duero","El Guadalquivir"],"fact":"El Ebro es uno de los ríos más caudalosos de España y atraviesa Zaragoza de norte a sur."},
+  {"cat":"spain","em":"🏝️","q":"¿Cuál es el archipiélago español situado en el mar Mediterráneo?","ans":"Las Islas Baleares","opts":["Las Islas Baleares","Las Islas Canarias","Las Islas Chafarinas","Las Azores"],"fact":"Las Islas Baleares incluyen Mallorca, Menorca, Ibiza y Formentera, entre otras."},
+  {"cat":"history","em":"🏰","q":"¿Cómo se llama el periodo histórico entre la caída del Imperio Romano y el descubrimiento de América?","ans":"La Edad Media","opts":["La Prehistoria","La Edad Antigua","La Edad Media","La Edad Moderna"],"fact":"La Edad Media duró casi 1.000 años, desde el año 476 hasta 1492, y en ella se construyeron muchos castillos y catedrales."},
+  {"cat":"history","em":"📰","q":"¿Qué inventó Johannes Gutenberg en el siglo XV?","ans":"La imprenta de tipos móviles","opts":["La imprenta de tipos móviles","La rueda","El papel","La brújula"],"fact":"Gracias a la imprenta, los libros pudieron copiarse mucho más rápido y barato, y el conocimiento se difundió por toda Europa."}
 ];
 
 /* ══════════════════════════════════════
@@ -2268,6 +2424,13 @@ const acentQ=[
   {"w":"CANCIÓN","sl":"can-CIÓN","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la ÚLTIMA sílaba. Termina en N → lleva tilde."},
   {"w":"SÁBADO","sl":"SÁ-ba-do","ans":"Esdrújula","opts":["Aguda","Llana","Esdrújula"],"rule":"Esdrújula: acento en la ANTEPENÚLTIMA sílaba. Siempre lleva tilde."},
   {"w":"MENÚ","sl":"me-NÚ","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la ÚLTIMA sílaba. Termina en vocal → lleva tilde."}
+,
+  {"w":"OÍDO","sl":"o-Í-do","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"OÍDO es LLANA (acento en Í). Termina en vocal, pero el HIATO (o-í) exige tilde igualmente."},
+  {"w":"RAÍZ","sl":"ra-ÍZ","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"RAÍZ es AGUDA (acento en ÍZ). Termina en Z, pero el HIATO (a-í) obliga a poner tilde."},
+  {"w":"BAÚL","sl":"ba-ÚL","ans":"Aguda","opts":["Aguda","Llana","Esdrújula"],"rule":"BAÚL es AGUDA (acento en ÚL). Termina en L, pero el HIATO (a-ú) obliga a poner tilde."},
+  {"w":"FRÍO","sl":"FRÍ-o","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"FRÍO es LLANA (acento en FRÍ). Termina en vocal, pero el HIATO (í-o) exige tilde."},
+  {"w":"GRÚA","sl":"GRÚ-a","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"GRÚA es LLANA (acento en GRÚ). Termina en vocal, pero el HIATO (ú-a) exige tilde."},
+  {"w":"CARÁCTER","sl":"ca-RÁC-ter","ans":"Llana","opts":["Aguda","Llana","Esdrújula"],"rule":"Acento en la PENÚLTIMA sílaba. Termina en R (no vocal, N o S) → por eso SÍ lleva tilde."}
 ];
 
 /* ══════════════════════════════════════
@@ -2342,6 +2505,13 @@ const crossQ=[
   {"em":"🔭","cat":"Ciencia","q":"Instrumento que sirve para observar objetos muy lejanos, como planetas y estrellas.","ans":"TELESCOPIO","fact":"El telescopio espacial Hubble lleva más de 30 años enviando imágenes del universo desde fuera de la atmósfera."},
   {"em":"🐧","cat":"Geografía","q":"Continente helado situado en el polo sur de la Tierra, donde viven los pingüinos.","ans":"ANTARTIDA","fact":"En la Antártida se han registrado temperaturas de hasta -89°C, ¡las más bajas jamás medidas en la Tierra!"},
   {"em":"🍎","cat":"Ciencia","q":"Fuerza invisible que atrae los objetos hacia el centro de la Tierra y nos mantiene sobre el suelo.","ans":"GRAVEDAD","fact":"En la Luna la gravedad es 6 veces menor que en la Tierra, por eso los astronautas dan saltos tan grandes."}
+,
+  {"em":"🌋","cat":"Geografía","q":"Abertura en la parte superior de un volcán por donde sale la lava, las cenizas y los gases.","ans":"CRATER","fact":"El cráter suele estar en la cima del volcán y puede medir desde unos metros hasta varios kilómetros de ancho."},
+  {"em":"🦴","cat":"Ciencia","q":"Conjunto de huesos que forma la estructura interna del cuerpo de los vertebrados.","ans":"ESQUELETO","fact":"El esqueleto humano adulto tiene 206 huesos que protegen los órganos y permiten el movimiento."},
+  {"em":"🧬","cat":"Ciencia","q":"Molécula que contiene toda la información genética de un ser vivo.","ans":"ADN","fact":"El ADN de una sola célula humana, si se estirara, mediría unos 2 metros de largo."},
+  {"em":"🏰","cat":"Historia","q":"Construcción fortificada, con murallas y torres, donde vivían los señores feudales en la Edad Media.","ans":"CASTILLO","fact":"Muchos castillos tenían fosos y puentes levadizos para defenderse mejor de los ataques."},
+  {"em":"🌡️","cat":"Ciencia","q":"Instrumento que sirve para medir la temperatura del cuerpo o del ambiente.","ans":"TERMOMETRO","fact":"El primer termómetro moderno con una escala de medición fue creado por Fahrenheit en 1714."},
+  {"em":"🦷","cat":"Ciencia","q":"Capa dura y blanca que cubre y protege los dientes; es la sustancia más dura del cuerpo humano.","ans":"ESMALTE","fact":"El esmalte dental es más duro que el propio hueso, pero puede dañarse con los ácidos y el azúcar."}
 ];
 
 /* ══════════════════════════════════════
@@ -2479,6 +2649,13 @@ const exploraQ=[
   {"mission":"Fíjate en una colonia de hormigas trabajando y observa si algunas parecen más grandes que otras.","q":"Además de la reina, ¿qué otro tipo especial de hormiga puede haber en un hormiguero grande?","ans":"Hormigas soldado, más grandes, que defienden el hormiguero","opts":["Hormigas soldado, más grandes, que defienden el hormiguero","Hormigas voladoras que solo existen en cuentos","No hay ningún otro tipo, todas son iguales","Hormigas que se convierten en abejas"],"diff":"medium","dato":"En algunas especies, las hormigas soldado tienen mandíbulas enormes especializadas solo en defender la colonia."},
   {"mission":"Observa una piña de pino cerrada y otra abierta si encuentras alguna en el suelo.","q":"¿Por qué las piñas de pino se abren cuando hace calor y se cierran con la humedad?","ans":"Para proteger las semillas de la humedad y liberarlas cuando hace buen tiempo para germinar","opts":["Para proteger las semillas de la humedad y liberarlas cuando hace buen tiempo para germinar","Porque tienen frío","Es solo decoración, no tiene ninguna función","Porque las tocan los pájaros"],"diff":"medium","dato":"Las escamas de la piña actúan casi como un higrómetro natural, abriéndose y cerrándose según la humedad del aire."},
   {"mission":"Busca nubes en el cielo y observa su forma: unas parecen algodón y otras láminas planas.","q":"¿Qué tipo de nubes suelen anunciar tormenta, con forma de gran torre o yunque?","ans":"Los cumulonimbos","opts":["Los cumulonimbos","Los cirros","Los estratos","Las nubes nunca anuncian nada"],"diff":"medium","dato":"Un cumulonimbo puede alcanzar más de 12 km de altura, ¡más alto que el Everest!"}
+,
+  {"mission":"Observa una planta con espinas, como un rosal o un cactus, sin tocarla.","q":"¿Para qué sirven las espinas de una planta?","ans":"Para defenderse de los animales que quieren comérsela","opts":["Para defenderse de los animales que quieren comérsela","Para atraer más agua de lluvia","Para hacer la fotosíntesis mejor","No tienen ninguna función"],"diff":"medium","dato":"Las espinas son hojas modificadas que, además de defender la planta, reducen la pérdida de agua en climas secos."},
+  {"mission":"Fíjate en las patas de un pájaro posado en una rama o cable.","q":"¿Por qué los pájaros no se caen al dormir posados en una rama?","ans":"Sus tendones se tensan automáticamente y cierran los dedos alrededor de la rama","opts":["Sus tendones se tensan automáticamente y cierran los dedos alrededor de la rama","Porque no se duermen nunca","Porque pesan muy poco","Porque tienen pegamento en las patas"],"diff":"medium","dato":"Este mecanismo funciona incluso sin que el ave esté despierta, así que no necesita hacer ningún esfuerzo para no caerse."},
+  {"mission":"Busca una hoja caída y observa sus nervios (las líneas que la recorren).","q":"¿Para qué sirven los nervios de una hoja?","ans":"Transportan agua y nutrientes por toda la hoja","opts":["Transportan agua y nutrientes por toda la hoja","Sirven para que la hoja cambie de color","Atraen a los insectos","No tienen ninguna función"],"diff":"medium","dato":"Los nervios de la hoja son como diminutas tuberías conectadas al tallo y a las raíces de la planta."},
+  {"mission":"Observa un charco después de la lluvia varias veces a lo largo del día.","q":"¿Por qué un charco desaparece con las horas aunque no llueva más?","ans":"El agua se evapora poco a poco con el calor y el aire","opts":["El agua se evapora poco a poco con el calor y el aire","Se va toda bajo tierra de golpe","Los animales se la beben toda","El agua desaparece por arte de magia"],"diff":"medium","dato":"Este proceso se llama evaporación y es la primera fase del ciclo del agua."},
+  {"mission":"Fíjate en un caracol moviéndose y observa el rastro brillante que deja.","q":"¿Para qué sirve el rastro de baba que deja el caracol?","ans":"Le ayuda a deslizarse y a proteger su cuerpo blando del roce","opts":["Le ayuda a deslizarse y a proteger su cuerpo blando del roce","Es su comida favorita","Sirve para marcar su territorio con olor a menta","No tiene ninguna función"],"diff":"medium","dato":"Esa baba también le ayuda a trepar por superficies muy inclinadas sin resbalar."},
+  {"mission":"Observa un árbol de hoja caduca (que pierde las hojas) en distintas épocas del año si es posible.","q":"¿Por qué a algunos árboles les cambia el color de las hojas antes de caer en otoño?","ans":"Porque dejan de producir clorofila y aparecen otros colores que ya estaban escondidos","opts":["Porque dejan de producir clorofila y aparecen otros colores que ya estaban escondidos","Porque las hojas se queman con el sol","Porque los pájaros las pintan","Porque hace demasiado calor"],"diff":"medium","dato":"La clorofila es el pigmento verde que usan las plantas para hacer la fotosíntesis; al desaparecer, se ven los colores que ya estaban ahí."}
 ];
 
 /* ══════════════════════════════════════
@@ -2537,6 +2714,13 @@ const creativeQ=[
   {"cat":"solve","em":"⚖️","prompt":"Dos amigos quieren el último trozo de pizza y ninguno quiere compartir. Inventa 3 formas justas de decidir quién se lo queda.","tip":"Piensa en formas que a los dos les parezcan justas."},
   {"cat":"describe","em":"🌍","prompt":"Si tuvieras que explicarle a un extraterrestre qué es la amistad, ¿qué le dirías con tus propias palabras?","tip":"Usa ejemplos de tu propia vida."},
   {"cat":"imagine","em":"📚","prompt":"Imagina que los libros de tu biblioteca cobran vida por la noche. ¿Qué crees que harían y con quién se llevarían mejor?","tip":"Piensa en personajes de cuentos que conozcas."}
+,
+  {"cat":"solve","em":"🎉","prompt":"Imagina que te encargan organizar el cumpleaños perfecto para tu mejor amigo sin gastar dinero. ¿Qué harías?","tip":"Piensa en actividades, no en cosas que comprar."},
+  {"cat":"invent","em":"⚽","prompt":"Inventa un deporte completamente nuevo que se pueda jugar con solo una pelota y cuatro jugadores. ¿Cuáles son las reglas?","tip":"Piensa en cómo se gana un punto."},
+  {"cat":"imagine","em":"🐾","prompt":"Si los animales pudieran hablar durante un solo día, ¿qué crees que nos dirían sobre cómo los tratamos?","tip":"Piensa en distintos tipos de animales: mascotas, salvajes, de granja."},
+  {"cat":"describe","em":"📵","prompt":"Describe cómo sería un día sin ningún tipo de tecnología (sin móviles, sin tele, sin internet).","tip":"Piensa en cómo te comunicarías o te entretendrías."},
+  {"cat":"solve","em":"💻","prompt":"En clase hay solo 5 ordenadores para 25 alumnos. Inventa un sistema justo para repartir el tiempo de uso.","tip":"Piensa en turnos, tiempo o sorteos."},
+  {"cat":"imagine","em":"🐜","prompt":"Imagina que puedes encoger al tamaño de una hormiga durante una hora. ¿Qué harías y qué peligros crees que encontrarías?","tip":"Piensa en cómo se vería tu propia casa desde ese tamaño."}
 ];
 
 /* ══════════════════════════════════════
@@ -2627,6 +2811,13 @@ const vocabQ=[
   {"cat":"curiopal","em":"☔","q":"¿Cómo se llama una palabra formada por la unión de otras dos, como \"paraguas\" (para + aguas)?","ans":"Palabra compuesta","opts":["Palabra compuesta","Palabra derivada","Palabra primitiva","Palabra homófona"],"fact":"Otros ejemplos de palabras compuestas son \"sacapuntas\", \"rascacielos\" y \"correcaminos\"."},
   {"cat":"expr","em":"✋","q":"¿Qué significa la expresión \"tener mano de santo\"?","ans":"Tener mucha habilidad para curar o arreglar cosas rápidamente","opts":["Tener mucha habilidad para curar o arreglar cosas rápidamente","Ser muy religioso","Tener las manos muy limpias","Ser torpe con las manos"],"fact":"Se usa mucho para hablar de remedios que funcionan muy rápido, \"como por milagro\"."},
   {"cat":"curiopal","em":"📜","q":"¿Cómo se llama el estudio del origen y la historia de las palabras?","ans":"Etimología","opts":["Etimología","Gramática","Ortografía","Fonética"],"fact":"Gracias a la etimología sabemos que muchas palabras españolas vienen del latín, del árabe o del griego."}
+,
+  {"cat":"etim","em":"👨‍👩‍👧","q":"¿De qué palabra latina viene \"familia\"?","ans":"De \"famulus\", que significaba sirviente o criado","opts":["De \"famulus\", que significaba sirviente o criado","Del árabe \"famil\"","De \"fama\", porque las familias eran famosas","No tiene origen conocido"],"fact":"En la antigua Roma, \"familia\" incluía a todos los que vivían en una casa, incluidos los sirvientes, no solo a los parientes."},
+  {"cat":"etim","em":"🚗","q":"¿De dónde viene la palabra \"automóvil\"?","ans":"Del griego \"auto\" (uno mismo) y el latín \"mobilis\" (que se mueve)","opts":["Del griego \"auto\" (uno mismo) y el latín \"mobilis\" (que se mueve)","Del inglés \"auto\"","Del nombre de su inventor","Del japonés antiguo"],"fact":"\"Automóvil\" significa literalmente \"que se mueve por sí mismo\", sin necesidad de caballos ni de que lo empujen."},
+  {"cat":"expr","em":"🎩","q":"¿Qué significa \"ponerse el mundo por montera\"?","ans":"No importarle a alguien lo que piensen los demás","opts":["No importarle a alguien lo que piensen los demás","Ponerse un sombrero muy grande","Viajar por todo el mundo","Ser muy educado"],"fact":"Viene del mundo taurino: la montera era el sombrero del torero, y \"ponérsela por montera\" significaba desafiar las normas."},
+  {"cat":"expr","em":"🌧️","q":"¿Qué significa \"llover sobre mojado\"?","ans":"Que un problema se suma a otro que ya existía","opts":["Que un problema se suma a otro que ya existía","Que está lloviendo mucho","Que algo se ha mojado por error","Que todo va perfectamente"],"fact":"Se usa cuando pasa algo malo justo después de otra cosa mala, empeorando la situación."},
+  {"cat":"curiopal","em":"🔄","q":"¿Cómo se llama una palabra que se lee igual al derecho y al revés, como \"reconocer\"?","ans":"Palíndromo","opts":["Palíndromo","Anagrama","Sinónimo","Acrónimo"],"fact":"\"Reconocer\", \"anilina\" y \"radar\" son palíndromos: se leen igual empezando por cualquier extremo."},
+  {"cat":"curiopal","em":"🛸","q":"¿Cómo se llama una palabra formada con las iniciales de varias palabras, como \"OVNI\"?","ans":"Acrónimo (o sigla)","opts":["Acrónimo (o sigla)","Palíndromo","Antónimo","Diminutivo"],"fact":"Otros acrónimos comunes son \"ONU\", \"láser\" y \"radar\"."}
 ];
 
 /* ══════════════════════════════════════
@@ -2716,6 +2907,13 @@ const geolocQ=[
   {"cat":"spain","em":"🗣️","q":"¿Cuál es la lengua cooficial que se habla en Galicia?","ans":"El gallego","opts":["El gallego","El euskera","El catalán","El valenciano"],"fact":"El gallego es muy parecido al portugués, ya que ambos derivan del antiguo gallego-portugués medieval."},
   {"cat":"spain","em":"🌊","q":"¿Cómo se llama el fenómeno por el que sube y baja el nivel del mar cada día en las costas?","ans":"La marea","opts":["La marea","El monzón","El tsunami","La corriente"],"fact":"Las mareas están causadas principalmente por la atracción gravitatoria de la Luna sobre los océanos."},
   {"cat":"spain","em":"🏔️","q":"¿Cómo se llama la cordillera situada en el centro de España que atraviesa Madrid?","ans":"El Sistema Central","opts":["El Sistema Central","Los Pirineos","Sierra Nevada","Los Picos de Europa"],"fact":"El Sistema Central incluye la Sierra de Guadarrama, muy cerca de Madrid, y también se extiende hacia Ávila y Salamanca."}
+,
+  {"cat":"local","em":"⛰️","q":"¿En qué provincia limítrofe nace el río Henares, antes de llegar a Guadalajara?","ans":"En Soria","opts":["En Soria","En Cuenca","En Toledo","En Ávila"],"fact":"El Henares nace en la Sierra Ministra, en la provincia de Soria, y recorre después Guadalajara y Madrid."},
+  {"cat":"local","em":"🌡️","q":"¿Qué tipo de clima predomina en la Campiña del Henares, donde está Humanes de Mohernando?","ans":"Mediterráneo continentalizado (veranos calurosos, inviernos fríos)","opts":["Mediterráneo continentalizado (veranos calurosos, inviernos fríos)","Tropical, muy húmedo todo el año","Polar, con nieve permanente","Desértico, sin apenas lluvias en ningún mes"],"fact":"Este clima es típico del interior de la Península Ibérica, con grandes diferencias de temperatura entre verano e invierno."},
+  {"cat":"clm","em":"🏘️","q":"¿Qué provincia de Castilla-La Mancha tiene como capital la ciudad de Cuenca?","ans":"Cuenca","opts":["Cuenca","Toledo","Albacete","Guadalajara"],"fact":"Cuenca es famosa por sus Casas Colgadas, construidas al borde de un acantilado."},
+  {"cat":"clm","em":"🪨","q":"¿Cómo se llama el paraje de rocas con formas curiosas situado en la Serranía de Cuenca?","ans":"La Ciudad Encantada","opts":["La Ciudad Encantada","El Delta del Ebro","Los Picos de Europa","Sierra Nevada"],"fact":"Sus formaciones rocosas fueron creadas por la erosión del agua y el viento durante millones de años."},
+  {"cat":"spain","em":"🌋","q":"¿Cuál es el punto más alto de España, situado en la isla de Tenerife?","ans":"El Teide","opts":["El Teide","El Mulhacén","El Aneto","El Moncayo"],"fact":"El Teide mide 3.718 metros y es el pico más alto de todo el territorio español, incluyendo la península."},
+  {"cat":"spain","em":"🍷","q":"¿Cuál de estas comunidades autónomas es la más pequeña de España por superficie?","ans":"La Rioja","opts":["La Rioja","Cantabria","Murcia","Islas Baleares"],"fact":"La Rioja es la comunidad autónoma más pequeña de España, aunque es muy conocida internacionalmente por sus vinos."}
 ];
 
 /* ══════════════════════════════════════
@@ -3114,11 +3312,16 @@ function smartPool(type, allItems, keyFn, dispFn){
   // Place weak items within first 65% of slots, rest normal
   const total=annotated.length;
   const earlyMax=Math.ceil(total*.65);
-  const earlySlots=shuffle([...Array(earlyMax).keys()]).slice(0,wkItems.length);
+  const earlyCount=Math.min(wkItems.length, earlyMax);
+  const earlySlots=shuffle([...Array(earlyMax).keys()]).slice(0,earlyCount);
   const result=new Array(total).fill(null);
   earlySlots.forEach((slot,i)=>result[slot]=wkItems[i]);
-  let ni=0;
-  for(let i=0;i<total;i++) if(result[i]===null) result[i]=nrItems[ni++];
+  // Anything left over (weak items that didn't fit early + all normal items)
+  // gets shuffled into the remaining slots so no slot is ever left empty,
+  // even if almost every item in the pool is currently marked "weak".
+  const leftover=shuffle([...wkItems.slice(earlyCount), ...nrItems]);
+  let li=0;
+  for(let i=0;i<total;i++) if(result[i]===null) result[i]=leftover[li++];
   return result;
 }
 

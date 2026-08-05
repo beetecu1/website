@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/eliza/Documents/libros -name *Mision2*)",
+      "Bash(mdls \"/Users/eliza/Documents/libros/Mision2/Mision2-recortado.pdf\")",
+      "Bash(python3:*)",
+      "Bash(pip3 install:*)",
+      "Bash(npm run:*)",
+      "Bash(mkdir -p /tmp/mision2_aws)",
+      "Read(//tmp/**)",
+      "Bash(cp ~/Downloads/Mision2-tapa-blanda-draf-aws.docx .)",
+      "Bash(unzip -o Mision2-tapa-blanda-draf-aws.docx word/media/* -d extracted/)"
+    ]
+  }
+}
