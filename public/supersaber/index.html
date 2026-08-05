@@ -1437,15 +1437,9 @@ const sudokuQ=[
   {nm:'Puzzle 3',
    puz:[[0,4,1,2],[1,0,3,4],[4,3,0,1],[2,1,4,0]],
    sol:[[3,4,1,2],[1,2,3,4],[4,3,2,1],[2,1,4,3]]},
-  {nm:'Puzzle 4',
-   puz:[[4,0,2,0],[0,0,4,0],[0,4,0,2],[1,0,3,4]],
-   sol:[[4,3,2,1],[2,1,4,3],[3,4,1,2],[1,2,3,4]]},
-  {nm:'Puzzle 5',
-   puz:[[0,3,0,4],[4,0,3,0],[0,4,0,3],[3,0,4,0]],
-   sol:[[1,3,2,4],[4,2,3,1],[2,4,1,3],[3,1,4,2]]},
-  {nm:'Puzzle 6',
-   puz:[[0,4,0,3],[3,0,4,0],[0,3,0,4],[4,0,3,0]],
-   sol:[[2,4,1,3],[3,1,4,2],[1,3,2,4],[4,2,3,1]]},
+  {"nm":"Puzzle 4","puz":[[2,4,0,0],[0,0,2,4],[3,2,0,0],[0,0,3,2]],"sol":[[2,4,1,3],[1,3,2,4],[3,2,4,1],[4,1,3,2]]},
+  {"nm":"Puzzle 5","puz":[[0,1,0,4],[0,0,1,2],[0,0,4,3],[0,3,0,1]],"sol":[[2,1,3,4],[3,4,1,2],[1,2,4,3],[4,3,2,1]]},
+  {"nm":"Puzzle 6","puz":[[4,0,0,0],[0,2,1,0],[0,4,2,3],[2,0,4,0]],"sol":[[4,1,3,2],[3,2,1,4],[1,4,2,3],[2,3,4,1]]},
   {nm:'Puzzle 7',
    puz:[[4,3,0,0],[2,0,0,4],[0,0,4,0],[0,4,0,1]],
    sol:[[4,3,1,2],[2,1,3,4],[1,2,4,3],[3,4,2,1]]},
@@ -1455,15 +1449,26 @@ const sudokuQ=[
   {nm:'Puzzle 9',
    puz:[[0,2,0,0],[0,0,1,0],[0,3,0,1],[2,0,4,3]],
    sol:[[1,2,3,4],[3,4,1,2],[4,3,2,1],[2,1,4,3]]},
-  {nm:'Puzzle 10',
-   puz:[[0,0,2,0],[1,0,4,0],[0,0,1,0],[2,1,0,4]],
-   sol:[[3,4,2,1],[1,2,4,3],[4,3,1,2],[2,1,3,4]]},
+  {"nm":"Puzzle 10","puz":[[0,0,4,0],[4,3,0,1],[2,0,3,4],[0,0,0,0]],"sol":[[1,2,4,3],[4,3,2,1],[2,1,3,4],[3,4,1,2]]},
   {nm:'Puzzle 11',
    puz:[[2,4,0,0],[0,0,2,0],[0,1,4,0],[0,2,0,1]],
    sol:[[2,4,1,3],[1,3,2,4],[3,1,4,2],[4,2,3,1]]},
   {nm:'Puzzle 12',
    puz:[[2,0,1,0],[0,3,0,4],[4,0,0,1],[0,0,0,2]],
    sol:[[2,4,1,3],[1,3,2,4],[4,2,3,1],[3,1,4,2]]}
+,
+  {"nm":"Puzzle 13","puz":[[3,0,1,0],[0,1,0,0],[0,2,3,1],[1,0,0,4]],"sol":[[3,4,1,2],[2,1,4,3],[4,2,3,1],[1,3,2,4]]},
+  {"nm":"Puzzle 14","puz":[[1,0,2,0],[3,0,0,1],[2,0,0,0],[4,0,1,2]],"sol":[[1,4,2,3],[3,2,4,1],[2,1,3,4],[4,3,1,2]]},
+  {"nm":"Puzzle 15","puz":[[0,0,0,1],[0,0,2,3],[0,4,3,2],[2,0,0,4]],"sol":[[3,2,4,1],[4,1,2,3],[1,4,3,2],[2,3,1,4]]},
+  {"nm":"Puzzle 16","puz":[[1,4,0,0],[0,0,0,0],[4,1,0,2],[0,3,4,0]],"sol":[[1,4,2,3],[3,2,1,4],[4,1,3,2],[2,3,4,1]]},
+  {"nm":"Puzzle 17","puz":[[0,0,3,2],[3,0,1,0],[0,3,0,0],[4,0,2,0]],"sol":[[1,4,3,2],[3,2,1,4],[2,3,4,1],[4,1,2,3]]},
+  {"nm":"Puzzle 18","puz":[[2,4,3,0],[1,0,4,0],[0,2,0,0],[4,0,0,0]],"sol":[[2,4,3,1],[1,3,4,2],[3,2,1,4],[4,1,2,3]]},
+  {"nm":"Puzzle 19","puz":[[0,3,0,1],[1,0,4,0],[0,0,0,0],[0,0,1,2]],"sol":[[4,3,2,1],[1,2,4,3],[2,1,3,4],[3,4,1,2]]},
+  {"nm":"Puzzle 20","puz":[[0,0,3,0],[3,1,0,2],[0,3,0,0],[0,0,2,0]],"sol":[[4,2,3,1],[3,1,4,2],[2,3,1,4],[1,4,2,3]]},
+  {"nm":"Puzzle 21","puz":[[0,0,2,0],[1,2,0,3],[3,0,0,2],[0,0,0,0]],"sol":[[4,3,2,1],[1,2,4,3],[3,4,1,2],[2,1,3,4]]},
+  {"nm":"Puzzle 22","puz":[[2,0,1,0],[0,0,0,0],[0,3,2,0],[0,0,0,1]],"sol":[[2,4,1,3],[3,1,4,2],[1,3,2,4],[4,2,3,1]]},
+  {"nm":"Puzzle 23","puz":[[0,2,0,3],[0,0,0,0],[0,0,3,0],[0,0,1,4]],"sol":[[1,2,4,3],[3,4,2,1],[4,1,3,2],[2,3,1,4]]},
+  {"nm":"Puzzle 24","puz":[[1,0,0,4],[2,0,0,0],[0,0,1,3],[0,1,0,0]],"sol":[[1,3,2,4],[2,4,3,1],[4,2,1,3],[3,1,4,2]]}
 ];
 
 // SOPA DE LETRAS — placements definen las palabras; el resto son letras aleatorias
@@ -1500,6 +1505,15 @@ const sopaQ=[
    placements:[{w:'LLUVIA',r:0,c:0,dir:'h'},{w:'NIEVE',r:2,c:0,dir:'h'},{w:'VIENTO',r:4,c:0,dir:'h'},{w:'SOL',r:6,c:0,dir:'h'},{w:'NUBE',r:6,c:3,dir:'h'}]}
 ,
   {"nm":"Animales marinos","em":"🐠","size":9,"words":["TORTUGA","DELFIN","TIBURON","PULPO","BALLENA","MEDUSA"],"placements":[{"w":"TORTUGA","r":0,"c":0,"dir":"h"},{"w":"DELFIN","r":1,"c":0,"dir":"h"},{"w":"TIBURON","r":2,"c":0,"dir":"h"},{"w":"PULPO","r":3,"c":0,"dir":"h"},{"w":"BALLENA","r":4,"c":0,"dir":"h"},{"w":"MEDUSA","r":5,"c":0,"dir":"h"}]}
+,
+  {"nm":"Profesiones","em":"👩‍⚕️","size":8,"words":["MEDICO","MAESTRO","BOMBERO","CHEF","PILOTO"],"placements":[{"w":"MAESTRO","r":6,"c":1,"dir":"h"},{"w":"BOMBERO","r":7,"c":0,"dir":"h"},{"w":"MEDICO","r":0,"c":5,"dir":"v"},{"w":"PILOTO","r":0,"c":6,"dir":"v"},{"w":"CHEF","r":0,"c":4,"dir":"v"}]},
+  {"nm":"Instrumentos musicales","em":"🎸","size":9,"words":["PIANO","GUITARRA","TAMBOR","FLAUTA","ARPA"],"placements":[{"w":"GUITARRA","r":0,"c":6,"dir":"v"},{"w":"TAMBOR","r":8,"c":2,"dir":"h"},{"w":"FLAUTA","r":1,"c":3,"dir":"v"},{"w":"PIANO","r":4,"c":8,"dir":"v"},{"w":"ARPA","r":0,"c":7,"dir":"v"}]},
+  {"nm":"Medios de transporte","em":"🚗","size":8,"words":["COCHE","AVION","BARCO","TREN","MOTO"],"placements":[{"w":"COCHE","r":2,"c":5,"dir":"v"},{"w":"AVION","r":3,"c":0,"dir":"v"},{"w":"BARCO","r":0,"c":6,"dir":"v"},{"w":"TREN","r":0,"c":3,"dir":"v"},{"w":"MOTO","r":5,"c":1,"dir":"h"}]},
+  {"nm":"La ropa","em":"👕","size":9,"words":["CAMISA","PANTALON","FALDA","GORRO","BOTA"],"placements":[{"w":"PANTALON","r":4,"c":0,"dir":"h"},{"w":"CAMISA","r":0,"c":2,"dir":"h"},{"w":"FALDA","r":3,"c":0,"dir":"h"},{"w":"GORRO","r":0,"c":8,"dir":"v"},{"w":"BOTA","r":5,"c":6,"dir":"v"}]},
+  {"nm":"En la cocina","em":"🍳","size":8,"words":["CUCHARA","TENEDOR","PLATO","VASO","OLLA"],"placements":[{"w":"CUCHARA","r":2,"c":0,"dir":"h"},{"w":"TENEDOR","r":0,"c":1,"dir":"h"},{"w":"PLATO","r":1,"c":2,"dir":"h"},{"w":"VASO","r":7,"c":1,"dir":"h"},{"w":"OLLA","r":3,"c":1,"dir":"v"}]},
+  {"nm":"En el colegio","em":"🎒","size":8,"words":["LAPIZ","GOMA","REGLA","TIJERA","MOCHILA"],"placements":[{"w":"MOCHILA","r":6,"c":0,"dir":"h"},{"w":"TIJERA","r":4,"c":1,"dir":"h"},{"w":"LAPIZ","r":2,"c":2,"dir":"h"},{"w":"REGLA","r":1,"c":1,"dir":"h"},{"w":"GOMA","r":0,"c":3,"dir":"h"}]},
+  {"nm":"Las emociones","em":"😊","size":9,"words":["ALEGRIA","ENFADO","MIEDO","SORPRESA","CALMA"],"placements":[{"w":"SORPRESA","r":0,"c":7,"dir":"v"},{"w":"ALEGRIA","r":1,"c":3,"dir":"v"},{"w":"ENFADO","r":2,"c":5,"dir":"v"},{"w":"MIEDO","r":0,"c":4,"dir":"v"},{"w":"CALMA","r":8,"c":0,"dir":"h"}]},
+  {"nm":"El sistema solar","em":"🪐","size":9,"words":["JUPITER","SATURNO","MERCURIO","NEPTUNO","URANO"],"placements":[{"w":"MERCURIO","r":0,"c":1,"dir":"h"},{"w":"JUPITER","r":6,"c":2,"dir":"h"},{"w":"SATURNO","r":8,"c":2,"dir":"h"},{"w":"NEPTUNO","r":2,"c":0,"dir":"h"},{"w":"URANO","r":4,"c":1,"dir":"v"}]}
 ];
 
 // CURIOSIDAD — preguntas con links a YouTube o búsqueda web
@@ -2512,6 +2526,22 @@ const crossQ=[
   {"em":"🏰","cat":"Historia","q":"Construcción fortificada, con murallas y torres, donde vivían los señores feudales en la Edad Media.","ans":"CASTILLO","fact":"Muchos castillos tenían fosos y puentes levadizos para defenderse mejor de los ataques."},
   {"em":"🌡️","cat":"Ciencia","q":"Instrumento que sirve para medir la temperatura del cuerpo o del ambiente.","ans":"TERMOMETRO","fact":"El primer termómetro moderno con una escala de medición fue creado por Fahrenheit en 1714."},
   {"em":"🦷","cat":"Ciencia","q":"Capa dura y blanca que cubre y protege los dientes; es la sustancia más dura del cuerpo humano.","ans":"ESMALTE","fact":"El esmalte dental es más duro que el propio hueso, pero puede dañarse con los ácidos y el azúcar."}
+,
+  {"em":"🦎","cat":"Animales","q":"Reptil capaz de cambiar el color de su piel para camuflarse, con ojos que se mueven cada uno por su lado.","ans":"CAMALEON","fact":"Un camaleón puede mover cada ojo de forma independiente, ¡mirando a dos sitios distintos a la vez!"},
+  {"em":"🐨","cat":"Animales","q":"Marsupial australiano que se pasa casi todo el día durmiendo y solo come hojas de eucalipto.","ans":"KOALA","fact":"Los koalas duermen unas 20 horas al día para ahorrar la poca energía que les dan las hojas de eucalipto."},
+  {"em":"🦔","cat":"Animales","q":"Pequeño mamífero cubierto de púas que se enrolla en forma de bola cuando se siente amenazado.","ans":"ERIZO","fact":"Un erizo puede tener hasta 7.000 púas en su cuerpo."},
+  {"em":"🏔️","cat":"Geografía","q":"Cadena de montañas más larga del mundo, recorre casi toda Sudamérica de norte a sur.","ans":"ANDES","fact":"La cordillera de los Andes mide más de 7.000 km de longitud."},
+  {"em":"🏝️","cat":"Geografía","q":"Extensión de tierra rodeada de agua por todas partes.","ans":"ISLA","fact":"Groenlandia es la isla más grande del mundo (sin contar Australia, que se considera un continente)."},
+  {"em":"🌊","cat":"Geografía","q":"Movimiento de agua que se forma en el mar y rompe contra la orilla.","ans":"OLA","fact":"Las olas más grandes jamás registradas por surfistas han superado los 25 metros de altura."},
+  {"em":"🔍","cat":"Ciencia","q":"Instrumento con un cristal curvo que agranda lo que se mira a través de él, muy usado por detectives.","ans":"LUPA","fact":"Una lupa funciona porque su cristal curvo dobla la luz y hace que las cosas parezcan más grandes."},
+  {"em":"🧲","cat":"Ciencia","q":"Objeto capaz de atraer metales como el hierro gracias a su fuerza invisible.","ans":"IMAN","fact":"La Tierra entera se comporta como un enorme imán, por eso funciona la brújula."},
+  {"em":"💉","cat":"Ciencia","q":"Sustancia que se inyecta para proteger al cuerpo de una enfermedad antes de que aparezca.","ans":"VACUNA","fact":"Gracias a las vacunas, una enfermedad llamada viruela desapareció por completo del mundo."},
+  {"em":"🫁","cat":"Cuerpo humano","q":"Órganos que se llenan de aire cuando respiramos y nos dan el oxígeno que necesita el cuerpo.","ans":"PULMONES","fact":"Si se extendieran todos los alveolos de tus pulmones, cubrirían la superficie de una pista de tenis."},
+  {"em":"🦴","cat":"Cuerpo humano","q":"El hueso más largo y fuerte del cuerpo humano; está en el muslo.","ans":"FEMUR","fact":"El fémur puede soportar hasta 30 veces el peso del cuerpo sin romperse."},
+  {"em":"🔒","cat":"Objetos","q":"Objeto de metal que se cierra con una llave y sirve para proteger algo, como una puerta o una maleta.","ans":"CANDADO","fact":"Los candados más antiguos conocidos datan de la época del Antiguo Egipto, hace unos 4.000 años."},
+  {"em":"🗝️","cat":"Objetos","q":"Mecanismo que se encaja en una puerta y que solo se abre con la llave correcta.","ans":"CERRADURA","fact":"Las primeras cerraduras conocidas se inventaron en Egipto hace más de 4.000 años."},
+  {"em":"📜","cat":"Historia","q":"Material antiguo hecho con la planta del papiro, usado por los egipcios para escribir antes del papel.","ans":"PAPIRO","fact":"Los egipcios fabricaban papiro trenzando tiras de la planta y prensándolas hasta formar hojas."},
+  {"em":"⚔️","cat":"Historia","q":"Época histórica entre la caída del Imperio Romano y el Renacimiento, con castillos y caballeros.","ans":"MEDIEVAL","fact":"La época medieval duró casi mil años, del siglo V al XV."}
 ];
 
 /* ══════════════════════════════════════
