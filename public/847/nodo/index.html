@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex"/>
+<title>847 — nodo_ext_00</title>
+<style>
+  :root { --bg:#0a0a0a; --fg:#00cc44; --dim:#4a8a4a; --white:#e8e8e8; --line:#1a3a1a; --warn:#cc6600; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { background:#0a0a0a; }
+  body {
+    background:var(--bg); color:var(--fg);
+    font-family:"Courier New",Courier,monospace;
+    font-size:14px; line-height:1.65;
+    padding:26px 16px 80px; max-width:720px; margin:0 auto;
+  }
+  .tb { display:flex; justify-content:space-between; align-items:center;
+        border-bottom:1px solid var(--line); padding-bottom:6px; margin-bottom:26px;
+        font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
+  .dot { display:inline-block; width:6px; height:6px; border-radius:50%;
+         background:#00ff44; animation:pulse 1.4s ease-in-out infinite; margin-right:5px; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+  .line { opacity:0; animation:in .18s ease-out forwards; }
+  @keyframes in { to { opacity:1 } }
+
+  .row { display:flex; justify-content:space-between; gap:16px; padding:2px 0; }
+  .k { color:var(--dim); }
+  .v { color:var(--fg); text-align:right; word-break:break-word; }
+
+  .cnt { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
+         border-top:1px solid var(--line); margin-top:14px; padding-top:10px; }
+  .cnt b { color:var(--white); font-size:20px; }
+
+  .golpe { border:1px solid var(--line); background:#080c08; padding:16px 16px 14px; margin:26px 0; }
+  .golpe .et { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--dim); margin-bottom:10px; }
+  .big { color:var(--white); font-size:26px; font-weight:bold; letter-spacing:-.03em; line-height:1.25; }
+  .big small { display:block; font-size:12px; font-weight:normal; color:var(--dim); letter-spacing:0; margin-top:5px; }
+  .huella { color:var(--warn); font-size:19px; letter-spacing:.06em; word-break:break-all; }
+
+  .autora { color:#cfcfcf; font-style:italic; margin:9px 0; }
+  .autora.b { color:var(--white); font-style:normal; }
+  .sec { border-top:1px solid var(--line); margin-top:30px; padding-top:20px; }
+  .nota { color:#999; font-size:12.5px; margin-top:22px; border-left:2px solid var(--line); padding-left:12px; }
+  .nota b { color:var(--fg); font-style:normal; }
+</style>
+</head>
+<body>
+
+<div class="tb">
+  <span>sistema_847</span>
+  <span><span class="dot"></span>nodo_ext_00</span>
+</div>
+
+<div id="salida"></div>
+
+<script>
+(function () {
+  var out = document.getElementById("salida");
+  var cola = [], t = 0;
+
+  function esc(s){ return String(s).replace(/[<>&]/g, ""); }
+  function push(html, delay) {
+    cola.push([html, delay === undefined ? 130 : delay]);
+  }
+  function campo(k, v) {
+    if (v === undefined || v === null || v === "") v = "no_disponible";
+    push('<div class="row"><span class="k">' + k + '</span><span class="v">' + esc(v) + "</span></div>");
+  }
+
+  var n = navigator, s = screen;
+  var tz  = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+  var ciudad = tz.split("/").pop().replace(/_/g, " ");
+  var region = tz.split("/")[0] || "";
+  var hora = new Date().toLocaleTimeString();
+
+  // --- 1. enumeración ---
+  push('<div style="color:var(--dim);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px">Enumerando lo que tu navegador entrega sin que nadie se lo pida</div>', 400);
+
+  campo("navegador", (n.userAgent || "").slice(0, 64));
+  campo("plataforma", n.platform);
+  campo("idioma", n.language);
+  campo("idiomas aceptados", (n.languages || []).join(", "));
+  campo("zona horaria", tz);
+  campo("desfase respecto a UTC", new Date().getTimezoneOffset() + " min");
+  campo("resolución", s.width + "×" + s.height);
+  campo("resolución disponible", s.availWidth + "×" + s.availHeight);
+  campo("profundidad de color", s.colorDepth + " bits");
+  campo("densidad de píxel", window.devicePixelRatio);
+  campo("ventana", window.innerWidth + "×" + window.innerHeight);
+  campo("núcleos de procesador", n.hardwareConcurrency);
+  campo("memoria declarada", n.deviceMemory ? n.deviceMemory + " GB" : undefined);
+  campo("puntos de contacto", n.maxTouchPoints);
+  campo("cookies habilitadas", n.cookieEnabled ? "sí" : "no");
+  campo("no-rastrear", n.doNotTrack === null ? "sin declarar" : n.doNotTrack);
+  campo("conexión", n.connection && n.connection.effectiveType);
+  campo("tema del sistema", window.matchMedia("(prefers-color-scheme: dark)").matches ? "oscuro" : "claro");
+  campo("movimiento reducido", window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "sí" : "no");
+  campo("página de origen", document.referrer || "acceso directo");
+
+  var gpu = null;
+  try {
+    var gl = document.createElement("canvas").getContext("webgl");
+    var dbg = gl && gl.getExtension("WEBGL_debug_renderer_info");
+    if (dbg) {
+      campo("fabricante gráfico", gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL));
+      gpu = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
+      campo("tarjeta gráfica", gpu);
+    }
+  } catch (e) {}
+
+  var huella = null;
+  try {
+    var cv = document.createElement("canvas");
+    cv.width = 240; cv.height = 40;
+    var cx = cv.getContext("2d");
+    cx.textBaseline = "top";
+    cx.font = "16px 'Arial'";
+    cx.fillStyle = "#f60"; cx.fillRect(0, 0, 240, 40);
+    cx.fillStyle = "#069"; cx.fillText("847 nodo_ext_00", 2, 12);
+    var d = cv.toDataURL(), h = 0;
+    for (var i = 0; i < d.length; i++) { h = ((h << 5) - h + d.charCodeAt(i)) | 0; }
+    huella = (h >>> 0).toString(16).toUpperCase();
+    campo("huella del lienzo", huella);
+  } catch (e) {}
+
+  var total = cola.filter(function (x) { return x[0].indexOf('class="row"') > -1; }).length;
+
+  push('<div class="cnt">campos entregados: <b>' + total + '</b> · permisos solicitados: <b>0</b> · avisos mostrados: <b>0</b></div>', 500);
+
+  // --- 2. el golpe: nada inventado ---
+  push('<div class="golpe"><div class="et">Tres cosas que no le has dicho a nadie</div>' +
+       '<div class="big">' + esc(ciudad) +
+       '<small>tu reloj declara ' + esc(tz) + '. No hizo falta preguntarte.</small></div></div>', 900);
+
+  push('<div class="golpe"><div class="et">Hora local en tu dispositivo</div>' +
+       '<div class="big">' + esc(hora) +
+       '<small>si esto no encaja con la hora a la que crees que lees, la que se equivoca no es la página.</small></div></div>', 900);
+
+  if (gpu) {
+    push('<div class="golpe"><div class="et">La pieza exacta que tienes dentro</div>' +
+         '<div class="big" style="font-size:17px">' + esc(gpu) +
+         '<small>modelo y controlador. Nunca lo autorizaste porque nunca te lo pidieron.</small></div></div>', 900);
+  }
+
+  if (huella) {
+    push('<div class="golpe"><div class="et">Y esto es lo que de verdad importa</div>' +
+         '<div class="huella">' + esc(huella) + '</div>' +
+         '<div style="color:var(--dim);font-size:12px;margin-top:9px">' +
+         'Se ha dibujado una letra en un lienzo que nunca llegó a mostrarse. Tu máquina la ha suavizado a su manera, y el resultado se ha convertido en ese número.<br/><br/>' +
+         'Ninguno de los ' + total + ' campos de arriba te identifica. Los ' + total + ' juntos, sí.<br/><br/>' +
+         'Peter Eckersley midió esto en 2010: de los navegadores analizados, el <b style="color:var(--fg)">83,6% resultó único</b>. Ninguno había iniciado sesión en nada.<br/><br/>' +
+         'No hay cookie que borrar. No entregaste ningún dato. Dibujaste una letra.</div></div>', 1100);
+  }
+
+  // --- 3. el rapapolvo ---
+  push('<div class="sec">' +
+       '<p class="autora b">Ahora la parte incómoda.</p>' +
+       '<p class="autora">Entraste porque te lo pidió un libro.</p>' +
+       '<p class="autora">No comprobaste el dominio. No miraste el certificado. No te preguntaste quién lo había registrado ni cuándo.</p>' +
+       '<p class="autora">Y lo hiciste después de trescientas páginas leyendo exactamente sobre esto.</p>' +
+       '</div>', 1200);
+
+  push('<p class="autora" style="margin-top:18px">No es que no supieras. Sabías más que casi nadie.</p>', 700);
+  push('<p class="autora b">Saber no era la variable.</p>', 700);
+
+  // --- 4. la verificación ---
+  push('<div class="nota"><b>Y ahora comprueba que esta página no te ha mentido.</b><br/><br/>' +
+       'Abre las herramientas de desarrollo, pestaña de red, y recarga. Cuenta las peticiones que salen de tu máquina.<br/><br/>' +
+       'Son cero. No hay servidor, no hay analítica, no hay cookies, no se guarda nada. Todo lo que has leído lo ha calculado esta página dentro de tu dispositivo, y al cerrar la pestaña desaparece.<br/><br/>' +
+       'Eso es lo único que te pedí: que lo verificaras. Tarde, pero hazlo.<br/><br/>' +
+       '<b>Vuelve al libro.</b></div>', 1400);
+
+  // --- reproducción secuencial ---
+  cola.forEach(function (item) {
+    t += item[1];
+    setTimeout(function () {
+      var d = document.createElement("div");
+      d.className = "line";
+      d.innerHTML = item[0];
+      out.appendChild(d);
+      window.scrollTo(0, document.body.scrollHeight);
+    }, t);
+  });
+})();
+</script>
+
+</body>
+</html>
