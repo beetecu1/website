@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#4F46E5"><meta name="robots" content="noindex">
+<title>Cycle Test Quest 🦉</title>
+<style>:root{--in:#4F46E5;--il:#EEF2FF;--te:#0D9488;--tl:#CCFBF1;--pu:#7C3AED;--pk:#EC4899;--or:#F97316;--ye:#FACC15;--gr:#16A34A;--gl:#DCFCE7;--re:#DC2626;--rl:#FEE2E2;--bg:#F5F7FF;--tx:#1E293B;--mu:#64748B;--r:20px;--sh:0 6px 22px rgba(79,70,229,.14)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:ui-rounded,'SF Pro Rounded','Nunito','Trebuchet MS',system-ui,sans-serif;font-size:16px}
+#app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:90px}
+button{font-family:inherit;cursor:pointer;border:0}
+.hero{background:linear-gradient(135deg,#4F46E5 0%,#7C3AED 55%,#EC4899 100%);color:#fff;padding:34px 20px 46px;text-align:center;border-radius:0 0 34px 34px;box-shadow:var(--sh)}
+.hero .em{font-size:60px;animation:bob 2.4s ease-in-out infinite}
+.hero h1{margin:6px 0 2px;font-size:30px;letter-spacing:.5px}
+.hero p{margin:0;opacity:.92;font-weight:600}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-4deg)}}
+.pad{padding:16px}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:-26px;padding:0 16px}
+.kid{background:#fff;border-radius:var(--r);padding:18px 10px;text-align:center;box-shadow:var(--sh);border:3px solid transparent;font-weight:800;transition:.15s}
+.kid:active{transform:scale(.96)}
+.kid.k1{border-color:#C7D2FE}.kid.k2{border-color:#FBCFE8}
+.kid .av{font-size:54px}.kid .nm{font-size:19px;margin-top:4px}.kid .sub{font-size:13px;color:var(--mu);font-weight:700;margin-top:4px}
+.top{display:flex;align-items:center;gap:10px;padding:14px 16px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.06);position:sticky;top:0;z-index:5}
+.top .back{background:var(--il);color:var(--in);border-radius:12px;padding:8px 12px;font-weight:800;font-size:16px}
+.top .ttl{flex:1;font-weight:900;font-size:17px;line-height:1.15}
+.chip{background:var(--il);color:var(--in);border-radius:99px;padding:6px 11px;font-weight:900;font-size:14px;white-space:nowrap}
+.chip.y{background:#FEF9C3;color:#A16207}.chip.o{background:#FFEDD5;color:#C2410C}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin:14px 16px}
+.card h2{margin:0 0 8px;font-size:18px}
+.profile{display:flex;align-items:center;gap:12px}
+.profile .av{font-size:44px}.profile .info{flex:1}
+.profile .nm{font-weight:900;font-size:20px}
+.bar{height:12px;background:#E2E8F0;border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,#4F46E5,#EC4899);border-radius:99px;transition:width .5s}
+.small{font-size:13px;color:var(--mu);font-weight:700}
+.test-card{background:linear-gradient(135deg,#0D9488,#4F46E5);color:#fff}
+.test-card .big{font-size:30px;font-weight:900}
+.cd{display:inline-block;background:#fff;color:var(--in);border-radius:99px;padding:5px 14px;font-weight:900;margin-top:6px}
+.task{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:14px;background:var(--bg);margin-top:8px;font-weight:800;border:2px solid transparent}
+.task.done{background:var(--gl);border-color:#86EFAC}
+.task .ck{width:28px;height:28px;border-radius:50%;background:#fff;border:3px solid #CBD5E1;display:grid;place-items:center;font-size:15px}
+.task.done .ck{background:var(--gr);border-color:var(--gr);color:#fff}
+.btn{display:block;width:100%;padding:15px;border-radius:16px;font-weight:900;font-size:17px;color:#fff;background:var(--in);box-shadow:0 5px 0 #3730A3;margin-top:12px;transition:.1s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #3730A3}
+.btn.g{background:var(--gr);box-shadow:0 5px 0 #166534}.btn.g:active{box-shadow:0 1px 0 #166534}
+.btn.o{background:var(--or);box-shadow:0 5px 0 #C2410C}.btn.o:active{box-shadow:0 1px 0 #C2410C}
+.btn.p{background:var(--pk);box-shadow:0 5px 0 #BE185D}.btn.p:active{box-shadow:0 1px 0 #BE185D}
+.btn.ghost{background:#fff;color:var(--in);box-shadow:inset 0 0 0 3px #C7D2FE}
+.btn.sm{padding:10px;font-size:15px;box-shadow:none}
+.btn:disabled{opacity:.45;box-shadow:none;transform:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.mod{background:#fff;border-radius:var(--r);padding:14px 12px;box-shadow:var(--sh);text-align:left;border-top:6px solid var(--c,#4F46E5);position:relative}
+.mod:active{transform:scale(.97)}
+.mod .e{font-size:30px}.mod .n{font-weight:900;font-size:15px;line-height:1.15;margin:4px 0 8px;min-height:35px}
+.mini{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--mu);margin-top:4px}
+.mini .bar{flex:1;height:8px}
+.crown{position:absolute;top:8px;right:10px;font-size:22px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:560px;background:#fff;display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 18px rgba(0,0,0,.08);z-index:9;border-radius:22px 22px 0 0}
+.nav button{background:none;font-weight:800;font-size:12px;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 10px}
+.nav button b{font-size:22px}
+.nav button.on{color:var(--in)}
+.learn{font-size:17px;line-height:1.55}
+.learn h3{margin-top:0;color:var(--in)}
+.learn p{margin:10px 0;background:var(--il);padding:10px 12px;border-radius:14px}
+.prog{display:flex;gap:10px;align-items:center;padding:12px 16px;background:#fff}
+.prog .bar{flex:1}
+.q{margin:14px 16px;background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px}
+.q .lbl{font-size:13px;font-weight:900;color:var(--in);letter-spacing:.5px;margin-bottom:6px}
+.q .qt{font-size:20px;font-weight:800;line-height:1.35;white-space:pre-line}
+.q .hint{margin-top:10px;background:#FEF9C3;color:#854D0E;padding:8px 12px;border-radius:12px;font-weight:700;font-size:14px}
+.text{background:#FFFBEB;border-left:6px solid #F59E0B;border-radius:14px;padding:12px 14px;margin-bottom:12px;font-size:16px;line-height:1.6}
+.text b.t{display:block;margin-bottom:4px;color:#92400E}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opt{background:#fff;border:3px solid #E2E8F0;border-radius:16px;padding:13px 14px;font-size:17px;font-weight:800;text-align:left;color:var(--tx);transition:.1s}
+.opt:active{transform:scale(.98)}
+.opt.ok{background:var(--gl);border-color:var(--gr)}
+.opt.no{background:var(--rl);border-color:var(--re)}
+.inp{width:100%;font-size:21px;font-family:inherit;font-weight:800;padding:14px;border-radius:16px;border:3px solid #C7D2FE;outline:none;margin-top:14px;color:var(--tx);background:#fff}
+.inp:focus{border-color:var(--in)}
+.inp.ok{border-color:var(--gr);background:var(--gl)}.inp.no{border-color:var(--re);background:var(--rl)}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.keys button{background:var(--il);color:var(--in);font-weight:900;font-size:18px;border-radius:10px;padding:7px 11px;min-width:40px}
+.speak{display:flex;gap:10px;margin-top:12px}
+.speak button{flex:1;background:var(--tl);color:#0F766E;font-weight:900;font-size:16px;padding:13px;border-radius:14px}
+.chipbox{min-height:58px;border:3px dashed #C7D2FE;border-radius:16px;padding:8px;margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#FAFAFF}
+.chipbox.empty:before{content:'Toca las palabras aquí…';color:#94A3B8;font-weight:700}
+.chipbank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tk{background:var(--in);color:#fff;font-weight:900;font-size:18px;border-radius:14px;padding:10px 14px;box-shadow:0 4px 0 #3730A3}
+.tk.used{opacity:.25;box-shadow:none}
+.tk.in{background:var(--te);box-shadow:0 4px 0 #115E59}
+.fb{margin:0 16px 16px;border-radius:var(--r);padding:16px;font-weight:800;animation:pop .25s}
+.fb.ok{background:var(--gl);border:3px solid var(--gr);color:#14532D}
+.fb.no{background:var(--rl);border:3px solid var(--re);color:#7F1D1D}
+.fb .big{font-size:19px;margin-bottom:4px}
+.fb .ex{font-weight:700;font-size:15px;margin-top:4px}
+@keyframes pop{from{transform:scale(.9);opacity:0}}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.res{text-align:center;padding:24px 16px}
+.res .stars{font-size:54px;letter-spacing:6px}
+.res .big{font-size:44px;font-weight:900;color:var(--in)}
+.pts{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.miss{text-align:left;background:#fff;border-radius:16px;padding:12px 14px;margin-top:8px;box-shadow:var(--sh);font-weight:700;font-size:15px}
+.miss b{color:var(--gr)}
+.prize{background:#fff;border-radius:var(--r);padding:14px 10px;text-align:center;box-shadow:var(--sh);font-weight:800}
+.prize .e{font-size:40px}.prize .n{font-size:14px;min-height:36px;margin:4px 0}
+.prize button{width:100%;margin-top:6px}
+.badge{background:#fff;border-radius:16px;padding:12px 8px;text-align:center;box-shadow:var(--sh);font-weight:800;font-size:12px}
+.badge .e{font-size:34px}.badge.lock{opacity:.35;filter:grayscale(1)}
+.cal{display:flex;gap:12px;align-items:center;padding:12px;border-radius:16px;background:#fff;margin:10px 16px;box-shadow:var(--sh);border-left:6px solid var(--c,#94A3B8)}
+.cal .dt{min-width:58px;text-align:center;font-weight:900;line-height:1.1}
+.cal .dt b{display:block;font-size:24px}
+.cal.past{opacity:.5}
+.cal .info{flex:1;font-weight:800}
+.cal .tp{font-size:12px;color:var(--mu);font-weight:700;margin-top:3px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:900}
+.tag.g{background:var(--gl);color:#166534}.tag.y{background:#FEF9C3;color:#854D0E}
+.mh{margin:18px 16px 0;font-weight:900;color:var(--mu);letter-spacing:1px;font-size:13px;text-transform:uppercase}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#1E293B;color:#fff;padding:12px 18px;border-radius:16px;font-weight:800;z-index:99;max-width:90%;text-align:center;animation:pop .25s;box-shadow:var(--sh)}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.6);display:grid;place-items:center;z-index:50;padding:20px}
+.modal .box{background:#fff;border-radius:24px;padding:22px;max-width:420px;width:100%;text-align:center;animation:pop .25s;max-height:90vh;overflow:auto}
+.modal .e{font-size:64px}
+.confetti{position:fixed;top:-30px;font-size:28px;z-index:80;pointer-events:none;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+.field{width:100%;padding:11px;font-size:16px;font-family:inherit;border:2px solid #CBD5E1;border-radius:12px;margin-top:6px}
+.row{display:flex;gap:8px;align-items:center;margin-top:8px}
+.row .field{margin-top:0}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;font-weight:700}
+.tbl td,.tbl th{padding:6px 4px;border-bottom:1px solid #E2E8F0;text-align:left}
+.tabs{display:flex;gap:8px;padding:12px 16px 0}
+.tabs button{flex:1;background:#fff;border-radius:12px;padding:10px;font-weight:900;color:var(--mu);box-shadow:var(--sh)}
+.tabs button.on{background:var(--in);color:#fff}
+.lock{background:none;color:var(--mu);font-weight:800;text-decoration:underline;display:block;margin:20px auto}
+.owl{font-size:46px}
+</style></head>
+<body><div id="app"></div>
+<script>
+/* ═══════════════════════════════════════════════
+   CONTENIDO — 1er Cycle Test de LENGUA (6 oct 2026)
+   Módulos: mayúscula, orden alfabético, sonido K,
+   sinónimos y antónimos, gramática, comprensión lectora
+═══════════════════════════════════════════════ */
+const mc=(q,ans,wrong,expl)=>({t:'mc',q,ans,opts:[ans,...wrong],expl:expl||''});
+const tx=(q,ans,mode,extra)=>Object.assign({t:'tx',q,ans:Array.isArray(ans)?ans:[ans],mode:mode||'loose'},extra||{});
+const chips=(q,tokens,ans,expl)=>({t:'chips',q,tokens,ans:Array.isArray(ans)?ans:[ans],expl:expl||''});
+
+/* ---------- banco de palabras para ordenar alfabéticamente ---------- */
+const ALPHA_GROUPS={ // palabras que empiezan igual (nivel difícil)
+  c:['caballo','camisa','casa','cama','cuna','cola','coche','cebra','cuento'],
+  m:['mesa','mariposa','manzana','mano','mono','mapa','moto','mar','menta'],
+  p:['pan','pera','playa','pájaro','pato','perro','pelota','puerta','piña'],
+  s:['sol','silla','sapo','sopa','sal','seta','sillón','suelo'],
+  l:['luna','libro','león','lápiz','lazo','lobo','lupa','leche','lana'],
+  r:['rana','ratón','rosa','rojo','regla','reloj','rayo','ropa'],
+  t:['tren','tigre','tortuga','taza','techo','tomate','toro','tela'],
+  b:['barco','bota','banco','boca','bolso','bruja','bici','bosque'],
+};
+const ALPHA_DISTINCT=['abeja','árbol','barco','caballo','dado','escuela','flor','gato','helado','isla','jirafa','kiwi','luna','mesa','nube','ñu','oso','pera','queso','rana','sol','tren','uva','vaca','xilófono','yogur','zapato','zorro','delfín','fresa','globo','hormiga','naranja','ojo','silla','zanahoria'];
+
+const LEN1={
+  id:'len1', subject:'Lengua', ct:'1er Cycle Test', date:'2026-10-06',
+  modules:[
+/* ═════════════ 1. LA MAYÚSCULA ═════════════ */
+  { id:'mayus', nm:'La mayúscula', em:'🔠', color:'#7C3AED',
+    learn:`<h3>¿Cuándo se escribe con MAYÚSCULA?</h3>
+<p>✅ <b>Al empezar a escribir</b> una frase: <i>Hoy hace sol.</i></p>
+<p>✅ <b>Después de un punto</b>: <i>Es lunes. Vamos al cole.</i></p>
+<p>✅ <b>Nombres propios</b> de personas y mascotas: <i>Lucía, Pablo, mi perro Max</i></p>
+<p>✅ <b>Lugares</b>: ciudades, países, ríos, montañas… <i>Madrid, España, río Tajo, Teide</i></p>
+<p>✅ <b>Nombres de colegios y calles</b>: <i>colegio San Patricio</i></p>
+<p>❌ <b>¡Ojo, trampa!</b> Los <b>días</b> (lunes, martes…), los <b>meses</b> (octubre…) y las <b>estaciones</b> (otoño…) se escriben con <b>minúscula</b>.</p>
+<p>🧠 Truco: si es el <b>nombre único</b> de alguien o de algún sitio, ¡mayúscula!</p>`,
+    test:[
+      mc('¿Cuál oración está bien escrita?','Mi amiga se llama Lucía.',['Mi amiga se llama lucía.','mi amiga se llama Lucía.','Mi Amiga se llama Lucía.'],'Empieza con mayúscula y Lucía es un nombre propio.'),
+      mc('¿Cuál de estas palabras necesita mayúscula?','madrid',['mesa','libro','casa'],'Madrid es el nombre de una ciudad: nombre propio.'),
+      mc('Después de un punto, la siguiente palabra se escribe con…','mayúscula',['minúscula','comillas','acento'],'Después de punto siempre mayúscula.'),
+      mc('¿Cuál es un nombre propio?','Pablo',['niño','perro','ciudad'],'Pablo es el nombre de una persona concreta.'),
+      mc('¿Cuál oración está bien escrita?','Hoy es lunes.',['Hoy es Lunes.','hoy es lunes.','Hoy Es lunes.'],'Los días de la semana van con minúscula (aunque a principio de frase sí llevan mayúscula).'),
+      mc('¿Cuál oración está bien escrita?','Mi cumpleaños es en octubre.',['Mi cumpleaños es en Octubre.','mi cumpleaños es en octubre.','Mi cumpleaños es en Octubre'],'Los meses se escriben con minúscula.'),
+      mc('¿Cuál oración está bien escrita?','Mi perro se llama Toby.',['Mi perro se llama toby.','mi perro se llama Toby.','Mi Perro se llama Toby.'],'Los nombres de mascotas también son nombres propios.'),
+      mc('¿Cuál oración está bien escrita?','Vivo en España.',['Vivo en españa.','vivo en España.','Vivo En España.'],'España es un país: mayúscula.'),
+      mc('¿Cuántas mayúsculas necesita: «ayer fui con pedro a barcelona.»?','3',['1','2','4'],'Ayer (empieza), Pedro (persona) y Barcelona (ciudad).'),
+      mc('¿Cuál oración está bien escrita?','El río Tajo pasa por Toledo.',['El Río Tajo pasa por Toledo.','el río tajo pasa por toledo.','El río tajo pasa por Toledo.'],'Tajo y Toledo son nombres propios; «río» no.'),
+      mc('¿Cuál oración está bien escrita?','Estudio en el colegio San Patricio.',['Estudio en el colegio san patricio.','estudio en el Colegio San Patricio.','Estudio en el colegio San patricio.'],'San Patricio es el nombre del colegio: las dos palabras con mayúscula.'),
+      mc('¿Por qué «Sofía» lleva mayúscula?','Porque es un nombre propio',['Porque es muy larga','Porque lleva tilde','Porque es la última palabra'],''),
+      mc('¿Cuál de estas palabras se escribe con minúscula en medio de una frase?','jueves',['Guadalajara','Ana','España'],'Los días de la semana van con minúscula.'),
+      mc('¿Cuál oración está bien escrita?','Mis primos Juan y Ana viven en Sevilla.',['Mis primos juan y ana viven en sevilla.','Mis Primos Juan y Ana viven en Sevilla.','Mis primos Juan y ana viven en Sevilla.'],''),
+      mc('¿Cuál oración está bien escrita?','El sábado voy al cine.',['el sábado voy al cine.','El Sábado voy al cine.','el Sábado voy al cine.'],'Empieza con mayúscula; «sábado» en medio sería minúscula, pero aquí «El» abre la frase.'),
+      mc('¿Cuál oración está bien escrita?','Mi hermano se llama Álvaro y su gata se llama Luna.',['Mi hermano se llama álvaro y su gata se llama luna.','Mi hermano se llama Álvaro y su gata se llama luna.','mi hermano se llama Álvaro y su gata se llama Luna.'],'Álvaro y Luna: nombres propios. ¡Las mayúsculas también llevan tilde!'),
+      mc('¿Qué palabra de esta lista es el nombre de un río?','Ebro',['mesa','verano','lunes'],'Ebro es el nombre de un río: nombre propio.'),
+    ],
+    write:[
+      tx('✍️ Escribe bien, con sus mayúsculas:\nayer fui al parque con maría.','Ayer fui al parque con María.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nmi perro se llama max.','Mi perro se llama Max.','caps',{hint:'Son 2 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nvivo en madrid y mi abuela vive en toledo.','Vivo en Madrid y mi abuela vive en Toledo.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nel lunes iremos a la playa.','El lunes iremos a la playa.','caps',{hint:'¡Cuidado! ¿Lleva mayúscula «lunes»?'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nmi colegio se llama san patricio.','Mi colegio se llama San Patricio.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\npablo y lucas son hermanos. juegan al fútbol.','Pablo y Lucas son hermanos. Juegan al fútbol.','caps',{hint:'Son 4 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nel río ebro pasa por zaragoza.','El río Ebro pasa por Zaragoza.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nen octubre empieza el otoño.','En octubre empieza el otoño.','caps',{hint:'Solo 1 mayúscula. Los meses y las estaciones van en minúscula.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nmi gata luna duerme en el sofá.','Mi gata Luna duerme en el sofá.','caps',{hint:'Son 2 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nespaña está en europa.','España está en Europa.','caps',{hint:'Son 2 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nhoy es martes. mañana es miércoles.','Hoy es martes. Mañana es miércoles.','caps',{hint:'Son 2 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nmi tía carmen vive en sevilla.','Mi tía Carmen vive en Sevilla.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\n¿cómo te llamas? me llamo daniel.','¿Cómo te llamas? Me llamo Daniel.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('✍️ Escribe bien, con sus mayúsculas:\nel teide es una montaña de españa.','El Teide es una montaña de España.','caps',{hint:'Son 3 mayúsculas.'}),
+      tx('¿Lleva mayúscula la palabra «domingo» en medio de una frase? Escribe sí o no.',['no'],'loose',{expl:'Los días de la semana van con minúscula.'}),
+      tx('¿Lleva mayúscula la palabra «guadalajara» en medio de una frase? Escribe sí o no.',['si'],'loose',{expl:'Guadalajara es una ciudad: nombre propio.'}),
+      tx('🎧 Escucha y escribe la frase con sus mayúsculas y su punto final.','Pedro vive en Sevilla.','caps',{say:'Pedro vive en Sevilla.',hint:'Piensa: ¿qué palabras son nombres de personas o de lugares?'}),
+      tx('🎧 Escucha y escribe la frase con sus mayúsculas y su punto final.','Ana y Marta van a Madrid.','caps',{say:'Ana y Marta van a Madrid.'}),
+      tx('🎧 Escucha y escribe la frase con sus mayúsculas y su punto final.','Mi gato Tom duerme mucho.','caps',{say:'Mi gato Tom duerme mucho.'}),
+    ]
+  },
+/* ═════════════ 2. ORDEN ALFABÉTICO ═════════════ */
+  { id:'alfa', nm:'Orden alfabético', em:'🔤', color:'#0EA5E9',
+    learn:`<h3>El abecedario (27 letras)</h3>
+<p style="font-size:19px;letter-spacing:2px;font-weight:800;line-height:1.7;color:#0369A1">A B C D E F G H I J K L M N Ñ O P Q R S T U V W X Y Z</p>
+<p>📖 Para ordenar palabras como en un diccionario:</p>
+<p>1️⃣ Mira la <b>primera letra</b> de cada palabra y ordénalas según el abecedario.</p>
+<p>2️⃣ Si dos palabras empiezan igual, mira la <b>segunda letra</b>. Y si también coincide, la tercera…</p>
+<p>Ejemplo: <i>cama, casa, cola, cuna</i> → todas empiezan por C, así que miramos la 2ª letra: <b>a</b>, <b>a</b>, <b>o</b>, <b>u</b>. Entre <i>cama</i> y <i>casa</i>, miramos la 3ª: <b>m</b> va antes que <b>s</b>.</p>
+<p>🧠 Truco: la <b>Ñ</b> va justo <b>después de la N</b>.</p>`,
+    test:[
+      mc('¿Qué letra va después de la M?','N',['L','Ñ','O'],'M, N, Ñ, O…'),
+      mc('¿Qué letra va justo antes de la P?','O',['Q','N','R'],'…N, Ñ, O, P'),
+      mc('¿Qué letra va entre la F y la H?','G',['E','I','J'],'F, G, H.'),
+      mc('¿Qué palabra va primero en el diccionario?','luna',['mesa','nube','oso'],'L va antes que M, N y O.'),
+      mc('¿Qué palabra va la última en el diccionario?','tren',['sol','pan','rosa'],'T está más al final del abecedario que las demás.'),
+      mc('¿Qué lista está ordenada alfabéticamente?','ala, boca, cama, dado',['boca, ala, cama, dado','ala, cama, boca, dado','dado, cama, boca, ala'],'A, B, C, D.'),
+      mc('Si dos palabras empiezan igual, miramos la segunda letra. ¿Cuál va primero?','cama',['casa','cuna','cola'],'cama, casa, cola, cuna: a, a, o, u… y entre cama y casa, la m va antes que la s.'),
+      mc('¿Qué palabra va entre «gato» y «gorro»?','gesto',['gafas','guante','gallo'],'gato (a) → gesto (e) → gorro (o): a, e, o.'),
+      mc('¿Qué letra va justo después de la N en el abecedario español?','Ñ',['O','M','P'],'La Ñ va después de la N.'),
+      mc('¿Qué lista está ordenada alfabéticamente?','mano, mapa, mesa, mono',['mapa, mano, mesa, mono','mono, mesa, mapa, mano','mano, mesa, mapa, mono'],'Todas empiezan por M: miramos la 2ª letra (a, a, e, o) y luego la 3ª (n antes que p).'),
+      mc('¿Cuántas letras tiene el abecedario español?','27',['26','28','25'],'Son 27 contando la Ñ.'),
+      mc('¿Qué palabra va primero en el diccionario?','abeja',['árbol','barco','azul'],'abeja: a-b… árbol: a-r… azul: a-z. La b va antes que la r y la z.'),
+      mc('¿Qué letra va justo antes de la K?','J',['L','I','H'],'I, J, K, L.'),
+      mc('¿Qué letra va justo después de la T?','U',['S','V','R'],'S, T, U, V.'),
+    ],
+    write:[
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\npera, manzana, uva, kiwi',['kiwi, manzana, pera, uva'],'list'),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\ngato, abeja, perro, nube',['abeja, gato, nube, perro'],'list'),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\nsol, luna, estrella, nube, rayo',['estrella, luna, nube, rayo, sol'],'list'),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\nmesa, silla, cama, lámpara',['cama, lámpara, mesa, silla'],'list'),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\ncasa, cama, cuna, cola',['cama, casa, cola, cuna'],'list',{hint:'Todas empiezan por C. Mira la 2ª y la 3ª letra.'}),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\noso, ñu, nariz, pato',['nariz, ñu, oso, pato'],'list',{hint:'La Ñ va después de la N.'}),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\nzorro, yate, xilófono, uva',['uva, xilófono, yate, zorro'],'list'),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\nlápiz, libro, lazo, lobo',['lápiz, lazo, libro, lobo'],'list',{hint:'Todas empiezan por L. Mira la 2ª letra.'}),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\nrojo, azul, verde, amarillo, negro',['amarillo, azul, negro, rojo, verde'],'list',{hint:'Mira la 2ª letra de amarillo y azul.'}),
+      tx('✍️ Ordena alfabéticamente (sepáralas con comas):\ntren, avión, barco, moto, coche',['avión, barco, coche, moto, tren'],'list'),
+      tx('Escribe la letra que va justo antes de la R.',['q'],'loose',{expl:'P, Q, R.'}),
+      tx('Escribe la letra que va justo después de la T.',['u'],'loose',{expl:'S, T, U.'}),
+      tx('Escribe las dos letras que van entre la J y la M (separadas por una coma).',['k, l'],'list',{expl:'J, K, L, M.'}),
+      tx('¿Qué palabra va primero en el diccionario: «jirafa» o «hipopótamo»? Escríbela.',['hipopótamo'],'loose',{expl:'La H va antes que la J.'}),
+      tx('Escribe la letra que va justo después de la N.',['ñ'],'loose',{expl:'¡La Ñ!'}),
+    ],
+    gen:true
+  },
+/* ═════════════ 3. EL SONIDO K ═════════════ */
+  { id:'k', nm:'El sonido K', em:'🔑', color:'#EA580C',
+    learn:`<h3>El sonido K se escribe de 3 maneras</h3>
+<p>🅒 <b>C</b> antes de <b>a, o, u</b>: <i>casa, cometa, cuna</i></p>
+<p>🅠 <b>QU</b> antes de <b>e, i</b>: <i>queso, quince, esquina</i> — ¡La <b>u</b> no suena!</p>
+<p>🅚 <b>K</b> en palabras que vienen de otros idiomas: <i>koala, kilo, kiwi, karate</i></p>
+<p>⚠️ Si dices «ke» o «ki»… ¡casi siempre se escribe <b>QU</b>! (queso, quiero, parque).</p>
+<p>🧠 Truco: <b>ca-co-cu</b> / <b>que-qui</b> / <b>ka-ke-ki-ko-ku</b> (esta última solo para palabras raras).</p>`,
+    test:[
+      mc('Completa: __ueso 🧀','qu',['c','k','z']),
+      mc('Completa: __asa 🏠','c',['qu','k','z']),
+      mc('Completa: __ilo (de peso) ⚖️','k',['c','qu','g']),
+      mc('Completa: pa__ete 📦','qu',['c','k','z']),
+      mc('Completa: __ometa 🪁','c',['qu','k','g']),
+      mc('Completa: __ince (el número) ','qu',['c','k','z']),
+      mc('Completa: __uchara 🥄','c',['qu','k','g']),
+      mc('Completa: __oala 🐨','k',['c','qu','g']),
+      mc('Completa: má__ina ⚙️','qu',['c','k','z']),
+      mc('Completa: __aballo 🐴','c',['qu','k','g']),
+      mc('Completa: es__ina 🛣️','qu',['c','k','z']),
+      mc('Completa: pe__eño 🐭','qu',['c','k','g']),
+      mc('Completa: __iwi 🥝','k',['c','qu','g']),
+      mc('Antes de la e y la i, el sonido K se escribe…','qu',['c','k','z']),
+      mc('Antes de la a, la o y la u, el sonido K normalmente se escribe…','c',['qu','z','g']),
+      mc('¿Qué palabra se escribe con K?','koala',['caballo','queso','cuna'],'Koala viene del idioma aborigen de Australia.'),
+      mc('¿Cuál está bien escrita?','queso',['keso','cueso','kueso']),
+      mc('¿Cuál está bien escrita?','quince',['kince','cince','cuince']),
+      mc('¿Cuál está bien escrita?','cuna',['quna','kuna','cuuna']),
+      mc('En «queso», la letra u…','no suena',['suena como una u','suena como una k','suena como una g'],'En que/qui la u es muda.'),
+      mc('¿Qué palabra tiene el sonido K?','queso',['gato','sol','mesa']),
+      mc('¿Cuál está bien escrita?','pequeño',['pekeño','peqeño','pecueño']),
+    ],
+    write:[
+      tx('✍️ Escribe la palabra completa: __ueso 🧀','queso','loose'),
+      tx('✍️ Escribe la palabra completa: __ometa 🪁','cometa','loose'),
+      tx('✍️ Escribe la palabra completa: __oala 🐨','koala','loose'),
+      tx('✍️ Escribe la palabra completa: pa__ete 📦','paquete','loose'),
+      tx('✍️ Escribe la palabra completa: má__ina ⚙️','máquina','loose'),
+      tx('✍️ Escribe la palabra completa: __uchara 🥄','cuchara','loose'),
+      tx('✍️ Escribe la palabra completa: __iwi 🥝','kiwi','loose'),
+      tx('✍️ Escribe la palabra completa: es__ina 🛣️','esquina','loose'),
+      tx('✍️ Escribe la palabra completa: pe__eño 🐭','pequeño','loose'),
+      tx('✍️ Escribe la palabra completa: __aballo 🐴','caballo','loose'),
+      tx('✍️ Escribe la palabra completa: man__tequilla… (ya sabes: ¿cómo suena? ¡ke!)',['mantequilla'],'loose'),
+      tx('Para escribir «ke» en «queso» usamos las letras…  (escribe c, qu o k)',['qu'],'loose'),
+      tx('Para escribir «ka» en «casa» normalmente usamos la letra… (escribe c, qu o k)',['c'],'loose'),
+      tx('🎧 Escucha y escribe la palabra.','queso','loose',{say:'queso'}),
+      tx('🎧 Escucha y escribe la palabra.','cometa','loose',{say:'cometa'}),
+      tx('🎧 Escucha y escribe la palabra.','parque','loose',{say:'parque'}),
+      tx('🎧 Escucha y escribe la palabra.','cuna','loose',{say:'cuna'}),
+      tx('🎧 Escucha y escribe la palabra.','kilo','loose',{say:'kilo'}),
+      tx('🎧 Escucha y escribe la palabra.','esquina','loose',{say:'esquina'}),
+      tx('🎧 Escucha y escribe la palabra.','quiero','loose',{say:'quiero'}),
+      tx('🎧 Escucha y escribe la palabra.','cuchillo','loose',{say:'cuchillo'}),
+    ]
+  },
+/* ═════════════ 4. SINÓNIMOS Y ANTÓNIMOS ═════════════ */
+  { id:'sinan', nm:'Sinónimos y antónimos', em:'🔄', color:'#16A34A',
+    learn:`<h3>Palabras que se parecen… y palabras opuestas</h3>
+<p>🟰 <b>Sinónimos</b>: significan <b>lo mismo o casi lo mismo</b>.<br><i>grande = enorme · bonito = hermoso · contento = alegre</i></p>
+<p>↔️ <b>Antónimos</b>: significan <b>lo contrario</b>.<br><i>grande ↔ pequeño · día ↔ noche · subir ↔ bajar</i></p>
+<p>🧠 Truco: <b>SI</b>nónimos = <b>SI</b>milares. <b>AN</b>tónimos = <b>AN</b>tagónicos (¡opuestos!).</p>`,
+    test:[
+      mc('Un sinónimo de «rápido» es…','veloz',['lento','pesado','triste']),
+      mc('Un sinónimo de «bonito» es…','hermoso',['feo','pequeño','frío']),
+      mc('Un sinónimo de «contento» es…','alegre',['enfadado','triste','cansado']),
+      mc('Un sinónimo de «empezar» es…','comenzar',['terminar','parar','salir']),
+      mc('Un sinónimo de «casa» es…','hogar',['calle','coche','mesa']),
+      mc('Un sinónimo de «enorme» es…','gigante',['diminuto','delgado','lento']),
+      mc('Un sinónimo de «mirar» es…','observar',['oír','tocar','oler']),
+      mc('Un sinónimo de «terminar» es…','acabar',['empezar','mirar','correr']),
+      mc('Un sinónimo de «pequeño» es…','diminuto',['gigante','pesado','alto']),
+      mc('Un sinónimo de «cansado» es…','agotado',['fuerte','contento','rápido']),
+      mc('Un sinónimo de «hablar» es…','charlar',['callar','dormir','comer']),
+      mc('Un antónimo de «alto» es…','bajo',['grande','largo','fuerte']),
+      mc('Un antónimo de «día» es…','noche',['mañana','tarde','sol']),
+      mc('Un antónimo de «frío» es…','caliente',['helado','nieve','fresco']),
+      mc('Un antónimo de «subir» es…','bajar',['saltar','correr','trepar']),
+      mc('Un antónimo de «abrir» es…','cerrar',['romper','mirar','tirar']),
+      mc('Un antónimo de «limpio» es…','sucio',['brillante','nuevo','claro']),
+      mc('Un antónimo de «rápido» es…','lento',['veloz','ligero','fuerte']),
+      mc('Un antónimo de «fácil» es…','difícil',['sencillo','simple','pequeño']),
+      mc('Un antónimo de «lleno» es…','vacío',['grande','pesado','completo']),
+      mc('Un antónimo de «ganar» es…','perder',['jugar','empatar','correr']),
+      mc('Un antónimo de «valiente» es…','cobarde',['fuerte','héroe','listo']),
+      mc('Un antónimo de «antes» es…','después',['ayer','temprano','siempre']),
+      mc('«Grande» y «pequeño» son…','antónimos',['sinónimos','nombres propios','verbos']),
+      mc('«Feliz» y «contento» son…','sinónimos',['antónimos','nombres propios','adjetivos opuestos']),
+      mc('¿Qué pareja son sinónimos?','feliz – contento',['frío – caliente','subir – bajar','día – noche']),
+      mc('¿Qué pareja son antónimos?','ancho – estrecho',['bonito – hermoso','casa – hogar','mirar – observar']),
+      mc('¿Qué pareja son antónimos?','temprano – tarde',['rápido – veloz','enorme – gigante','enfadado – enojado']),
+    ],
+    write:[
+      tx('Escribe un antónimo de «subir».',['bajar','descender'],'loose'),
+      tx('Escribe un antónimo de «día».',['noche'],'loose'),
+      tx('Escribe un antónimo de «lleno».',['vacío','vacio'],'loose'),
+      tx('Escribe un antónimo de «abrir».',['cerrar'],'loose'),
+      tx('Escribe un antónimo de «frío».',['caliente','cálido','calido'],'loose'),
+      tx('Escribe un antónimo de «limpio».',['sucio'],'loose'),
+      tx('Escribe un antónimo de «fácil».',['difícil','dificil','complicado'],'loose'),
+      tx('Escribe un antónimo de «duro».',['blando'],'loose'),
+      tx('Escribe un antónimo de «delante».',['detrás','detras','atrás','atras'],'loose'),
+      tx('Escribe un antónimo de «ligero».',['pesado'],'loose'),
+      tx('Escribe un antónimo de «reír».',['llorar'],'loose'),
+      tx('Escribe un antónimo de «mentira».',['verdad'],'loose'),
+      tx('Escribe un sinónimo de «comenzar».',['empezar','iniciar','arrancar'],'loose'),
+      tx('Escribe un sinónimo de «bonito».',['hermoso','bello','lindo','precioso','guapo'],'loose'),
+      tx('Escribe un sinónimo de «rápido».',['veloz','ligero','rapido'],'loose'),
+      tx('Escribe un sinónimo de «contento».',['alegre','feliz'],'loose'),
+      tx('Escribe un sinónimo de «enorme».',['gigante','inmenso','gigantesco','grandísimo','grandisimo','descomunal','grande'],'loose'),
+      tx('Escribe un sinónimo de «terminar».',['acabar','finalizar','concluir'],'loose'),
+      tx('Escribe un sinónimo de «casa».',['hogar','vivienda'],'loose'),
+      tx('Escribe un sinónimo de «mirar».',['observar','ver','contemplar'],'loose'),
+      tx('Escribe un sinónimo de «pequeño».',['diminuto','chico','minúsculo','minusculo'],'loose'),
+      tx('Escribe un sinónimo de «cansado».',['agotado','fatigado','exhausto'],'loose'),
+      tx('Escribe un sinónimo de «hablar».',['charlar','conversar','platicar','decir'],'loose'),
+    ]
+  },
+/* ═════════════ 5. GRAMÁTICA: oraciones, palabras, sonidos y letras ═════════════ */
+  { id:'gram', nm:'Oraciones, palabras, sonidos y letras', em:'🧩', color:'#DB2777',
+    learn:`<h3>Letras, sonidos, palabras y oraciones</h3>
+<p>🔡 Las <b>letras</b> se escriben. Los <b>sonidos</b> se oyen. ¡No siempre son iguales!</p>
+<p>🤫 La <b>h</b> no suena: <i>hola</i> tiene 4 letras pero 3 sonidos.</p>
+<p>🔑 En <i>queso</i> la <b>u</b> no suena: 5 letras, 4 sonidos. En <i>chico</i>, <b>ch</b> es 1 sonido; en <i>perro</i>, <b>rr</b> es 1 sonido.</p>
+<p>🅰️ <b>Vocales</b>: a, e, i, o, u. Todas las demás son <b>consonantes</b>.</p>
+<p>📝 Una <b>palabra</b> es un conjunto de letras con significado.</p>
+<p>💬 Una <b>oración</b> es un grupo de palabras con <b>sentido completo</b>: empieza con <b>mayúscula</b> y termina con <b>punto</b>.<br><i>El gato duerme en el sofá.</i></p>
+<p>🧠 Truco para contar palabras: ¡hay un espacio entre cada una!</p>`,
+    test:[
+      mc('¿Cuál es una oración?','El gato duerme en el sofá.',['gato sofá duerme el','El gato del sofá','Perro azul grande']),
+      mc('¿Cuántas palabras tiene: «Mi madre cocina una tarta rica.»?','6',['5','7','4']),
+      mc('Una oración empieza con ____ y termina con ____.','mayúscula y punto',['minúscula y coma','punto y mayúscula','una letra y un número']),
+      mc('¿Cuántas vocales tiene «ventana»?','3',['2','4','5'],'v-E-nt-A-n-A: e, a, a.'),
+      mc('¿Cuántas letras tiene «mariposa»?','8',['7','9','6']),
+      mc('¿Qué letra no suena en «hormiga»?','h',['o','m','g']),
+      mc('¿Cuántos sonidos tiene «hola»?','3',['4','2','5'],'La h no suena: o, l, a.'),
+      mc('En «queso» hay…','5 letras y 4 sonidos',['5 letras y 5 sonidos','4 letras y 4 sonidos','4 letras y 5 sonidos'],'La u de «qu» no suena.'),
+      mc('¿Qué palabra tiene dos vocales iguales juntas?','leer',['mesa','pato','sol']),
+      mc('¿Cuántas consonantes tiene «sol»?','2',['1','3','0'],'s y l.'),
+      mc('¿Cuántos sonidos tiene «chico»?','4',['5','3','6'],'ch + i + k + o.'),
+      mc('¿Cuántos sonidos tiene «perro»?','4',['5','3','6'],'p + e + rr + o.'),
+      mc('¿Cuál de estas es una vocal?','e',['t','m','s']),
+      mc('¿Cuál NO es una oración completa y bien escrita?','el perro corre',['El perro corre.','Mi abuela cocina.','Hoy llueve mucho.'],'Le falta la mayúscula y el punto.'),
+      chips('Ordena las palabras para formar una oración:',['duerme','El','gato','en','el','sofá.'],['El gato duerme en el sofá.']),
+      chips('Ordena las palabras para formar una oración:',['mucho.','Hoy','llueve'],['Hoy llueve mucho.']),
+      chips('Ordena las palabras para formar una oración:',['una','Ana','manzana.','come'],['Ana come una manzana.']),
+      chips('Ordena las palabras para formar una oración:',['juegan','Los','niños','parque.','en','el'],['Los niños juegan en el parque.']),
+      chips('Ordena las palabras para formar una oración:',['Mi','vive','Madrid.','abuela','en'],['Mi abuela vive en Madrid.']),
+    ],
+    write:[
+      tx('¿Cuántas palabras tiene la oración «Los niños juegan en el parque.»? Escribe el número.',['6','seis'],'loose'),
+      tx('¿Cuántas letras tiene «jirafa»? Escribe el número.',['6','seis'],'loose'),
+      tx('¿Cuántas letras tiene «escuela»? Escribe el número.',['7','siete'],'loose'),
+      tx('¿Cuántas vocales tiene «elefante»? Escribe el número.',['4','cuatro'],'loose',{expl:'e-l-E-f-A-n-t-E: e, e, a, e → 4.'}),
+      tx('¿Cuántas consonantes tiene «mesa»? Escribe el número.',['2','dos'],'loose',{expl:'m y s.'}),
+      tx('¿Cuántos sonidos tiene «chico»? Escribe el número.',['4','cuatro'],'loose'),
+      tx('¿Cuántos sonidos tiene «hola»? Escribe el número.',['3','tres'],'loose'),
+      tx('¿Cuántos sonidos tiene «perro»? Escribe el número.',['4','cuatro'],'loose'),
+      tx('¿Qué letra no suena en «huevo»? Escríbela.',['h'],'loose'),
+      tx('🧠 Reto: ¿cuántos sonidos tiene «guitarra»? (la u no suena y la rr es un solo sonido)',['6','seis'],'loose',{expl:'g + i + t + a + rr + a = 6 sonidos (tiene 8 letras).'}),
+      tx('Escribe sí o no: «gato come pescado» ¿es una oración completa y bien escrita?',['no'],'loose',{expl:'Le falta la mayúscula al principio y el punto al final.'}),
+      tx('✍️ Ordena y escribe la oración con mayúscula y punto:\nperro el ladra fuerte',['El perro ladra fuerte.'],'caps'),
+      tx('✍️ Ordena y escribe la oración con mayúscula y punto:\ncome manzana una Ana',['Ana come una manzana.'],'caps'),
+      tx('✍️ Ordena y escribe la oración con mayúscula y punto:\njuegan los niños parque en el',['Los niños juegan en el parque.','En el parque juegan los niños.'],'caps'),
+      tx('✍️ Ordena y escribe la oración con mayúscula y punto:\nmi vive abuela Madrid en',['Mi abuela vive en Madrid.','En Madrid vive mi abuela.'],'caps'),
+      tx('✍️ Ordena y escribe la oración con mayúscula y punto:\nsofá el en duerme gato el',['El gato duerme en el sofá.'],'caps'),
+      tx('✍️ Ordena y escribe la oración con mayúscula y punto:\nmucho llueve hoy',['Hoy llueve mucho.'],'caps'),
+      tx('Escribe las vocales de la palabra «luna» (sepáralas con comas).',['u, a'],'list'),
+      tx('Escribe las vocales de la palabra «sol» (sepáralas con comas).',['o'],'list'),
+    ]
+  },
+/* ═════════════ 6. COMPRENSIÓN LECTORA ═════════════ */
+  { id:'lect', nm:'Comprensión lectora', em:'📖', color:'#CA8A04',
+    learn:`<h3>Cómo leer para entender</h3>
+<p>1️⃣ Lee el texto <b>despacio</b>, una vez entero.</p>
+<p>2️⃣ Lee la pregunta y <b>busca la respuesta en el texto</b>: ¡está escondida ahí!</p>
+<p>3️⃣ Algunas respuestas no están escritas tal cual: hay que <b>pensar</b> con las pistas (eso se llama <i>deducir</i>).</p>
+<p>4️⃣ Al escribir, contesta con una <b>frase completa</b> y con <b>mayúscula</b> y <b>punto</b>.</p>`,
+    texts:[
+      { id:'t1', title:'El gato de Lucía', em:'🐱',
+        body:'Lucía tiene un gato gris que se llama Nube. Todas las mañanas, Nube se sube a la ventana para ver pasar a los pájaros. Un día, Lucía olvidó cerrar la ventana y Nube salió al tejado. Lucía se asustó mucho, pero su abuelo trajo una escalera y lo bajó con cuidado. Desde entonces, Lucía siempre cierra la ventana antes de ir al colegio.',
+        test:[
+          mc('¿Cómo se llama el gato?','Nube',['Lucía','Gris','Tejado']),
+          mc('¿Qué pasó un día?','Lucía olvidó cerrar la ventana',['El gato se perdió en el parque','El abuelo compró un gato','Nube rompió la escalera']),
+          mc('¿Quién bajó al gato del tejado?','El abuelo de Lucía',['Lucía','Un bombero','Un vecino']),
+          mc('¿Qué crees que aprendió Lucía?','Que hay que cerrar la ventana para que el gato esté seguro',['Que los gatos no saben subir','Que no hay que tener mascotas','Que el abuelo no sabe usar escaleras'],'Esto no lo dice el texto tal cual: hay que deducirlo.'),
+        ],
+        write:[
+          tx('¿De qué color es el gato?','gris','keys',{keys:[['gris']]}),
+          tx('¿Qué hace Nube todas las mañanas? Contesta con una frase.','Nube se sube a la ventana para ver pasar a los pájaros.','keys',{keys:[['ventana','pajaro','pajaros','mirar','ver']]}),
+          tx('¿Por qué se asustó Lucía? Contesta con una frase.','Porque Nube salió al tejado.','keys',{keys:[['tejado','salio','salido','escapo','fuera']]}),
+        ]},
+      { id:'t2', title:'El huerto del colegio', em:'🍅',
+        body:'En el colegio de Marcos hay un huerto pequeño. Cada semana, los niños de tercero riegan las plantas y quitan las malas hierbas. En primavera plantaron tomates, lechugas y zanahorias. Marcos cuidó sus tomates con mucho cariño y, en verano, recogió doce tomates rojos y jugosos. Con ellos, toda la clase preparó una ensalada y se la comió en el patio.',
+        test:[
+          mc('¿Dónde está el huerto?','En el colegio de Marcos',['En casa de Marcos','En el parque','En el patio de su abuelo']),
+          mc('¿Qué plantaron en primavera?','Tomates, lechugas y zanahorias',['Solo tomates','Manzanas y peras','Flores y árboles']),
+          mc('¿Cuántos tomates recogió Marcos?','Doce',['Diez','Veinte','Dos']),
+          mc('En el texto, «jugosos» significa…','con mucho jugo',['muy pequeños','muy duros','de color verde'],'Un tomate jugoso tiene mucho jugo.'),
+        ],
+        write:[
+          tx('¿Qué hizo la clase con los tomates? Contesta con una frase.','Prepararon una ensalada.','keys',{keys:[['ensalada']]}),
+          tx('¿Cuándo recogió Marcos los tomates?','En verano.','keys',{keys:[['verano']]}),
+          tx('¿Qué hacen los niños cada semana en el huerto? Contesta con una frase.','Riegan las plantas y quitan las malas hierbas.','keys',{keys:[['riegan','regar','riego','plantas','hierbas','agua']]}),
+        ]},
+      { id:'t3', title:'Una tarde de lluvia', em:'🌧️',
+        body:'Llovía tanto que Daniel y su hermana Sara no pudieron salir al parque. Primero, hicieron un fuerte con mantas y cojines en el salón. Después, Sara leyó un cuento de piratas en voz alta y Daniel dibujó un mapa del tesoro. Cuando dejó de llover, salieron al jardín y buscaron el tesoro: una caja con galletas que había escondido su madre.',
+        test:[
+          mc('¿Por qué no salieron al parque?','Porque llovía mucho',['Porque estaban cansados','Porque era de noche','Porque no tenían amigos']),
+          mc('¿Qué hizo Sara?','Leyó un cuento de piratas',['Dibujó un mapa','Hizo galletas','Escondió el tesoro']),
+          mc('¿Qué había en la caja del tesoro?','Galletas',['Monedas de oro','Juguetes','Cuentos']),
+          mc('¿Cómo crees que se sintieron los hermanos al final?','Contentos',['Enfadados','Asustados','Aburridos'],'Encontraron el tesoro y había galletas: se pusieron contentos.'),
+        ],
+        write:[
+          tx('¿Qué construyeron en el salón? Contesta con una frase.','Construyeron un fuerte.','keys',{keys:[['fuerte']]}),
+          tx('¿Qué dibujó Daniel?','Un mapa del tesoro.','keys',{keys:[['mapa','tesoro']]}),
+          tx('¿Dónde buscaron el tesoro?','En el jardín.','keys',{keys:[['jardin']]}),
+        ]},
+    ]
+  },
+  ]
+};
+if(typeof module!=='undefined') module.exports={LEN1,ALPHA_GROUPS,ALPHA_DISTINCT};
+
+/* ═══════════ CALENDARIO (del Excel «SC – Calendario Cycle Test 2026-2027») ═══════════ */
+const SUBJ={Lengua:{em:'📚',col:'#7C3AED'},'Inglés':{em:'🇬🇧',col:'#DC2626'},'Matemáticas':{em:'🔢',col:'#0EA5E9'},Science:{em:'🔬',col:'#16A34A'},Sociales:{em:'🌍',col:'#CA8A04'}};
+const CAL=[
+ {d:'2026-10-06',s:'Lengua',n:'1º Cycle Test',pack:'len1',topics:'Comprensión lectora · Ortografía: mayúsculas y sonido K · Vocabulario: sinónimos y antónimos · Gramática: oraciones, palabras, sonidos y letras · Ordenar alfabéticamente'},
+ {d:'2026-10-13',s:'Inglés',n:'1º CT (post-puente)',topics:'Unit 1 · Vocabulary 1 and 2 · Grammar 1 and 2 · Reading comprehension'},
+ {d:'2026-10-20',s:'Matemáticas',n:'1º CT',topics:'Conteo 0–1.000 (de 1 en 1, 5 en 5, 10 en 10, 100 en 100) · Sumas y restas con recta numérica · Tablas del 2, 4 y 5 · Movimientos cardinales · Pares e impares · Ábaco'},
+ {d:'2026-10-27',s:'Science',n:'1º CT',topics:'Unit 1: Scientific method steps · Unit 2: 3 vital functions, animal characteristics, vertebrates (5 types)'},
+ {d:'2026-11-04',s:'Sociales',n:'1º CT',note:'Se hará el miércoles 4'},
+ {d:'2026-11-11',s:'Lengua',n:'2º CT',note:'Se hará el miércoles 11'},
+ {d:'2026-11-17',s:'Inglés',n:'2º CT'},
+ {d:'2026-11-24',s:'Matemáticas',n:'Evaluación 1ª',ev:1},
+ {d:'2026-11-25',s:'Science',n:'Evaluación 1ª',ev:1},
+ {d:'2026-11-27',s:'Sociales',n:'Evaluación 1ª',ev:1},
+ {d:'2026-11-30',s:'Inglés',n:'Evaluación 1ª',ev:1},
+ {d:'2026-12-01',s:'Lengua',n:'Evaluación 1ª',ev:1},
+ {d:'2027-01-12',s:'Lengua',n:'3º CT'},
+ {d:'2027-01-19',s:'Inglés',n:'3º CT'},
+ {d:'2027-01-26',s:'Matemáticas',n:'2º CT'},
+ {d:'2027-02-02',s:'Science',n:'2º CT'},
+ {d:'2027-02-09',s:'Sociales',n:'2º CT'},
+ {d:'2027-02-17',s:'Lengua',n:'4º CT',note:'El calendario dice «miércoles 18»: confírmalo con el cole'},
+ {d:'2027-02-23',s:'Matemáticas',n:'Evaluación 2ª',ev:2},
+ {d:'2027-02-24',s:'Science',n:'Evaluación 2ª',ev:2},
+ {d:'2027-02-26',s:'Sociales',n:'Evaluación 2ª',ev:2},
+ {d:'2027-03-01',s:'Inglés',n:'Evaluación 2ª',ev:2},
+ {d:'2027-03-02',s:'Lengua',n:'Evaluación 2ª',ev:2},
+ {d:'2027-03-30',s:'Lengua',n:'5º CT',note:'Vuelta de Semana Santa: comprensión lectora, expresión escrita y comprensión oral'},
+ {d:'2027-04-06',s:'Inglés',n:'5º CT',note:'Puede haber exámenes Cambridge'},
+ {d:'2027-04-13',s:'Matemáticas',n:'4º CT'},
+ {d:'2027-04-20',s:'Science',n:'3º CT'},
+ {d:'2027-04-27',s:'Sociales',n:'3º CT'},
+ {d:'2027-05-04',s:'Lengua',n:'6º CT',note:'Contextualizado con Sociales'},
+ {d:'2027-05-11',s:'Inglés',n:'6º CT',note:'Contextualizado con Science'},
+ {d:'2027-05-18',s:'Matemáticas',n:'4º CT'},
+ {d:'2027-05-25',s:'Sociales',n:'Evaluación 3ª',ev:3},
+ {d:'2027-05-26',s:'Science',n:'Evaluación 3ª',ev:3},
+ {d:'2027-05-27',s:'Lengua',n:'Evaluación 3ª',ev:3,note:'El calendario dice «viernes 27»: confírmalo con el cole'},
+ {d:'2027-05-31',s:'Inglés',n:'Evaluación 3ª',ev:3},
+ {d:'2027-06-01',s:'Matemáticas',n:'Evaluación 3ª',ev:3},
+];
+const PACKS={len1:LEN1};
+
+/* ═══════════ UTILIDADES ═══════════ */
+const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+function parseD(s){const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
+function todayD(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());}
+function dayKey(d){d=d||todayD();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function daysUntil(s,from){return Math.round((parseD(s)-(from||todayD()))/864e5);}
+function fmtDate(s){const d=parseD(s);return DIAS[d.getDay()]+' '+d.getDate()+' '+MESES[d.getMonth()];}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return (h>>>0).toString(36);}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/* ═══════════ CORRECCIÓN DE RESPUESTAS ESCRITAS ═══════════ */
+// quita tildes pero conserva la ñ (la ñ SÍ importa)
+function stripAcc(s){return s.replace(/ñ/g,'\u0001').replace(/Ñ/g,'\u0002').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\u0001/g,'ñ').replace(/\u0002/g,'Ñ');}
+function nl(s){return stripAcc(String(s).toLowerCase()).replace(/[¿?¡!.,;:"“”«»()\-–]/g,' ').replace(/\s+/g,' ').trim();}
+function capsCanon(s,keepAcc){let t=String(s).replace(/[¿¡]/g,'').replace(/\s+/g,' ').trim().replace(/[.!?]+$/,'').trim();return keepAcc?t:stripAcc(t);}
+function checkTx(q,raw){
+  const user=String(raw||'').trim();
+  if(!user) return {ok:false,empty:true};
+  const mode=q.mode||'loose';
+  if(mode==='caps'){
+    for(const a of q.ans){
+      if(capsCanon(user)===capsCanon(a)){
+        const exact=capsCanon(user,true)===capsCanon(a,true);
+        return {ok:true,note:exact?'':'¡Bien! Pero ojo con las tildes: se escribe «'+a+'».'};
+      }
+    }
+    return {ok:false};
+  }
+  if(mode==='list'){
+    const u=nl(user).split(/[\s,;]+/).filter(Boolean);
+    for(const a of q.ans){const t=nl(a).split(/[\s,;]+/).filter(Boolean);if(t.length===u.length&&t.every((x,i)=>x===u[i]))return {ok:true};}
+    return {ok:false};
+  }
+  if(mode==='keys'){
+    const u=' '+nl(user)+' ';
+    if(u.trim().length<3) return {ok:false};
+    const ok=q.keys.every(g=>g.some(k=>u.includes(nl(k))));
+    return {ok};
+  }
+  // loose
+  const u=nl(user);
+  return {ok:q.ans.some(a=>nl(a)===u)};
+}
+function selfCorrectable(q){return q.t==='tx'&&(q.mode==='loose'||q.mode==='keys');}
+
+/* ═══════════ GENERADOR: ordenar alfabéticamente ═══════════ */
+const esCmp=(a,b)=>a.localeCompare(b,'es');
+function genAlphaWords(level){
+  for(let tries=0;tries<50;tries++){
+    let words;
+    if(level===1){
+      const seen=new Set();words=[];
+      for(const w of shuffle(ALPHA_DISTINCT)){const f=nl(w)[0];if(!seen.has(f)){seen.add(f);words.push(w);}if(words.length===(Math.random()<.5?4:5))break;}
+    } else {
+      const g=rnd(Object.keys(ALPHA_GROUPS));
+      words=shuffle(ALPHA_GROUPS[g]).slice(0,4);
+    }
+    const sorted=[...words].sort(esCmp);
+    if(words.join()!==sorted.join()) return {words,sorted};
+  }
+  const w=['gato','abeja','perro','nube'];return {words:w,sorted:[...w].sort(esCmp)};
+}
+function genAlphaChips(level){
+  const {words,sorted}=genAlphaWords(level);
+  return {t:'chips',q:level===1?'Toca las palabras en ORDEN ALFABÉTICO (de la A a la Z):':'Todas empiezan igual: mira la 2ª y la 3ª letra. ¡Ordénalas!',tokens:words,ans:[sorted.join(' ')],expl:'Orden correcto: '+sorted.join(', ')+'.',_gen:1};
+}
+function genAlphaWrite(level){
+  const {words,sorted}=genAlphaWords(level);
+  return {t:'tx',mode:'list',q:'✍️ Ordena alfabéticamente (sepáralas con comas):\n'+shuffle(words).join(', '),ans:[sorted.join(', ')],hint:level===2?'Todas empiezan por la misma letra. Mira la 2ª y la 3ª.':'',_gen:1};
+}
+
+/* ═══════════ BANCO DE PREGUNTAS ═══════════ */
+function poolOf(pack,mod,mode){
+  if(mod.texts){
+    const out=[];
+    mod.texts.forEach(t=>(mode==='test'?t.test:t.write).forEach(q=>out.push(Object.assign({},q,{_text:{title:t.title,body:t.body,em:t.em},_tid:t.id}))));
+    return out;
+  }
+  return (mode==='test'?mod.test:mod.write).map(q=>Object.assign({},q));
+}
+function qKey(q){return hash((q.q||'')+'|'+(q.ans&&q.ans[0]!==undefined?q.ans[0]:q.ans));}
+function prepQ(q){q._k=qKey(q);if(q.t==='mc'){q._o=shuffle(q.opts);}if(q.t==='chips'){let s=shuffle(q.tokens);for(let i=0;i<9&&s.join(' ')===q.ans[0];i++)s=shuffle(q.tokens);q._tk=s;}return q;}
+// elige n preguntas, dando prioridad a las falladas
+function pickWeighted(items,weak,n){
+  const w=items.filter(q=>(weak[qKey(q)]||0)>0), r=items.filter(q=>!((weak[qKey(q)]||0)>0));
+  const nW=Math.min(w.length,Math.ceil(n*.4));
+  return shuffle([...shuffle(w).slice(0,nW),...shuffle(r).slice(0,n-nW)]).slice(0,n);
+}
+function buildSession(kid,pack,mod,mode,n){
+  n=n||10;
+  const weak=(kid&&kid.weak)||{};
+  if(mod.texts){
+    // 2 textos (los menos recientes primero) con todas sus preguntas
+    const all=poolOf(pack,mod,mode);
+    const seen=(kid&&kid.textSeen)||{};
+    const tids=mod.texts.map(t=>t.id).sort((a,b)=>(seen[a]||0)-(seen[b]||0)).slice(0,2);
+    const qs=[];tids.forEach(id=>qs.push(...all.filter(q=>q._tid===id)));
+    return {qs:qs.map(prepQ),tids};
+  }
+  let pool=poolOf(pack,mod,mode);
+  let qs;
+  if(mod.gen){
+    const g=mode==='test'?[genAlphaChips(1),genAlphaChips(1),genAlphaChips(2),genAlphaChips(2)]:[genAlphaWrite(1),genAlphaWrite(2),genAlphaWrite(2)];
+    qs=[...pickWeighted(pool,weak,n-g.length),...g];
+    qs=shuffle(qs);
+  } else qs=pickWeighted(pool,weak,Math.min(n,pool.length));
+  return {qs:qs.map(prepQ)};
+}
+function buildSimulacro(kid,pack){
+  const weak=(kid&&kid.weak)||{};
+  const qs=[];
+  pack.modules.filter(m=>!m.texts).forEach(m=>{
+    let w=poolOf(pack,m,'write').filter(q=>!q.say);
+    let t=poolOf(pack,m,'test');
+    if(m.gen){w=[genAlphaWrite(1),genAlphaWrite(2)];}
+    qs.push(...pickWeighted(w,weak,2).map(q=>Object.assign(q,{_mod:m.id})));
+    qs.push(...pickWeighted(t,weak,1).map(q=>Object.assign(q,{_mod:m.id})));
+  });
+  const lm=pack.modules.find(m=>m.texts);
+  if(lm){
+    const t=rnd(lm.texts);
+    t.test.slice(0,2).forEach(q=>qs.push(Object.assign({},q,{_text:{title:t.title,body:t.body,em:t.em},_mod:lm.id})));
+    t.write.slice(0,2).forEach(q=>qs.push(Object.assign({},q,{_text:{title:t.title,body:t.body,em:t.em},_mod:lm.id})));
+  }
+  return {qs:qs.map(prepQ)};
+}
+
+/* ═══════════ PUNTOS, RANGOS, INSIGNIAS ═══════════ */
+const RANKS=[[0,'Aprendiz','🐣'],[150,'Lector curioso','📖'],[400,'Detective de letras','🔍'],[800,'Experto','🧠'],[1500,'Maestro de las letras','✒️'],[3000,'Súper Genio','🦸'],[6000,'Leyenda','👑']];
+function rankOf(xp){let i=0;RANKS.forEach((r,k)=>{if(xp>=r[0])i=k;});const nx=RANKS[i+1];return {i,nm:RANKS[i][1],em:RANKS[i][2],next:nx?nx[0]:null,from:RANKS[i][0]};}
+const PTS={mc:8,chips:10,tx:12};
+function qPts(q,combo){return (PTS[q.t]||8)+Math.min(Math.max(combo-1,0),5)*2;}
+function sessionBonus(acc,isSim,nota){
+  if(isSim) return nota>=9?100:nota>=7?50:20;
+  return acc>=1?40:acc>=.8?20:acc>=.6?10:5;
+}
+function stars3(acc){return acc>=.9?3:acc>=.7?2:acc>=.5?1:0;}
+function avgM(arr){return arr&&arr.length?arr.slice(-3).reduce((a,b)=>a+b,0)/Math.min(arr.length,3):null;}
+function modMastery(kid,mid){const m=(kid.mast||{})[mid]||{};return {test:avgM(m.test),write:avgM(m.write),n:(m.n||0)};}
+function modMastered(kid,mid){const m=modMastery(kid,mid);return m.test!==null&&m.write!==null&&m.test>=.8&&m.write>=.8;}
+const BADGES=[
+ {id:'first',em:'🌱',nm:'Primer paso',ds:'Termina tu primera ronda'},
+ {id:'streak3',em:'🔥',nm:'3 días seguidos',ds:'Estudia 3 días seguidos'},
+ {id:'streak5',em:'🚀',nm:'5 días seguidos',ds:'Estudia 5 días seguidos'},
+ {id:'streak7',em:'🌋',nm:'¡Una semana entera!',ds:'Estudia 7 días seguidos'},
+ {id:'perfect',em:'💯',nm:'¡Perfecto!',ds:'100 % en una ronda'},
+ {id:'combo10',em:'⚡',nm:'Racha de 10',ds:'10 aciertos seguidos'},
+ {id:'writer30',em:'✍️',nm:'Escritor/a',ds:'30 respuestas escritas correctas'},
+ {id:'all6',em:'🧭',nm:'Explorador/a',ds:'Practica todos los módulos'},
+ {id:'sim7',em:'🎓',nm:'Aprobado/a',ds:'Nota 7 o más en un simulacro'},
+ {id:'sim9',em:'🏆',nm:'¡Sobresaliente!',ds:'Nota 9 o más en un simulacro'},
+ {id:'xp1000',em:'💎',nm:'Mil estrellas',ds:'Consigue 1.000 ⭐ en total'},
+ {id:'mission3',em:'📅',nm:'Misión cumplida x3',ds:'Completa 3 misiones diarias'},
+];
+function modBadgeDefs(pack){return pack.modules.map(m=>({id:'m_'+m.id,em:'👑',nm:'Maestro: '+m.nm,ds:'Más de 80 % en test y en escribir'}));}
+function allBadgeDefs(){return [...BADGES,...modBadgeDefs(LEN1)];}
+function evalBadges(kid,ctx){
+  const got=[];const has=id=>kid.badges.includes(id);const give=id=>{if(!has(id)){kid.badges.push(id);got.push(id);}};
+  if(kid.hist.length>=1) give('first');
+  if(kid.streak>=3) give('streak3'); if(kid.streak>=5) give('streak5'); if(kid.streak>=7) give('streak7');
+  if(ctx&&ctx.perfect) give('perfect');
+  if(kid.stat.combo>=10) give('combo10');
+  if(kid.stat.wrote>=30) give('writer30');
+  const practiced=new Set(kid.hist.filter(h=>h.mod!=='sim').map(h=>h.mod));
+  if(LEN1.modules.every(m=>practiced.has(m.id))) give('all6');
+  if(ctx&&ctx.sim!==undefined){ if(ctx.sim>=7) give('sim7'); if(ctx.sim>=9) give('sim9'); }
+  if(kid.xp>=1000) give('xp1000');
+  if(Object.values(kid.missions||{}).filter(m=>m.awarded).length>=3) give('mission3');
+  LEN1.modules.forEach(m=>{if(modMastered(kid,m.id))give('m_'+m.id);});
+  return got;
+}
+
+/* ═══════════ PLAN DIARIO ═══════════ */
+function activeTest(){
+  const t=todayD();
+  const up=CAL.filter(c=>c.pack&&parseD(c.d)>=t).sort((a,b)=>a.d<b.d?-1:1);
+  if(up.length) return up[0];
+  const past=CAL.filter(c=>c.pack).sort((a,b)=>a.d<b.d?-1:1);
+  return past[past.length-1];
+}
+function nextAny(){const t=todayD();return CAL.filter(c=>parseD(c.d)>=t).sort((a,b)=>a.d<b.d?-1:1)[0];}
+function countdownTxt(dateStr){
+  const n=daysUntil(dateStr);
+  return n<0?'Ya pasó':n===0?'¡HOY!':n===1?'¡MAÑANA!':'Faltan '+n+' días';
+}
+function planTasks(kid,pack,testDate){
+  const D=Math.max(1,daysUntil(testDate));
+  const mods=pack.modules.map((m,i)=>({id:m.id,i,v:(()=>{const a=modMastery(kid,m.id);return ((a.test===null?0:a.test)+(a.write===null?0:a.write))/2;})()}));
+  mods.sort((a,b)=>a.v-b.v||a.i-b.i);
+  const n=Math.min(4,Math.ceil(pack.modules.length/D));
+  const ids=mods.slice(0,n).map(m=>m.id);
+  const tasks=ids.map(id=>({id}));
+  if(daysUntil(testDate)<=2) tasks.push({id:'sim'});
+  return tasks;
+}
+function getMission(kid,pack,testDate){
+  const k=dayKey();
+  if(!kid.missions) kid.missions={};
+  if(!kid.missions[k]) kid.missions[k]={tasks:planTasks(kid,pack,testDate).map(t=>t.id),done:{},awarded:false};
+  return kid.missions[k];
+}
+
+if(typeof module!=='undefined') module.exports={checkTx,genAlphaWords,buildSession,buildSimulacro};
+
+/* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
+const LS_KEY='ct_v1';
+const DEF_SHOP=[
+ {id:'r1',em:'🍦',nm:'Un helado',cost:150},
+ {id:'r2',em:'🎮',nm:'30 min extra de pantalla',cost:200},
+ {id:'r3',em:'🌙',nm:'20 min más despiertos',cost:250},
+ {id:'r4',em:'🎬',nm:'Elegir la película de la noche',cost:300},
+ {id:'r5',em:'🍕',nm:'Elegir la cena del sábado',cost:400},
+ {id:'r6',em:'🎡',nm:'Plan especial de fin de semana',cost:700},
+ {id:'r7',em:'🎁',nm:'Regalo sorpresa',cost:1000},
+ {id:'r8',em:'🧸',nm:'Juguete a elegir (hasta 15 €)',cost:1500},
+];
+const CHEST_COST=80;
+const CHEST_PRIZES=['🐻 Un abrazo de oso','⏱️ 10 min extra de juego','🎵 Elegir la música del coche','📖 Un cuento extra antes de dormir','🤹 Una sesión de cosquillas','💃 Un baile en familia','🍪 Una galleta a elegir','🃏 Una partida de lo que quieras con mamá o papá'];
+const AVATARS=['🦊','🐯','🦁','🐼','🐸','🦄','🐙','🦉','🐲','🚀','🤖','⚽','🎨','🦖','🐬','🧙'];
+function defKid(n,e){return {name:n,emoji:e,xp:0,stars:0,streak:0,lastDay:null,badges:[],hist:[],mast:{},weak:{},missions:{},claims:[],missed:{},selfOk:[],textSeen:{},stat:{ok:0,wrote:0,combo:0},manual:[]};}
+function loadState(){
+  try{const s=JSON.parse(localStorage.getItem(LS_KEY));if(s&&s.kids)return s;}catch(e){}
+  let n1='Gemelo 1',e1='🦊',n2='Gemela 2',e2='🐯';
+  try{const ss=JSON.parse(localStorage.getItem('ss_v7'));if(ss&&ss.p1){n1=ss.p1.name||n1;e1=ss.p1.emoji||e1;n2=ss.p2.name||n2;e2=ss.p2.emoji||e2;}}catch(e){}
+  return {ver:1,kids:{k1:defKid(n1,e1),k2:defKid(n2,e2)},shop:JSON.parse(JSON.stringify(DEF_SHOP)),pin:null,sound:true};
+}
+let S=loadState();
+function save(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
+let KID=null, G=null, SCR='welcome';
+const K=()=>S.kids[KID];
+
+/* ═══════════ AYUDAS DE INTERFAZ ═══════════ */
+const $app=document.getElementById('app');
+function render(h,nav){$app.innerHTML=h+(nav?navBar(nav):'');window.scrollTo(0,0);}
+function toast(t,ms){const d=document.createElement('div');d.className='toast';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),ms||2200);}
+function modal(html){const m=document.createElement('div');m.className='modal';m.innerHTML='<div class="box">'+html+'</div>';m.addEventListener('click',e=>{if(e.target===m)m.remove();});document.body.appendChild(m);return m;}
+function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.remove());}
+function confetti(n){const em=['🎉','⭐','✨','🎊','💜','🌟','🧡'];for(let i=0;i<(n||26);i++){const s=document.createElement('span');s.className='confetti';s.textContent=rnd(em);s.style.left=Math.random()*100+'vw';s.style.animationDelay=Math.random()*.6+'s';s.style.fontSize=(18+Math.random()*22)+'px';document.body.appendChild(s);setTimeout(()=>s.remove(),2600);}}
+let AC=null;
+function beep(kind){
+  if(!S.sound)return;
+  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const seq=kind==='ok'?[[660,.09],[880,.14]]:kind==='no'?[[260,.18]]:kind==='win'?[[523,.1],[659,.1],[784,.1],[1047,.25]]:[[500,.05]];
+    let t=AC.currentTime;
+    seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=kind==='no'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);t+=d;});
+  }catch(e){}
+}
+function speak(t,rate){
+  if(!('speechSynthesis' in window)){toast('Este dispositivo no tiene voz 😕');return;}
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-ES';u.rate=rate||.8;
+  const v=speechSynthesis.getVoices().find(v=>/^es/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u);
+}
+const pct=v=>v===null||v===undefined?0:Math.round(v*100);
+const modOf=id=>LEN1.modules.find(m=>m.id===id);
+
+function navBar(on){
+  const it=[['home','🏠','Inicio'],['cal','📅','Calendario'],['shop','🛍️','Tienda'],['ach','🏅','Logros'],['par','🔒','Padres']];
+  return '<div class="nav">'+it.map(([k,e,l])=>`<button class="${on===k?'on':''}" onclick="go('${k}')"><b>${e}</b>${l}</button>`).join('')+'</div>';
+}
+function go(k){ if(k==='home')showHome(); else if(k==='cal')showCal(); else if(k==='shop')showShop(); else if(k==='ach')showAch(); else if(k==='par')showParent(); }
+function topBar(title,back){
+  const k=K();
+  return `<div class="top">${back?`<button class="back" onclick="${back}">←</button>`:''}<div class="ttl">${title}</div><span class="chip y">⭐ ${k.stars}</span><span class="chip o">🔥 ${k.streak}</span></div>`;
+}
+
+/* ═══════════ BIENVENIDA ═══════════ */
+function showWelcome(){
+  KID=null;SCR='welcome';
+  const a=S.kids.k1,b=S.kids.k2;
+  render(`<div class="hero"><div class="em">🦉</div><h1>Cycle Test Quest</h1><p>¡Prepara tus exámenes jugando y gana premios!</p></div>
+  <div class="who">
+    <button class="kid k1" onclick="pick('k1')"><div class="av">${esc(a.emoji)}</div><div class="nm">${esc(a.name)}</div><div class="sub">⭐ ${a.stars} · 🔥 ${a.streak}</div></button>
+    <button class="kid k2" onclick="pick('k2')"><div class="av">${esc(b.emoji)}</div><div class="nm">${esc(b.name)}</div><div class="sub">⭐ ${b.stars} · 🔥 ${b.streak}</div></button>
+  </div>
+  <div class="pad" style="text-align:center"><p class="small">3º de Primaria · Colegio San Patricio</p>${nextTestLine()}</div>
+  <button class="lock" onclick="showParent()">🔒 Zona de padres</button>`);
+}
+function nextTestLine(){
+  const c=activeTest();if(!c)return '';
+  const n=daysUntil(c.d);
+  return `<div class="card" style="margin:6px 0;text-align:left"><b>${SUBJ[c.s].em} Próximo Cycle Test: ${c.s}</b><br><span class="small">${fmtDate(c.d)} · ${n<0?'ya pasó':countdownTxt(c.d)}</span></div>`;
+}
+function pick(id){KID=id;touchDayCheck();showHome();}
+function touchDayCheck(){/* la racha se actualiza al terminar una ronda */}
+
+/* ═══════════ INICIO ═══════════ */
+function showHome(){
+  SCR='home';const k=K();
+  const c=activeTest(), pack=PACKS[c.pack], rk=rankOf(k.xp);
+  const prog=rk.next?Math.min(100,Math.round((k.xp-rk.from)/(rk.next-rk.from)*100)):100;
+  const days=daysUntil(c.d);
+  const ms=getMission(k,pack,c.d);save();
+  const doneN=ms.tasks.filter(t=>ms.done[t]).length;
+  const tasks=ms.tasks.map(t=>{
+    const isSim=t==='sim',m=isSim?null:modOf(t),d=!!ms.done[t];
+    return `<div class="task ${d?'done':''}" onclick="${isSim?'startSim()':`openMod('${t}')`}"><div class="ck">${d?'✓':''}</div><div style="flex:1">${isSim?'🏆 Simulacro del Cycle Test':m.em+' '+m.nm}</div><span class="small">${d?'¡hecho!':'Jugar ▸'}</span></div>`;
+  }).join('');
+  const mods=pack.modules.map(m=>{
+    const ma=modMastery(k,m.id);
+    return `<button class="mod" style="--c:${m.color}" onclick="openMod('${m.id}')">${modMastered(k,m.id)?'<span class="crown">👑</span>':''}<div class="e">${m.em}</div><div class="n">${m.nm}</div>
+      <div class="mini">🧪<div class="bar"><i style="width:${pct(ma.test)}%"></i></div>${ma.test===null?'–':pct(ma.test)+'%'}</div>
+      <div class="mini">✍️<div class="bar"><i style="width:${pct(ma.write)}%"></i></div>${ma.write===null?'–':pct(ma.write)+'%'}</div></button>`;
+  }).join('');
+  const nx=nextAny();let teaser='';
+  if(nx&&nx.d!==c.d&&!nx.pack) teaser=`<div class="card" style="background:#FEF9C3"><b>${SUBJ[nx.s].em} Después: ${nx.s} (${fmtDate(nx.d)})</b><br><span class="small">Aún no está preparado. ¡Pídeme a mamá o papá que lo añadan!</span></div>`;
+  render(`${topBar('Cycle Test Quest','showWelcome()')}
+  <div class="card"><div class="profile"><div class="av">${esc(k.emoji)}</div><div class="info"><div class="nm">${esc(k.name)}</div><div class="small">${rk.em} ${rk.nm}</div><div class="bar" style="margin-top:6px"><i style="width:${prog}%"></i></div><div class="small" style="margin-top:3px">${rk.next?(rk.next-k.xp)+' ⭐ para el siguiente rango':'¡Rango máximo!'}</div></div></div></div>
+  <div class="card test-card"><div class="small" style="color:#CCFBF1">PRÓXIMO CYCLE TEST</div><div class="big">${SUBJ[c.s].em} ${c.s} · ${c.n}</div><div style="font-weight:800">${fmtDate(c.d)}</div><span class="cd">${days<0?'Ya pasó · ¡repasa!':countdownTxt(c.d)}</span><div style="font-size:13px;margin-top:10px;opacity:.95">${esc(c.topics||'')}</div></div>
+  <div class="card"><h2>🎯 Misión de hoy <span class="small">(${doneN}/${ms.tasks.length})</span></h2>${tasks}<div class="small" style="margin-top:10px">${ms.awarded?'✅ Misión cumplida · +40 ⭐ ganadas':'Completa la misión y gana <b>+40 ⭐</b> extra'}</div></div>
+  <div class="mh">Todos los temas</div><div class="grid2" style="margin-top:10px">${mods}</div>
+  <div style="padding:0 16px"><button class="btn o" onclick="startSim()">🏆 Simulacro del Cycle Test</button></div>
+  ${teaser}`,'home');
+}
+
+/* ═══════════ MÓDULO ═══════════ */
+function openMod(id){
+  const k=K(),m=modOf(id),ma=modMastery(k,id);SCR='mod';
+  render(`${topBar(m.em+' '+m.nm,'showHome()')}
+  <div class="card"><div class="profile"><div class="av">${m.em}</div><div class="info"><div class="nm" style="font-size:18px">${m.nm}</div><div class="small">🧪 Test: ${ma.test===null?'sin practicar':pct(ma.test)+'%'} · ✍️ Escribir: ${ma.write===null?'sin practicar':pct(ma.write)+'%'}</div></div></div></div>
+  <div style="padding:0 16px">
+   <button class="btn ghost" onclick="showLearn('${id}')">📚 Aprende (2 minutos)</button>
+   <button class="btn" onclick="startMod('${id}','test')">🧪 Modo TEST — elige la respuesta</button>
+   <button class="btn g" onclick="startMod('${id}','write')">✍️ Modo ESCRIBIR — escribe tú la respuesta</button>
+   <p class="small" style="text-align:center;margin-top:16px">Las preguntas que fallas vuelven a salir para que las domines 💪.<br>Test: +8 ⭐ por acierto · Escribir: +12 ⭐ por acierto.</p></div>`,'home');
+}
+function showLearn(id){
+  const m=modOf(id);
+  render(`${topBar('📚 '+m.nm,`openMod('${id}')`)}<div class="card learn">${m.learn||''}${m.texts?'':''}</div>
+  <div style="padding:0 16px"><button class="btn" onclick="startMod('${id}','test')">¡Lo tengo! A practicar 🧪</button><button class="btn g" onclick="startMod('${id}','write')">Prefiero escribir ✍️</button></div>`,'home');
+}
+
+/* ═══════════ JUEGO ═══════════ */
+function startMod(id,mode){
+  const k=K(),m=modOf(id),s=buildSession(k,LEN1,m,mode,10);
+  if(s.tids){s.tids.forEach(t=>k.textSeen[t]=Date.now());save();}
+  G={mod:id,mode,qs:s.qs,i:0,right:0,combo:0,maxCombo:0,pts:0,mist:[],sim:false,locked:false,selfN:0,wrote:0};
+  showQ();
+}
+function startSim(){
+  const k=K(),s=buildSimulacro(k,LEN1);
+  G={mod:'sim',mode:'sim',qs:s.qs,i:0,right:0,combo:0,maxCombo:0,pts:0,mist:[],sim:true,locked:false,selfN:0,wrote:0};
+  modal(`<div class="e">🏆</div><h2>Simulacro del Cycle Test</h2><p>${G.qs.length} preguntas de todos los temas, como en el examen de verdad. ¡Escribe con cuidado y concéntrate!</p><button class="btn o" onclick="closeModal();showQ()">¡Empezar!</button><button class="btn ghost sm" onclick="closeModal()">Ahora no</button>`);
+}
+function showQ(){
+  const q=G.qs[G.i],m=G.sim?modOf(q._mod):modOf(G.mod);
+  const prog=Math.round(G.i/G.qs.length*100);
+  let body='';
+  if(q._text) body+=`<div class="text"><b class="t">${q._text.em} ${esc(q._text.title)}</b>${esc(q._text.body)}</div>`;
+  const lbl=(G.sim?'SIMULACRO · ':'')+m.em+' '+m.nm.toUpperCase();
+  body+=`<div class="lbl">${esc(lbl)}</div><div class="qt">${esc(q.q)}</div>`;
+  if(q.hint) body+=`<div class="hint">💡 ${esc(q.hint)}</div>`;
+  if(q.t==='mc'){
+    body+='<div class="opts">'+q._o.map((o,i)=>`<button class="opt" onclick="ansMc(${i})">${esc(o)}</button>`).join('')+'</div>';
+  } else if(q.t==='tx'){
+    if(q.say) body+=`<div class="speak"><button onclick="speak(G.qs[G.i].say,.8)">🔊 Escuchar</button><button onclick="speak(G.qs[G.i].say,.45)">🐢 Despacio</button></div>`;
+    body+=`<input class="inp" id="ti" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…" onkeydown="if(event.key==='Enter')ansTx()">
+      <div class="keys" id="kb"></div>
+      <button class="btn g" id="chk" onclick="ansTx()">Comprobar ✓</button>`;
+  } else if(q.t==='chips'){
+    body+=`<div class="chipbox empty" id="cb"></div><div class="chipbank" id="bank">${q._tk.map((w,i)=>`<button class="tk" id="tk${i}" onclick="tapChip(${i})">${esc(w)}</button>`).join('')}</div>
+      <div class="row"><button class="btn ghost sm" onclick="clearChips()">↺ Borrar</button><button class="btn g sm" id="chk" onclick="ansChips()" disabled>Comprobar ✓</button></div>`;
+    G.sel=[];
+  }
+  render(`${topBar(G.sim?'🏆 Simulacro':m.em+' '+m.nm,'quitGame()')}
+  <div class="prog"><div class="bar"><i style="width:${prog}%"></i></div><span class="small">${G.i+1}/${G.qs.length}</span>${G.combo>=2?`<span class="chip o">🔥 x${G.combo}</span>`:''}</div>
+  <div class="q" id="qbox">${body}</div><div id="fbox"></div>`);
+  G.locked=false;
+  if(q.t==='tx'){buildKeys();const i=document.getElementById('ti');if(i&&!q.say)setTimeout(()=>i.focus(),50);if(q.say)setTimeout(()=>speak(q.say,.8),350);}
+}
+function quitGame(){if(confirm('¿Salir de la ronda? Perderás el progreso de esta ronda.')){G=null;showHome();}}
+let CAPS=false;
+function buildKeys(){
+  const kb=document.getElementById('kb');if(!kb)return;
+  const set=CAPS?['Á','É','Í','Ó','Ú','Ñ','¿','¡']:['á','é','í','ó','ú','ñ','ü','¿','¡'];
+  kb.innerHTML=set.map(c=>`<button type="button" onclick="insCh('${c}')">${c}</button>`).join('')+`<button type="button" onclick="CAPS=!CAPS;buildKeys()">${CAPS?'abc':'ABC'}</button>`;
+}
+function insCh(c){const i=document.getElementById('ti');if(!i)return;const a=i.selectionStart||i.value.length,b=i.selectionEnd||a;i.value=i.value.slice(0,a)+c+i.value.slice(b);i.focus();i.selectionStart=i.selectionEnd=a+1;}
+
+function ansMc(i){
+  if(G.locked)return;G.locked=true;const q=G.qs[G.i],pick=q._o[i],ok=pick===q.ans;
+  document.querySelectorAll('.opt').forEach((b,j)=>{if(q._o[j]===q.ans)b.classList.add('ok');else if(j===i)b.classList.add('no');b.disabled=true;});
+  grade(ok,{});
+}
+function ansTx(){
+  if(G.locked)return;const q=G.qs[G.i],inp=document.getElementById('ti');
+  const r=checkTx(q,inp.value);
+  if(r.empty){inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),400);return;}
+  G.locked=true;inp.disabled=true;inp.classList.add(r.ok?'ok':'no');document.getElementById('chk').style.display='none';
+  G.wrote++;grade(r.ok,{note:r.note,user:inp.value});
+}
+function tapChip(i){
+  if(G.locked)return;const q=G.qs[G.i];
+  if(G.sel.includes(i))return;G.sel.push(i);syncChips();
+}
+function untapChip(i){if(G.locked)return;G.sel=G.sel.filter(x=>x!==i);syncChips();}
+function clearChips(){if(G.locked)return;G.sel=[];syncChips();}
+function syncChips(){
+  const q=G.qs[G.i],cb=document.getElementById('cb');
+  cb.className='chipbox'+(G.sel.length?'':' empty');
+  cb.innerHTML=G.sel.map(i=>`<button class="tk in" onclick="untapChip(${i})">${esc(q._tk[i])}</button>`).join('');
+  q._tk.forEach((w,i)=>document.getElementById('tk'+i).classList.toggle('used',G.sel.includes(i)));
+  document.getElementById('chk').disabled=G.sel.length!==q._tk.length;
+}
+function ansChips(){
+  if(G.locked)return;const q=G.qs[G.i];if(G.sel.length!==q._tk.length)return;
+  G.locked=true;const built=G.sel.map(i=>q._tk[i]).join(' ');
+  const ok=q.ans.includes(built);
+  document.getElementById('cb').style.borderColor=ok?'#16A34A':'#DC2626';
+  document.getElementById('chk').style.display='none';
+  grade(ok,{user:built});
+}
+function grade(ok,info){
+  const k=K(),q=G.qs[G.i];let gained=0;
+  if(ok){
+    G.right++;G.combo++;G.maxCombo=Math.max(G.maxCombo,G.combo);gained=qPts(q,G.combo);G.pts+=gained;
+    if(k.weak[q._k])k.weak[q._k]=Math.max(0,k.weak[q._k]-1);
+    k.stat.ok++;if(q.t==='tx')k.stat.wrote++;k.stat.combo=Math.max(k.stat.combo,G.maxCombo);
+    beep('ok');if(G.combo===5||G.combo===10)confetti(14);
+  } else {
+    G.combo=0;k.weak[q._k]=(k.weak[q._k]||0)+1;beep('no');
+    const corr=q.t==='mc'?q.ans:q.ans[0];
+    G.mist.push({k:q._k,q:q.q.replace(/\n/g,' '),a:corr});
+    k.missed[q._k]={q:q.q.replace(/\n/g,' '),a:corr,n:((k.missed[q._k]||{}).n||0)+1,ts:Date.now()};
+  }
+  save();
+  const corr=q.t==='mc'?q.ans:(q.t==='chips'?q.ans[0]:q.ans[0]);
+  const owl=ok?rnd(['¡Muy bien!','¡Genial!','¡Eso es!','¡Bravo!','¡Lo clavaste!']):rnd(['¡Casi!','No pasa nada, ¡aprendemos!','¡Ánimo, la próxima sí!']);
+  const fb=`<div class="fb ${ok?'ok':'no'}"><div class="big">${ok?'✅':'💪'} ${owl}${ok?` <span style="float:right">+${gained} ⭐</span>`:''}</div>
+   ${ok?'':`<div>La respuesta correcta es: <b>${esc(corr)}</b></div>`}
+   ${info.note?`<div class="ex">${esc(info.note)}</div>`:''}${q.expl?`<div class="ex">🧠 ${esc(q.expl)}</div>`:''}
+   ${(!ok&&selfCorrectable(q))?`<button class="btn ghost sm" style="margin-top:10px" onclick="selfOk()">🤔 Creo que mi respuesta también vale</button>`:''}
+   <button class="btn ${ok?'g':''}" onclick="nextQ()">${G.i+1>=G.qs.length?'Ver resultado 🏁':'Siguiente ▸'}</button></div>`;
+  document.getElementById('fbox').innerHTML=fb;
+  document.getElementById('fbox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function selfOk(){
+  const k=K(),q=G.qs[G.i];
+  // revertir el fallo y contarlo como acierto (queda anotado para los padres)
+  G.mist=G.mist.filter(m=>m.k!==q._k);G.right++;G.combo=0;G.selfN++;
+  k.weak[q._k]=Math.max(0,(k.weak[q._k]||1)-1);delete k.missed[q._k];
+  const g=PTS.tx;G.pts+=g;k.stat.ok++;k.stat.wrote++;
+  const inp=document.getElementById('ti');
+  k.selfOk.push({ts:Date.now(),q:q.q.replace(/\n/g,' '),user:inp?inp.value:'',a:q.ans[0]});if(k.selfOk.length>40)k.selfOk.shift();
+  save();toast('Anotado para que mamá o papá lo revisen 👍');
+  document.getElementById('fbox').innerHTML=`<div class="fb ok"><div class="big">✅ ¡Vale! <span style="float:right">+${g} ⭐</span></div><div class="ex">Tus padres lo revisarán.</div><button class="btn g" onclick="nextQ()">${G.i+1>=G.qs.length?'Ver resultado 🏁':'Siguiente ▸'}</button></div>`;
+}
+function nextQ(){G.i++;if(G.i>=G.qs.length)finish();else showQ();}
+
+/* ═══════════ FINAL DE RONDA ═══════════ */
+function finish(){
+  const k=K(),n=G.qs.length,acc=G.right/n,nota=Math.round(acc*100)/10;
+  const bonus=sessionBonus(acc,G.sim,nota);
+  let total=G.pts+bonus;const notes=[];
+  // racha diaria
+  const today=dayKey(),yest=dayKey(new Date(todayD().getTime()-864e5));
+  if(k.lastDay!==today){
+    k.streak=(k.lastDay===yest)?k.streak+1:1;k.lastDay=today;
+    const sb={3:30,5:50,7:80}[k.streak];if(sb){total+=sb;notes.push(`🔥 ¡${k.streak} días seguidos! +${sb} ⭐`);}
+  }
+  // histórico y dominio
+  k.hist.push({ts:Date.now(),mod:G.sim?'sim':G.mod,mode:G.mode,right:G.right,total:n,pts:total});if(k.hist.length>300)k.hist.shift();
+  if(!G.sim){const m=k.mast[G.mod]=k.mast[G.mod]||{test:[],write:[],n:0};m[G.mode].push(acc);if(m[G.mode].length>6)m[G.mode].shift();m.n++;}
+  else{(k.sim=k.sim||[]).push(nota);
+    // el simulacro también cuenta para el dominio de cada módulo
+  }
+  // misión diaria
+  const c=activeTest(),ms=getMission(k,PACKS[c.pack],c.d);
+  const tid=G.sim?'sim':G.mod;if(ms.tasks.includes(tid))ms.done[tid]=true;
+  if(!ms.awarded&&ms.tasks.every(t=>ms.done[t])){ms.awarded=true;total+=40;notes.push('🎯 ¡Misión de hoy cumplida! +40 ⭐');}
+  k.xp+=total;k.stars+=total;
+  const got=evalBadges(k,{perfect:acc===1,sim:G.sim?nota:undefined});
+  save();
+  const st=G.sim?(nota>=9?3:nota>=7?2:nota>=5?1:0):stars3(acc);
+  if(acc>=.8)confetti(30);beep(acc>=.6?'win':'no');
+  const mis=G.mist.map(m=>`<div class="miss">❓ ${esc(m.q)}<br>✅ <b>${esc(m.a)}</b></div>`).join('');
+  const rk=rankOf(k.xp);
+  render(`${topBar(G.sim?'🏆 Resultado':'🏁 Resultado','showHome()')}
+  <div class="res"><div class="stars">${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</div>
+  ${G.sim?`<div class="big">Nota: ${nota.toFixed(1)} / 10</div>`:`<div class="big">${G.right} / ${n}</div>`}
+  <p style="font-weight:800;font-size:18px">${acc>=.9?'¡Increíble! 🤩':acc>=.7?'¡Muy bien! 😄':acc>=.5?'¡Vas mejorando! 💪':'¡Sigue practicando, tú puedes! 🌱'}</p>
+  <div class="pts"><span class="chip y">+${G.pts} ⭐ respuestas</span><span class="chip y">+${bonus} ⭐ bonus ronda</span>${G.selfN?`<span class="chip">🤔 ${G.selfN} por revisar</span>`:''}</div>
+  ${notes.map(x=>`<div class="chip o" style="display:block;margin:6px auto;max-width:340px">${x}</div>`).join('')}
+  <div style="font-weight:900;font-size:20px;margin:8px 0">Total: +${total} ⭐ → ${k.stars} ⭐</div>
+  <div class="small">${rk.em} ${rk.nm}${rk.next?' · faltan '+(rk.next-k.xp)+' ⭐ para subir':''}</div>
+  ${mis?`<div class="mh" style="text-align:left">Repasa estas</div>${mis}`:'<p style="font-weight:800;color:var(--gr)">¡Sin fallos! 🎉</p>'}
+  </div>
+  <div style="padding:0 16px">${G.sim?`<button class="btn o" onclick="startSim()">🏆 Otro simulacro</button>`:`<button class="btn" onclick="startMod('${G.mod}','${G.mode}')">🔁 Otra ronda</button>`}
+  <button class="btn ghost" onclick="showHome()">🏠 Volver al inicio</button></div>`);
+  got.forEach((id,i)=>setTimeout(()=>{const b=allBadgeDefs().find(x=>x.id===id);if(b){modal(`<div class="e">${b.em}</div><h2>¡Nueva insignia!</h2><p><b>${b.nm}</b><br>${b.ds}</p><button class="btn" onclick="closeModal()">¡Genial!</button>`);confetti(24);beep('win');}},900+i*50));
+  G=null;
+}
+
+/* ═══════════ CALENDARIO ═══════════ */
+function showCal(){
+  SCR='cal';const t=todayD();let last='',h='';
+  const first=CAL.find(c=>parseD(c.d)>=t);
+  CAL.forEach(c=>{
+    const d=parseD(c.d),mk=d.getFullYear()+'-'+d.getMonth();
+    if(mk!==last){last=mk;h+=`<div class="mh">${['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][d.getMonth()]} ${d.getFullYear()}</div>`;}
+    const past=d<t,n=daysUntil(c.d),isNext=first&&first.d===c.d&&first.s===c.s;
+    const tag=c.pack?`<span class="tag g">✅ Listo para estudiar</span>`:`<span class="tag y">🔜 Se prepara antes</span>`;
+    h+=`<div class="cal ${past?'past':''}" style="--c:${SUBJ[c.s].col};${isNext?'box-shadow:0 0 0 3px #4F46E5,var(--sh)':''}" ${c.pack?`onclick="${KID?'showHome()':'toast(\'Elige primero quién estudia 😉\')'}"`:''}>
+      <div class="dt">${d.getDate()}<b style="font-size:13px;color:var(--mu)">${MESES[d.getMonth()]}</b></div>
+      <div class="info">${SUBJ[c.s].em} ${c.s} <span class="small">· ${c.n}</span><br>${past?'<span class="small">✔ Pasado</span>':tag+' <span class="small">'+countdownTxt(c.d)+'</span>'}
+      ${c.topics?`<div class="tp">${esc(c.topics)}</div>`:''}${c.note?`<div class="tp">📝 ${esc(c.note)}</div>`:''}</div></div>`;
+  });
+  if(!KID){render(`<div class="top"><button class="back" onclick="showWelcome()">←</button><div class="ttl">📅 Calendario de Cycle Tests</div></div>${h}`);return;}
+  render(`${topBar('📅 Calendario Cycle Tests')}${h}`,'cal');
+}
+
+/* ═══════════ TIENDA ═══════════ */
+function showShop(){
+  SCR='shop';const k=K();
+  const items=S.shop.map(r=>`<div class="prize"><div class="e">${esc(r.em)}</div><div class="n">${esc(r.nm)}</div><div class="chip y">⭐ ${r.cost}</div>
+    <button class="btn ${k.stars>=r.cost?'g':'ghost'} sm" onclick="buy('${r.id}')">${k.stars>=r.cost?'¡Lo quiero!':'Te faltan '+(r.cost-k.stars)}</button></div>`).join('');
+  render(`${topBar('🛍️ Tienda de premios')}
+  <div class="card" style="background:linear-gradient(135deg,#F59E0B,#EC4899);color:#fff"><div style="display:flex;align-items:center;gap:12px"><div style="font-size:50px">🎁</div><div style="flex:1"><b style="font-size:18px">Cofre misterioso</b><div style="font-size:13px;font-weight:700">¡Un premio sorpresa! A veces trae estrellas extra.</div></div></div><button class="btn sm" style="background:#fff;color:#BE185D;box-shadow:none" onclick="openChest()">Abrir por ⭐ ${CHEST_COST}</button></div>
+  <div class="grid2" style="margin-top:6px">${items}</div>
+  <p class="small" style="text-align:center;padding:10px 20px">Cuando canjees un premio, ¡enséñaselo a mamá o papá para que te lo den!</p>
+  <div class="mh">Mis premios canjeados</div>${claimList(k,false)}`,'shop');
+}
+function claimList(k,forParent){
+  if(!k.claims.length)return '<div class="card small">Todavía no has canjeado nada. ¡A ganar estrellas!</div>';
+  return k.claims.slice().reverse().slice(0,20).map(c=>`<div class="card" style="margin:8px 16px;padding:12px;display:flex;gap:10px;align-items:center"><div style="font-size:30px">${esc(c.em)}</div><div style="flex:1;font-weight:800">${esc(c.nm)}<div class="small">${new Date(c.ts).toLocaleDateString('es-ES')}</div></div>${c.done?'<span class="tag g">Entregado ✅</span>':'<span class="tag y">Por entregar</span>'}${forParent&&!c.done?`<button class="btn g sm" style="width:auto;margin:0;padding:8px 12px" onclick="deliver('${KID_P}',${c.ts})">✓</button>`:''}</div>`).join('');
+}
+function buy(id){
+  const k=K(),r=S.shop.find(x=>x.id===id);if(!r)return;
+  if(k.stars<r.cost){toast('Aún te faltan '+(r.cost-k.stars)+' ⭐ ¡Tú puedes!');return;}
+  modal(`<div class="e">${esc(r.em)}</div><h2>${esc(r.nm)}</h2><p>Cuesta <b>⭐ ${r.cost}</b>. Te quedarán ⭐ ${k.stars-r.cost}.</p><button class="btn g" onclick="confirmBuy('${id}')">¡Canjear!</button><button class="btn ghost sm" onclick="closeModal()">Mejor no</button>`);
+}
+function confirmBuy(id){
+  const k=K(),r=S.shop.find(x=>x.id===id);if(!r||k.stars<r.cost)return;
+  k.stars-=r.cost;k.claims.push({id:r.id,em:r.em,nm:r.nm,ts:Date.now(),done:false});save();closeModal();confetti(40);beep('win');
+  modal(`<div class="e">🎉</div><h2>¡Premio canjeado!</h2><p><b>${esc(r.em)} ${esc(r.nm)}</b><br>Enséñaselo a mamá o papá.</p><button class="btn" onclick="closeModal();showShop()">¡Qué guay!</button>`);
+}
+function openChest(){
+  const k=K();if(k.stars<CHEST_COST){toast('Te faltan '+(CHEST_COST-k.stars)+' ⭐');return;}
+  k.stars-=CHEST_COST;
+  let html;
+  if(Math.random()<.25){const b=rnd([50,80,120,150]);k.stars+=b;html=`<div class="e">🌟</div><h2>¡Estrellas extra!</h2><p>El cofre traía <b>+${b} ⭐</b></p>`;}
+  else{const p=rnd(CHEST_PRIZES);const em=[...p][0];k.claims.push({id:'chest',em:em,nm:p.slice(em.length).trim(),ts:Date.now(),done:false});html=`<div class="e">${em}</div><h2>¡Premio sorpresa!</h2><p><b>${esc(p.slice(em.length).trim())}</b><br>Pídeselo a mamá o papá.</p>`;}
+  save();confetti(40);beep('win');modal(html+`<button class="btn" onclick="closeModal();showShop()">¡Genial!</button>`);
+}
+
+/* ═══════════ LOGROS ═══════════ */
+function showAch(){
+  SCR='ach';const k=K(),rk=rankOf(k.xp);
+  const defs=allBadgeDefs();
+  render(`${topBar('🏅 Mis logros')}
+  <div class="card"><div class="profile"><div class="av">${rk.em}</div><div class="info"><div class="nm">${rk.nm}</div><div class="small">${k.xp} ⭐ ganadas en total · ${k.hist.length} rondas · racha máxima ${k.stat.combo}</div></div></div>
+  <div class="small" style="margin-top:10px">${RANKS.map(r=>(k.xp>=r[0]?'':'🔒')+r[2]+' '+r[1]).join(' · ')}</div></div>
+  <div class="mh">Insignias (${k.badges.length}/${defs.length})</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 16px">${defs.map(b=>`<div class="badge ${k.badges.includes(b.id)?'':'lock'}"><div class="e">${b.em}</div>${b.nm}<div class="small" style="font-size:11px">${b.ds}</div></div>`).join('')}</div>`,'ach');
+}
+
+/* ═══════════ ZONA DE PADRES ═══════════ */
+let KID_P='k1',PTAB='res';
+function showParent(){
+  if(!S.pin){
+    modal(`<div class="e">🔒</div><h2>Crea un PIN de padres</h2><p class="small">4 números. Lo necesitarás para entrar aquí (así los peques no cambian los premios).</p><input class="field" id="pin1" type="password" inputmode="numeric" maxlength="4" placeholder="••••" style="text-align:center;font-size:24px"><button class="btn" onclick="setPin()">Guardar PIN</button><button class="btn ghost sm" onclick="closeModal()">Cancelar</button>`);return;
+  }
+  modal(`<div class="e">🔒</div><h2>Zona de padres</h2><input class="field" id="pin1" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" style="text-align:center;font-size:24px"><button class="btn" onclick="checkPin()">Entrar</button><button class="btn ghost sm" onclick="closeModal()">Cancelar</button>`);
+  setTimeout(()=>{const i=document.getElementById('pin1');i&&i.focus();},60);
+}
+function setPin(){const v=document.getElementById('pin1').value;if(!/^\d{4}$/.test(v)){toast('Pon 4 números');return;}S.pin=v;save();closeModal();parentPanel();}
+function checkPin(){const v=document.getElementById('pin1').value;if(v===S.pin){closeModal();parentPanel();}else toast('PIN incorrecto');}
+function parentPanel(){
+  SCR='par';
+  const kid=S.kids[KID_P];
+  const tabs=`<div class="tabs">${[['res','📊 Resumen'],['pri','🎁 Premios'],['aju','⚙️ Ajustes']].map(([k,l])=>`<button class="${PTAB===k?'on':''}" onclick="PTAB='${k}';parentPanel()">${l}</button>`).join('')}</div>
+  <div class="tabs">${['k1','k2'].map(id=>`<button class="${KID_P===id?'on':''}" onclick="KID_P='${id}';parentPanel()">${esc(S.kids[id].emoji)} ${esc(S.kids[id].name)}</button>`).join('')}</div>`;
+  let body='';
+  if(PTAB==='res'){
+    const rows=LEN1.modules.map(m=>{const a=modMastery(kid,m.id);return `<tr><td>${m.em} ${m.nm}</td><td>${a.test===null?'–':pct(a.test)+'%'}</td><td>${a.write===null?'–':pct(a.write)+'%'}</td><td>${a.n}</td></tr>`;}).join('');
+    const miss=Object.values(kid.missed).sort((a,b)=>b.n-a.n).slice(0,8).map(m=>`<div class="miss">❓ ${esc(m.q)}<br>✅ <b>${esc(m.a)}</b> <span class="small">(falló ${m.n}×)</span></div>`).join('')||'<div class="small">Sin fallos registrados.</div>';
+    const so=kid.selfOk.slice(-8).reverse().map(m=>`<div class="miss">🤔 ${esc(m.q)}<br>Escribió: <b>${esc(m.user)}</b> · Esperado: ${esc(m.a)}</div>`).join('')||'<div class="small">Ninguna.</div>';
+    const sims=(kid.sim||[]).slice(-5).map(n=>n.toFixed(1)).join(' · ')||'–';
+    body=`<div class="card"><h2>${esc(kid.emoji)} ${esc(kid.name)}</h2><div class="small">⭐ ${kid.stars} · 🔥 racha ${kid.streak} días · ${kid.hist.length} rondas · simulacros: ${sims}</div>
+    <table class="tbl" style="margin-top:10px"><tr><th>Tema</th><th>🧪</th><th>✍️</th><th>Rondas</th></tr>${rows}</table></div>
+    <div class="card"><h2>Preguntas más falladas</h2>${miss}</div>
+    <div class="card"><h2>Respuestas «creo que también vale»</h2><div class="small">Para que decidas si estaban bien:</div>${so}</div>`;
+  } else if(PTAB==='pri'){
+    body=`<div class="mh">Premios por entregar</div>${claimsParent(kid)}
+    <div class="mh">Catálogo de la tienda</div>
+    <div class="card">${S.shop.map((r,i)=>`<div class="row"><input class="field" style="width:56px;text-align:center" value="${esc(r.em)}" onchange="shopEdit(${i},'em',this.value)"><input class="field" value="${esc(r.nm)}" onchange="shopEdit(${i},'nm',this.value)"><input class="field" style="width:80px" type="number" value="${r.cost}" onchange="shopEdit(${i},'cost',this.value)"><button class="btn sm" style="width:44px;margin:0;background:#FEE2E2;color:#B91C1C" onclick="shopDel(${i})">✕</button></div>`).join('')}
+    <button class="btn ghost sm" onclick="shopAdd()">+ Añadir premio</button><p class="small">Pon aquí los regalos y planes reales. Un cofre misterioso cuesta ${CHEST_COST} ⭐.</p></div>`;
+  } else {
+    body=`<div class="card"><h2>Nombre y avatar</h2><input class="field" value="${esc(kid.name)}" onchange="S.kids[KID_P].name=this.value;save()">
+      <div class="keys" style="margin-top:8px">${AVATARS.map(a=>`<button onclick="S.kids[KID_P].emoji='${a}';save();parentPanel()" style="${kid.emoji===a?'background:#4F46E5;color:#fff':''}">${a}</button>`).join('')}</div></div>
+    <div class="card"><h2>Dar o quitar estrellas</h2><div class="row"><input class="field" id="mpts" type="number" placeholder="± estrellas"><button class="btn sm" style="width:90px;margin:0" onclick="manualPts()">Aplicar</button></div><p class="small">Para premiar deberes, buen comportamiento, etc.</p></div>
+    <div class="card"><h2>Seguridad y datos</h2><button class="btn ghost sm" onclick="changePin()">Cambiar PIN</button><button class="btn ghost sm" onclick="S.sound=!S.sound;save();toast(S.sound?'Sonido activado':'Sonido desactivado')">🔊 Activar / desactivar sonidos</button>
+    <button class="btn sm" style="background:#FEE2E2;color:#B91C1C;box-shadow:none" onclick="resetKid()">Reiniciar progreso de ${esc(kid.name)}</button></div>`;
+  }
+  render(`<div class="top"><button class="back" onclick="${KID?'showHome()':'showWelcome()'}">←</button><div class="ttl">🔒 Zona de padres</div></div>${tabs}${body}`);
+}
+function claimsParent(kid){
+  const pend=kid.claims.filter(c=>!c.done);
+  if(!pend.length)return '<div class="card small">No hay premios pendientes.</div>';
+  return pend.map(c=>`<div class="card" style="margin:8px 16px;padding:12px;display:flex;gap:10px;align-items:center"><div style="font-size:30px">${esc(c.em)}</div><div style="flex:1;font-weight:800">${esc(c.nm)}<div class="small">${new Date(c.ts).toLocaleDateString('es-ES')}</div></div><button class="btn g sm" style="width:auto;margin:0;padding:8px 14px" onclick="deliver(${c.ts})">Entregado ✓</button></div>`).join('');
+}
+function deliver(ts){const c=S.kids[KID_P].claims.find(x=>x.ts===ts);if(c){c.done=true;save();parentPanel();}}
+function shopEdit(i,f,v){S.shop[i][f]=f==='cost'?Math.max(10,parseInt(v)||10):v;save();}
+function shopDel(i){if(confirm('¿Quitar este premio?')){S.shop.splice(i,1);save();parentPanel();}}
+function shopAdd(){S.shop.push({id:'r'+Date.now(),em:'🎁',nm:'Nuevo premio',cost:300});save();parentPanel();}
+function manualPts(){const v=parseInt(document.getElementById('mpts').value);if(!v)return;const k=S.kids[KID_P];k.stars=Math.max(0,k.stars+v);if(v>0)k.xp+=v;k.manual.push({ts:Date.now(),v});save();toast((v>0?'+':'')+v+' ⭐ aplicadas');parentPanel();}
+function changePin(){const v=prompt('Nuevo PIN (4 números):');if(v&&/^\d{4}$/.test(v)){S.pin=v;save();toast('PIN cambiado');}else if(v)toast('Debe tener 4 números');}
+function resetKid(){if(confirm('¿Seguro? Se borrará TODO el progreso de este niño/a.')&&confirm('Última confirmación: ¿borrar progreso?')){const k=S.kids[KID_P];S.kids[KID_P]=defKid(k.name,k.emoji);save();parentPanel();}}
+
+showWelcome();
+
+
+</script></body></html>
