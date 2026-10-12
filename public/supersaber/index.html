@@ -111,6 +111,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lv-card.u-memoria:active{transform:scale(.98)}
 .lv-card.done-memoria{border-left-color:#4338CA}
 .lv-badge-memoria{background:#4338CA}
+.hm-sci{border-top-color:#0891B2}
+/* SCIENCE (ENGLISH) */
+.lv-card.u-sci{border-left-color:#0891B2;cursor:pointer;transition:transform .12s}
+.lv-card.u-sci:active{transform:scale(.98)}
+.lv-card.done-sci{border-left-color:#0891B2}
+.lv-badge-sci{background:#0891B2}
+/* SEPARAR EN SÍLABAS */
+.syl-word{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 0;width:100%;margin:6px 0 2px;min-height:56px}
+.syl-l{min-width:32px;height:52px;padding:0 4px;border:2px solid #C4B5FD;border-radius:10px;font-size:28px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#4C1D95;font-family:inherit;margin:0 1px}
+.syl-l.g0{background:#EDE9FE}
+.syl-l.g1{background:#DBEAFE;border-color:#93C5FD;color:#1E3A8A}
+.syl-l:active{transform:scale(.94)}
+.syl-bar{width:5px;height:58px;border-radius:3px;background:#F59E0B;margin:0 5px;display:inline-block}
+.syl-cnt{font-size:15px;font-weight:800;color:var(--mu)}
+.syl-res{font-size:26px;font-weight:900;color:var(--pu);letter-spacing:1px}
 .pairs-grid{display:grid;gap:8px;width:100%;max-width:340px;margin:0 auto}
 .pair-card{aspect-ratio:1;border:2px solid #E5E7EB;border-radius:12px;background:#F9FAFB;font-size:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .1s}
 .pair-card:active{transform:scale(.95)}
@@ -452,7 +467,8 @@ const ACHS = [
   {id:'creative_done',em:'🎨', nm:'Mente Creativa',      ds:'Completa todos los retos del Taller Creativo'},
   {id:'vocab_done',  em:'📜', nm:'Máster de Palabras',   ds:'Supera todos los niveles de Vocabulario y Palabras'},
   {id:'geoloc_done', em:'🗺️', nm:'Gran Geógrafo',        ds:'Supera todos los niveles de Mi Tierra'},
-  {id:'memoria_done',em:'🐘', nm:'Memoria de Elefante',  ds:'Supera todos los niveles de Memoria y Atención'}
+  {id:'memoria_done',em:'🐘', nm:'Memoria de Elefante',  ds:'Supera todos los niveles de Memoria y Atención'},
+  {id:'sci_done',    em:'🥼', nm:'Young Scientist',      ds:'Complete every level of Science (English)'}
 ];
 
 const SHOP_ITEMS = [
@@ -513,10 +529,16 @@ const LANG_LVS = [
   {id:6, nm:'Lectura comprensora',  em:'📚', df:3, ds:'Textos más largos con preguntas',    tp:'lect', p:{diff:'medium'}},
   {id:7, nm:'Dictado',              em:'🎧', df:4, ds:'Escucha y escribe las palabras',     tp:'dict', p:{easy:false}},
   {id:8, nm:'Lectura experta ✨',   em:'🏆', df:5, ds:'Textos con inferencias',             tp:'lect', p:{diff:'hard'}},
-  {id:9, nm:'Sinónimos y antónimos',em:'🔄', df:2, ds:'Palabras con significado igual o contrario', tp:'sinan',p:{}},
+  {id:9, nm:'Sinónimos',           em:'🔄', df:2, ds:'Palabras con el mismo significado',  tp:'sinan',p:{kind:'sin'}},
   {id:10,nm:'Tipos de palabras 📝', em:'🏷️', df:3, ds:'Sustantivos, verbos y adjetivos',    tp:'tippal',p:{}},
   {id:11,nm:'Acentuación 📣',       em:'´',  df:4, ds:'Palabras agudas, llanas y esdrújulas',tp:'acent', p:{}},
-  {id:12,nm:'Género y número',      em:'♀️♂️',df:3, ds:'Masculino, femenino, singular y plural',tp:'genus', p:{}}
+  {id:12,nm:'Género y número',      em:'♀️♂️',df:3, ds:'Masculino, femenino, singular y plural',tp:'genus', p:{}},
+  {id:13,nm:'Antónimos',            em:'↔️', df:2, ds:'Palabras con significado contrario',  tp:'sinan', p:{kind:'ant'}, free:true},
+  {id:14,nm:'Separa en sílabas ✂️', em:'✂️', df:2, ds:'Corta cada palabra en sílabas',       tp:'syl',   p:{diff:'easy'}, free:true},
+  {id:15,nm:'Sílabas con reto 🧩',  em:'🧩', df:4, ds:'Diptongos, hiatos y grupos de consonantes', tp:'syl', p:{diff:'hard'}, free:true},
+  {id:16,nm:'Cuenta y clasifica 🔢',em:'🔢', df:3, ds:'Monosílabas, bisílabas, trisílabas y polisílabas', tp:'sylc', p:{cats:['count','class','which']}, free:true},
+  {id:17,nm:'Monosílabos 1️⃣',       em:'1️⃣', df:4, ds:'Una sola sílaba… ¿lleva tilde o no?', tp:'sylc', p:{cats:['mono']}, free:true},
+  {id:18,nm:'Reto: sinónimos y antónimos 🏆', em:'🏆', df:4, ds:'Las dos cosas mezcladas, ¡sin ayuda!', tp:'sinan', p:{kind:'all'}, free:true}
 ];
 const LOGIC_LVS=[
   {id:1,nm:'¿Qué no pertenece?',  em:'🚫',df:2,ds:'Encuentra el intruso del grupo',         tp:'grp',   p:{}},
@@ -581,6 +603,16 @@ const MEMORIA_LVS=[
   {id:2,nm:'Parejas difíciles',    em:'🎴',df:3,ds:'Ahora con más cartas (6 parejas)',                 tp:'pairs', p:{pairs:6,rounds:3}},
   {id:3,nm:'Secuencia de memoria', em:'🔴',df:3,ds:'Repite la secuencia de colores, cada vez más larga',tp:'simon',p:{rounds:5}},
   {id:4,nm:'Atención al detalle',  em:'🔎',df:3,ds:'Encuentra el símbolo diferente en la cuadrícula',  tp:'attn', p:{rounds:8}}
+];
+const SCI_LVS=[
+  {id:1,nm:'Think like a Scientist',  em:'🔬',df:2,ds:'The scientific method, tools and units',          tp:'sci',p:{cat:'method'},free:true},
+  {id:2,nm:'Living Things',           em:'🌿',df:2,ds:'Animals, plants and food chains',                 tp:'sci',p:{cat:'living'},free:true},
+  {id:3,nm:'The Human Body',          em:'🫀',df:3,ds:'Organs, bones, senses and healthy habits',        tp:'sci',p:{cat:'body'},free:true},
+  {id:4,nm:'Maps & the Globe',        em:'🧭',df:3,ds:'Meridians, parallels, Equator and hemispheres',   tp:'sci',p:{cat:'maps'},free:true},
+  {id:5,nm:'Planet Earth',            em:'🌍',df:3,ds:'Layers, water cycle, volcanoes and continents',   tp:'sci',p:{cat:'earth'},free:true},
+  {id:6,nm:'Earth, Sun & Moon',       em:'🪐',df:3,ds:'The Solar System, seasons and the Moon',          tp:'sci',p:{cat:'space'},free:true},
+  {id:7,nm:'Matter, Energy & Forces', em:'⚡',df:4,ds:'States of matter, electricity, magnets and light', tp:'sci',p:{cat:'matter'},free:true},
+  {id:8,nm:'Science Champion! ✨',    em:'🏆',df:5,ds:'20 random questions from every topic',            tp:'sci',p:{cat:'all'},free:true}
 ];
 
 /* ══════════════════════════════════════
@@ -1891,37 +1923,37 @@ const medQ=[
    CONTENT: SINÓNIMOS Y ANTÓNIMOS
 ══════════════════════════════════════ */
 const sinanQ=[
-  {tp:'sin',q:'¿Cuál es un sinónimo de RÁPIDO?',ans:'Veloz',opts:['Lento','Veloz','Grande','Frío']},
-  {tp:'ant',q:'¿Cuál es el antónimo de ALEGRE?',ans:'Triste',opts:['Feliz','Contento','Triste','Animado']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de BONITO?',ans:'Hermoso',opts:['Feo','Horrible','Hermoso','Oscuro']},
-  {tp:'ant',q:'¿Cuál es el antónimo de GRANDE?',ans:'Pequeño',opts:['Enorme','Gigante','Pequeño','Amplio']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de CAMINAR?',ans:'Andar',opts:['Correr','Andar','Saltar','Volar']},
-  {tp:'ant',q:'¿Cuál es el antónimo de CALIENTE?',ans:'Frío',opts:['Cálido','Tibio','Frío','Ardiente']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de CONTENTO?',ans:'Feliz',opts:['Triste','Enfadado','Feliz','Aburrido']},
-  {tp:'ant',q:'¿Cuál es el antónimo de DÍA?',ans:'Noche',opts:['Tarde','Amanecer','Noche','Mediodía']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de ENORME?',ans:'Gigante',opts:['Pequeño','Gigante','Minúsculo','Mediano']},
-  {tp:'ant',q:'¿Cuál es el antónimo de FÁCIL?',ans:'Difícil',opts:['Sencillo','Simple','Difícil','Cómodo']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de INTELIGENTE?',ans:'Listo',opts:['Tonto','Listo','Torpe','Descuidado']},
-  {tp:'ant',q:'¿Cuál es el antónimo de LIMPIO?',ans:'Sucio',opts:['Ordenado','Pulcro','Sucio','Aseado']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de MIEDO?',ans:'Terror',opts:['Valor','Terror','Alegría','Calma']},
-  {tp:'ant',q:'¿Cuál es el antónimo de ENCENDER?',ans:'Apagar',opts:['Iluminar','Calentar','Prender','Apagar']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de COMER?',ans:'Ingerir',opts:['Beber','Ingerir','Correr','Dormir']},
-  {tp:'ant',q:'¿Cuál es el antónimo de ARRIBA?',ans:'Abajo',opts:['Arriba','Cerca','Abajo','Lejos']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de HERMOSO?',ans:'Bonito',opts:['Feo','Bonito','Extraño','Raro']},
-  {tp:'ant',q:'¿Cuál es el antónimo de ABRIR?',ans:'Cerrar',opts:['Abrir','Cerrar','Empujar','Tirar']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de VELOZ?',ans:'Rápido',opts:['Lento','Rápido','Pesado','Suave']},
-  {tp:'ant',q:'¿Cuál es el antónimo de VALIENTE?',ans:'Cobarde',opts:['Fuerte','Cobarde','Audaz','Osado']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de FELIZ?',ans:'Alegre',opts:['Triste','Enfadado','Alegre','Aburrido']},
-  {tp:'ant',q:'¿Cuál es el antónimo de LLENO?',ans:'Vacío',opts:['Repleto','Colmado','Vacío','Completo']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de MIRAR?',ans:'Observar',opts:['Observar','Escuchar','Oler','Tocar']},
-  {tp:'ant',q:'¿Cuál es el antónimo de EMPEZAR?',ans:'Terminar',opts:['Iniciar','Comenzar','Terminar','Continuar']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de AMIGO?',ans:'Compañero',opts:['Enemigo','Compañero','Extraño','Rival']},
-  {tp:'ant',q:'¿Cuál es el antónimo de SUBIR?',ans:'Bajar',opts:['Subir','Bajar','Correr','Andar']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de DIFÍCIL?',ans:'Complicado',opts:['Fácil','Sencillo','Complicado','Simple']},
-  {tp:'ant',q:'¿Cuál es el antónimo de RICO?',ans:'Pobre',opts:['Adinerado','Pobre','Millonario','Acaudalado']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de PEQUEÑO?',ans:'Diminuto',opts:['Enorme','Gigante','Diminuto','Amplio']},
-  {tp:'ant',q:'¿Cuál es el antónimo de FUERTE?',ans:'Débil',opts:['Robusto','Potente','Débil','Firme']},
-  {tp:'sin',q:'¿Cuál es un sinónimo de TRISTE?',ans:'Apenado',opts:['Feliz','Apenado','Contento','Alegre']},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de RÁPIDO?","ans":"Veloz","opts":["Lento","Veloz","Grande","Frío"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ALEGRE?","ans":"Triste","opts":["Feliz","Contento","Triste","Animado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de BONITO?","ans":"Hermoso","opts":["Feo","Horrible","Hermoso","Oscuro"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de GRANDE?","ans":"Pequeño","opts":["Enorme","Gigante","Pequeño","Amplio"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CAMINAR?","ans":"Andar","opts":["Correr","Andar","Saltar","Volar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CALIENTE?","ans":"Frío","opts":["Cálido","Tibio","Frío","Ardiente"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CONTENTO?","ans":"Feliz","opts":["Triste","Enfadado","Feliz","Aburrido"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DÍA?","ans":"Noche","opts":["Tarde","Amanecer","Noche","Mediodía"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ENORME?","ans":"Gigante","opts":["Pequeño","Gigante","Minúsculo","Mediano"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de FÁCIL?","ans":"Difícil","opts":["Sencillo","Simple","Difícil","Cómodo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de INTELIGENTE?","ans":"Listo","opts":["Tonto","Listo","Torpe","Descuidado"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de LIMPIO?","ans":"Sucio","opts":["Ordenado","Pulcro","Sucio","Aseado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de MIEDO?","ans":"Terror","opts":["Valor","Terror","Alegría","Calma"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ENCENDER?","ans":"Apagar","opts":["Iluminar","Calentar","Prender","Apagar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de COMER?","ans":"Ingerir","opts":["Beber","Ingerir","Correr","Dormir"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ARRIBA?","ans":"Abajo","opts":["Encima","Cerca","Abajo","Lejos"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de HERMOSO?","ans":"Bonito","opts":["Feo","Bonito","Extraño","Raro"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ABRIR?","ans":"Cerrar","opts":["Empujar","Cerrar","Tirar","Romper"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de VELOZ?","ans":"Rápido","opts":["Lento","Rápido","Pesado","Suave"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de VALIENTE?","ans":"Cobarde","opts":["Fuerte","Cobarde","Audaz","Osado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de FELIZ?","ans":"Alegre","opts":["Triste","Enfadado","Alegre","Aburrido"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de LLENO?","ans":"Vacío","opts":["Repleto","Colmado","Vacío","Completo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de MIRAR?","ans":"Observar","opts":["Observar","Escuchar","Oler","Tocar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de EMPEZAR?","ans":"Terminar","opts":["Iniciar","Comenzar","Terminar","Continuar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de AMIGO?","ans":"Compañero","opts":["Enemigo","Compañero","Extraño","Rival"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de SUBIR?","ans":"Bajar","opts":["Escalar","Bajar","Correr","Andar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de DIFÍCIL?","ans":"Complicado","opts":["Fácil","Sencillo","Complicado","Simple"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de RICO?","ans":"Pobre","opts":["Adinerado","Pobre","Millonario","Acaudalado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de PEQUEÑO?","ans":"Diminuto","opts":["Enorme","Gigante","Diminuto","Amplio"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de FUERTE?","ans":"Débil","opts":["Robusto","Potente","Débil","Firme"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de TRISTE?","ans":"Apenado","opts":["Feliz","Apenado","Contento","Alegre"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de FEO?","ans":"Horrible","opts":["Bonito","Horrible","Grande","Suave"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de ANCHO?","ans":"Estrecho","opts":["Largo","Estrecho","Corto","Grueso"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de BUENO?","ans":"Estupendo","opts":["Malo","Estupendo","Triste","Lento"]},
@@ -1929,8 +1961,7 @@ const sinanQ=[
   {"tp":"sin","q":"¿Cuál es un sinónimo de GRITAR?","ans":"Chillar","opts":["Susurrar","Chillar","Callar","Dormir"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de CERCA?","ans":"Lejos","opts":["Aquí","Lejos","Dentro","Encima"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de AYUDAR?","ans":"Colaborar","opts":["Colaborar","Pelear","Esconder","Correr"]},
-  {"tp":"ant","q":"¿Cuál es el antónimo de DULCE?","ans":"Salado","opts":["Rico","Salado","Frío","Blando"]},
-
+  {"tp":"ant","q":"¿Cuál es el antónimo de DULCE?","ans":"Amargo","opts":["Rico","Amargo","Frío","Blando"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de GENEROSO?","ans":"Desprendido","opts":["Egoísta","Desprendido","Tacaño","Perezoso"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de HONESTO?","ans":"Mentiroso","opts":["Sincero","Mentiroso","Amable","Valiente"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de CURIOSO?","ans":"Preguntón","opts":["Aburrido","Preguntón","Tímido","Cansado"]},
@@ -1940,16 +1971,834 @@ const sinanQ=[
   {"tp":"sin","q":"¿Cuál es un sinónimo de ABUNDANTE?","ans":"Numeroso","opts":["Escaso","Numeroso","Pequeño","Vacío"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de ESCASO?","ans":"Abundante","opts":["Poco","Abundante","Raro","Difícil"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de TÍMIDO?","ans":"Vergonzoso","opts":["Valiente","Vergonzoso","Alegre","Fuerte"]},
-  {"tp":"ant","q":"¿Cuál es el antónimo de ATREVIDO?","ans":"Cobarde","opts":["Valiente","Cobarde","Curioso","Amable"]}
-,
+  {"tp":"ant","q":"¿Cuál es el antónimo de ATREVIDO?","ans":"Cobarde","opts":["Valiente","Cobarde","Curioso","Amable"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de JUSTO?","ans":"Equitativo","opts":["Injusto","Equitativo","Cruel","Parcial"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de AMABLE?","ans":"Grosero","opts":["Simpático","Grosero","Educado","Alegre"]},
-  {"tp":"sin","q":"¿Cuál es un sinónimo de ORDENADO?","ans":"Meticuloso","opts":["Desordenado","Meticuloso","Sucio","Rápido"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ORDENADO?","ans":"Organizado","opts":["Desordenado","Organizado","Sucio","Rápido"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de TRANQUILO?","ans":"Nervioso","opts":["Calmado","Nervioso","Feliz","Cansado"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de VIEJO (para una persona)?","ans":"Anciano","opts":["Joven","Anciano","Fuerte","Bajo"]},
   {"tp":"ant","q":"¿Cuál es el antónimo de CLARO?","ans":"Oscuro","opts":["Brillante","Oscuro","Transparente","Limpio"]},
   {"tp":"sin","q":"¿Cuál es un sinónimo de PODEROSO?","ans":"Fuerte","opts":["Débil","Fuerte","Pequeño","Lento"]},
-  {"tp":"ant","q":"¿Cuál es el antónimo de EDUCADO?","ans":"Maleducado","opts":["Amable","Maleducado","Simpático","Cortés"]}
+  {"tp":"ant","q":"¿Cuál es el antónimo de EDUCADO?","ans":"Maleducado","opts":["Amable","Maleducado","Simpático","Cortés"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CASA?","ans":"Hogar","opts":["Hogar","Calle","Jardín","Escuela"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de COCHE?","ans":"Automóvil","opts":["Automóvil","Bicicleta","Tren","Avión"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de NIÑO?","ans":"Chaval","opts":["Chaval","Anciano","Adulto","Maestro"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de MAESTRO?","ans":"Profesor","opts":["Profesor","Alumno","Médico","Vecino"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ENFADADO?","ans":"Enojado","opts":["Enojado","Tranquilo","Dormido","Contento"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de PRINCIPIO?","ans":"Comienzo","opts":["Comienzo","Final","Mitad","Premio"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de FIN?","ans":"Final","opts":["Final","Inicio","Medio","Duda"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de COMENZAR?","ans":"Iniciar","opts":["Iniciar","Acabar","Parar","Esperar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de TERMINAR?","ans":"Acabar","opts":["Acabar","Empezar","Mirar","Dudar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CAMINO?","ans":"Sendero","opts":["Sendero","Montaña","Río","Puente"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de REGALO?","ans":"Obsequio","opts":["Obsequio","Castigo","Deuda","Tarea"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de HABLAR?","ans":"Conversar","opts":["Conversar","Callar","Escuchar","Dormir"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de BARATO?","ans":"Económico","opts":["Económico","Caro","Valioso","Lujoso"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CARO?","ans":"Costoso","opts":["Costoso","Barato","Gratis","Rebajado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de SILENCIOSO?","ans":"Callado","opts":["Callado","Ruidoso","Alegre","Rápido"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de RUIDOSO?","ans":"Bullicioso","opts":["Bullicioso","Callado","Tranquilo","Pequeño"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de LARGO?","ans":"Extenso","opts":["Extenso","Corto","Ancho","Bajo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CORTO?","ans":"Breve","opts":["Breve","Largo","Lento","Pesado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de LENTO?","ans":"Pausado","opts":["Pausado","Rápido","Veloz","Ligero"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de GRANDE?","ans":"Inmenso","opts":["Inmenso","Diminuto","Escaso","Débil"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de LUGAR?","ans":"Sitio","opts":["Sitio","Tiempo","Objeto","Persona"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de COMPRAR?","ans":"Adquirir","opts":["Adquirir","Vender","Regalar","Perder"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ENTENDER?","ans":"Comprender","opts":["Comprender","Ignorar","Olvidar","Dudar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ESCONDER?","ans":"Ocultar","opts":["Ocultar","Mostrar","Buscar","Encontrar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de PELEA?","ans":"Riña","opts":["Riña","Paz","Juego","Abrazo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de MENTIR?","ans":"Engañar","opts":["Engañar","Confesar","Ayudar","Perdonar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de VALIENTE?","ans":"Audaz","opts":["Audaz","Cobarde","Débil","Aburrido"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de SALTAR?","ans":"Brincar","opts":["Brincar","Arrastrarse","Dormir","Sentarse"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de PERRO?","ans":"Can","opts":["Can","Gato","Pájaro","Pez"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de VELOCIDAD?","ans":"Rapidez","opts":["Rapidez","Lentitud","Altura","Fuerza"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CANSADO?","ans":"Agotado","opts":["Agotado","Descansado","Despierto","Contento"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de DELGADO?","ans":"Flaco","opts":["Flaco","Grueso","Ancho","Fuerte"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de SABROSO?","ans":"Delicioso","opts":["Delicioso","Asqueroso","Amargo","Crudo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de HUIR?","ans":"Escapar","opts":["Escapar","Quedarse","Perseguir","Atrapar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de DESCANSAR?","ans":"Reposar","opts":["Reposar","Trabajar","Correr","Estudiar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de AMABLE?","ans":"Cordial","opts":["Cordial","Grosero","Rudo","Enfadado"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de TRABAJADOR?","ans":"Laborioso","opts":["Laborioso","Vago","Perezoso","Dormilón"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de ASUSTAR?","ans":"Espantar","opts":["Espantar","Calmar","Alegrar","Abrazar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de PERMITIR?","ans":"Autorizar","opts":["Autorizar","Prohibir","Negar","Impedir"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de IDIOMA?","ans":"Lengua","opts":["Lengua","Número","Palabra","Dibujo"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de CRUZAR?","ans":"Atravesar","opts":["Atravesar","Rodear","Detener","Esquivar"]},
+  {"tp":"sin","q":"¿Cuál es un sinónimo de LANZAR?","ans":"Arrojar","opts":["Arrojar","Atrapar","Recoger","Guardar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ALTO?","ans":"Bajo","opts":["Bajo","Enorme","Largo","Grueso"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de LARGO?","ans":"Corto","opts":["Corto","Alto","Ancho","Grande"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de RÁPIDO?","ans":"Lento","opts":["Lento","Veloz","Ágil","Ligero"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de GRUESO?","ans":"Delgado","opts":["Delgado","Pesado","Largo","Hondo"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DURO?","ans":"Blando","opts":["Blando","Fuerte","Pesado","Seco"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de LIGERO?","ans":"Pesado","opts":["Pesado","Suave","Rápido","Fino"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de SECO?","ans":"Mojado","opts":["Mojado","Duro","Caliente","Limpio"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de NUEVO?","ans":"Viejo","opts":["Viejo","Moderno","Limpio","Brillante"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de JOVEN?","ans":"Anciano","opts":["Anciano","Pequeño","Alegre","Bonito"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de AMIGO?","ans":"Enemigo","opts":["Enemigo","Compañero","Vecino","Hermano"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de VERDAD?","ans":"Mentira","opts":["Mentira","Realidad","Duda","Secreto"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de GANAR?","ans":"Perder","opts":["Perder","Competir","Jugar","Correr"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DORMIR?","ans":"Despertar","opts":["Despertar","Soñar","Descansar","Cansarse"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ENTRAR?","ans":"Salir","opts":["Salir","Pasar","Llegar","Volver"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de LLEGAR?","ans":"Marcharse","opts":["Marcharse","Venir","Entrar","Volver"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de COMPRAR?","ans":"Vender","opts":["Vender","Pagar","Cambiar","Ganar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de PREGUNTAR?","ans":"Responder","opts":["Responder","Hablar","Escribir","Dudar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de AMAR?","ans":"Odiar","opts":["Odiar","Querer","Cuidar","Abrazar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de REÍR?","ans":"Llorar","opts":["Llorar","Sonreír","Cantar","Gritar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ANTES?","ans":"Después","opts":["Después","Ayer","Siempre","Nunca"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de SIEMPRE?","ans":"Nunca","opts":["Nunca","A veces","Hoy","Casi"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DENTRO?","ans":"Fuera","opts":["Fuera","Cerca","Encima","Detrás"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ENCIMA?","ans":"Debajo","opts":["Debajo","Dentro","Delante","Lejos"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DELANTE?","ans":"Detrás","opts":["Detrás","Encima","Dentro","Cerca"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de IZQUIERDA?","ans":"Derecha","opts":["Derecha","Arriba","Abajo","Centro"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de NORTE?","ans":"Sur","opts":["Sur","Este","Oeste","Arriba"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de PRIMERO?","ans":"Último","opts":["Último","Segundo","Tercero","Siguiente"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de MUCHO?","ans":"Poco","opts":["Poco","Bastante","Demasiado","Todos"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CARO?","ans":"Barato","opts":["Barato","Valioso","Rico","Costoso"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de RUIDOSO?","ans":"Silencioso","opts":["Silencioso","Alegre","Fuerte","Rápido"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de SUAVE?","ans":"Áspero","opts":["Áspero","Blando","Ligero","Fino"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de AMARGO?","ans":"Dulce","opts":["Dulce","Ácido","Duro","Frío"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de PERMITIR?","ans":"Prohibir","opts":["Prohibir","Autorizar","Dejar","Aceptar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de OBEDECER?","ans":"Desobedecer","opts":["Desobedecer","Cumplir","Escuchar","Respetar"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CAPAZ?","ans":"Incapaz","opts":["Incapaz","Hábil","Listo","Fuerte"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de POSIBLE?","ans":"Imposible","opts":["Imposible","Probable","Seguro","Fácil"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CORRECTO?","ans":"Incorrecto","opts":["Incorrecto","Cierto","Bueno","Exacto"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de VISIBLE?","ans":"Invisible","opts":["Invisible","Claro","Grande","Brillante"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de ÚTIL?","ans":"Inútil","opts":["Inútil","Práctico","Necesario","Valioso"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de VERANO?","ans":"Invierno","opts":["Invierno","Primavera","Otoño","Calor"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de HUMILDE?","ans":"Orgulloso","opts":["Orgulloso","Pobre","Sencillo","Amable"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de TRABAJADOR?","ans":"Vago","opts":["Vago","Laborioso","Cansado","Fuerte"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de SEGURO?","ans":"Peligroso","opts":["Peligroso","Firme","Cerrado","Cierto"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de NATURAL?","ans":"Artificial","opts":["Artificial","Verde","Fresco","Limpio"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de VERTICAL?","ans":"Horizontal","opts":["Horizontal","Recto","Alto","Curvo"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de CURVO?","ans":"Recto","opts":["Recto","Redondo","Torcido","Largo"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de EXTERIOR?","ans":"Interior","opts":["Interior","Externo","Lateral","Cercano"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de MAYOR?","ans":"Menor","opts":["Menor","Grande","Más","Primero"]},
+  {"tp":"ant","q":"¿Cuál es el antónimo de DESPEGAR?","ans":"Aterrizar","opts":["Aterrizar","Volar","Subir","Salir"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de BONITO?","ans":"Feo","opts":["Feo","Hermoso","Lindo","Precioso"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de GRANDE?","ans":"Diminuto","opts":["Diminuto","Enorme","Inmenso","Gigante"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de CONTENTO?","ans":"Enfadado","opts":["Enfadado","Alegre","Feliz","Dichoso"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de RÁPIDO?","ans":"Lento","opts":["Lento","Veloz","Ligero","Presto"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de MIRAR?","ans":"Oír","opts":["Oír","Observar","Contemplar","Ver"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de COMENZAR?","ans":"Terminar","opts":["Terminar","Iniciar","Empezar","Arrancar"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de HABLAR?","ans":"Callar","opts":["Callar","Conversar","Charlar","Decir"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de MIEDO?","ans":"Valentía","opts":["Valentía","Temor","Pavor","Terror"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de TRISTE?","ans":"Contento","opts":["Contento","Apenado","Afligido","Melancólico"]},
+  {"tp":"sin","q":"¿Qué palabra NO es sinónimo de ANDAR?","ans":"Quedarse","opts":["Quedarse","Caminar","Marchar","Pasear"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Alto – Bajo","opts":["Alto – Bajo","Frío – Helado","Grande – Enorme","Feliz – Alegre"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Limpio – Sucio","opts":["Limpio – Sucio","Rápido – Veloz","Bonito – Hermoso","Fácil – Sencillo"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Entrar – Salir","opts":["Entrar – Salir","Comprar – Adquirir","Hablar – Conversar","Mirar – Observar"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Valiente – Cobarde","opts":["Valiente – Cobarde","Pequeño – Diminuto","Contento – Feliz","Camino – Sendero"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Ganar – Perder","opts":["Ganar – Perder","Empezar – Comenzar","Rápido – Veloz","Mirar – Ver"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Día – Noche","opts":["Día – Noche","Casa – Hogar","Coche – Automóvil","Mentir – Engañar"]},
+  {"tp":"ant","q":"¿Qué pareja de palabras son ANTÓNIMOS?","ans":"Abrir – Cerrar","opts":["Abrir – Cerrar","Subir – Ascender","Ayudar – Colaborar","Terminar – Acabar"]},
+  {"tp":"sin","q":"¿Qué pareja de palabras son SINÓNIMOS?","ans":"Feliz – Alegre","opts":["Feliz – Alegre","Alto – Bajo","Día – Noche","Frío – Caliente"]},
+  {"tp":"sin","q":"¿Qué pareja de palabras son SINÓNIMOS?","ans":"Hablar – Conversar","opts":["Hablar – Conversar","Entrar – Salir","Ganar – Perder","Abrir – Cerrar"]},
+  {"tp":"sin","q":"¿Qué pareja de palabras son SINÓNIMOS?","ans":"Comenzar – Iniciar","opts":["Comenzar – Iniciar","Limpio – Sucio","Lleno – Vacío","Fácil – Difícil"]},
+  {"tp":"sin","q":"¿Qué pareja de palabras son SINÓNIMOS?","ans":"Bonito – Hermoso","opts":["Bonito – Hermoso","Grande – Pequeño","Rápido – Lento","Dulce – Amargo"]},
+  {"tp":"sin","q":"¿Qué pareja de palabras son SINÓNIMOS?","ans":"Amigo – Compañero","opts":["Amigo – Compañero","Subir – Bajar","Empezar – Terminar","Ancho – Estrecho"]},
+  {"tp":"sin","q":"¿Qué pareja de palabras son SINÓNIMOS?","ans":"Terminar – Acabar","opts":["Terminar – Acabar","Valiente – Cobarde","Antes – Después","Dentro – Fuera"]}
+];
+const sylW=[
+  {"h": "ca-sa", "d": "easy"},
+  {"h": "me-sa", "d": "easy"},
+  {"h": "ga-to", "d": "easy"},
+  {"h": "lu-na", "d": "easy"},
+  {"h": "ma-no", "d": "easy"},
+  {"h": "pe-lo-ta", "d": "easy"},
+  {"h": "ven-ta-na", "d": "easy"},
+  {"h": "ca-mi-no", "d": "easy"},
+  {"h": "ma-ri-po-sa", "d": "easy"},
+  {"h": "e-le-fan-te", "d": "easy"},
+  {"h": "cho-co-la-te", "d": "easy"},
+  {"h": "za-pa-to", "d": "easy"},
+  {"h": "co-ci-na", "d": "easy"},
+  {"h": "to-ma-te", "d": "easy"},
+  {"h": "bi-ci-cle-ta", "d": "easy"},
+  {"h": "es-ca-le-ra", "d": "easy"},
+  {"h": "te-lé-fo-no", "d": "easy"},
+  {"h": "na-ran-ja", "d": "easy"},
+  {"h": "mon-ta-ña", "d": "easy"},
+  {"h": "ca-rre-te-ra", "d": "easy"},
+  {"h": "ca-ba-llo", "d": "easy"},
+  {"h": "ga-lli-na", "d": "easy"},
+  {"h": "mu-ñe-ca", "d": "easy"},
+  {"h": "som-bre-ro", "d": "easy"},
+  {"h": "hor-mi-ga", "d": "easy"},
+  {"h": "or-de-na-dor", "d": "easy"},
+  {"h": "mo-chi-la", "d": "easy"},
+  {"h": "lám-pa-ra", "d": "easy"},
+  {"h": "plá-ta-no", "d": "easy"},
+  {"h": "pan-ta-lón", "d": "easy"},
+  {"h": "tor-tu-ga", "d": "easy"},
+  {"h": "ra-tón", "d": "easy"},
+  {"h": "ji-ra-fa", "d": "easy"},
+  {"h": "del-fín", "d": "easy"},
+  {"h": "co-me-ta", "d": "easy"},
+  {"h": "cas-ti-llo", "d": "easy"},
+  {"h": "he-la-do", "d": "easy"},
+  {"h": "pa-ya-so", "d": "easy"},
+  {"h": "a-yu-dar", "d": "easy"},
+  {"h": "pi-za-rra", "d": "easy"},
+  {"h": "car-te-ra", "d": "easy"},
+  {"h": "ven-ti-la-dor", "d": "easy"},
+  {"h": "pe-ga-men-to", "d": "easy"},
+  {"h": "ti-je-ras", "d": "easy"},
+  {"h": "a-ma-ri-llo", "d": "easy"},
+  {"h": "man-te-qui-lla", "d": "easy"},
+  {"h": "gui-ta-rra", "d": "easy"},
+  {"h": "ri-no-ce-ron-te", "d": "easy"},
+  {"h": "hi-po-pó-ta-mo", "d": "easy"},
+  {"h": "co-co-dri-lo", "d": "easy"},
+  {"h": "pin-güi-no", "d": "easy"},
+  {"h": "pá-ja-ro", "d": "easy"},
+  {"h": "pri-ma-ve-ra", "d": "easy"},
+  {"h": "ca-ma-re-ro", "d": "easy"},
+  {"h": "pe-rro", "d": "easy"},
+  {"h": "ca-rro", "d": "easy"},
+  {"h": "co-che", "d": "easy"},
+  {"h": "ca-lle", "d": "easy"},
+  {"h": "mu-cha-cho", "d": "easy"},
+  {"h": "gue-rra", "d": "easy"},
+  {"h": "que-so", "d": "easy"},
+  {"h": "lá-piz", "d": "easy"},
+  {"h": "ár-bol", "d": "easy"},
+  {"h": "a-vión", "d": "easy"},
+  {"h": "pa-pel", "d": "easy"},
+  {"h": "cu-chi-llo", "d": "easy"},
+  {"h": "bo-te-lla", "d": "easy"},
+  {"h": "mo-ne-da", "d": "easy"},
+  {"h": "pa-to", "d": "easy"},
+  {"h": "ro-pa", "d": "easy"},
+  {"h": "ciu-dad", "d": "hard"},
+  {"h": "pei-ne", "d": "hard"},
+  {"h": "ai-re", "d": "hard"},
+  {"h": "cua-der-no", "d": "hard"},
+  {"h": "es-cue-la", "d": "hard"},
+  {"h": "puen-te", "d": "hard"},
+  {"h": "a-bue-lo", "d": "hard"},
+  {"h": "mur-cié-la-go", "d": "hard"},
+  {"h": "bi-blio-te-ca", "d": "hard"},
+  {"h": "ins-tru-men-to", "d": "hard"},
+  {"h": "trans-por-te", "d": "hard"},
+  {"h": "cons-truir", "d": "hard"},
+  {"h": "Ma-rí-a", "d": "hard"},
+  {"h": "pa-ís", "d": "hard"},
+  {"h": "re-ír", "d": "hard"},
+  {"h": "Ra-úl", "d": "hard"},
+  {"h": "ca-í-da", "d": "hard"},
+  {"h": "hé-ro-e", "d": "hard"},
+  {"h": "te-a-tro", "d": "hard"},
+  {"h": "po-e-ta", "d": "hard"},
+  {"h": "le-er", "d": "hard"},
+  {"h": "o-a-sis", "d": "hard"},
+  {"h": "ca-ca-hue-te", "d": "hard"},
+  {"h": "hie-lo", "d": "hard"},
+  {"h": "guan-te", "d": "hard"},
+  {"h": "rui-do", "d": "hard"},
+  {"h": "boi-na", "d": "hard"},
+  {"h": "es-tu-diar", "d": "hard"},
+  {"h": "cui-da-do", "d": "hard"},
+  {"h": "Pa-ra-guay", "d": "hard"},
+  {"h": "es-tu-diáis", "d": "hard"},
+  {"h": "a-bra-zo", "d": "hard"},
+  {"h": "ti-gre", "d": "hard"},
+  {"h": "pla-to", "d": "hard"},
+  {"h": "blan-co", "d": "hard"},
+  {"h": "cru-zar", "d": "hard"},
+  {"h": "fle-cha", "d": "hard"},
+  {"h": "glo-bo", "d": "hard"},
+  {"h": "dra-ma", "d": "hard"},
+  {"h": "in-glés", "d": "hard"},
+  {"h": "so-bri-no", "d": "hard"},
+  {"h": "cum-bre", "d": "hard"},
+  {"h": "hom-bro", "d": "hard"},
+  {"h": "al-fom-bra", "d": "hard"},
+  {"h": "com-pra", "d": "hard"},
+  {"h": "ar-bus-to", "d": "hard"},
+  {"h": "cos-tum-bre", "d": "hard"},
+  {"h": "obs-tá-cu-lo", "d": "hard"},
+  {"h": "ins-tan-te", "d": "hard"},
+  {"h": "pers-pec-ti-va", "d": "hard"},
+  {"h": "a-pren-der", "d": "hard"},
+  {"h": "bai-la-rín", "d": "hard"},
+  {"h": "u-ni-ver-si-dad", "d": "hard"},
+  {"h": "ge-o-gra-fí-a", "d": "hard"},
+  {"h": "bio-lo-gí-a", "d": "hard"},
+  {"h": "e-ner-gí-a", "d": "hard"},
+  {"h": "cien-tí-fi-co", "d": "hard"},
+  {"h": "len-gua", "d": "hard"},
+  {"h": "a-gua", "d": "hard"},
+  {"h": "cie-lo", "d": "hard"},
+  {"h": "pie-dra", "d": "hard"},
+  {"h": "fue-go", "d": "hard"},
+  {"h": "cuen-to", "d": "hard"},
+  {"h": "vien-to", "d": "hard"},
+  {"h": "sie-te", "d": "hard"},
+  {"h": "nue-ve", "d": "hard"},
+  {"h": "cien-to", "d": "hard"},
+  {"h": "es-drú-ju-la", "d": "hard"},
+  {"h": "mons-truo", "d": "hard"},
+  {"h": "abs-trac-to", "d": "hard"},
+  {"h": "ins-pec-tor", "d": "hard"},
+  {"h": "ex-cur-sión", "d": "hard"},
+  {"h": "ca-len-da-rio", "d": "hard"},
+  {"h": "za-na-ho-ria", "d": "hard"},
+  {"h": "pro-hi-bir", "d": "hard"},
+  {"h": "co-he-te", "d": "hard"},
+  {"h": "li-bre-rí-a", "d": "hard"},
+  {"h": "pa-ra-guas", "d": "hard"},
+  {"h": "can-ción", "d": "hard"},
+  {"h": "es-ta-ción", "d": "hard"},
+  {"h": "pe-lí-cu-la", "d": "hard"}
+];
+const sylcQ=[
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «casa»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "ca-sa → 2 sílabas", "k": "casa"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «mesa»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "me-sa → 2 sílabas", "k": "mesa"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «gato»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "ga-to → 2 sílabas", "k": "gato"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «luna»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "lu-na → 2 sílabas", "k": "luna"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «mano»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "ma-no → 2 sílabas", "k": "mano"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pelota»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "pe-lo-ta → 3 sílabas", "k": "pelota"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ventana»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "ven-ta-na → 3 sílabas", "k": "ventana"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «camino»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "ca-mi-no → 3 sílabas", "k": "camino"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «mariposa»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "ma-ri-po-sa → 4 sílabas", "k": "mariposa"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «elefante»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "e-le-fan-te → 4 sílabas", "k": "elefante"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «chocolate»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "cho-co-la-te → 4 sílabas", "k": "chocolate"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «zapato»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "za-pa-to → 3 sílabas", "k": "zapato"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cocina»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "co-ci-na → 3 sílabas", "k": "cocina"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «tomate»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "to-ma-te → 3 sílabas", "k": "tomate"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «bicicleta»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "6 sílabas"], "fact": "bi-ci-cle-ta → 4 sílabas", "k": "bicicleta"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «escalera»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "es-ca-le-ra → 4 sílabas", "k": "escalera"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «teléfono»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "te-lé-fo-no → 4 sílabas", "k": "teléfono"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «naranja»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "na-ran-ja → 3 sílabas", "k": "naranja"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «montaña»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "mon-ta-ña → 3 sílabas", "k": "montaña"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «carretera»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "ca-rre-te-ra → 4 sílabas", "k": "carretera"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «caballo»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "ca-ba-llo → 3 sílabas", "k": "caballo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «gallina»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "ga-lli-na → 3 sílabas", "k": "gallina"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «muñeca»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "mu-ñe-ca → 3 sílabas", "k": "muñeca"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «sombrero»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "som-bre-ro → 3 sílabas", "k": "sombrero"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «hormiga»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "hor-mi-ga → 3 sílabas", "k": "hormiga"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ordenador»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "or-de-na-dor → 4 sílabas", "k": "ordenador"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «mochila»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "mo-chi-la → 3 sílabas", "k": "mochila"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «lámpara»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "lám-pa-ra → 3 sílabas", "k": "lámpara"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «plátano»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "plá-ta-no → 3 sílabas", "k": "plátano"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pantalón»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "pan-ta-lón → 3 sílabas", "k": "pantalón"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «tortuga»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "tor-tu-ga → 3 sílabas", "k": "tortuga"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ratón»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "ra-tón → 2 sílabas", "k": "ratón"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «jirafa»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "ji-ra-fa → 3 sílabas", "k": "jirafa"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «delfín»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "del-fín → 2 sílabas", "k": "delfín"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cometa»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "co-me-ta → 3 sílabas", "k": "cometa"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «castillo»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "cas-ti-llo → 3 sílabas", "k": "castillo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «helado»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "he-la-do → 3 sílabas", "k": "helado"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «payaso»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "pa-ya-so → 3 sílabas", "k": "payaso"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ayudar»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "a-yu-dar → 3 sílabas", "k": "ayudar"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pizarra»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "pi-za-rra → 3 sílabas", "k": "pizarra"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cartera»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "car-te-ra → 3 sílabas", "k": "cartera"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ventilador»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "ven-ti-la-dor → 4 sílabas", "k": "ventilador"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pegamento»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "pe-ga-men-to → 4 sílabas", "k": "pegamento"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «tijeras»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "ti-je-ras → 3 sílabas", "k": "tijeras"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «amarillo»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "a-ma-ri-llo → 4 sílabas", "k": "amarillo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «mantequilla»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "man-te-qui-lla → 4 sílabas", "k": "mantequilla"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «guitarra»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "gui-ta-rra → 3 sílabas", "k": "guitarra"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «rinoceronte»?", "ans": "5 sílabas", "opts": ["5 sílabas", "4 sílabas", "6 sílabas", "7 sílabas"], "fact": "ri-no-ce-ron-te → 5 sílabas", "k": "rinoceronte"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «hipopótamo»?", "ans": "5 sílabas", "opts": ["5 sílabas", "6 sílabas", "4 sílabas", "7 sílabas"], "fact": "hi-po-pó-ta-mo → 5 sílabas", "k": "hipopótamo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cocodrilo»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "co-co-dri-lo → 4 sílabas", "k": "cocodrilo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pingüino»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "pin-güi-no → 3 sílabas", "k": "pingüino"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pájaro»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "pá-ja-ro → 3 sílabas", "k": "pájaro"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «primavera»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "pri-ma-ve-ra → 4 sílabas", "k": "primavera"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «camarero»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "ca-ma-re-ro → 4 sílabas", "k": "camarero"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «perro»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "pe-rro → 2 sílabas", "k": "perro"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «carro»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "ca-rro → 2 sílabas", "k": "carro"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «coche»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "co-che → 2 sílabas", "k": "coche"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «calle»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "ca-lle → 2 sílabas", "k": "calle"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «muchacho»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "mu-cha-cho → 3 sílabas", "k": "muchacho"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «guerra»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "gue-rra → 2 sílabas", "k": "guerra"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «queso»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "que-so → 2 sílabas", "k": "queso"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «lápiz»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "lá-piz → 2 sílabas", "k": "lápiz"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «árbol»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "ár-bol → 2 sílabas", "k": "árbol"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «avión»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "a-vión → 2 sílabas", "k": "avión"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «papel»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "pa-pel → 2 sílabas", "k": "papel"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cuchillo»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "cu-chi-llo → 3 sílabas", "k": "cuchillo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «botella»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "bo-te-lla → 3 sílabas", "k": "botella"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «moneda»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "mo-ne-da → 3 sílabas", "k": "moneda"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «pato»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "pa-to → 2 sílabas", "k": "pato"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ropa»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "ro-pa → 2 sílabas", "k": "ropa"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ciudad»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "ciu-dad → 2 sílabas", "k": "ciudad"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «peine»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "pei-ne → 2 sílabas", "k": "peine"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «aire»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "ai-re → 2 sílabas", "k": "aire"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cuaderno»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "cua-der-no → 3 sílabas", "k": "cuaderno"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «escuela»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "es-cue-la → 3 sílabas", "k": "escuela"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «puente»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "puen-te → 2 sílabas", "k": "puente"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «abuelo»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "a-bue-lo → 3 sílabas", "k": "abuelo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «murciélago»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "mur-cié-la-go → 4 sílabas", "k": "murciélago"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «biblioteca»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "bi-blio-te-ca → 4 sílabas", "k": "biblioteca"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «instrumento»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "ins-tru-men-to → 4 sílabas", "k": "instrumento"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «transporte»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "trans-por-te → 3 sílabas", "k": "transporte"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «construir»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "cons-truir → 2 sílabas", "k": "construir"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «extraordinario»?", "ans": "6 sílabas", "opts": ["6 sílabas", "5 sílabas", "7 sílabas", "4 sílabas"], "fact": "ex-tra-or-di-na-rio → 6 sílabas", "k": "extraordinario"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «María»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "Ma-rí-a → 3 sílabas", "k": "María"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «país»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "pa-ís → 2 sílabas", "k": "país"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «reír»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "re-ír → 2 sílabas", "k": "reír"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «Raúl»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "Ra-úl → 2 sílabas", "k": "Raúl"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «caída»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "ca-í-da → 3 sílabas", "k": "caída"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «héroe»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "hé-ro-e → 3 sílabas", "k": "héroe"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «teatro»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "te-a-tro → 3 sílabas", "k": "teatro"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «poeta»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "po-e-ta → 3 sílabas", "k": "poeta"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «leer»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "le-er → 2 sílabas", "k": "leer"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «oasis»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "o-a-sis → 3 sílabas", "k": "oasis"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cacahuete»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "ca-ca-hue-te → 4 sílabas", "k": "cacahuete"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «hielo»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "hie-lo → 2 sílabas", "k": "hielo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «guante»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "guan-te → 2 sílabas", "k": "guante"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ruido»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "rui-do → 2 sílabas", "k": "ruido"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «boina»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "boi-na → 2 sílabas", "k": "boina"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «estudiar»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "es-tu-diar → 3 sílabas", "k": "estudiar"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cuidado»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "cui-da-do → 3 sílabas", "k": "cuidado"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «Paraguay»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "Pa-ra-guay → 3 sílabas", "k": "Paraguay"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «estudiáis»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "es-tu-diáis → 3 sílabas", "k": "estudiáis"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «abrazo»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "a-bra-zo → 3 sílabas", "k": "abrazo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «tigre»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "ti-gre → 2 sílabas", "k": "tigre"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «plato»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "pla-to → 2 sílabas", "k": "plato"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «blanco»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "blan-co → 2 sílabas", "k": "blanco"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cruzar»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "cru-zar → 2 sílabas", "k": "cruzar"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «flecha»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "fle-cha → 2 sílabas", "k": "flecha"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «globo»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "glo-bo → 2 sílabas", "k": "globo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «drama»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "dra-ma → 2 sílabas", "k": "drama"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «inglés»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "in-glés → 2 sílabas", "k": "inglés"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «sobrino»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "so-bri-no → 3 sílabas", "k": "sobrino"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cumbre»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "cum-bre → 2 sílabas", "k": "cumbre"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «hombro»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "hom-bro → 2 sílabas", "k": "hombro"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «alfombra»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "al-fom-bra → 3 sílabas", "k": "alfombra"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «compra»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "com-pra → 2 sílabas", "k": "compra"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «arbusto»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "ar-bus-to → 3 sílabas", "k": "arbusto"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «costumbre»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "cos-tum-bre → 3 sílabas", "k": "costumbre"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «obstáculo»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "6 sílabas"], "fact": "obs-tá-cu-lo → 4 sílabas", "k": "obstáculo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «construcción»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "cons-truc-ción → 3 sílabas", "k": "construcción"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «instante»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "ins-tan-te → 3 sílabas", "k": "instante"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «perspectiva»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "2 sílabas"], "fact": "pers-pec-ti-va → 4 sílabas", "k": "perspectiva"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «aprender»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "a-pren-der → 3 sílabas", "k": "aprender"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «bailarín»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "bai-la-rín → 3 sílabas", "k": "bailarín"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «universidad»?", "ans": "5 sílabas", "opts": ["5 sílabas", "6 sílabas", "4 sílabas", "3 sílabas"], "fact": "u-ni-ver-si-dad → 5 sílabas", "k": "universidad"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «geografía»?", "ans": "5 sílabas", "opts": ["5 sílabas", "6 sílabas", "4 sílabas", "7 sílabas"], "fact": "ge-o-gra-fí-a → 5 sílabas", "k": "geografía"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «biología»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "bio-lo-gí-a → 4 sílabas", "k": "biología"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «energía»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "e-ner-gí-a → 4 sílabas", "k": "energía"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «científico»?", "ans": "4 sílabas", "opts": ["4 sílabas", "5 sílabas", "3 sílabas", "6 sílabas"], "fact": "cien-tí-fi-co → 4 sílabas", "k": "científico"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «lengua»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "len-gua → 2 sílabas", "k": "lengua"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «agua»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "a-gua → 2 sílabas", "k": "agua"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cielo»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "cie-lo → 2 sílabas", "k": "cielo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «piedra»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "pie-dra → 2 sílabas", "k": "piedra"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «fuego»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "fue-go → 2 sílabas", "k": "fuego"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cuento»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "cuen-to → 2 sílabas", "k": "cuento"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «viento»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "vien-to → 2 sílabas", "k": "viento"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «siete»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "sie-te → 2 sílabas", "k": "siete"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «nueve»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "nue-ve → 2 sílabas", "k": "nueve"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «ciento»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "cien-to → 2 sílabas", "k": "ciento"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «esdrújula»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "es-drú-ju-la → 4 sílabas", "k": "esdrújula"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «monstruo»?", "ans": "2 sílabas", "opts": ["2 sílabas", "1 sílaba", "3 sílabas", "4 sílabas"], "fact": "mons-truo → 2 sílabas", "k": "monstruo"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «abstracto»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "abs-trac-to → 3 sílabas", "k": "abstracto"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «inspector»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "1 sílaba"], "fact": "ins-pec-tor → 3 sílabas", "k": "inspector"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «excursión»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "ex-cur-sión → 3 sílabas", "k": "excursión"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «calendario»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "ca-len-da-rio → 4 sílabas", "k": "calendario"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «zanahoria»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "6 sílabas"], "fact": "za-na-ho-ria → 4 sílabas", "k": "zanahoria"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «prohibir»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "pro-hi-bir → 3 sílabas", "k": "prohibir"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cohete»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "5 sílabas"], "fact": "co-he-te → 3 sílabas", "k": "cohete"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «cinematografía»?", "ans": "7 sílabas", "opts": ["7 sílabas", "6 sílabas", "5 sílabas", "4 sílabas"], "fact": "ci-ne-ma-to-gra-fí-a → 7 sílabas", "k": "cinematografía"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «librería»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "2 sílabas"], "fact": "li-bre-rí-a → 4 sílabas", "k": "librería"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «paraguas»?", "ans": "3 sílabas", "opts": ["3 sílabas", "4 sílabas", "2 sílabas", "5 sílabas"], "fact": "pa-ra-guas → 3 sílabas", "k": "paraguas"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «canción»?", "ans": "2 sílabas", "opts": ["2 sílabas", "3 sílabas", "1 sílaba", "4 sílabas"], "fact": "can-ción → 2 sílabas", "k": "canción"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «estación»?", "ans": "3 sílabas", "opts": ["3 sílabas", "2 sílabas", "4 sílabas", "1 sílaba"], "fact": "es-ta-ción → 3 sílabas", "k": "estación"},
+  {"cat": "count", "q": "¿Cuántas sílabas tiene «película»?", "ans": "4 sílabas", "opts": ["4 sílabas", "3 sílabas", "5 sílabas", "6 sílabas"], "fact": "pe-lí-cu-la → 4 sílabas", "k": "película"},
+  {"cat": "class", "q": "«instante» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ins-tan-te → 3 sílabas → trisílaba", "k": "instante"},
+  {"cat": "class", "q": "«perspectiva» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pers-pec-ti-va → 4 sílabas → polisílaba", "k": "perspectiva"},
+  {"cat": "class", "q": "«país» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pa-ís → 2 sílabas → bisílaba", "k": "país"},
+  {"cat": "class", "q": "«pájaro» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pá-ja-ro → 3 sílabas → trisílaba", "k": "pájaro"},
+  {"cat": "class", "q": "«calendario» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ca-len-da-rio → 4 sílabas → polisílaba", "k": "calendario"},
+  {"cat": "class", "q": "«carro» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ca-rro → 2 sílabas → bisílaba", "k": "carro"},
+  {"cat": "class", "q": "«avión» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "a-vión → 2 sílabas → bisílaba", "k": "avión"},
+  {"cat": "class", "q": "«extraordinario» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ex-tra-or-di-na-rio → 6 sílabas → polisílaba", "k": "extraordinario"},
+  {"cat": "class", "q": "«muchacho» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "mu-cha-cho → 3 sílabas → trisílaba", "k": "muchacho"},
+  {"cat": "class", "q": "«delfín» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "del-fín → 2 sílabas → bisílaba", "k": "delfín"},
+  {"cat": "class", "q": "«guerra» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "gue-rra → 2 sílabas → bisílaba", "k": "guerra"},
+  {"cat": "class", "q": "«blanco» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "blan-co → 2 sílabas → bisílaba", "k": "blanco"},
+  {"cat": "class", "q": "«esdrújula» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "es-drú-ju-la → 4 sílabas → polisílaba", "k": "esdrújula"},
+  {"cat": "class", "q": "«aprender» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "a-pren-der → 3 sílabas → trisílaba", "k": "aprender"},
+  {"cat": "class", "q": "«castillo» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "cas-ti-llo → 3 sílabas → trisílaba", "k": "castillo"},
+  {"cat": "class", "q": "«leer» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "le-er → 2 sílabas → bisílaba", "k": "leer"},
+  {"cat": "class", "q": "«héroe» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "hé-ro-e → 3 sílabas → trisílaba", "k": "héroe"},
+  {"cat": "class", "q": "«guitarra» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "gui-ta-rra → 3 sílabas → trisílaba", "k": "guitarra"},
+  {"cat": "class", "q": "«perro» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pe-rro → 2 sílabas → bisílaba", "k": "perro"},
+  {"cat": "class", "q": "«elefante» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "e-le-fan-te → 4 sílabas → polisílaba", "k": "elefante"},
+  {"cat": "class", "q": "«ventana» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ven-ta-na → 3 sílabas → trisílaba", "k": "ventana"},
+  {"cat": "class", "q": "«pantalón» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pan-ta-lón → 3 sílabas → trisílaba", "k": "pantalón"},
+  {"cat": "class", "q": "«monstruo» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "mons-truo → 2 sílabas → bisílaba", "k": "monstruo"},
+  {"cat": "class", "q": "«prohibir» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pro-hi-bir → 3 sílabas → trisílaba", "k": "prohibir"},
+  {"cat": "class", "q": "«cartera» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "car-te-ra → 3 sílabas → trisílaba", "k": "cartera"},
+  {"cat": "class", "q": "«construir» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "cons-truir → 2 sílabas → bisílaba", "k": "construir"},
+  {"cat": "class", "q": "«tortuga» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "tor-tu-ga → 3 sílabas → trisílaba", "k": "tortuga"},
+  {"cat": "class", "q": "«costumbre» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "cos-tum-bre → 3 sílabas → trisílaba", "k": "costumbre"},
+  {"cat": "class", "q": "«fuego» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "fue-go → 2 sílabas → bisílaba", "k": "fuego"},
+  {"cat": "class", "q": "«científico» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "cien-tí-fi-co → 4 sílabas → polisílaba", "k": "científico"},
+  {"cat": "class", "q": "«instrumento» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ins-tru-men-to → 4 sílabas → polisílaba", "k": "instrumento"},
+  {"cat": "class", "q": "«boina» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "boi-na → 2 sílabas → bisílaba", "k": "boina"},
+  {"cat": "class", "q": "«hielo» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "hie-lo → 2 sílabas → bisílaba", "k": "hielo"},
+  {"cat": "class", "q": "«inspector» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ins-pec-tor → 3 sílabas → trisílaba", "k": "inspector"},
+  {"cat": "class", "q": "«reír» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "re-ír → 2 sílabas → bisílaba", "k": "reír"},
+  {"cat": "class", "q": "«gallina» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ga-lli-na → 3 sílabas → trisílaba", "k": "gallina"},
+  {"cat": "class", "q": "«murciélago» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "mur-cié-la-go → 4 sílabas → polisílaba", "k": "murciélago"},
+  {"cat": "class", "q": "«estudiar» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "es-tu-diar → 3 sílabas → trisílaba", "k": "estudiar"},
+  {"cat": "class", "q": "«mano» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ma-no → 2 sílabas → bisílaba", "k": "mano"},
+  {"cat": "class", "q": "«aire» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "ai-re → 2 sílabas → bisílaba", "k": "aire"},
+  {"cat": "class", "q": "«bailarín» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "bai-la-rín → 3 sílabas → trisílaba", "k": "bailarín"},
+  {"cat": "class", "q": "«película» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "pe-lí-cu-la → 4 sílabas → polisílaba", "k": "película"},
+  {"cat": "class", "q": "«viento» es una palabra…", "ans": "bisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "vien-to → 2 sílabas → bisílaba", "k": "viento"},
+  {"cat": "class", "q": "«zapato» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "za-pa-to → 3 sílabas → trisílaba", "k": "zapato"},
+  {"cat": "class", "q": "«sobrino» es una palabra…", "ans": "trisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "so-bri-no → 3 sílabas → trisílaba", "k": "sobrino"},
+  {"cat": "class", "q": "«escalera» es una palabra…", "ans": "polisílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "es-ca-le-ra → 4 sílabas → polisílaba", "k": "escalera"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "ruido", "opts": ["ruido", "elefante", "tren", "guitarra"], "fact": "rui-do → 2 sílabas → bisílaba", "k": "ruido"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "lápiz", "opts": ["lápiz", "caída", "un", "universidad"], "fact": "lá-piz → 2 sílabas → bisílaba", "k": "lápiz"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "agua", "opts": ["agua", "bicicleta", "ventana", "pues"], "fact": "a-gua → 2 sílabas → bisílaba", "k": "agua"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "puente", "opts": ["puente", "hormiga", "cruz", "extraordinario"], "fact": "puen-te → 2 sílabas → bisílaba", "k": "puente"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "aire", "opts": ["aire", "esdrújula", "estudiáis", "vio"], "fact": "ai-re → 2 sílabas → bisílaba", "k": "aire"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "ciento", "opts": ["ciento", "zanahoria", "pelota", "voz"], "fact": "cien-to → 2 sílabas → bisílaba", "k": "ciento"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "cielo", "opts": ["cielo", "mes", "plátano", "chocolate"], "fact": "cie-lo → 2 sílabas → bisílaba", "k": "cielo"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "flecha", "opts": ["flecha", "mariposa", "pantalón", "sal"], "fact": "fle-cha → 2 sílabas → bisílaba", "k": "flecha"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es bisílaba?", "ans": "inglés", "opts": ["inglés", "pingüino", "obstáculo", "con"], "fact": "in-glés → 2 sílabas → bisílaba", "k": "inglés"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "cohete", "opts": ["cohete", "red", "guerra", "instrumento"], "fact": "co-he-te → 3 sílabas → trisílaba", "k": "cohete"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "jirafa", "opts": ["jirafa", "instrumento", "red", "globo"], "fact": "ji-ra-fa → 3 sílabas → trisílaba", "k": "jirafa"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "héroe", "opts": ["héroe", "calendario", "voz", "peine"], "fact": "hé-ro-e → 3 sílabas → trisílaba", "k": "héroe"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "sobrino", "opts": ["sobrino", "gato", "dos", "científico"], "fact": "so-bri-no → 3 sílabas → trisílaba", "k": "sobrino"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "muchacho", "opts": ["muchacho", "camarero", "miel", "cuento"], "fact": "mu-cha-cho → 3 sílabas → trisílaba", "k": "muchacho"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "escuela", "opts": ["escuela", "avión", "escalera", "buey"], "fact": "es-cue-la → 3 sílabas → trisílaba", "k": "escuela"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "poeta", "opts": ["poeta", "gato", "carretera", "muy"], "fact": "po-e-ta → 3 sílabas → trisílaba", "k": "poeta"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es trisílaba?", "ans": "alfombra", "opts": ["alfombra", "rey", "ciento", "extraordinario"], "fact": "al-fom-bra → 3 sílabas → trisílaba", "k": "alfombra"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "película", "opts": ["película", "cuento", "zapato", "muchacho"], "fact": "pe-lí-cu-la → 4 sílabas → polisílaba", "k": "película"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "escalera", "opts": ["escalera", "estudiáis", "avión", "luna"], "fact": "es-ca-le-ra → 4 sílabas → polisílaba", "k": "escalera"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "hipopótamo", "opts": ["hipopótamo", "guitarra", "cruzar", "cometa"], "fact": "hi-po-pó-ta-mo → 5 sílabas → polisílaba", "k": "hipopótamo"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "extraordinario", "opts": ["extraordinario", "excursión", "hombro", "construcción"], "fact": "ex-tra-or-di-na-rio → 6 sílabas → polisílaba", "k": "extraordinario"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "carretera", "opts": ["carretera", "ayudar", "Raúl", "paraguas"], "fact": "ca-rre-te-ra → 4 sílabas → polisílaba", "k": "carretera"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "elefante", "opts": ["elefante", "estudiar", "cruzar", "sobrino"], "fact": "e-le-fan-te → 4 sílabas → polisílaba", "k": "elefante"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "esdrújula", "opts": ["esdrújula", "estudiar", "canción", "leer"], "fact": "es-drú-ju-la → 4 sílabas → polisílaba", "k": "esdrújula"},
+  {"cat": "which", "q": "¿Cuál de estas palabras es polisílaba?", "ans": "biología", "opts": ["biología", "aprender", "pájaro", "gato"], "fact": "bio-lo-gí-a → 4 sílabas → polisílaba", "k": "biología"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "gris", "opts": ["gris", "estudiáis", "plátano", "caída"], "fact": "«gris» tiene una sola sílaba", "k": "gris"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "fui", "opts": ["fui", "alfombra", "pegamento", "mochila"], "fact": "«fui» tiene una sola sílaba", "k": "fui"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "cien", "opts": ["cien", "piedra", "murciélago", "agua"], "fact": "«cien» tiene una sola sílaba", "k": "cien"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "pues", "opts": ["pues", "María", "monstruo", "compra"], "fact": "«pues» tiene una sola sílaba", "k": "pues"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "pan", "opts": ["pan", "blanco", "abstracto", "alfombra"], "fact": "«pan» tiene una sola sílaba", "k": "pan"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "muy", "opts": ["muy", "ropa", "abstracto", "paraguas"], "fact": "«muy» tiene una sola sílaba", "k": "muy"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "yo", "opts": ["yo", "ayudar", "inglés", "ciudad"], "fact": "«yo» tiene una sola sílaba", "k": "yo"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "pez", "opts": ["pez", "escalera", "transporte", "castillo"], "fact": "«pez» tiene una sola sílaba", "k": "pez"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "red", "opts": ["red", "pato", "carro", "perspectiva"], "fact": "«red» tiene una sola sílaba", "k": "red"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "paz", "opts": ["paz", "nueve", "transporte", "arbusto"], "fact": "«paz» tiene una sola sílaba", "k": "paz"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "fe", "opts": ["fe", "hombro", "blanco", "pingüino"], "fact": "«fe» tiene una sola sílaba", "k": "fe"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "buey", "opts": ["buey", "pato", "coche", "cruzar"], "fact": "«buey» tiene una sola sílaba", "k": "buey"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "ya", "opts": ["ya", "piedra", "Paraguay", "cometa"], "fact": "«ya» tiene una sola sílaba", "k": "ya"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "bien", "opts": ["bien", "gato", "cartera", "aire"], "fact": "«bien» tiene una sola sílaba", "k": "bien"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "sal", "opts": ["sal", "fuego", "ordenador", "queso"], "fact": "«sal» tiene una sola sílaba", "k": "sal"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "pie", "opts": ["pie", "hombro", "escalera", "murciélago"], "fact": "«pie» tiene una sola sílaba", "k": "pie"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "sol", "opts": ["sol", "tomate", "nueve", "película"], "fact": "«sol» tiene una sola sílaba", "k": "sol"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras es monosílaba?", "ans": "ley", "opts": ["ley", "blanco", "pingüino", "elefante"], "fact": "«ley» tiene una sola sílaba", "k": "ley"},
+  {"cat": "mono", "q": "«gris» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«gris» → 1 sílaba → monosílaba", "k": "gris"},
+  {"cat": "mono", "q": "«hoy» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«hoy» → 1 sílaba → monosílaba", "k": "hoy"},
+  {"cat": "mono", "q": "«pues» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«pues» → 1 sílaba → monosílaba", "k": "pues"},
+  {"cat": "mono", "q": "«cien» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«cien» → 1 sílaba → monosílaba", "k": "cien"},
+  {"cat": "mono", "q": "«mar» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«mar» → 1 sílaba → monosílaba", "k": "mar"},
+  {"cat": "mono", "q": "«paz» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«paz» → 1 sílaba → monosílaba", "k": "paz"},
+  {"cat": "mono", "q": "«ver» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«ver» → 1 sílaba → monosílaba", "k": "ver"},
+  {"cat": "mono", "q": "«fui» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«fui» → 1 sílaba → monosílaba", "k": "fui"},
+  {"cat": "mono", "q": "«muy» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«muy» → 1 sílaba → monosílaba", "k": "muy"},
+  {"cat": "mono", "q": "«un» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«un» → 1 sílaba → monosílaba", "k": "un"},
+  {"cat": "mono", "q": "«voz» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«voz» → 1 sílaba → monosílaba", "k": "voz"},
+  {"cat": "mono", "q": "«ya» es una palabra…", "ans": "monosílaba", "opts": ["monosílaba", "bisílaba", "trisílaba", "polisílaba"], "fact": "«ya» → 1 sílaba → monosílaba", "k": "ya"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras NO es monosílaba?", "ans": "reír", "opts": ["reír", "mal", "gris", "pie"], "fact": "re-ír → 2 sílabas", "k": "reír"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras NO es monosílaba?", "ans": "instante", "opts": ["instante", "mes", "flor", "red"], "fact": "ins-tan-te → 3 sílabas", "k": "instante"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras NO es monosílaba?", "ans": "escalera", "opts": ["escalera", "con", "sol", "fui"], "fact": "es-ca-le-ra → 4 sílabas", "k": "escalera"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras NO es monosílaba?", "ans": "tigre", "opts": ["tigre", "sed", "con", "paz"], "fact": "ti-gre → 2 sílabas", "k": "tigre"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras NO es monosílaba?", "ans": "ciento", "opts": ["ciento", "con", "ya", "muy"], "fact": "cien-to → 2 sílabas", "k": "ciento"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras NO es monosílaba?", "ans": "energía", "opts": ["energía", "paz", "sed", "sol"], "fact": "e-ner-gí-a → 4 sílabas", "k": "energía"},
+  {"cat": "mono", "q": "Los monosílabos (palabras de una sola sílaba) normalmente…", "ans": "no llevan tilde", "opts": ["siempre llevan tilde", "no llevan tilde", "llevan tilde si acaban en vocal", "llevan tilde si son verbos"], "fact": "Los monosílabos no se acentúan: fue, fui, dio, vio, pie, sol, tren…", "k": "no llevan tilde"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "fue", "opts": ["fue", "fué"], "fact": "Ayer fue mi cumpleaños. Los monosílabos no llevan tilde.", "k": "fue"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "dio", "opts": ["dio", "dió"], "fact": "Me dio un regalo. Los monosílabos no llevan tilde.", "k": "dio"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "vio", "opts": ["vio", "vió"], "fact": "Vio una película. Los monosílabos no llevan tilde.", "k": "vio"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "fui", "opts": ["fui", "fuí"], "fact": "Fui al parque. Los monosílabos no llevan tilde.", "k": "fui"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "pie", "opts": ["pie", "pié"], "fact": "Me duele el pie. Los monosílabos no llevan tilde.", "k": "pie"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "tren", "opts": ["tren", "trén"], "fact": "Vamos en tren. Los monosílabos no llevan tilde.", "k": "tren"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "sol", "opts": ["sol", "sól"], "fact": "Hace sol. Los monosílabos no llevan tilde.", "k": "sol"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "mes", "opts": ["mes", "més"], "fact": "Este mes es octubre. Los monosílabos no llevan tilde.", "k": "mes"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "ti", "opts": ["ti", "tí"], "fact": "Este regalo es para ti. Los monosílabos no llevan tilde.", "k": "ti"},
+  {"cat": "mono", "q": "Elige la forma bien escrita:", "ans": "ver", "opts": ["ver", "vér"], "fact": "Quiero ver la tele. Los monosílabos no llevan tilde.", "k": "ver"},
+  {"cat": "mono", "q": "Completa: «Mi abuelo bebe ___ por la tarde.»", "ans": "té", "opts": ["té", "te"], "fact": "«té» (la infusión) lleva tilde diacrítica; «te» es un pronombre.", "k": "té"},
+  {"cat": "mono", "q": "Completa: «Mamá ___ quiere mucho.»", "ans": "te", "opts": ["te", "té"], "fact": "«te» es un pronombre y no lleva tilde.", "k": "te"},
+  {"cat": "mono", "q": "Completa: «___ eres muy listo.»", "ans": "Tú", "opts": ["Tú", "Tu"], "fact": "«tú» (pronombre personal) lleva tilde; «tu» (posesivo) no.", "k": "Tú"},
+  {"cat": "mono", "q": "Completa: «Ese es ___ cuaderno.»", "ans": "tu", "opts": ["tu", "tú"], "fact": "«tu» (posesivo) no lleva tilde.", "k": "tu"},
+  {"cat": "mono", "q": "Completa: «Este regalo es para ___. (yo)»", "ans": "mí", "opts": ["mí", "mi"], "fact": "«mí» (pronombre) lleva tilde; «mi» (posesivo) no.", "k": "mí"},
+  {"cat": "mono", "q": "Completa: «Esta es ___ mochila.»", "ans": "mi", "opts": ["mi", "mí"], "fact": "«mi» (posesivo) no lleva tilde.", "k": "mi"},
+  {"cat": "mono", "q": "Completa: «Cuando me preguntó si quería ir, le dije que ___.»", "ans": "sí", "opts": ["sí", "si"], "fact": "«sí» (afirmación) lleva tilde; «si» (condición) no.", "k": "sí"},
+  {"cat": "mono", "q": "Completa: «___ llueve, nos quedamos en casa.»", "ans": "Si", "opts": ["Si", "Sí"], "fact": "«si» condicional no lleva tilde.", "k": "Si"},
+  {"cat": "mono", "q": "Completa: «Quiero ___ agua, por favor.»", "ans": "más", "opts": ["más", "mas"], "fact": "«más» (cantidad) lleva tilde.", "k": "más"},
+  {"cat": "mono", "q": "Completa: «Yo ___ la respuesta.»", "ans": "sé", "opts": ["sé", "se"], "fact": "«sé» (verbo saber) lleva tilde.", "k": "sé"},
+  {"cat": "mono", "q": "Completa: «Ana ___ peina antes de salir.»", "ans": "se", "opts": ["se", "sé"], "fact": "«se» (pronombre) no lleva tilde.", "k": "se"},
+  {"cat": "mono", "q": "Completa: «El libro es ___ Marta.»", "ans": "de", "opts": ["de", "dé"], "fact": "«de» (preposición) no lleva tilde.", "k": "de"},
+  {"cat": "mono", "q": "Completa: «Espero que mi madre me ___ un beso.»", "ans": "dé", "opts": ["dé", "de"], "fact": "«dé» (verbo dar) lleva tilde.", "k": "dé"},
+  {"cat": "mono", "q": "Completa: «___ es mi hermano mayor. (la persona)»", "ans": "Él", "opts": ["Él", "El"], "fact": "«él» (pronombre) lleva tilde.", "k": "Él"},
+  {"cat": "mono", "q": "Completa: «___ coche es muy rápido. (el artículo)»", "ans": "El", "opts": ["El", "Él"], "fact": "«el» (artículo) no lleva tilde.", "k": "El"},
+  {"cat": "mono", "q": "¿Para qué sirve la tilde diacrítica?", "ans": "Para distinguir dos palabras que se escriben igual", "opts": ["Para distinguir dos palabras que se escriben igual", "Para que una palabra suene más fuerte", "Para separar las sílabas", "Para marcar las palabras largas"], "fact": "Ejemplos: tu / tú, el / él, mi / mí, si / sí, te / té, se / sé, de / dé, mas / más.", "k": "¿Para qué sirve la tilde"},
+  {"cat": "mono", "q": "¿Qué pareja de palabras se distingue por la tilde diacrítica?", "ans": "tu / tú", "opts": ["tu / tú", "sol / sal", "mar / mal", "pan / pon"], "fact": "«tu» (posesivo) y «tú» (pronombre) se escriben igual pero llevan o no tilde.", "k": "tu / tú"},
+  {"cat": "mono", "q": "¿Cuál de estas palabras monosílabas SÍ lleva tilde?", "ans": "él (pronombre)", "opts": ["él (pronombre)", "fue", "sol", "tren"], "fact": "Las demás no llevan tilde. «él» la lleva por ser tilde diacrítica.", "k": "él (pronombre)"}
+];
+const sciQ=[
+  {"cat":"maps","em":"🧭","q":"Which imaginary line divides the Earth into the Northern and Southern Hemispheres?","ans":"The Equator","opts":["The Equator","The Greenwich Meridian","The Tropic of Cancer","The Arctic Circle"],"fact":"The Equator is at 0° latitude. North of it is the Northern Hemisphere, south of it the Southern Hemisphere."},
+  {"cat":"maps","em":"🧭","q":"What is the latitude of the Equator?","ans":"0°","opts":["0°","23.5°","66.5°","90°"],"fact":"Latitude is measured in degrees north or south of the Equator, which is 0°."},
+  {"cat":"maps","em":"🧭","q":"What are meridians?","ans":"Imaginary lines that run from the North Pole to the South Pole","opts":["Imaginary lines that run from the North Pole to the South Pole","Imaginary circles around the Earth, parallel to the Equator","Lines that mark the borders of countries","Rivers that flow into the sea"],"fact":"Meridians are half-circles from pole to pole. They are used to measure longitude."},
+  {"cat":"maps","em":"🧭","q":"What are parallels?","ans":"Imaginary circles around the Earth, parallel to the Equator","opts":["Imaginary circles around the Earth, parallel to the Equator","Imaginary lines from the North Pole to the South Pole","Lines that show the height of mountains","Roads drawn on a map"],"fact":"Parallels never touch each other. They are used to measure latitude."},
+  {"cat":"maps","em":"🧭","q":"Which meridian is at 0° longitude?","ans":"The Greenwich Meridian","opts":["The Greenwich Meridian","The Tropic of Cancer","The Tropic of Capricorn","The International Date Line"],"fact":"The Prime Meridian passes through Greenwich, near London, and is the starting point for measuring longitude."},
+  {"cat":"maps","em":"🧭","q":"The Greenwich Meridian (together with the 180° meridian) divides the Earth into…","ans":"The Eastern and Western Hemispheres","opts":["The Eastern and Western Hemispheres","The Northern and Southern Hemispheres","The hot and cold zones","Land and sea"],"fact":"Places east of Greenwich are in the Eastern Hemisphere; places west of it are in the Western Hemisphere."},
+  {"cat":"maps","em":"🧭","q":"In which country is the town of Greenwich, which gives its name to the Prime Meridian?","ans":"The United Kingdom","opts":["The United Kingdom","Spain","France","Greece"],"fact":"Greenwich is in London. The Prime Meridian also crosses the east of Spain!"},
+  {"cat":"maps","em":"🧭","q":"Spain is in the…","ans":"Northern Hemisphere","opts":["Northern Hemisphere","Southern Hemisphere","Equatorial zone","Polar zone"],"fact":"Spain is north of the Equator, so it is in the Northern Hemisphere."},
+  {"cat":"maps","em":"🧭","q":"It is December and summer in Australia. Why?","ans":"It is in the Southern Hemisphere, where seasons are opposite","opts":["It is in the Southern Hemisphere, where seasons are opposite","Australia is nearer to the Sun in December than Spain","Australia is on the Equator, where it is always summer","The Moon heats Australia more in December"],"fact":"When it is winter in the Northern Hemisphere it is summer in the Southern Hemisphere."},
+  {"cat":"maps","em":"🧭","q":"Latitude tells us how far a place is…","ans":"North or south of the Equator","opts":["North or south of the Equator","East or west of Greenwich","Above or below sea level","Away from the nearest ocean"],"fact":"Latitude goes from 0° at the Equator to 90° N or 90° S at the poles."},
+  {"cat":"maps","em":"🧭","q":"Longitude tells us how far a place is…","ans":"East or west of Greenwich","opts":["East or west of Greenwich","North or south of the Equator","Above or below sea level","Away from the nearest ocean"],"fact":"Longitude is measured in degrees east (E) or west (W) of the Prime Meridian."},
+  {"cat":"maps","em":"🧭","q":"Which lines are lines of latitude?","ans":"Parallels","opts":["Parallels","Meridians","Rivers","Compass lines"],"fact":"Parallels (like the Equator) give the latitude of a place."},
+  {"cat":"maps","em":"🧭","q":"Which lines are lines of longitude?","ans":"Meridians","opts":["Meridians","Parallels","Coastlines","Borders"],"fact":"Meridians (like Greenwich) give the longitude of a place."},
+  {"cat":"maps","em":"🧭","q":"What is the longest parallel of the globe?","ans":"The Equator","opts":["The Equator","The Tropic of Cancer","The Arctic Circle","The Antarctic Circle"],"fact":"The Equator is about 40,075 km long. Parallels get shorter towards the poles."},
+  {"cat":"maps","em":"🧭","q":"Which of these is NOT a parallel?","ans":"The Greenwich Meridian","opts":["The Greenwich Meridian","The Equator","The Tropic of Cancer","The Tropic of Capricorn"],"fact":"The Equator, the tropics and the polar circles are parallels. Greenwich is a meridian."},
+  {"cat":"maps","em":"🧭","q":"Where is the Tropic of Cancer?","ans":"In the Northern Hemisphere, at about 23.5° N","opts":["In the Northern Hemisphere, at about 23.5° N","In the Southern Hemisphere, at about 23.5° S","On the Equator, at 0°","At the North Pole, at 90° N"],"fact":"The Tropic of Capricorn is its southern twin, at about 23.5° S."},
+  {"cat":"maps","em":"🧭","q":"The Tropic of Capricorn is located…","ans":"South of the Equator","opts":["South of the Equator","North of the Equator","On the Equator","At the North Pole"],"fact":"It is at about 23.5° S, in the Southern Hemisphere."},
+  {"cat":"maps","em":"🧭","q":"The Arctic Circle is close to the…","ans":"North Pole","opts":["North Pole","South Pole","Equator","Greenwich Meridian"],"fact":"The Arctic Circle is at about 66.5° N. The Antarctic Circle is at about 66.5° S."},
+  {"cat":"maps","em":"🧭","q":"Which point of the Earth is at 90° N?","ans":"The North Pole","opts":["The North Pole","The South Pole","The Equator","Greenwich"],"fact":"The North Pole is at 90° N and the South Pole at 90° S."},
+  {"cat":"maps","em":"🧭","q":"Which zone of the Earth is the hottest?","ans":"The torrid zone, between the tropics","opts":["The torrid zone, between the tropics","The polar zone, around the poles","The temperate zone, in the middle latitudes","The Arctic zone, around the North Pole"],"fact":"In the torrid zone the Sun’s rays arrive most directly, so it is hot all year."},
+  {"cat":"maps","em":"🧭","q":"Which climate zone is Spain in?","ans":"Temperate zone","opts":["Temperate zone","Torrid zone","Polar zone","Equatorial zone"],"fact":"The temperate zones lie between the tropics and the polar circles. They have four seasons."},
+  {"cat":"maps","em":"🧭","q":"Which are the four cardinal points?","ans":"North, South, East and West","opts":["North, South, East and West","Up, down, left and right","Front, back, side and top","North, South, centre and edge"],"fact":"N, S, E and W are the main directions on a map."},
+  {"cat":"maps","em":"🧭","q":"Which cardinal point is opposite to North?","ans":"South","opts":["South","East","West","Northeast"],"fact":"South is opposite to North, and West is opposite to East."},
+  {"cat":"maps","em":"🧭","q":"The Sun rises in the…","ans":"East","opts":["East","West","North","South"],"fact":"The Sun appears to rise in the east and set in the west because the Earth rotates."},
+  {"cat":"maps","em":"🧭","q":"If you face North, what is on your right hand?","ans":"East","opts":["East","West","South","North"],"fact":"Facing north: east on the right, west on the left, south behind you."},
+  {"cat":"maps","em":"🧭","q":"If you face South, what is on your left hand?","ans":"East","opts":["East","West","North","South"],"fact":"Facing south, east is on your left and west on your right."},
+  {"cat":"maps","em":"🧭","q":"Which instrument shows where North is?","ans":"A compass","opts":["A compass","A thermometer","A barometer","A ruler"],"fact":"The needle of a compass points to the Earth’s magnetic North."},
+  {"cat":"maps","em":"🧭","q":"What does the legend (key) of a map show?","ans":"What the symbols and colours mean","opts":["What the symbols and colours mean","How tall the mountains are in metres","Which way North is on the map","Who drew the map and when"],"fact":"Without the legend we could not understand the symbols."},
+  {"cat":"maps","em":"🧭","q":"What does the scale of a map tell us?","ans":"How real distances appear on the map","opts":["How real distances appear on the map","How old the map is and who made it","Which direction North points to","What the colours and symbols mean"],"fact":"A scale of 1 cm = 10 km means each centimetre on the map is 10 km in real life."},
+  {"cat":"maps","em":"🧭","q":"A map has a scale of 1 cm = 10 km. Two cities are 5 cm apart on the map. How far apart are they in real life?","ans":"50 km","opts":["50 km","15 km","5 km","500 km"],"fact":"5 × 10 km = 50 km."},
+  {"cat":"maps","em":"🧭","q":"On most maps, North is…","ans":"At the top","opts":["At the top","At the bottom","On the left","On the right"],"fact":"Maps are usually drawn with North at the top."},
+  {"cat":"maps","em":"🧭","q":"What is a compass rose?","ans":"A symbol showing the cardinal directions","opts":["A symbol showing the cardinal directions","A flower that grows near old maps","A scale used to measure distances","A type of map projection of the globe"],"fact":"It often shows N, S, E and W, and sometimes NE, NW, SE and SW."},
+  {"cat":"maps","em":"🧭","q":"Longitude goes from 0° at Greenwich to…","ans":"180° East and 180° West","opts":["180° East and 180° West","90° North and 90° South","360° East only","100° East and 100° West"],"fact":"The 180° meridian is on the opposite side of the Earth from Greenwich."},
+  {"cat":"maps","em":"🧭","q":"Latitude goes from 0° at the Equator to…","ans":"90° North and 90° South (the poles)","opts":["90° North and 90° South (the poles)","180° East and 180° West","360° North and South","45° North and South"],"fact":"The poles are at 90° N and 90° S."},
+  {"cat":"maps","em":"🧭","q":"The Earth rotates 360° in 24 hours. How many degrees does it turn in 1 hour?","ans":"15°","opts":["15°","24°","30°","10°"],"fact":"360 ÷ 24 = 15. That is why each time zone is about 15° of longitude wide."},
+  {"cat":"maps","em":"🧭","q":"It is 12:00 noon at Greenwich in winter. What time is it in Madrid (winter time)?","ans":"1:00 p.m.","opts":["1:00 p.m.","11:00 a.m.","12:00 noon","3:00 p.m."],"fact":"Spain uses Central European Time, which is 1 hour ahead of Greenwich Mean Time in winter (2 hours ahead in summer)."},
+  {"cat":"maps","em":"🧭","q":"What is a globe?","ans":"A model of the Earth shaped like a sphere","opts":["A model of the Earth shaped like a sphere","A flat map of one country","A tool to measure temperature","A picture of the Moon"],"fact":"A globe shows the shapes and positions of continents and oceans without distortion."},
+  {"cat":"maps","em":"🧭","q":"Which two things do we need to find the exact position of a place on the Earth?","ans":"Its latitude and its longitude","opts":["Its latitude and its longitude","Its height and its weight","Its name and its colour","Its temperature and its size"],"fact":"Latitude and longitude are the ‘coordinates’ of a place."},
+  {"cat":"maps","em":"🧭","q":"What is a hemisphere?","ans":"Half of the globe","opts":["Half of the globe","A quarter of the globe","A kind of map","A line on the globe"],"fact":"‘Hemi’ means half. The globe can be divided into Northern/Southern and Eastern/Western hemispheres."},
+  {"cat":"earth","em":"🌍","q":"What are the three main layers of the Earth?","ans":"Crust, mantle and core","opts":["Crust, mantle and core","Crust, ocean and sky","Rock, sand and soil","Ice, water and air"],"fact":"The crust is the outside, the mantle is in the middle and the core is the centre."},
+  {"cat":"earth","em":"🌍","q":"Which layer of the Earth do we live on?","ans":"The crust","opts":["The crust","The mantle","The outer core","The inner core"],"fact":"The crust is the thin, rocky outer layer."},
+  {"cat":"earth","em":"🌍","q":"Which is the hottest part of the Earth?","ans":"The core","opts":["The core","The crust","The atmosphere","The oceans"],"fact":"The centre of the Earth reaches more than 5,000 °C."},
+  {"cat":"earth","em":"🌍","q":"Which is the thinnest layer of the Earth?","ans":"The crust","opts":["The crust","The mantle","The core","They are all the same"],"fact":"The crust is very thin compared with the mantle and the core."},
+  {"cat":"earth","em":"🌍","q":"What is magma?","ans":"Melted rock inside the Earth","opts":["Melted rock inside the Earth","Cold water under the ground","A kind of gas","A type of sand"],"fact":"When magma comes out of a volcano it is called lava."},
+  {"cat":"earth","em":"🌍","q":"What do we call melted rock when it flows out of a volcano?","ans":"Lava","opts":["Lava","Ash","Crystal","Sediment"],"fact":"Lava cools and becomes solid rock."},
+  {"cat":"earth","em":"🌍","q":"What causes most earthquakes?","ans":"The movement of tectonic plates","opts":["The movement of tectonic plates","The force of very strong winds","The light and pull of the Moon","Very heavy rain over the mountains"],"fact":"The Earth’s crust is broken into big pieces called tectonic plates that move very slowly."},
+  {"cat":"earth","em":"🌍","q":"What is the opening at the top of a volcano called?","ans":"The crater","opts":["The crater","The valley","The summit","The cave"],"fact":"Lava, gas and ash come out through the crater."},
+  {"cat":"earth","em":"🌍","q":"What is the epicentre of an earthquake?","ans":"The surface point above where the quake starts","opts":["The surface point above where the quake starts","The strongest wave that comes after the quake","The instrument used to measure the quake","The crack that opens in the ground"],"fact":"The place inside the Earth where it starts is called the focus (or hypocentre)."},
+  {"cat":"earth","em":"🌍","q":"Which scale is used to measure the strength of an earthquake?","ans":"The Richter scale","opts":["The Richter scale","The Celsius scale","The Beaufort scale","The Mohs scale"],"fact":"The Richter scale measures the magnitude of an earthquake."},
+  {"cat":"earth","em":"🌍","q":"What is the ‘Ring of Fire’?","ans":"A zone around the Pacific with many volcanoes","opts":["A zone around the Pacific with many volcanoes","A ring of volcanoes around the Moon","A circle of fire at the centre of the Earth","A famous chain of mountains in Africa"],"fact":"About 75% of the world’s volcanoes are in the Ring of Fire."},
+  {"cat":"earth","em":"🌍","q":"Which is the largest continent?","ans":"Asia","opts":["Asia","Africa","Europe","North America"],"fact":"Asia is the largest and has the most people."},
+  {"cat":"earth","em":"🌍","q":"Which is the smallest continent?","ans":"Oceania","opts":["Oceania","Europe","Antarctica","Africa"],"fact":"Oceania (with Australia) is the smallest of the continents."},
+  {"cat":"earth","em":"🌍","q":"On which continent is Egypt?","ans":"Africa","opts":["Africa","Asia","Europe","South America"],"fact":"Egypt is in the north of Africa (a small part, the Sinai, is in Asia)."},
+  {"cat":"earth","em":"🌍","q":"On which continent is Brazil?","ans":"South America","opts":["South America","North America","Africa","Europe"],"fact":"Brazil is the biggest country in South America."},
+  {"cat":"earth","em":"🌍","q":"Which continent is almost completely covered by ice?","ans":"Antarctica","opts":["Antarctica","Oceania","Africa","Europe"],"fact":"Antarctica holds about 70% of the world’s fresh water as ice."},
+  {"cat":"earth","em":"🌍","q":"On which continent is Spain?","ans":"Europe","opts":["Europe","Africa","Asia","Oceania"],"fact":"Spain is in the south-west of Europe."},
+  {"cat":"earth","em":"🌍","q":"Which is the largest ocean?","ans":"The Pacific Ocean","opts":["The Pacific Ocean","The Atlantic Ocean","The Indian Ocean","The Arctic Ocean"],"fact":"The Pacific is bigger than all the land of the Earth put together."},
+  {"cat":"earth","em":"🌍","q":"Which ocean lies between Europe and America?","ans":"The Atlantic Ocean","opts":["The Atlantic Ocean","The Pacific Ocean","The Indian Ocean","The Arctic Ocean"],"fact":"Spain has Atlantic coasts in the north, the north-west and the south-west."},
+  {"cat":"earth","em":"🌍","q":"Which is the smallest ocean?","ans":"The Arctic Ocean","opts":["The Arctic Ocean","The Indian Ocean","The Atlantic Ocean","The Pacific Ocean"],"fact":"The Arctic Ocean is the smallest and the shallowest, and part of it is frozen all year."},
+  {"cat":"earth","em":"🌍","q":"About how much of the Earth’s surface is covered by water?","ans":"About 70%","opts":["About 70%","About 30%","About 50%","About 95%"],"fact":"That is why the Earth is called ‘the blue planet’."},
+  {"cat":"earth","em":"🌍","q":"Where is most of the Earth’s water?","ans":"In the oceans, as salt water","opts":["In the oceans, as salt water","In rivers and lakes, as fresh water","In glaciers and ice caps","In the clouds and the air"],"fact":"About 97% of the water on Earth is salty."},
+  {"cat":"earth","em":"🌍","q":"What happens during evaporation?","ans":"A liquid turns into a gas (vapour)","opts":["A liquid turns into a gas (vapour)","A gas turns into a liquid (drops)","A solid turns into a liquid (melts)","Water freezes into solid ice"],"fact":"The Sun’s heat makes water from seas, rivers and lakes rise as vapour."},
+  {"cat":"earth","em":"🌍","q":"What happens during condensation?","ans":"Water vapour cools and forms tiny drops","opts":["Water vapour cools and forms tiny drops","Liquid water heats up and turns into vapour","Ice melts in the mountains and flows down","Rain falls from the clouds to the ground"],"fact":"Condensation is how clouds are formed."},
+  {"cat":"earth","em":"🌍","q":"What is precipitation?","ans":"Water falling as rain, snow or hail","opts":["Water falling as rain, snow or hail","Water rising from the sea as vapour","Water frozen in a glacier for years","Water flowing along a river to the sea"],"fact":"It is the stage of the water cycle in which water returns to the surface."},
+  {"cat":"earth","em":"🌍","q":"What gives the energy that drives the water cycle?","ans":"The Sun’s heat","opts":["The Sun’s heat","The wind","The Moon","Volcanoes"],"fact":"The Sun heats the water and makes it evaporate."},
+  {"cat":"earth","em":"🌍","q":"Where does a river begin?","ans":"At its source","opts":["At its source","At its mouth","At its delta","At its meander"],"fact":"The source is usually in the mountains."},
+  {"cat":"earth","em":"🌍","q":"What is the place where a river flows into the sea called?","ans":"The mouth","opts":["The mouth","The source","The tributary","The bank"],"fact":"Some rivers form a delta at their mouth."},
+  {"cat":"earth","em":"🌍","q":"A smaller river that flows into a bigger river is called a…","ans":"Tributary","opts":["Tributary","Meander","Waterfall","Lake"],"fact":"The Henares is a tributary of the Jarama, which flows into the Tagus."},
+  {"cat":"earth","em":"🌍","q":"Land surrounded by water on all sides is called an…","ans":"Island","opts":["Island","Peninsula","Gulf","Valley"],"fact":"Mallorca and Tenerife are islands."},
+  {"cat":"earth","em":"🌍","q":"Land surrounded by water on three sides is a…","ans":"Peninsula","opts":["Peninsula","Island","Lake","Plain"],"fact":"Spain and Portugal are on the Iberian Peninsula."},
+  {"cat":"earth","em":"🌍","q":"What is a valley?","ans":"Low land between mountains or hills","opts":["Low land between mountains or hills","A very high mountain","A large area of flat land","A river that dries up"],"fact":"Many valleys are shaped by rivers."},
+  {"cat":"earth","em":"🌍","q":"What is the highest mountain in the world above sea level?","ans":"Mount Everest","opts":["Mount Everest","Mount Teide","Mont Blanc","Kilimanjaro"],"fact":"Everest, in the Himalayas, is about 8,849 m high."},
+  {"cat":"earth","em":"🌍","q":"What is the difference between weather and climate?","ans":"Weather is day to day; climate is the long-term average","opts":["Weather is day to day; climate is the long-term average","Weather is the long-term average; climate is day to day","Weather is only rain; climate is only sun","Weather lasts a year; climate lasts a week"],"fact":"Today’s rain is weather. Hot, dry summers in Spain are part of its climate."},
+  {"cat":"earth","em":"🌍","q":"Which instrument measures air temperature?","ans":"Thermometer","opts":["Thermometer","Barometer","Anemometer","Rain gauge"],"fact":"A barometer measures air pressure, an anemometer measures wind speed and a rain gauge measures rain."},
+  {"cat":"earth","em":"🌍","q":"Which instrument measures wind speed?","ans":"Anemometer","opts":["Anemometer","Thermometer","Barometer","Compass"],"fact":"A weather vane shows the wind’s direction."},
+  {"cat":"earth","em":"🌍","q":"What is the atmosphere?","ans":"The layer of gases around the Earth","opts":["The layer of gases around the Earth","The layer of water around the Earth","The hottest layer inside the Earth","The surface of the Moon"],"fact":"The atmosphere gives us air to breathe and protects us from the Sun’s harmful rays."},
+  {"cat":"earth","em":"🌍","q":"Which is the most abundant gas in the air?","ans":"Nitrogen","opts":["Nitrogen","Oxygen","Carbon dioxide","Hydrogen"],"fact":"Air is about 78% nitrogen and about 21% oxygen."},
+  {"cat":"earth","em":"🌍","q":"What does the ozone layer do?","ans":"It protects us from harmful ultraviolet rays","opts":["It protects us from harmful ultraviolet rays","It makes the rain that falls on the Earth","It holds the Moon in orbit around us","It produces most of the oxygen we breathe"],"fact":"Ozone is found high up in the atmosphere."},
+  {"cat":"earth","em":"🌍","q":"What is erosion?","ans":"Rock and soil being worn away by water, wind or ice","opts":["Rock and soil being worn away by water, wind or ice","Mountains growing taller because of the plates","The melting of the Earth’s hot core","The formation of clouds over the sea"],"fact":"Erosion slowly changes the shape of the land."},
+  {"cat":"earth","em":"🌍","q":"What is a glacier?","ans":"A huge mass of ice that moves slowly","opts":["A huge mass of ice that moves slowly","A frozen lake high in the mountains","A cloud made of ice crystals","A very big snowflake that never melts"],"fact":"Glaciers are found in cold regions and on high mountains."},
+  {"cat":"earth","em":"🌍","q":"Which is the largest hot desert in the world?","ans":"The Sahara","opts":["The Sahara","The Gobi","The Kalahari","The Atacama"],"fact":"The Sahara is in northern Africa and is nearly as big as the United States."},
+  {"cat":"earth","em":"🌍","q":"Which river carries the most water in the world?","ans":"The Amazon","opts":["The Amazon","The Nile","The Ebro","The Thames"],"fact":"The Amazon flows through South America and is the world’s largest river by volume of water."},
+  {"cat":"earth","em":"🌍","q":"Igneous rocks are formed when…","ans":"Melted rock cools and becomes solid","opts":["Melted rock cools and becomes solid","Layers of sand are pressed together","Animals die in the sea","Ice melts in the mountains"],"fact":"Granite and basalt are igneous rocks."},
+  {"cat":"earth","em":"🌍","q":"Sedimentary rocks are formed when…","ans":"Layers of sediment are pressed together over time","opts":["Layers of sediment are pressed together over time","Magma cools very quickly under the sea","Lava flows out of a volcano and cools","Clouds turn into stone high in the sky"],"fact":"Limestone and sandstone are sedimentary rocks."},
+  {"cat":"space","em":"🪐","q":"What is at the centre of our Solar System?","ans":"The Sun","opts":["The Sun","The Earth","The Moon","Jupiter"],"fact":"All the planets orbit the Sun."},
+  {"cat":"space","em":"🪐","q":"The Sun is a…","ans":"Star","opts":["Star","Planet","Moon","Comet"],"fact":"The Sun is the star closest to the Earth."},
+  {"cat":"space","em":"🪐","q":"Which planet is the closest to the Sun?","ans":"Mercury","opts":["Mercury","Venus","Mars","Neptune"],"fact":"Mercury is the smallest planet in the Solar System."},
+  {"cat":"space","em":"🪐","q":"Which is the biggest planet in the Solar System?","ans":"Jupiter","opts":["Jupiter","Saturn","Earth","Neptune"],"fact":"Jupiter is so big that more than 1,000 Earths could fit inside it."},
+  {"cat":"space","em":"🪐","q":"Which planet is called the ‘Red Planet’?","ans":"Mars","opts":["Mars","Venus","Mercury","Jupiter"],"fact":"Mars looks red because its soil contains a lot of iron oxide (rust)."},
+  {"cat":"space","em":"🪐","q":"Which planet is famous for its bright rings?","ans":"Saturn","opts":["Saturn","Mars","Mercury","Earth"],"fact":"Jupiter, Uranus and Neptune also have rings, but Saturn’s are the biggest and brightest."},
+  {"cat":"space","em":"🪐","q":"How many planets are there in the Solar System?","ans":"8","opts":["8","9","7","10"],"fact":"Pluto is now classified as a dwarf planet."},
+  {"cat":"space","em":"🪐","q":"The Earth is the ___ planet from the Sun.","ans":"Third","opts":["Third","Second","Fourth","First"],"fact":"The order is: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune."},
+  {"cat":"space","em":"🪐","q":"Which planet is the farthest from the Sun?","ans":"Neptune","opts":["Neptune","Uranus","Saturn","Jupiter"],"fact":"Neptune is very cold and windy. It takes about 165 Earth years to orbit the Sun."},
+  {"cat":"space","em":"🪐","q":"Which planet is the hottest?","ans":"Venus","opts":["Venus","Mercury","Mars","Jupiter"],"fact":"Venus is hotter than Mercury because its thick atmosphere traps heat."},
+  {"cat":"space","em":"🪐","q":"Which are the four rocky (terrestrial) planets?","ans":"Mercury, Venus, Earth and Mars","opts":["Mercury, Venus, Earth and Mars","Jupiter, Saturn, Uranus and Neptune","Earth, Moon, Sun and Mars","Mars, Jupiter, Saturn and Venus"],"fact":"The four outer planets are giants made mostly of gas (or ice)."},
+  {"cat":"space","em":"🪐","q":"Which planets are the gas giants?","ans":"Jupiter, Saturn, Uranus and Neptune","opts":["Jupiter, Saturn, Uranus and Neptune","Mercury, Venus, Earth and Mars","Earth, Mars, Jupiter and Saturn","Venus, Earth, Uranus and Pluto"],"fact":"Uranus and Neptune are sometimes called ‘ice giants’."},
+  {"cat":"space","em":"🪐","q":"How long does the Earth take to go once around the Sun?","ans":"One year (about 365 days)","opts":["One year (about 365 days)","One month (about 30 days)","One day (24 hours)","One decade (ten years)"],"fact":"This movement is called revolution (or orbit)."},
+  {"cat":"space","em":"🪐","q":"How long does the Earth take to spin once on its axis?","ans":"About 24 hours (one day)","opts":["About 24 hours (one day)","About 365 days","About one month","About 12 hours"],"fact":"This movement is called rotation."},
+  {"cat":"space","em":"🪐","q":"What does the Earth’s rotation cause?","ans":"Day and night","opts":["Day and night","The seasons","The tides only","The phases of the Moon"],"fact":"The side facing the Sun has day; the other side has night."},
+  {"cat":"space","em":"🪐","q":"What causes the seasons?","ans":"The tilt of the Earth’s axis as it orbits the Sun","opts":["The tilt of the Earth’s axis as it orbits the Sun","The Earth getting closer and farther from the Sun","The Moon’s gravity","Clouds blocking the Sun"],"fact":"Because the axis is tilted, each hemisphere gets more direct sunlight at different times of the year."},
+  {"cat":"space","em":"🪐","q":"Why is it hot in summer in Spain?","ans":"The Sun’s rays hit our hemisphere more directly","opts":["The Sun’s rays hit our hemisphere more directly","The Earth is closest to the Sun in summer","The Moon is closer","The Earth spins faster"],"fact":"In fact, the Earth is closest to the Sun in early January, in the middle of our winter!"},
+  {"cat":"space","em":"🪐","q":"Which season comes after winter in the Northern Hemisphere?","ans":"Spring","opts":["Spring","Summer","Autumn","Winter again"],"fact":"The order is spring, summer, autumn, winter."},
+  {"cat":"space","em":"🪐","q":"On the spring and autumn equinoxes…","ans":"Day and night last about the same","opts":["Day and night last about the same","The day is the longest of the year","The night is the longest of the year","There is no Sun"],"fact":"‘Equinox’ means ‘equal night’."},
+  {"cat":"space","em":"🪐","q":"When is the longest day of the year in the Northern Hemisphere?","ans":"Around 21 June (summer solstice)","opts":["Around 21 June (summer solstice)","Around 21 December (winter solstice)","Around 21 March","Around 1 January"],"fact":"At the summer solstice the North Pole is tilted most towards the Sun."},
+  {"cat":"space","em":"🪐","q":"What is the Moon?","ans":"The Earth’s natural satellite","opts":["The Earth’s natural satellite","A small star near the Earth","A planet that orbits the Sun","A comet that stays near us"],"fact":"A satellite is an object that orbits a bigger one."},
+  {"cat":"space","em":"🪐","q":"Why can we see the Moon?","ans":"It reflects light from the Sun","opts":["It reflects light from the Sun","It makes its own light like a star","It is made of burning gas","The Earth’s lights shine on it"],"fact":"The Moon has no light of its own."},
+  {"cat":"space","em":"🪐","q":"Which Moon phase shows the whole face of the Moon lit?","ans":"Full Moon","opts":["Full Moon","New Moon","Crescent Moon","First quarter"],"fact":"At New Moon we cannot see it, because the lit side faces away from the Earth."},
+  {"cat":"space","em":"🪐","q":"About how long is one full cycle of the Moon’s phases?","ans":"About 29 days (a month)","opts":["About 29 days (a month)","About 7 days (a week)","About 365 days (a year)","About 24 hours (a day)"],"fact":"The word ‘month’ comes from ‘Moon’."},
+  {"cat":"space","em":"🪐","q":"What happens during a solar eclipse?","ans":"The Moon passes between the Earth and the Sun","opts":["The Moon passes between the Earth and the Sun","The Earth passes between the Sun and the Moon","The Sun goes out","A planet crashes into the Sun"],"fact":"The Moon blocks the Sun’s light. Never look at the Sun directly!"},
+  {"cat":"space","em":"🪐","q":"What happens during a lunar eclipse?","ans":"The Earth passes between the Sun and the Moon","opts":["The Earth passes between the Sun and the Moon","The Moon passes between the Earth and the Sun","The Moon disappears forever","The Sun covers the Moon"],"fact":"The Earth’s shadow falls on the Moon."},
+  {"cat":"space","em":"🪐","q":"If you jumped on the Moon you would jump…","ans":"Higher, because gravity is weaker","opts":["Higher, because gravity is weaker","Lower, because gravity is stronger","The same as on Earth","You could not jump"],"fact":"Gravity on the Moon is about one sixth of the Earth’s."},
+  {"cat":"space","em":"🪐","q":"Who was the first person to walk on the Moon (1969)?","ans":"Neil Armstrong","opts":["Neil Armstrong","Yuri Gagarin","Buzz Aldrin","Isaac Newton"],"fact":"Neil Armstrong was the commander of Apollo 11; Buzz Aldrin walked on the Moon second. Yuri Gagarin was the first person in space (1961)."},
+  {"cat":"space","em":"🪐","q":"What is the name of our galaxy?","ans":"The Milky Way","opts":["The Milky Way","Andromeda","The Big Dipper","The Solar System"],"fact":"A galaxy is a huge group of stars. The Solar System is one small part of the Milky Way."},
+  {"cat":"space","em":"🪐","q":"What is a comet?","ans":"A ball of ice and dust with a long tail","opts":["A ball of ice and dust with a long tail","A very small planet","A falling star made of fire only","A star that explodes"],"fact":"Its tail forms when the Sun heats the ice and it turns into gas."},
+  {"cat":"space","em":"🪐","q":"What force keeps the planets orbiting the Sun?","ans":"Gravity","opts":["Gravity","Magnetism","Friction","Wind"],"fact":"The Sun’s gravity pulls the planets so they keep going around it."},
+  {"cat":"space","em":"🪐","q":"What is a light-year?","ans":"The distance light travels in one year","opts":["The distance light travels in one year","A year with a lot of sunlight","The time light takes to reach the Moon","A year on the planet Mercury"],"fact":"It is a unit of distance, not of time. A light-year is about 9.5 trillion km."},
+  {"cat":"living","em":"🌿","q":"Which are the three vital functions of living things?","ans":"Nutrition, relation and reproduction","opts":["Nutrition, relation and reproduction","Eating, sleeping and playing","Growing, shrinking and moving","Breathing, jumping and running"],"fact":"All living things feed themselves, react to their surroundings and have offspring."},
+  {"cat":"living","em":"🌿","q":"Which of these is NOT a living thing?","ans":"A rock","opts":["A rock","A mushroom","A bee","A tree"],"fact":"Living things are born, grow, reproduce and die."},
+  {"cat":"living","em":"🌿","q":"Animals with a backbone are called…","ans":"Vertebrates","opts":["Vertebrates","Invertebrates","Herbivores","Insects"],"fact":"Fish, amphibians, reptiles, birds and mammals are vertebrates."},
+  {"cat":"living","em":"🌿","q":"Which of these animals is an invertebrate?","ans":"A snail","opts":["A snail","A frog","A snake","A sparrow"],"fact":"Invertebrates have no backbone: insects, spiders, snails, jellyfish, worms…"},
+  {"cat":"living","em":"🌿","q":"Which of these is a vertebrate?","ans":"A frog","opts":["A frog","A spider","A snail","A jellyfish"],"fact":"A frog is an amphibian."},
+  {"cat":"living","em":"🌿","q":"Mammals feed their babies with…","ans":"Milk","opts":["Milk","Insects","Seeds","Eggs"],"fact":"Mammals have hair or fur and most give birth to live young."},
+  {"cat":"living","em":"🌿","q":"Which of these animals is a mammal?","ans":"A dolphin","opts":["A dolphin","A shark","A trout","A frog"],"fact":"Dolphins breathe air, are warm-blooded and feed their calves with milk."},
+  {"cat":"living","em":"🌿","q":"Which group of vertebrates has feathers and lays eggs?","ans":"Birds","opts":["Birds","Reptiles","Mammals","Fish"],"fact":"Most birds can fly, but ostriches and penguins cannot."},
+  {"cat":"living","em":"🌿","q":"Which group of animals breathes with gills?","ans":"Fish","opts":["Fish","Mammals","Birds","Reptiles"],"fact":"Gills take oxygen from the water."},
+  {"cat":"living","em":"🌿","q":"Reptiles have…","ans":"Dry skin covered with scales","opts":["Dry skin covered with scales","Soft, wet skin with no scales","Feathers all over the body","Fur and a layer of fat"],"fact":"Snakes, lizards, turtles and crocodiles are reptiles."},
+  {"cat":"living","em":"🌿","q":"Amphibians (like frogs)…","ans":"Live in water first and then on land","opts":["Live in water first and then on land","Live all their life in the deep sea","Live only in the trees of forests","Have feathers and lay hard eggs"],"fact":"Young frogs, called tadpoles, live in water and breathe with gills."},
+  {"cat":"living","em":"🌿","q":"A bat is a…","ans":"Mammal","opts":["Mammal","Bird","Insect","Reptile"],"fact":"Bats are the only mammals that can truly fly."},
+  {"cat":"living","em":"🌿","q":"What do herbivores eat?","ans":"Plants","opts":["Plants","Meat","Plants and meat","Only insects"],"fact":"Cows, rabbits and horses are herbivores."},
+  {"cat":"living","em":"🌿","q":"A bear that eats fish, berries and honey is an…","ans":"Omnivore","opts":["Omnivore","Herbivore","Carnivore","Insectivore"],"fact":"Omnivores eat both plants and animals. People are omnivores too."},
+  {"cat":"living","em":"🌿","q":"In a food chain, plants are the…","ans":"Producers","opts":["Producers","Consumers","Decomposers","Predators"],"fact":"Plants make their own food using sunlight."},
+  {"cat":"living","em":"🌿","q":"Fungi and bacteria that break down dead plants and animals are the…","ans":"Decomposers","opts":["Decomposers","Producers","Predators","Herbivores"],"fact":"Decomposers return nutrients to the soil."},
+  {"cat":"living","em":"🌿","q":"What do plants need to make their own food (photosynthesis)?","ans":"Sunlight, water and carbon dioxide","opts":["Sunlight, water and carbon dioxide","Soil, sand and a lot of wind","Meat, sunlight and oxygen","Moonlight, salt and oxygen"],"fact":"Photosynthesis happens mainly in the leaves."},
+  {"cat":"living","em":"🌿","q":"Which gas do plants release during photosynthesis?","ans":"Oxygen","opts":["Oxygen","Carbon dioxide","Nitrogen","Helium"],"fact":"Plants make the oxygen that we breathe."},
+  {"cat":"living","em":"🌿","q":"Which part of a plant absorbs water from the soil?","ans":"The roots","opts":["The roots","The leaves","The flowers","The fruit"],"fact":"Roots also hold the plant in the ground."},
+  {"cat":"living","em":"🌿","q":"Which part of a plant makes food using sunlight?","ans":"The leaves","opts":["The leaves","The roots","The seeds","The stem"],"fact":"Leaves are green because they contain chlorophyll."},
+  {"cat":"living","em":"🌿","q":"What does the stem of a plant do?","ans":"It holds the plant up and carries water","opts":["It holds the plant up and carries water","It takes in sunlight to make seeds","It produces the fruit and the flowers","It keeps the roots dry and warm"],"fact":"The stem is like the plant’s ‘pipes’."},
+  {"cat":"living","em":"🌿","q":"What is the function of a flower?","ans":"To help the plant reproduce","opts":["To help the plant reproduce","To absorb water","To hold the plant up","To make oxygen"],"fact":"After pollination, the flower can make fruit and seeds."},
+  {"cat":"living","em":"🌿","q":"What is pollination?","ans":"Pollen moves from one flower to another","opts":["Pollen moves from one flower to another","A seed becomes a plant","A plant makes its own food","A flower loses its petals"],"fact":"Bees, butterflies, the wind and birds can carry pollen."},
+  {"cat":"living","em":"🌿","q":"Seeds grow inside the…","ans":"Fruit","opts":["Fruit","Root","Leaf","Stem"],"fact":"Fruits protect the seeds."},
+  {"cat":"living","em":"🌿","q":"Which of these trees is a conifer (cone-bearing tree)?","ans":"Pine","opts":["Pine","Oak","Poplar","Apple tree"],"fact":"Conifers usually keep their needle-like leaves all year."},
+  {"cat":"living","em":"🌿","q":"A tree that loses its leaves in autumn is called…","ans":"Deciduous","opts":["Deciduous","Evergreen","A conifer","A bush"],"fact":"Poplars and oaks are deciduous trees."},
+  {"cat":"living","em":"🌿","q":"What is a habitat?","ans":"The place where an animal or plant lives","opts":["The place where an animal or plant lives","The food an animal eats","The babies of an animal","The noise an animal makes"],"fact":"Forests, deserts, oceans and rivers are examples of habitats."},
+  {"cat":"living","em":"🌿","q":"What is camouflage?","ans":"When an animal blends in with its surroundings","opts":["When an animal blends in with its surroundings","When an animal sleeps in winter","When an animal travels to a warm place","When an animal changes its voice"],"fact":"Chameleons and stick insects use camouflage to hide."},
+  {"cat":"living","em":"🌿","q":"Which of these animals hibernates in winter?","ans":"A hedgehog","opts":["A hedgehog","A cow","A dog","A horse"],"fact":"During hibernation the animal’s heart beats slowly and it uses very little energy."},
+  {"cat":"living","em":"🌿","q":"A caterpillar turns into a…","ans":"Butterfly","opts":["Butterfly","Beetle","Spider","Bee"],"fact":"Metamorphosis: egg, larva (caterpillar), pupa (chrysalis) and adult."},
+  {"cat":"living","em":"🌿","q":"How many legs does an insect have?","ans":"6","opts":["6","8","4","10"],"fact":"Insects have 6 legs and 3 body parts. Spiders have 8 legs, so they are not insects."},
+  {"cat":"living","em":"🌿","q":"Spiders are NOT insects because they have…","ans":"8 legs","opts":["8 legs","6 legs","Wings","Antennae"],"fact":"Spiders are arachnids."},
+  {"cat":"living","em":"🌿","q":"Animals that are born from eggs are called…","ans":"Oviparous","opts":["Oviparous","Viviparous","Herbivorous","Nocturnal"],"fact":"Birds, reptiles, most fish and insects are oviparous. Viviparous animals are born from their mother’s body."},
+  {"cat":"living","em":"🌿","q":"Animals that are active at night are called…","ans":"Nocturnal","opts":["Nocturnal","Diurnal","Carnivorous","Migratory"],"fact":"Owls and bats are nocturnal."},
+  {"cat":"living","em":"🌿","q":"Mushrooms belong to…","ans":"The fungi kingdom, not plants or animals","opts":["The fungi kingdom, not plants or animals","The plant kingdom, like trees and grass","The animal kingdom, like insects","The mineral kingdom, like rocks"],"fact":"Fungi cannot make their own food like plants, and they do not eat like animals."},
+  {"cat":"living","em":"🌿","q":"What is a microorganism?","ans":"A living thing seen only with a microscope","opts":["A living thing seen only with a microscope","A very big animal that lives in the sea","A kind of mineral found in caves","A tiny part of a plant such as a petal"],"fact":"Bacteria are microorganisms. Some cause diseases and others are useful."},
+  {"cat":"living","em":"🌿","q":"Which is the largest animal in the world?","ans":"The blue whale","opts":["The blue whale","The African elephant","The giraffe","The great white shark"],"fact":"The blue whale can be about 30 metres long."},
+  {"cat":"living","em":"🌿","q":"Which is the fastest land animal?","ans":"The cheetah","opts":["The cheetah","The lion","The horse","The ostrich"],"fact":"A cheetah can run at more than 100 km/h for short distances."},
+  {"cat":"living","em":"🌿","q":"What is the largest land animal?","ans":"The African elephant","opts":["The African elephant","The giraffe","The hippopotamus","The rhinoceros"],"fact":"The giraffe is the tallest, but the elephant is the heaviest."},
+  {"cat":"living","em":"🌿","q":"Seeds can be spread by…","ans":"Wind, water and animals","opts":["Wind, water and animals","Only by the wind","Only by people","Only by the Sun"],"fact":"Dandelion seeds fly, coconuts float and some seeds stick to animals’ fur."},
+  {"cat":"body","em":"🫀","q":"Which organ pumps blood around the body?","ans":"The heart","opts":["The heart","The lungs","The stomach","The brain"],"fact":"The heart is a muscle about the size of your fist."},
+  {"cat":"body","em":"🫀","q":"Which organs do we use to breathe?","ans":"The lungs","opts":["The lungs","The kidneys","The liver","The heart"],"fact":"We breathe in oxygen and breathe out carbon dioxide."},
+  {"cat":"body","em":"🫀","q":"Which organ is the control centre of the body?","ans":"The brain","opts":["The brain","The heart","The stomach","The skin"],"fact":"The brain sends and receives messages through the nerves."},
+  {"cat":"body","em":"🫀","q":"What are the five senses?","ans":"Sight, hearing, smell, taste and touch","opts":["Sight, hearing, smell, taste and touch","Sight, speech, walking, taste and sleep","Hearing, balance, hunger, thirst and touch","Sight, smell, memory, taste and touch"],"fact":"Each sense has its own sense organ."},
+  {"cat":"body","em":"🫀","q":"Which sense organ do we use to smell?","ans":"The nose","opts":["The nose","The tongue","The ears","The skin"],"fact":"Smell and taste work together when we eat."},
+  {"cat":"body","em":"🫀","q":"Which sense organ lets us taste flavours?","ans":"The tongue","opts":["The tongue","The nose","The eyes","The ears"],"fact":"The tongue can detect sweet, salty, sour, bitter and umami."},
+  {"cat":"body","em":"🫀","q":"Which is the largest organ of the human body?","ans":"The skin","opts":["The skin","The liver","The brain","The heart"],"fact":"The skin protects us and lets us feel touch, heat and cold."},
+  {"cat":"body","em":"🫀","q":"How many bones does an adult human have?","ans":"206","opts":["206","106","306","60"],"fact":"Babies are born with about 300 soft bones; some fuse together as we grow."},
+  {"cat":"body","em":"🫀","q":"Which is the longest bone in the human body?","ans":"The femur (thigh bone)","opts":["The femur (thigh bone)","The skull","The rib","The humerus (upper arm)"],"fact":"The femur is also the strongest bone."},
+  {"cat":"body","em":"🫀","q":"What do muscles do?","ans":"They contract to make our body move","opts":["They contract to make our body move","They carry oxygen to all the cells","They make new blood every day","They break down the food we eat"],"fact":"Muscles work in pairs: one contracts while the other relaxes."},
+  {"cat":"body","em":"🫀","q":"What is the main job of the skeleton?","ans":"To support the body and protect organs","opts":["To support the body and protect organs","To digest all the food that we eat","To pump blood around the body","To send messages to the brain"],"fact":"Bones also store calcium and make blood cells in the bone marrow."},
+  {"cat":"body","em":"🫀","q":"Which part of the skeleton protects the brain?","ans":"The skull","opts":["The skull","The ribs","The spine","The pelvis"],"fact":"The skull is made of several bones joined together."},
+  {"cat":"body","em":"🫀","q":"Which bones protect the heart and the lungs?","ans":"The ribs","opts":["The ribs","The skull","The femur","The pelvis"],"fact":"There are 12 pairs of ribs."},
+  {"cat":"body","em":"🫀","q":"The spinal cord is protected by the…","ans":"Backbone (spine)","opts":["Backbone (spine)","Ribs","Skull","Pelvis"],"fact":"The spine is made of small bones called vertebrae."},
+  {"cat":"body","em":"🫀","q":"Where does food go after the mouth?","ans":"The oesophagus, then the stomach","opts":["The oesophagus, then the stomach","The lungs, then the heart","The kidneys, then the liver","The windpipe, then the brain"],"fact":"Food travels down the oesophagus to the stomach."},
+  {"cat":"body","em":"🫀","q":"What does the stomach do?","ans":"Mixes food with juices to break it down","opts":["Mixes food with juices to break it down","Pumps blood to the whole body","Filters the air that we breathe","Makes the tears that clean the eyes"],"fact":"Stomach juices contain acid that helps to digest food."},
+  {"cat":"body","em":"🫀","q":"Where is most of the food absorbed into the blood?","ans":"The small intestine","opts":["The small intestine","The stomach","The mouth","The oesophagus"],"fact":"The small intestine is about 6–7 metres long!"},
+  {"cat":"body","em":"🫀","q":"Which system carries blood around the body?","ans":"The circulatory system","opts":["The circulatory system","The digestive system","The respiratory system","The nervous system"],"fact":"The heart, arteries, veins and capillaries make the circulatory system."},
+  {"cat":"body","em":"🫀","q":"Which system helps us to breathe?","ans":"The respiratory system","opts":["The respiratory system","The digestive system","The circulatory system","The skeletal system"],"fact":"Nose, trachea and lungs are part of the respiratory system."},
+  {"cat":"body","em":"🫀","q":"Which system is made up of the brain, the spinal cord and the nerves?","ans":"The nervous system","opts":["The nervous system","The muscular system","The digestive system","The excretory system"],"fact":"Nerves carry messages very fast."},
+  {"cat":"body","em":"🫀","q":"Which organs clean the blood and make urine?","ans":"The kidneys","opts":["The kidneys","The lungs","The intestines","The liver"],"fact":"We have two kidneys, shaped like beans."},
+  {"cat":"body","em":"🫀","q":"What do red blood cells carry?","ans":"Oxygen","opts":["Oxygen","Germs","Food","Sunlight"],"fact":"Red blood cells give blood its red colour."},
+  {"cat":"body","em":"🫀","q":"What do white blood cells do?","ans":"They fight germs","opts":["They fight germs","They carry oxygen","They make bones","They digest food"],"fact":"White blood cells are part of the defence system of the body."},
+  {"cat":"body","em":"🫀","q":"Which blood vessels carry blood back to the heart?","ans":"Veins","opts":["Veins","Arteries","Nerves","Muscles"],"fact":"Arteries carry blood away from the heart."},
+  {"cat":"body","em":"🫀","q":"Which waste gas does our body get rid of when we breathe out?","ans":"Carbon dioxide","opts":["Carbon dioxide","Oxygen","Helium","Hydrogen"],"fact":"Our cells make carbon dioxide as a waste gas, and the lungs send it out."},
+  {"cat":"body","em":"🫀","q":"Which nutrients give us quick energy (like bread, pasta and rice)?","ans":"Carbohydrates","opts":["Carbohydrates","Proteins","Vitamins","Water"],"fact":"Carbohydrates are the body’s main fuel."},
+  {"cat":"body","em":"🫀","q":"Which nutrients help to build and repair our muscles?","ans":"Proteins","opts":["Proteins","Sugars","Fats only","Salt"],"fact":"Meat, fish, eggs, beans and milk have proteins."},
+  {"cat":"body","em":"🫀","q":"Calcium helps us to have…","ans":"Strong bones and teeth","opts":["Strong bones and teeth","Better eyesight at night","Faster and stronger legs","Healthier and curlier hair"],"fact":"Milk, cheese and yoghurt are rich in calcium."},
+  {"cat":"body","em":"🫀","q":"Our skin makes vitamin D when it is exposed to…","ans":"Sunlight","opts":["Sunlight","Cold water","Darkness","Wind"],"fact":"Vitamin D helps the body to absorb calcium. But we must also protect our skin from too much sun."},
+  {"cat":"body","em":"🫀","q":"How many baby (milk) teeth do children have?","ans":"20","opts":["20","32","10","28"],"fact":"Adults have 32 teeth, including the wisdom teeth."},
+  {"cat":"body","em":"🫀","q":"Which part of the eye lets light in?","ans":"The pupil","opts":["The pupil","The eyelid","The eyelash","The tear duct"],"fact":"The pupil gets smaller in bright light."},
+  {"cat":"body","em":"🫀","q":"What does the eardrum do?","ans":"It vibrates when sound arrives","opts":["It vibrates when sound arrives","It lets light in","It controls balance only","It makes earwax"],"fact":"Vibrations pass to tiny bones inside the ear and then to the brain."},
+  {"cat":"body","em":"🫀","q":"What is the smallest bone in the human body?","ans":"The stapes (in the ear)","opts":["The stapes (in the ear)","The femur, in the leg","The kneecap, in the knee","The rib, in the chest"],"fact":"The stapes is about 3 millimetres long."},
+  {"cat":"body","em":"🫀","q":"Why do we sweat?","ans":"To cool the body down","opts":["To cool the body down","To get more oxygen","To digest food","To grow taller"],"fact":"As sweat dries on the skin it takes heat away."},
+  {"cat":"body","em":"🫀","q":"How many hours of sleep do children of your age need?","ans":"9 to 11 hours","opts":["9 to 11 hours","4 to 5 hours","6 hours","14 hours"],"fact":"While we sleep, the body rests, grows and the brain organises memories."},
+  {"cat":"body","em":"🫀","q":"Which muscle never stops working?","ans":"The heart","opts":["The heart","The biceps","The tongue","The eyelid"],"fact":"The heart beats about 100,000 times a day."},
+  {"cat":"method","em":"🔬","q":"What is the first step of the scientific method?","ans":"Observe and ask a question","opts":["Observe and ask a question","Write the conclusion","Share the results","Build a model"],"fact":"Science begins with curiosity: you notice something and ask ‘why?’"},
+  {"cat":"method","em":"🔬","q":"What is a hypothesis?","ans":"An idea or prediction you can test","opts":["An idea or prediction you can test","The final result of an experiment","A tool that scientists use in labs","A kind of experiment with plants"],"fact":"Example: ‘Plants grow taller with more light.’"},
+  {"cat":"method","em":"🔬","q":"What is an experiment?","ans":"A test to check if a hypothesis is right","opts":["A test to check if a hypothesis is right","A guess that nobody tests or checks","A special microscope for tiny things","A notebook where scientists draw"],"fact":"Experiments must be done carefully and written down."},
+  {"cat":"method","em":"🔬","q":"After doing an experiment, what do scientists do with their results?","ans":"Analyse them and draw a conclusion","opts":["Analyse them and draw a conclusion","Throw them away and start again","Hide them so nobody can see them","Change them to match the hypothesis"],"fact":"The conclusion says whether the hypothesis was right or wrong."},
+  {"cat":"method","em":"🔬","q":"Which tool is used to see very tiny things, like cells?","ans":"A microscope","opts":["A microscope","A telescope","A thermometer","A ruler"],"fact":"Microscopes make small things look much bigger."},
+  {"cat":"method","em":"🔬","q":"Which tool is used to look at stars and planets?","ans":"A telescope","opts":["A telescope","A microscope","A balance","A stopwatch"],"fact":"Galileo used a telescope to observe the Moon and Jupiter."},
+  {"cat":"method","em":"🔬","q":"Which tool is used to measure temperature?","ans":"A thermometer","opts":["A thermometer","A balance","A ruler","A measuring cylinder"],"fact":"Temperature is measured in degrees Celsius (°C)."},
+  {"cat":"method","em":"🔬","q":"Which tool is used to measure the mass of an object?","ans":"A balance (scale)","opts":["A balance (scale)","A thermometer","A telescope","A compass"],"fact":"Mass is measured in grams (g) and kilograms (kg)."},
+  {"cat":"method","em":"🔬","q":"Which tool is used to measure the volume of a liquid?","ans":"A measuring cylinder","opts":["A measuring cylinder","A ruler","A balance","A stopwatch"],"fact":"Volume is measured in millilitres (ml) and litres (l)."},
+  {"cat":"method","em":"🔬","q":"Which unit do we use to measure length?","ans":"Metre","opts":["Metre","Litre","Kilogram","Second"],"fact":"1 metre = 100 centimetres."},
+  {"cat":"method","em":"🔬","q":"Which unit do we use to measure mass?","ans":"Kilogram","opts":["Kilogram","Metre","Litre","Degree"],"fact":"1 kilogram = 1,000 grams."},
+  {"cat":"method","em":"🔬","q":"Which unit do we use to measure time?","ans":"Second","opts":["Second","Metre","Gram","Litre"],"fact":"60 seconds = 1 minute."},
+  {"cat":"method","em":"🔬","q":"What is a ‘fair test’?","ans":"An experiment where only one thing is changed at a time","opts":["An experiment where only one thing is changed at a time","An experiment that is very easy","An experiment with many changes at once","An experiment without measuring"],"fact":"If you change several things, you cannot know which one caused the result."},
+  {"cat":"method","em":"🔬","q":"Why do scientists repeat their experiments?","ans":"To check that the results are reliable","opts":["To check that the results are reliable","Because they forgot the results","To waste time","To change the hypothesis"],"fact":"If the same result happens again and again we can trust it more."},
+  {"cat":"method","em":"🔬","q":"What does ‘to observe’ mean?","ans":"To look carefully and notice details","opts":["To look carefully and notice details","To guess the answer without looking","To break something to see inside","To draw a map of the laboratory"],"fact":"Scientists use their senses and tools to observe."},
+  {"cat":"method","em":"🔬","q":"What is data?","ans":"Information collected in an experiment","opts":["Information collected in an experiment","A very special kind of laboratory machine","The name of a famous scientist","A type of rock found in labs"],"fact":"Data can be numbers, drawings or notes."},
+  {"cat":"method","em":"🔬","q":"Which is a good way to show data clearly?","ans":"A table or a graph","opts":["A table or a graph","A long story with no numbers","A secret code","A photo of the lab"],"fact":"Bar charts, line graphs and tables make data easy to read."},
+  {"cat":"method","em":"🔬","q":"What should you wear in the lab to protect your eyes?","ans":"Safety goggles","opts":["Safety goggles","Sunglasses","A hat","Headphones"],"fact":"Always follow the teacher’s safety rules."},
+  {"cat":"method","em":"🔬","q":"A scientist who studies rocks is called a…","ans":"Geologist","opts":["Geologist","Botanist","Zoologist","Astronomer"],"fact":"‘Geo’ means Earth."},
+  {"cat":"method","em":"🔬","q":"A scientist who studies plants is called a…","ans":"Botanist","opts":["Botanist","Zoologist","Geologist","Meteorologist"],"fact":"Plants are studied in botany."},
+  {"cat":"method","em":"🔬","q":"A scientist who studies animals is called a…","ans":"Zoologist","opts":["Zoologist","Botanist","Geologist","Astronomer"],"fact":"Animals are studied in zoology."},
+  {"cat":"method","em":"🔬","q":"A scientist who studies the weather is called a…","ans":"Meteorologist","opts":["Meteorologist","Astronomer","Geologist","Botanist"],"fact":"Meteorologists make weather forecasts."},
+  {"cat":"method","em":"🔬","q":"A scientist who studies stars and planets is called an…","ans":"Astronomer","opts":["Astronomer","Archaeologist","Zoologist","Geologist"],"fact":"Astronomy is one of the oldest sciences."},
+  {"cat":"method","em":"🔬","q":"A scientist who studies fossils is called a…","ans":"Palaeontologist","opts":["Palaeontologist","Meteorologist","Botanist","Astronomer"],"fact":"Fossils are the remains of living things from millions of years ago."},
+  {"cat":"method","em":"🔬","q":"Who discovered penicillin, the first antibiotic, in 1928?","ans":"Alexander Fleming","opts":["Alexander Fleming","Isaac Newton","Marie Curie","Albert Einstein"],"fact":"Penicillin has saved millions of lives."},
+  {"cat":"method","em":"🔬","q":"Which Spanish scientist won the Nobel Prize in 1906 for his work on neurons?","ans":"Santiago Ramón y Cajal","opts":["Santiago Ramón y Cajal","Severo Ochoa","Isaac Peral","Miguel de Cervantes"],"fact":"Ramón y Cajal is considered the father of modern neuroscience. Cervantes was a writer."},
+  {"cat":"method","em":"🔬","q":"Who explained the theory of evolution by natural selection?","ans":"Charles Darwin","opts":["Charles Darwin","Galileo Galilei","Louis Pasteur","Thomas Edison"],"fact":"Darwin published ‘On the Origin of Species’ in 1859."},
+  {"cat":"matter","em":"⚡","q":"What are the three main states of matter?","ans":"Solid, liquid and gas","opts":["Solid, liquid and gas","Hot, warm and cold","Hard, soft and wet","Rock, water and wind"],"fact":"Matter is everything that has mass and takes up space."},
+  {"cat":"matter","em":"⚡","q":"Which state of matter has its own shape and volume?","ans":"Solid","opts":["Solid","Liquid","Gas","Vapour"],"fact":"A solid keeps its shape unless a force changes it."},
+  {"cat":"matter","em":"⚡","q":"A liquid…","ans":"Takes the shape of its container","opts":["Takes the shape of its container","Always keeps its own shape","Fills all the space it is in","Cannot be poured"],"fact":"Water, milk and oil are liquids."},
+  {"cat":"matter","em":"⚡","q":"A gas…","ans":"Spreads out and fills its container","opts":["Spreads out and fills its container","Always keeps its own fixed shape","Cannot spread out in a room","Is always much heavier than a solid"],"fact":"Air is a mixture of gases."},
+  {"cat":"matter","em":"⚡","q":"What is melting?","ans":"A solid turning into a liquid","opts":["A solid turning into a liquid","A liquid turning into a solid","A liquid turning into a gas","A gas turning into a liquid"],"fact":"Ice melts into water when it is heated."},
+  {"cat":"matter","em":"⚡","q":"What is freezing?","ans":"A liquid turning into a solid","opts":["A liquid turning into a solid","A solid turning into a liquid","A gas turning into a liquid","A liquid turning into a gas"],"fact":"Water freezes at 0 °C."},
+  {"cat":"matter","em":"⚡","q":"What is condensation?","ans":"A gas turning into a liquid","opts":["A gas turning into a liquid","A liquid turning into a gas","A solid turning into a liquid","A liquid turning into a solid"],"fact":"The drops on a cold glass are water vapour that has condensed."},
+  {"cat":"matter","em":"⚡","q":"What is evaporation?","ans":"A liquid turning into a gas","opts":["A liquid turning into a gas","A gas turning into a liquid","A solid turning into a liquid","A liquid turning into a solid"],"fact":"Wet clothes dry because the water evaporates."},
+  {"cat":"matter","em":"⚡","q":"At what temperature does water boil (at sea level)?","ans":"100 °C","opts":["100 °C","0 °C","50 °C","212 °C"],"fact":"Water boils at 100 °C and freezes at 0 °C."},
+  {"cat":"matter","em":"⚡","q":"At what temperature does water freeze?","ans":"0 °C","opts":["0 °C","10 °C","32 °C","−100 °C"],"fact":"Salt water freezes at a lower temperature than fresh water."},
+  {"cat":"matter","em":"⚡","q":"What is mass?","ans":"The amount of matter in an object","opts":["The amount of matter in an object","The space an object takes up","How hot an object is","How fast an object moves"],"fact":"Mass is measured in kilograms."},
+  {"cat":"matter","em":"⚡","q":"What is volume?","ans":"The amount of space that an object takes up","opts":["The amount of space that an object takes up","The amount of matter in an object","How heavy an object feels","How fast an object moves"],"fact":"Volume is measured in litres or cubic metres."},
+  {"cat":"matter","em":"⚡","q":"Which of these is a mixture?","ans":"Salt water","opts":["Salt water","Pure gold","Oxygen","Distilled water"],"fact":"A mixture contains two or more substances that are not chemically joined."},
+  {"cat":"matter","em":"⚡","q":"How can you separate sand from water?","ans":"By filtering","opts":["By filtering","By using a magnet","By freezing","By weighing"],"fact":"The sand stays in the filter paper."},
+  {"cat":"matter","em":"⚡","q":"How can you get salt back from salt water?","ans":"By evaporation","opts":["By evaporation","By filtering","By using a magnet","By cooling it"],"fact":"The water evaporates and the salt stays behind. This is how sea salt is made."},
+  {"cat":"matter","em":"⚡","q":"How can you separate iron nails from sand?","ans":"With a magnet","opts":["With a magnet","By filtering","By evaporation","By freezing"],"fact":"Magnets attract iron."},
+  {"cat":"matter","em":"⚡","q":"Which of these will a magnet attract?","ans":"An iron nail","opts":["An iron nail","A plastic spoon","A wooden pencil","A glass marble"],"fact":"Magnets attract iron, nickel and cobalt."},
+  {"cat":"matter","em":"⚡","q":"What happens when two north poles of magnets are brought together?","ans":"They repel (push away)","opts":["They repel (push away)","They attract (pull together)","Nothing happens at all","They melt together"],"fact":"Opposite poles attract; like poles repel."},
+  {"cat":"matter","em":"⚡","q":"Which materials are good conductors of electricity?","ans":"Metals","opts":["Metals","Plastic","Rubber","Wood"],"fact":"Copper wires are used in cables because copper is a very good conductor."},
+  {"cat":"matter","em":"⚡","q":"Which of these is a good insulator (does not conduct electricity)?","ans":"Rubber","opts":["Rubber","Copper","Iron","Aluminium"],"fact":"Electricians use rubber and plastic to cover wires."},
+  {"cat":"matter","em":"⚡","q":"What is an electric circuit?","ans":"A closed path that electricity flows around","opts":["A closed path that electricity flows around","A special kind of very strong battery","A type of magnet made of copper","A machine that makes light and heat"],"fact":"A circuit needs a source (like a battery), wires and something to power (like a bulb)."},
+  {"cat":"matter","em":"⚡","q":"What does a switch do in a circuit?","ans":"It opens or closes the circuit","opts":["It opens or closes the circuit","It makes electricity","It stores energy","It makes the wires hot"],"fact":"When the circuit is open the electricity cannot flow."},
+  {"cat":"matter","em":"⚡","q":"Which force pulls objects towards the Earth?","ans":"Gravity","opts":["Gravity","Friction","Magnetism","Wind"],"fact":"Gravity makes things fall."},
+  {"cat":"matter","em":"⚡","q":"Which force slows down an object that slides over a surface?","ans":"Friction","opts":["Friction","Gravity","Magnetism","Light"],"fact":"Rough surfaces create more friction than smooth ones."},
+  {"cat":"matter","em":"⚡","q":"Which of these is a renewable energy source?","ans":"Solar energy (from the Sun)","opts":["Solar energy (from the Sun)","Coal, burnt in power stations","Oil, pumped from underground","Natural gas from the ground"],"fact":"Renewable sources, like the Sun, wind and water, do not run out."},
+  {"cat":"matter","em":"⚡","q":"Which of these are fossil fuels?","ans":"Coal, oil and natural gas","opts":["Coal, oil and natural gas","Wind, Sun and water","Wood and paper","Iron and copper"],"fact":"Fossil fuels are non-renewable and pollute the air when burned."},
+  {"cat":"matter","em":"⚡","q":"What do wind turbines produce?","ans":"Electricity from the wind","opts":["Electricity from the wind","Water from the wind","Gas from the Sun","Heat from rocks"],"fact":"Spain is one of the world’s leading countries in wind energy."},
+  {"cat":"matter","em":"⚡","q":"What do solar panels produce?","ans":"Electricity from sunlight","opts":["Electricity from sunlight","Wind for the turbines","Coal for power stations","Water for the reservoirs"],"fact":"Solar panels are very useful in sunny countries like Spain."},
+  {"cat":"matter","em":"⚡","q":"Sound travels as…","ans":"Vibrations (waves)","opts":["Vibrations (waves)","Light rays","Heat","Magnets"],"fact":"When a guitar string vibrates, the air around it vibrates too."},
+  {"cat":"matter","em":"⚡","q":"Sound cannot travel through…","ans":"Empty space (a vacuum)","opts":["Empty space (a vacuum)","Normal air in a room","The water of the sea","A long metal rail"],"fact":"That is why there is no sound in space."},
+  {"cat":"matter","em":"⚡","q":"Which travels faster, light or sound?","ans":"Light","opts":["Light","Sound","They travel at the same speed","It depends on the day"],"fact":"In a storm we see lightning first and hear the thunder later."},
+  {"cat":"matter","em":"⚡","q":"Light travels in…","ans":"Straight lines","opts":["Straight lines","Circles","Zigzags","Waves of sound"],"fact":"That is why shadows have sharp edges."},
+  {"cat":"matter","em":"⚡","q":"What is a shadow?","ans":"An area where light is blocked","opts":["An area where light is blocked","A special kind of coloured light","A reflection that we see in water","A part of the light that is hotter"],"fact":"Shadows are formed when an opaque object blocks the light."},
+  {"cat":"matter","em":"⚡","q":"Which material is transparent?","ans":"Glass","opts":["Glass","Wood","Metal","Cardboard"],"fact":"Transparent materials let light pass through completely."},
+  {"cat":"matter","em":"⚡","q":"Which material is opaque?","ans":"Wood","opts":["Wood","Glass","Clean water","Clear plastic"],"fact":"Opaque materials do not let light through."},
+  {"cat":"matter","em":"⚡","q":"A see-saw is an example of a…","ans":"Lever","opts":["Lever","Pulley","Ramp","Wheel"],"fact":"A lever is a simple machine that helps us lift things."},
+  {"cat":"matter","em":"⚡","q":"Which weighs more: 1 kg of cotton or 1 kg of iron?","ans":"They weigh the same","opts":["They weigh the same","The iron","The cotton","It depends on the shape"],"fact":"Both are 1 kg. The cotton just takes up much more space."},
+  {"cat":"matter","em":"⚡","q":"Heat always flows from…","ans":"Hot objects to colder ones","opts":["Hot objects to colder ones","Cold objects to hotter ones","Small objects to big ones","The ground to the sky"],"fact":"That is why a hot drink cools down in a cold room."},
+  {"cat":"matter","em":"⚡","q":"What type of energy does the Sun give us?","ans":"Light and heat","opts":["Light and heat","Sound","Wind","Magnetism"],"fact":"Almost all energy on Earth comes from the Sun."}
 ];
 
 /* ══════════════════════════════════════
@@ -2957,8 +3806,8 @@ const ATTN_PAIRS=[['🟢','🟩'],['🔵','🟦'],['🔴','🟥'],['🟡','🟨'
    STATE
 ══════════════════════════════════════ */
 function blankT(){ return {unlocked:1,done:{}}; }
-function blankWeak(){ return {comp:{},ana:{},err:{},dict:{},geo:{},logic:{},calc:{},prob:{},lect:{},grp:{},seq:{},curio:{},frac:{},med:{},sinan:{},tippal:{},analog:{},matrix:{},cien:{},acent:{},detect:{},cross:{},explora:{},creative:{},vocab:{},geoloc:{},genus:{}}; }
-function blankP(n,e){ return {name:n,emoji:e,math:blankT(),lang:blankT(),logic:blankT(),curio:blankT(),cien:blankT(),detect:blankT(),explora:blankT(),creative:blankT(),vocab:blankT(),geoloc:blankT(),memoria:blankT(),coins:0,earned:0,maxStreak:0,hadPerfect:false,achievements:[],avatars:[e],weak:blankWeak(),creativeLog:[]}; }
+function blankWeak(){ return {comp:{},ana:{},err:{},dict:{},geo:{},logic:{},calc:{},prob:{},lect:{},grp:{},seq:{},curio:{},frac:{},med:{},sinan:{},tippal:{},analog:{},matrix:{},cien:{},acent:{},detect:{},cross:{},explora:{},creative:{},vocab:{},geoloc:{},genus:{},syl:{},sylc:{},sci:{}}; }
+function blankP(n,e){ return {name:n,emoji:e,math:blankT(),lang:blankT(),logic:blankT(),curio:blankT(),cien:blankT(),detect:blankT(),explora:blankT(),creative:blankT(),vocab:blankT(),geoloc:blankT(),memoria:blankT(),sci:blankT(),coins:0,earned:0,maxStreak:0,hadPerfect:false,achievements:[],avatars:[e],weak:blankWeak(),creativeLog:[]}; }
 
 function loadProfiles(){
   try{
@@ -2973,12 +3822,17 @@ function loadProfiles(){
         if(!d[id].weak.vocab)d[id].weak.vocab={};
         if(!d[id].weak.geoloc)d[id].weak.geoloc={};
         if(!d[id].weak.genus)d[id].weak.genus={};
+        if(!d[id].weak.syl)d[id].weak.syl={};
+        if(!d[id].weak.sylc)d[id].weak.sylc={};
+        if(!d[id].weak.sci)d[id].weak.sci={};
+        if(!d[id].sci)d[id].sci={unlocked:1,done:{}};
         if(!d[id].detect)d[id].detect={unlocked:1,done:{}};
         if(!d[id].explora)d[id].explora={unlocked:1,done:{}};
         if(!d[id].creative)d[id].creative={unlocked:1,done:{}};
         if(!d[id].vocab)d[id].vocab={unlocked:1,done:{}};
         if(!d[id].geoloc)d[id].geoloc={unlocked:1,done:{}};
         if(!d[id].memoria)d[id].memoria={unlocked:1,done:{}};
+        if(!d[id].sci)d[id].sci={unlocked:1,done:{}};
         if(!d[id].creativeLog)d[id].creativeLog=[];
       });
       return d;
@@ -2989,7 +3843,7 @@ function loadProfiles(){
       const d=JSON.parse(s);
       ['p1','p2'].forEach(id=>{
         if(!d[id].weak)d[id].weak=blankWeak();
-        ['comp','ana','err','dict','geo','logic','calc','prob','lect','grp','seq','curio','frac','med','sinan','tippal','analog','matrix','cien','acent','detect','cross','explora','creative','vocab','geoloc','genus'].forEach(t=>{if(!d[id].weak[t])d[id].weak[t]={};});
+        ['comp','ana','err','dict','geo','logic','calc','prob','lect','grp','seq','curio','frac','med','sinan','tippal','analog','matrix','cien','acent','detect','cross','explora','creative','vocab','geoloc','genus','syl','sylc','sci'].forEach(t=>{if(!d[id].weak[t])d[id].weak[t]={};});
         if(!d[id].logic)d[id].logic={unlocked:1,done:{}};
         if(!d[id].curio)d[id].curio={unlocked:1,done:{}};
         if(!d[id].cien)d[id].cien={unlocked:1,done:{}};
@@ -2999,6 +3853,7 @@ function loadProfiles(){
         if(!d[id].vocab)d[id].vocab={unlocked:1,done:{}};
         if(!d[id].geoloc)d[id].geoloc={unlocked:1,done:{}};
         if(!d[id].memoria)d[id].memoria={unlocked:1,done:{}};
+        if(!d[id].sci)d[id].sci={unlocked:1,done:{}};
         if(!d[id].creativeLog)d[id].creativeLog=[];
       });
       return d;
@@ -3189,6 +4044,7 @@ function totalStars(p){
   if(p.vocab) for(const v of Object.values(p.vocab.done)) t+=v;
   if(p.geoloc) for(const v of Object.values(p.geoloc.done)) t+=v;
   if(p.memoria) for(const v of Object.values(p.memoria.done)) t+=v;
+  if(p.sci) for(const v of Object.values(p.sci.done)) t+=v;
   return t;
 }
 
@@ -3207,7 +4063,8 @@ function checkAchs(){
   const voD=Object.values(p.vocab?.done||{});
   const glD=Object.values(p.geoloc?.done||{});
   const mrD=Object.values(p.memoria?.done||{});
-  const aD=[...mD,...lD,...lgD,...cD,...ciD,...dtD,...exD,...crD,...voD,...glD,...mrD];
+  const scD=Object.values(p.sci?.done||{});
+  const aD=[...mD,...lD,...lgD,...cD,...ciD,...dtD,...exD,...crD,...voD,...glD,...mrD,...scD];
   const cond={
     first_pass:  ()=>aD.length>=1,
     perfect_10:  ()=>p.hadPerfect,
@@ -3231,7 +4088,8 @@ function checkAchs(){
     vocab_done:  ()=>voD.length>=VOCAB_LVS.length,
     geoloc_done: ()=>glD.length>=GEOLOC_LVS.length,
     memoria_done:()=>mrD.length>=MEMORIA_LVS.length,
-    master:      ()=>mD.length>=MATH_LVS.length&&lD.length>=LANG_LVS.length&&lgD.length>=LOGIC_LVS.length&&cD.length>=CURIO_LVS.length&&ciD.length>=CIENCIA_LVS.length&&dtD.length>=DETECT_LVS.length&&exD.length>=EXPLORA_LVS.length&&crD.length>=CREATIVE_LVS.length&&voD.length>=VOCAB_LVS.length&&glD.length>=GEOLOC_LVS.length&&mrD.length>=MEMORIA_LVS.length
+    sci_done:    ()=>scD.length>=SCI_LVS.length,
+    master:      ()=>mD.length>=MATH_LVS.length&&lD.length>=LANG_LVS.length&&lgD.length>=LOGIC_LVS.length&&cD.length>=CURIO_LVS.length&&ciD.length>=CIENCIA_LVS.length&&dtD.length>=DETECT_LVS.length&&exD.length>=EXPLORA_LVS.length&&crD.length>=CREATIVE_LVS.length&&voD.length>=VOCAB_LVS.length&&glD.length>=GEOLOC_LVS.length&&mrD.length>=MEMORIA_LVS.length&&scD.length>=SCI_LVS.length
   };
   const news=[];
   for(const a of ACHS){
@@ -3288,7 +4146,7 @@ function markW(type, key, correct){
 // Count total weak items across content types for a profile
 function totalWeak(p){
   if(!p.weak) return 0;
-  return ['comp','ana','err','dict','geo','logic','prob','lect','grp','seq','curio','frac','med','sinan','tippal','analog','matrix','cien','acent','detect','cross','explora','vocab','geoloc'].reduce((t,k)=>t+Object.keys(p.weak[k]||{}).length,0);
+  return ['comp','ana','err','dict','geo','logic','prob','lect','grp','seq','curio','frac','med','sinan','tippal','analog','matrix','cien','acent','detect','cross','explora','vocab','geoloc','genus','syl','sylc','sci'].reduce((t,k)=>t+Object.keys(p.weak[k]||{}).length,0);
 }
 
 // Count weak items relevant to a specific level
@@ -3311,7 +4169,10 @@ function lvlWeak(track, lv){
   if(lv.tp==='sopa'||lv.tp==='sudoku') return 0;
   if(lv.tp==='frac')   return Object.keys(w.frac||{}).length;
   if(lv.tp==='med')    return Object.keys(w.med||{}).length;
-  if(lv.tp==='sinan')  return Object.keys(w.sinan||{}).length;
+  if(lv.tp==='sinan'){const k=lv.p&&lv.p.kind;const rel=(k==='sin'||k==='ant')?sinanQ.filter(x=>x.tp===k):sinanQ;const wk=new Set(Object.keys(w.sinan||{}));return rel.filter(x=>wk.has(x.q+'|'+x.ans)).length;}
+  if(lv.tp==='syl'){const rel=sylW.filter(x=>x.d===lv.p.diff);const wk=new Set(Object.keys(w.syl||{}));return rel.filter(x=>wk.has(x.h)).length;}
+  if(lv.tp==='sylc'){const rel=sylcQ.filter(x=>lv.p.cats.includes(x.cat));const wk=new Set(Object.keys(w.sylc||{}));return rel.filter(x=>wk.has(x.k)).length;}
+  if(lv.tp==='sci'){const rel=lv.p.cat==='all'?sciQ:sciQ.filter(x=>x.cat===lv.p.cat);const wk=new Set(Object.keys(w.sci||{}));return rel.filter(x=>wk.has(x.q)).length;}
   if(lv.tp==='tippal') return Object.keys(w.tippal||{}).length;
   if(lv.tp==='genus') return Object.keys(w.genus||{}).length;
   if(lv.tp==='analog') return Object.keys(w.analog||{}).length;
@@ -3329,27 +4190,37 @@ function lvlWeak(track, lv){
 }
 
 // Build annotated pool: marks each item with _wk, _type, _key, _disp
-// Weak items are shuffled into the first half so they appear early
+// Session cap: never more than CURCAP (20) questions per session.
+// Weak items (up to half the session) are picked first and placed early;
+// the rest are the items seen least recently, so the whole bank rotates.
+let CURCAP=20;
 function smartPool(type, allItems, keyFn, dispFn){
   const w=getW(type);
+  const p=P(); if(!p.seen) p.seen={}; if(!p.seen[type]) p.seen[type]={};
+  const seen=p.seen[type];
   const annotated=allItems.map(item=>{
     const key=keyFn(item);
     return {...item,_wk:(w[key]||0)>0,_type:type,_key:key,_disp:dispFn?dispFn(item):''};
   });
+  const cap=Math.max(1,Math.min(CURCAP||20, annotated.length));
   const wkItems=shuffle(annotated.filter(x=>x._wk));
-  const nrItems=shuffle(annotated.filter(x=>!x._wk));
-  if(!wkItems.length) return nrItems;
+  // least-recently-seen first (random among ties)
+  const nrItems=shuffle(annotated.filter(x=>!x._wk)).sort((a,b)=>(seen[a._key]||0)-(seen[b._key]||0));
+  const wkTake=Math.min(wkItems.length, Math.ceil(cap*.5));
+  let sel=[...wkItems.slice(0,wkTake), ...nrItems.slice(0,cap-wkTake)];
+  if(sel.length<cap) sel=sel.concat(wkItems.slice(wkTake, wkTake+cap-sel.length));
+  const now=Date.now();
+  sel.forEach(x=>{seen[x._key]=now;});
+  const selWk=sel.filter(x=>x._wk), selNr=shuffle(sel.filter(x=>!x._wk));
+  if(!selWk.length) return selNr;
   // Place weak items within first 65% of slots, rest normal
-  const total=annotated.length;
+  const total=sel.length;
   const earlyMax=Math.ceil(total*.65);
-  const earlyCount=Math.min(wkItems.length, earlyMax);
+  const earlyCount=Math.min(selWk.length, earlyMax);
   const earlySlots=shuffle([...Array(earlyMax).keys()]).slice(0,earlyCount);
   const result=new Array(total).fill(null);
-  earlySlots.forEach((slot,i)=>result[slot]=wkItems[i]);
-  // Anything left over (weak items that didn't fit early + all normal items)
-  // gets shuffled into the remaining slots so no slot is ever left empty,
-  // even if almost every item in the pool is currently marked "weak".
-  const leftover=shuffle([...wkItems.slice(earlyCount), ...nrItems]);
+  earlySlots.forEach((slot,i)=>result[slot]=selWk[i]);
+  const leftover=shuffle([...selWk.slice(earlyCount), ...selNr]);
   let li=0;
   for(let i=0;i<total;i++) if(result[i]===null) result[i]=leftover[li++];
   return result;
@@ -3390,7 +4261,8 @@ function showFb(ok,detail,cb,streakN){
   document.getElementById('fb-dt').textContent=detail||'';
   ov.className=`fbo show ${ok?'fb-ok':'fb-fail'}`;
   if(fbT) clearTimeout(fbT);
-  fbT=setTimeout(()=>{ov.className='fbo'; if(cb)cb();},ok?1400:1900);
+  const _extra=Math.min(1800,Math.max(0,((detail||'').length-45))*25);
+  fbT=setTimeout(()=>{ov.className='fbo'; if(cb)cb();},(ok?1400:1900)+_extra);
 }
 
 function boom(){
@@ -3420,10 +4292,11 @@ function relTime(ts){
   const d=Math.floor((Date.now()-ts)/864e5);
   if(d===0)return'Hoy';if(d===1)return'Ayer';return`Hace ${d} días`;
 }
-function trackEmoji(t){return{math:'🔢',lang:'📝',logic:'🧠',curio:'🔭',cien:'🔬',detect:'🕵️',explora:'🌍',creative:'🎨',vocab:'📜',geoloc:'🗺️',memoria:'🧩'}[t]||'📚';}
-function trackName(t){return{math:'Matemáticas',lang:'Lengua',logic:'Lógica',curio:'Curiosidad',cien:'Ciencias',detect:'Detective de Textos',explora:'Explorador Naturalista',creative:'Taller Creativo',vocab:'Vocabulario y Palabras',geoloc:'Mi Tierra',memoria:'Memoria y Atención'}[t]||t;}
+function trkArr(t){return {math:MATH_LVS,lang:LANG_LVS,logic:LOGIC_LVS,curio:CURIO_LVS,cien:CIENCIA_LVS,detect:DETECT_LVS,explora:EXPLORA_LVS,creative:CREATIVE_LVS,vocab:VOCAB_LVS,geoloc:GEOLOC_LVS,memoria:MEMORIA_LVS,sci:SCI_LVS}[t]||CURIO_LVS;}
+function trackEmoji(t){return{sci:'🥼',math:'🔢',lang:'📝',logic:'🧠',curio:'🔭',cien:'🔬',detect:'🕵️',explora:'🌍',creative:'🎨',vocab:'📜',geoloc:'🗺️',memoria:'🧩'}[t]||'📚';}
+function trackName(t){return{sci:'Science (English)',math:'Matemáticas',lang:'Lengua',logic:'Lógica',curio:'Curiosidad',cien:'Ciencias',detect:'Detective de Textos',explora:'Explorador Naturalista',creative:'Taller Creativo',vocab:'Vocabulario y Palabras',geoloc:'Mi Tierra',memoria:'Memoria y Atención'}[t]||t;}
 function lvName(track,id){
-  const arr=track==='math'?MATH_LVS:track==='lang'?LANG_LVS:track==='logic'?LOGIC_LVS:track==='cien'?CIENCIA_LVS:track==='detect'?DETECT_LVS:track==='explora'?EXPLORA_LVS:track==='creative'?CREATIVE_LVS:track==='vocab'?VOCAB_LVS:track==='geoloc'?GEOLOC_LVS:track==='memoria'?MEMORIA_LVS:CURIO_LVS;
+  const arr=trkArr(track);
   return(arr.find(l=>l.id===id)||{nm:'?'}).nm;
 }
 
@@ -3441,6 +4314,7 @@ function go(s){
   else if(s==='vocab')  showTrack('vocab');
   else if(s==='geoloc') showTrack('geoloc');
   else if(s==='memoria')showTrack('memoria');
+  else if(s==='sci')   showTrack('sci');
   else if(s==='team')  showTeam();
   else if(s==='shop')  showShop();
   else if(s==='tro')   showTrophies();
@@ -3555,7 +4429,7 @@ function endGame(){
 
   // Level progress
   const td=p[gs.track]||(p[gs.track]={unlocked:1,done:{}});
-  const _trkArr=gs.track==='math'?MATH_LVS:gs.track==='lang'?LANG_LVS:gs.track==='logic'?LOGIC_LVS:gs.track==='cien'?CIENCIA_LVS:gs.track==='detect'?DETECT_LVS:gs.track==='explora'?EXPLORA_LVS:gs.track==='creative'?CREATIVE_LVS:gs.track==='vocab'?VOCAB_LVS:gs.track==='geoloc'?GEOLOC_LVS:gs.track==='memoria'?MEMORIA_LVS:CURIO_LVS;
+  const _trkArr=trkArr(gs.track);
   const maxLvs=_trkArr.length;
   const prev=td.done[gs.lvId]||0;
   if(stars>prev) td.done[gs.lvId]=stars;
@@ -3709,6 +4583,7 @@ function showHome(){
   const voD=Object.keys(p.vocab?.done||{}).length;
   const glD=Object.keys(p.geoloc?.done||{}).length;
   const mrD=Object.keys(p.memoria?.done||{}).length;
+  const scD=Object.keys(p.sci?.done||{}).length;
   const wk=totalWeak(p);
   const mySessions=getHistory().filter(x=>x.pid===ST.pid).length;
   render(`
@@ -3720,7 +4595,7 @@ function showHome(){
         <div class="av-stats">
           <div class="stat-chip">⭐ ${totalStars(p)} estrellas</div>
           <div class="stat-chip">🏅 ${achN} logros</div>
-          <div class="stat-chip">📚 ${mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD}/${MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length} niveles</div>
+          <div class="stat-chip">📚 ${mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD+scD}/${MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length+SCI_LVS.length} niveles</div>
         </div>
         ${wk>0?`<div style="margin-top:8px"><span class="repaso-tag">💪 ${wk} ítem${wk>1?'s':''} guardado${wk>1?'s':''} para repasar</span></div>`:''}
       </div>
@@ -3749,6 +4624,11 @@ function showHome(){
           <div class="hm-em">🔬</div>
           <div class="hm-nm">Ciencias</div>
           <div class="hm-su">Nivel ${p.cien?.unlocked||1}/${CIENCIA_LVS.length}</div>
+        </button>
+        <button class="hm-btn hm-sci" onclick="showTrack('sci')">
+          <div class="hm-em">🥼</div>
+          <div class="hm-nm">Science (English)</div>
+          <div class="hm-su">${scD}/${SCI_LVS.length} levels</div>
         </button>
         <button class="hm-btn hm-detect" onclick="showTrack('detect')">
           <div class="hm-em">🕵️</div>
@@ -3816,16 +4696,16 @@ function showHome(){
 ══════════════════════════════════════ */
 function showTrack(track){
   ST.curScreen='track';
-  const lvs=track==='math'?MATH_LVS:track==='lang'?LANG_LVS:track==='logic'?LOGIC_LVS:track==='cien'?CIENCIA_LVS:track==='detect'?DETECT_LVS:track==='explora'?EXPLORA_LVS:track==='creative'?CREATIVE_LVS:track==='vocab'?VOCAB_LVS:track==='geoloc'?GEOLOC_LVS:track==='memoria'?MEMORIA_LVS:CURIO_LVS;
+  const lvs=trkArr(track);
   const maxLvs=lvs.length;
   const td=P()[track]||(P()[track]={unlocked:1,done:{}});
-  const titles={math:'Matemáticas 🔢',lang:'Lengua 📝',logic:'Lógica 🧠',curio:'Curiosidad 🔭',cien:'Ciencias 🔬',detect:'Detective de Textos 🕵️',explora:'Explorador Naturalista 🌍',creative:'Taller Creativo 🎨',vocab:'Vocabulario y Palabras 📜',geoloc:'Mi Tierra 🗺️',memoria:'Memoria y Atención 🧩'};
+  const titles={math:'Matemáticas 🔢',lang:'Lengua 📝',logic:'Lógica 🧠',curio:'Curiosidad 🔭',cien:'Ciencias 🔬',detect:'Detective de Textos 🕵️',explora:'Explorador Naturalista 🌍',creative:'Taller Creativo 🎨',vocab:'Vocabulario y Palabras 📜',geoloc:'Mi Tierra 🗺️',memoria:'Memoria y Atención 🧩',sci:'Science 🥼'};
   const title=titles[track];
-  const badgeCls=track==='lang'?'lv-badge-g':track==='logic'?'lv-badge-logic':track==='cien'?'lv-badge-cien':track==='detect'?'lv-badge-detect':track==='explora'?'lv-badge-explora':track==='creative'?'lv-badge-creative':track==='vocab'?'lv-badge-vocab':track==='geoloc'?'lv-badge-geoloc':track==='memoria'?'lv-badge-memoria':'lv-badge-curio';
+  const badgeCls=track==='lang'?'lv-badge-g':track==='logic'?'lv-badge-logic':track==='cien'?'lv-badge-cien':track==='detect'?'lv-badge-detect':track==='explora'?'lv-badge-explora':track==='creative'?'lv-badge-creative':track==='vocab'?'lv-badge-vocab':track==='geoloc'?'lv-badge-geoloc':track==='memoria'?'lv-badge-memoria':track==='sci'?'lv-badge-sci':'lv-badge-curio';
   const doneN=Object.keys(td.done).length;
 
   const cards=lvs.map(lv=>{
-    const unl=lv.id<=td.unlocked, done=td.done[lv.id]!==undefined, stars=td.done[lv.id]||0;
+    const unl=lv.free||lv.id<=td.unlocked, done=td.done[lv.id]!==undefined, stars=td.done[lv.id]||0;
     const dots=diffDots(lv.df);
 
     if(!unl) return `<div class="lv-card locked">
@@ -3988,8 +4868,9 @@ function showResults(track,lvId,score,total,stars,passed,newAchs){
 ══════════════════════════════════════ */
 function startLv(track,id){
   ST.curScreen='ingame';
-  const allLvs=track==='math'?MATH_LVS:track==='lang'?LANG_LVS:track==='logic'?LOGIC_LVS:track==='cien'?CIENCIA_LVS:track==='detect'?DETECT_LVS:track==='explora'?EXPLORA_LVS:track==='creative'?CREATIVE_LVS:track==='vocab'?VOCAB_LVS:track==='geoloc'?GEOLOC_LVS:track==='memoria'?MEMORIA_LVS:CURIO_LVS;
+  const allLvs=trkArr(track);
   const lv=allLvs.find(l=>l.id===id);
+  CURCAP=Math.min(20,(lv.p&&lv.p.max)||20);
   const base={track,lvId:id,lv,score:0,streak:0,maxStreak:0,coinsThis:0,lock:false,weakFixed:[],newErrors:[]};
   if(lv.tp==='calc'){
     // Adaptive: bias toward operation type with more errors
@@ -4060,7 +4941,9 @@ function startLv(track,id){
     const pool=smartPool('med',medQ,x=>x.q.slice(0,20),x=>x.ans);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderMed();
   } else if(lv.tp==='sinan'){
-    const pool=smartPool('sinan',sinanQ,x=>x.q.slice(0,22),x=>x.ans);
+    const _k=lv.p&&lv.p.kind;
+    const _all=(_k==='sin'||_k==='ant')?sinanQ.filter(x=>x.tp===_k):sinanQ;
+    const pool=smartPool('sinan',_all,x=>x.q+'|'+x.ans,x=>x.ans);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderSinan();
   } else if(lv.tp==='tippal'){
     const pool=smartPool('tippal',tippalQ,x=>x.w,x=>x.w);
@@ -4104,6 +4987,18 @@ function startLv(track,id){
     const all=lv.p.cat==='all'?geolocQ:geolocQ.filter(x=>x.cat===lv.p.cat);
     const pool=smartPool('geoloc',all,x=>x.q.slice(0,20),x=>x.ans);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderGeoloc();
+  } else if(lv.tp==='syl'){
+    const all=sylW.filter(x=>x.d===lv.p.diff);
+    const pool=smartPool('syl',all,x=>x.h,x=>x.h);
+    ST.gs={...base,probs:pool,total:pool.length,idx:0,cuts:new Set()}; renderSyl();
+  } else if(lv.tp==='sylc'){
+    const all=sylcQ.filter(x=>lv.p.cats.includes(x.cat));
+    const pool=smartPool('sylc',all,x=>x.k,x=>x.k);
+    ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderSylc();
+  } else if(lv.tp==='sci'){
+    const all=lv.p.cat==='all'?sciQ:sciQ.filter(x=>x.cat===lv.p.cat);
+    const pool=smartPool('sci',all,x=>x.q,x=>x.ans);
+    ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderSci();
   } else if(lv.tp==='pairs'){
     ST.gs={...base,total:lv.p.rounds,idx:0,pairState:null}; renderPairs();
   } else if(lv.tp==='simon'){
@@ -5128,7 +6023,9 @@ function ansMed(idx){
 function renderSinan(){
   const gs=ST.gs, item=gs.probs[gs.idx];
   const opts=gs.curOpts=shuffle([...item.opts]);
-  const tag=item.tp==='sin'
+  const tag=/NO es/.test(item.q)
+    ?`<span class="sinan-tag sinan-ant">🚫 BUSCA EL INTRUSO</span>`
+    :item.tp==='sin'
     ?`<span class="sinan-tag sinan-sin">SIN — SINÓNIMO</span>`
     :`<span class="sinan-tag sinan-ant">ANT — ANTÓNIMO</span>`;
   render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'lang',`Nivel ${gs.lvId}`)}
@@ -5151,8 +6048,141 @@ function ansSinan(idx){
   });
   trackResult(item,ok);
   const tipo=item.tp==='sin'?'sinónimo':'antónimo';
-  if(ok){onCorrect();showFb(true,`✅ "${item.ans}" es ${tipo} correcto`,()=>nextOrEnd(renderSinan),ST.gs.streak);}
-  else{onWrong();showFb(false,`El ${tipo} es "${item.ans}"`,()=>nextOrEnd(renderSinan),0);}
+  let okMsg,noMsg;
+  if(/NO es/.test(item.q)){okMsg=`✅ "${item.ans}" es el intruso`;noMsg=`El intruso era "${item.ans}"`;}
+  else if(/pareja/.test(item.q)){okMsg=`✅ ${item.ans}`;noMsg=`La pareja era "${item.ans}"`;}
+  else{okMsg=`✅ "${item.ans}" es ${tipo} correcto`;noMsg=`El ${tipo} es "${item.ans}"`;}
+  if(ok){onCorrect();showFb(true,okMsg,()=>nextOrEnd(renderSinan),ST.gs.streak);}
+  else{onWrong();showFb(false,noMsg,()=>nextOrEnd(renderSinan),0);}
+}
+
+/* ══════════════════════════════════════
+   GAME: SEPARA EN SÍLABAS (toca la última letra de cada sílaba)
+══════════════════════════════════════ */
+function sylLetters(it){return Array.from(it.h.replace(/-/g,''));}
+function renderSyl(){
+  const gs=ST.gs, it=gs.probs[gs.idx];
+  gs.cuts=new Set();
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'lang',`Nivel ${gs.lvId}`)}
+  <div class="gw">
+    ${progRow()}
+    <div class="qc" style="gap:12px">
+      ${it._wk?'<span class="repaso-tag">💪 Repasando</span>':''}
+      <div class="ql">✂️ Separa en sílabas</div>
+      <div class="tip">💡 Toca la letra donde termina cada sílaba</div>
+      <div id="syl-area" class="syl-word"></div>
+      <div id="syl-cnt" class="syl-cnt"></div>
+      <div style="display:flex;gap:10px;width:100%">
+        <button class="btn btn-gh" style="flex:1" onclick="clearSyl()">↺ Borrar</button>
+        <button class="btn btn-gr" style="flex:2" onclick="ansSyl()">✅ Comprobar</button>
+      </div>
+    </div>
+  </div>`);
+  drawSyl();
+}
+function drawSyl(){
+  const gs=ST.gs, it=gs.probs[gs.idx], L=sylLetters(it);
+  let g=0, h='';
+  L.forEach((ch,i)=>{
+    h+=`<button class="syl-l g${g%2}" onclick="togSyl(${i})">${ch}</button>`;
+    if(gs.cuts.has(i)){h+='<span class="syl-bar"></span>'; g++;}
+  });
+  const a=document.getElementById('syl-area'), c=document.getElementById('syl-cnt');
+  if(a)a.innerHTML=h;
+  if(c)c.textContent=`Sílabas: ${gs.cuts.size+1}`;
+}
+function togSyl(i){
+  const gs=ST.gs; if(gs.lock)return;
+  const L=sylLetters(gs.probs[gs.idx]); if(i>=L.length-1)return;
+  if(gs.cuts.has(i))gs.cuts.delete(i); else gs.cuts.add(i);
+  drawSyl();
+}
+function clearSyl(){const gs=ST.gs; if(gs.lock)return; gs.cuts=new Set(); drawSyl();}
+function ansSyl(){
+  const gs=ST.gs; if(gs.lock)return; gs.lock=true;
+  const it=gs.probs[gs.idx], parts=it.h.split('-');
+  const want=new Set(); let pos=0;
+  parts.slice(0,-1).forEach(p=>{pos+=Array.from(p).length; want.add(pos-1);});
+  const ok=want.size===gs.cuts.size&&[...want].every(x=>gs.cuts.has(x));
+  trackResult(it,ok);
+  const word=it.h.replace(/-/g,'');
+  const det=`✂️ ${it.h} · ${parts.length===1?'1 sílaba':parts.length+' sílabas'}`;
+  if(ok){onCorrect();showFb(true,det,()=>nextOrEnd(renderSyl),ST.gs.streak);}
+  else{onWrong();showFb(false,`${word}: ${det.slice(3)}`,()=>nextOrEnd(renderSyl),0);}
+}
+
+/* ══════════════════════════════════════
+   GAME: SÍLABAS (cuenta, clasifica) Y MONOSÍLABOS
+══════════════════════════════════════ */
+function renderSylc(){
+  const gs=ST.gs, item=gs.probs[gs.idx];
+  let opts;
+  if(item.cat==='class') opts=gs.curOpts=[...item.opts];
+  else if(item.cat==='count') opts=gs.curOpts=[...item.opts].sort((a,b)=>parseInt(a)-parseInt(b));
+  else opts=gs.curOpts=shuffle([...item.opts]);
+  const lbl={count:'🔢 Cuenta las sílabas',class:'🏷️ Clasifica la palabra',which:'🔎 Elige la palabra',mono:'1️⃣ Monosílabos'}[item.cat]||'🔢 Sílabas';
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'lang',`Nivel ${gs.lvId}`)}
+  <div class="gw">
+    ${progRow()}
+    <div class="qc" style="gap:14px">
+      ${item._wk?'<span class="repaso-tag">💪 Repasando</span>':''}
+      <div class="ql">${lbl}</div>
+      <div class="qt">${item.q}</div>
+      <div class="opts">${opts.map((o,i)=>`<button class="opt" onclick="ansSylc(${i})">${o}</button>`).join('')}</div>
+    </div>
+  </div>`);
+}
+function ansSylc(idx){
+  const gs=ST.gs; if(gs.lock)return; gs.lock=true;
+  const item=gs.probs[gs.idx], sel=gs.curOpts[idx], ok=sel===item.ans;
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    if(gs.curOpts[i]===item.ans)b.classList.add('ok');
+    else if(i===idx&&!ok)b.classList.add('no');
+  });
+  trackResult(item,ok);
+  if(ok){onCorrect();showFb(true,item.fact,()=>nextOrEnd(renderSylc),ST.gs.streak);}
+  else{onWrong();showFb(false,`Era «${item.ans}». ${item.fact}`,()=>nextOrEnd(renderSylc),0);}
+}
+
+/* ══════════════════════════════════════
+   GAME: SCIENCE (ENGLISH)
+══════════════════════════════════════ */
+const SCI_CAT={maps:'🧭 Maps & the Globe',earth:'🌍 Planet Earth',space:'🪐 Earth, Sun & Moon',living:'🌿 Living Things',body:'🫀 The Human Body',method:'🔬 Think like a Scientist',matter:'⚡ Matter, Energy & Forces'};
+function speakEn(txt){
+  if(!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='en-GB';u.rate=.9;u.pitch=1;
+  speechSynthesis.speak(u);
+}
+function sayQ(){const gs=ST.gs; if(gs&&gs.probs)speakEn(gs.probs[gs.idx].q);}
+function renderSci(){
+  const gs=ST.gs, item=gs.probs[gs.idx];
+  const opts=gs.curOpts=shuffle([...item.opts]);
+  const long=Math.max(...opts.map(o=>o.length))>26;
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'sci',`Level ${gs.lvId}`)}
+  <div class="gw">
+    ${progRow()}
+    <div class="qc" style="gap:12px">
+      ${item._wk?'<span class="repaso-tag">💪 Review</span>':''}
+      <div class="ql">${SCI_CAT[item.cat]||'🥼 Science'}</div>
+      <div style="font-size:46px">${item.em}</div>
+      <div class="qt" style="font-size:18px;line-height:1.5">${item.q}</div>
+      <button class="btn btn-gh" style="padding:6px 14px;font-size:14px" onclick="sayQ()">🔊 Listen</button>
+      <div class="opts"${long?' style="grid-template-columns:1fr"':''}>${opts.map((o,i)=>`<button class="opt" onclick="ansSci(${i})" style="font-size:14px;text-align:left;padding:10px 12px;min-height:46px">${o}</button>`).join('')}</div>
+    </div>
+  </div>`);
+}
+function ansSci(idx){
+  const gs=ST.gs; if(gs.lock)return; gs.lock=true;
+  const item=gs.probs[gs.idx], sel=gs.curOpts[idx], ok=sel===item.ans;
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    if(gs.curOpts[i]===item.ans)b.classList.add('ok');
+    else if(i===idx&&!ok)b.classList.add('no');
+  });
+  trackResult(item,ok);
+  if(ok){onCorrect();showFb(true,item.fact,()=>nextOrEnd(renderSci),ST.gs.streak);}
+  else{onWrong();showFb(false,`${item.ans} — ${item.fact}`,()=>nextOrEnd(renderSci),0);}
 }
 
 /* ══════════════════════════════════════
@@ -5352,13 +6382,13 @@ function showStats(){
   const activeDays=Object.values(dayMap).filter(v=>v>0).length;
 
   // By track
-  const tracks={math:{n:0,stars:0,tot:MATH_LVS.length},lang:{n:0,stars:0,tot:LANG_LVS.length},logic:{n:0,stars:0,tot:LOGIC_LVS.length},curio:{n:0,stars:0,tot:CURIO_LVS.length},cien:{n:0,stars:0,tot:CIENCIA_LVS.length},detect:{n:0,stars:0,tot:DETECT_LVS.length},explora:{n:0,stars:0,tot:EXPLORA_LVS.length},creative:{n:0,stars:0,tot:CREATIVE_LVS.length},vocab:{n:0,stars:0,tot:VOCAB_LVS.length},geoloc:{n:0,stars:0,tot:GEOLOC_LVS.length},memoria:{n:0,stars:0,tot:MEMORIA_LVS.length}};
+  const tracks={math:{n:0,stars:0,tot:MATH_LVS.length},lang:{n:0,stars:0,tot:LANG_LVS.length},logic:{n:0,stars:0,tot:LOGIC_LVS.length},curio:{n:0,stars:0,tot:CURIO_LVS.length},cien:{n:0,stars:0,tot:CIENCIA_LVS.length},detect:{n:0,stars:0,tot:DETECT_LVS.length},explora:{n:0,stars:0,tot:EXPLORA_LVS.length},creative:{n:0,stars:0,tot:CREATIVE_LVS.length},vocab:{n:0,stars:0,tot:VOCAB_LVS.length},geoloc:{n:0,stars:0,tot:GEOLOC_LVS.length},memoria:{n:0,stars:0,tot:MEMORIA_LVS.length},sci:{n:0,stars:0,tot:SCI_LVS.length}};
   hist.forEach(h=>{if(tracks[h.track]){tracks[h.track].n++;tracks[h.track].stars+=h.stars;}});
   const maxTrackN=Math.max(...Object.values(tracks).map(t=>t.n),1);
 
   const trackRows=Object.entries(tracks).map(([k,t])=>{
     const pct=t.n?Math.round(t.n/maxTrackN*100):0;
-    const col={math:'#7C3AED',lang:'#16A34A',logic:'#7C3AED',curio:'#0EA5E9',cien:'#0D9488',detect:'#92400E',explora:'#15803D',creative:'#A21CAF',vocab:'#EA580C',geoloc:'#0369A1',memoria:'#4338CA'}[k];
+    const col={math:'#7C3AED',lang:'#16A34A',logic:'#7C3AED',curio:'#0EA5E9',cien:'#0D9488',detect:'#92400E',explora:'#15803D',creative:'#A21CAF',vocab:'#EA580C',geoloc:'#0369A1',memoria:'#4338CA',sci:'#0891B2'}[k];
     const avg=t.n?'⭐'.repeat(Math.round(t.stars/t.n)):'-';
     return `<div class="stat-track-row">
       <div class="stat-track-em">${trackEmoji(k)}</div>
@@ -5484,8 +6514,9 @@ function profileCard(pid){
   const voD=Object.keys(p.vocab?.done||{}).length;
   const glD=Object.keys(p.geoloc?.done||{}).length;
   const mrD=Object.keys(p.memoria?.done||{}).length;
-  const totalLvs=MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length;
-  const doneLvs=mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD;
+  const scD=Object.keys(p.sci?.done||{}).length;
+  const totalLvs=MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length+SCI_LVS.length;
+  const doneLvs=mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD+scD;
   const weak=topWeak(p);
   const weakHtml=weak.length
     ?weak.map(w=>`<span class="weak-chip">💪 ${w.key.slice(0,18)} (${w.cnt}x)</span>`).join('')
@@ -5503,7 +6534,8 @@ function profileCard(pid){
     {k:'creative',nm:'Creativo',done:crD,tot:CREATIVE_LVS.length,col:'#A21CAF'},
     {k:'vocab',nm:'Vocabulario',done:voD,tot:VOCAB_LVS.length,col:'#EA580C'},
     {k:'geoloc',nm:'Mi Tierra',done:glD,tot:GEOLOC_LVS.length,col:'#0369A1'},
-    {k:'memoria',nm:'Memoria',done:mrD,tot:MEMORIA_LVS.length,col:'#4338CA'}
+    {k:'memoria',nm:'Memoria',done:mrD,tot:MEMORIA_LVS.length,col:'#4338CA'},
+    {k:'sci',nm:'Science',done:scD,tot:SCI_LVS.length,col:'#0891B2'}
   ];
   const tBars=tdata.map(t=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
