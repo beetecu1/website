@@ -703,6 +703,20 @@ function activeTest(){
   const past=CAL.filter(c=>c.pack).sort((a,b)=>a.d<b.d?-1:1);
   return past[past.length-1];
 }
+/* ═══════════ APERTURA DEL REPASO (se libera N días antes del Cycle Test) ═══════════ */
+const DEF_UNLOCK_DAYS=2;
+function testKey(c){return c.d+'|'+c.s;}
+function opensOnDate(c,days){const d=parseD(c.d);return new Date(d.getFullYear(),d.getMonth(),d.getDate()-days);}
+function isOpen(c,days,forced){return !!forced||daysUntil(c.d)<=days;}
+// Qué se muestra en el inicio: el próximo test con contenido SI ya está abierto;
+// si todavía está cerrado, se muestra un candado y (si lo hay) el repaso del último test ya hecho.
+function viewTest(days,forcedMap){
+  const t=todayD(),withPack=CAL.filter(x=>x.pack).sort((a,b)=>a.d<b.d?-1:1);
+  const up=withPack.find(x=>parseD(x.d)>=t)||null;
+  if(up&&isOpen(up,days,(forcedMap||{})[testKey(up)])) return {c:up,upcoming:true,lockedNext:null};
+  const past=withPack.filter(x=>parseD(x.d)<t).pop()||null;
+  return {c:past,upcoming:false,lockedNext:up};
+}
 function nextAny(){const t=todayD();return CAL.filter(c=>parseD(c.d)>=t).sort((a,b)=>a.d<b.d?-1:1)[0];}
 function countdownTxt(dateStr){
   const n=daysUntil(dateStr);
@@ -725,7 +739,7 @@ function getMission(kid,pack,testDate){
   return kid.missions[k];
 }
 
-if(typeof module!=='undefined') module.exports={checkTx,genAlphaWords,buildSession,buildSimulacro};
+if(typeof module!=='undefined') module.exports={viewTest,isOpen,opensOnDate,checkTx,genAlphaWords,buildSession,buildSimulacro};
 
 /* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
 const LS_KEY='ct_v1';
@@ -747,9 +761,11 @@ function loadState(){
   try{const s=JSON.parse(localStorage.getItem(LS_KEY));if(s&&s.kids)return s;}catch(e){}
   let n1='Gemelo 1',e1='🦊',n2='Gemela 2',e2='🐯';
   try{const ss=JSON.parse(localStorage.getItem('ss_v7'));if(ss&&ss.p1){n1=ss.p1.name||n1;e1=ss.p1.emoji||e1;n2=ss.p2.name||n2;e2=ss.p2.emoji||e2;}}catch(e){}
-  return {ver:1,kids:{k1:defKid(n1,e1),k2:defKid(n2,e2)},shop:JSON.parse(JSON.stringify(DEF_SHOP)),pin:null,sound:true};
+  return {ver:1,kids:{k1:defKid(n1,e1),k2:defKid(n2,e2)},shop:JSON.parse(JSON.stringify(DEF_SHOP)),pin:null,sound:true,unlockDays:DEF_UNLOCK_DAYS,unlock:{}};
 }
 let S=loadState();
+if(S.unlockDays==null)S.unlockDays=DEF_UNLOCK_DAYS;if(!S.unlock)S.unlock={};
+const VT=()=>viewTest(S.unlockDays,S.unlock);
 function save(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
 let KID=null, G=null, SCR='welcome';
 const K=()=>S.kids[KID];
@@ -801,44 +817,55 @@ function showWelcome(){
   <button class="lock" onclick="showParent()">🔒 Zona de padres</button>`);
 }
 function nextTestLine(){
-  const c=activeTest();if(!c)return '';
+  const c=nextAny()||activeTest();if(!c)return '';
   const n=daysUntil(c.d);
-  return `<div class="card" style="margin:6px 0;text-align:left"><b>${SUBJ[c.s].em} Próximo Cycle Test: ${c.s}</b><br><span class="small">${fmtDate(c.d)} · ${n<0?'ya pasó':countdownTxt(c.d)}</span></div>`;
+  const lock=c.pack&&!isOpen(c,S.unlockDays,S.unlock[testKey(c)])?` · 🔒 se abre el ${fmtDate(dayKey(opensOnDate(c,S.unlockDays)))}`:'';
+  return `<div class="card" style="margin:6px 0;text-align:left"><b>${SUBJ[c.s].em} Próximo Cycle Test: ${c.s}</b><br><span class="small">${fmtDate(c.d)} · ${n<0?'ya pasó':countdownTxt(c.d)}${lock}</span></div>`;
 }
 function pick(id){KID=id;touchDayCheck();showHome();}
 function touchDayCheck(){/* la racha se actualiza al terminar una ronda */}
 
 /* ═══════════ INICIO ═══════════ */
+function lockCard(c){
+  const od=dayKey(opensOnDate(c,S.unlockDays)),n=daysUntil(od);
+  return `<div class="card" style="background:linear-gradient(135deg,#475569,#334155);color:#fff"><div class="small" style="color:#CBD5E1">PRÓXIMO CYCLE TEST</div><div class="big" style="font-size:24px;font-weight:900">${SUBJ[c.s].em} ${c.s} · ${c.n}</div><div style="font-weight:800">${fmtDate(c.d)} · ${countdownTxt(c.d)}</div>
+  <div style="margin-top:12px;background:rgba(255,255,255,.14);border-radius:14px;padding:12px;font-weight:800">🔒 El repaso se abre el <b>${fmtDate(od)}</b>${n>0?` (en ${n} día${n===1?'':'s'})`:''}.<br><span style="font-weight:600;font-size:13px">Se libera ${S.unlockDays} día${S.unlockDays===1?'':'s'} antes del examen. ¡Mientras tanto, repasa en clase y en el cuaderno!</span></div>
+  <div style="font-size:13px;margin-top:10px;opacity:.9">${esc(c.topics||'')}</div></div>`;
+}
 function showHome(){
-  SCR='home';const k=K();
-  const c=activeTest(), pack=PACKS[c.pack], rk=rankOf(k.xp);
+  SCR='home';const k=K(),rk=rankOf(k.xp),vt=VT(),c=vt.c;
   const prog=rk.next?Math.min(100,Math.round((k.xp-rk.from)/(rk.next-rk.from)*100)):100;
-  const days=daysUntil(c.d);
-  const ms=getMission(k,pack,c.d);save();
-  const doneN=ms.tasks.filter(t=>ms.done[t]).length;
-  const tasks=ms.tasks.map(t=>{
-    const isSim=t==='sim',m=isSim?null:modOf(t),d=!!ms.done[t];
-    return `<div class="task ${d?'done':''}" onclick="${isSim?'startSim()':`openMod('${t}')`}"><div class="ck">${d?'✓':''}</div><div style="flex:1">${isSim?'🏆 Simulacro del Cycle Test':m.em+' '+m.nm}</div><span class="small">${d?'¡hecho!':'Jugar ▸'}</span></div>`;
-  }).join('');
+  const profile=`<div class="card"><div class="profile"><div class="av">${esc(k.emoji)}</div><div class="info"><div class="nm">${esc(k.name)}</div><div class="small">${rk.em} ${rk.nm}</div><div class="bar" style="margin-top:6px"><i style="width:${prog}%"></i></div><div class="small" style="margin-top:3px">${rk.next?(rk.next-k.xp)+' ⭐ para el siguiente rango':'¡Rango máximo!'}</div></div></div></div>`;
+  const lockedHtml=vt.lockedNext?lockCard(vt.lockedNext):'';
+  if(!c){render(`${topBar('Cycle Test Quest','showWelcome()')}${profile}${lockedHtml||'<div class="card">Todavía no hay repasos disponibles.</div>'}<div style="padding:0 16px"><button class="btn ghost" onclick="showCal()">📅 Ver el calendario</button></div>`,'home');return;}
+  const pack=PACKS[c.pack],days=daysUntil(c.d);let missionHtml='';
+  if(vt.upcoming){
+    const ms=getMission(k,pack,c.d);save();
+    const doneN=ms.tasks.filter(t=>ms.done[t]).length;
+    const tasks=ms.tasks.map(t=>{
+      const isSim=t==='sim',m=isSim?null:modOf(t),d=!!ms.done[t];
+      return `<div class="task ${d?'done':''}" onclick="${isSim?'startSim()':`openMod('${t}')`}"><div class="ck">${d?'✓':''}</div><div style="flex:1">${isSim?'🏆 Simulacro del Cycle Test':m.em+' '+m.nm}</div><span class="small">${d?'¡hecho!':'Jugar ▸'}</span></div>`;
+    }).join('');
+    missionHtml=`<div class="card"><h2>🎯 Misión de hoy <span class="small">(${doneN}/${ms.tasks.length})</span></h2>${tasks}<div class="small" style="margin-top:10px">${ms.awarded?'✅ Misión cumplida · +40 ⭐ ganadas':'Completa la misión y gana <b>+40 ⭐</b> extra'}</div></div>`;
+  }
   const mods=pack.modules.map(m=>{
     const ma=modMastery(k,m.id);
     return `<button class="mod" style="--c:${m.color}" onclick="openMod('${m.id}')">${modMastered(k,m.id)?'<span class="crown">👑</span>':''}<div class="e">${m.em}</div><div class="n">${m.nm}</div>
       <div class="mini">🧪<div class="bar"><i style="width:${pct(ma.test)}%"></i></div>${ma.test===null?'–':pct(ma.test)+'%'}</div>
       <div class="mini">✍️<div class="bar"><i style="width:${pct(ma.write)}%"></i></div>${ma.write===null?'–':pct(ma.write)+'%'}</div></button>`;
   }).join('');
-  const nx=nextAny();let teaser='';
-  if(nx&&nx.d!==c.d&&!nx.pack) teaser=`<div class="card" style="background:#FEF9C3"><b>${SUBJ[nx.s].em} Después: ${nx.s} (${fmtDate(nx.d)})</b><br><span class="small">Aún no está preparado. ¡Pídeme a mamá o papá que lo añadan!</span></div>`;
-  render(`${topBar('Cycle Test Quest','showWelcome()')}
-  <div class="card"><div class="profile"><div class="av">${esc(k.emoji)}</div><div class="info"><div class="nm">${esc(k.name)}</div><div class="small">${rk.em} ${rk.nm}</div><div class="bar" style="margin-top:6px"><i style="width:${prog}%"></i></div><div class="small" style="margin-top:3px">${rk.next?(rk.next-k.xp)+' ⭐ para el siguiente rango':'¡Rango máximo!'}</div></div></div></div>
-  <div class="card test-card"><div class="small" style="color:#CCFBF1">PRÓXIMO CYCLE TEST</div><div class="big">${SUBJ[c.s].em} ${c.s} · ${c.n}</div><div style="font-weight:800">${fmtDate(c.d)}</div><span class="cd">${days<0?'Ya pasó · ¡repasa!':countdownTxt(c.d)}</span><div style="font-size:13px;margin-top:10px;opacity:.95">${esc(c.topics||'')}</div></div>
-  <div class="card"><h2>🎯 Misión de hoy <span class="small">(${doneN}/${ms.tasks.length})</span></h2>${tasks}<div class="small" style="margin-top:10px">${ms.awarded?'✅ Misión cumplida · +40 ⭐ ganadas':'Completa la misión y gana <b>+40 ⭐</b> extra'}</div></div>
+  const testCard=vt.upcoming
+    ?`<div class="card test-card"><div class="small" style="color:#CCFBF1">PRÓXIMO CYCLE TEST</div><div class="big">${SUBJ[c.s].em} ${c.s} · ${c.n}</div><div style="font-weight:800">${fmtDate(c.d)}</div><span class="cd">${countdownTxt(c.d)}</span><div style="font-size:13px;margin-top:10px;opacity:.95">${esc(c.topics||'')}</div></div>`
+    :`<div class="card" style="background:#EEF2FF"><div class="small">🔁 REPASO LIBRE</div><div style="font-weight:900;font-size:19px">${SUBJ[c.s].em} ${c.s} · ${c.n} <span class="small">(${fmtDate(c.d)})</span></div><div class="small" style="margin-top:4px">Ese examen ya pasó, pero puedes seguir practicando para ganar ⭐.</div></div>`;
+  render(`${topBar('Cycle Test Quest','showWelcome()')}${profile}${lockedHtml}${testCard}${missionHtml}
   <div class="mh">Todos los temas</div><div class="grid2" style="margin-top:10px">${mods}</div>
-  <div style="padding:0 16px"><button class="btn o" onclick="startSim()">🏆 Simulacro del Cycle Test</button></div>
-  ${teaser}`,'home');
+  <div style="padding:0 16px"><button class="btn o" onclick="startSim()">🏆 Simulacro del Cycle Test</button></div>`,'home');
 }
 
 /* ═══════════ MÓDULO ═══════════ */
+function studyOK(){if(!VT().c){toast('🔒 El repaso aún no está abierto');return false;}return true;}
 function openMod(id){
+  if(!studyOK())return;
   const k=K(),m=modOf(id),ma=modMastery(k,id);SCR='mod';
   render(`${topBar(m.em+' '+m.nm,'showHome()')}
   <div class="card"><div class="profile"><div class="av">${m.em}</div><div class="info"><div class="nm" style="font-size:18px">${m.nm}</div><div class="small">🧪 Test: ${ma.test===null?'sin practicar':pct(ma.test)+'%'} · ✍️ Escribir: ${ma.write===null?'sin practicar':pct(ma.write)+'%'}</div></div></div></div>
@@ -849,6 +876,7 @@ function openMod(id){
    <p class="small" style="text-align:center;margin-top:16px">Las preguntas que fallas vuelven a salir para que las domines 💪.<br>Test: +8 ⭐ por acierto · Escribir: +12 ⭐ por acierto.</p></div>`,'home');
 }
 function showLearn(id){
+  if(!studyOK())return;
   const m=modOf(id);
   render(`${topBar('📚 '+m.nm,`openMod('${id}')`)}<div class="card learn">${m.learn||''}${m.texts?'':''}</div>
   <div style="padding:0 16px"><button class="btn" onclick="startMod('${id}','test')">¡Lo tengo! A practicar 🧪</button><button class="btn g" onclick="startMod('${id}','write')">Prefiero escribir ✍️</button></div>`,'home');
@@ -856,12 +884,14 @@ function showLearn(id){
 
 /* ═══════════ JUEGO ═══════════ */
 function startMod(id,mode){
+  if(!studyOK())return;
   const k=K(),m=modOf(id),s=buildSession(k,LEN1,m,mode,10);
   if(s.tids){s.tids.forEach(t=>k.textSeen[t]=Date.now());save();}
   G={mod:id,mode,qs:s.qs,i:0,right:0,combo:0,maxCombo:0,pts:0,mist:[],sim:false,locked:false,selfN:0,wrote:0};
   showQ();
 }
 function startSim(){
+  if(!studyOK())return;
   const k=K(),s=buildSimulacro(k,LEN1);
   G={mod:'sim',mode:'sim',qs:s.qs,i:0,right:0,combo:0,maxCombo:0,pts:0,mist:[],sim:true,locked:false,selfN:0,wrote:0};
   modal(`<div class="e">🏆</div><h2>Simulacro del Cycle Test</h2><p>${G.qs.length} preguntas de todos los temas, como en el examen de verdad. ¡Escribe con cuidado y concéntrate!</p><button class="btn o" onclick="closeModal();showQ()">¡Empezar!</button><button class="btn ghost sm" onclick="closeModal()">Ahora no</button>`);
@@ -989,9 +1019,12 @@ function finish(){
     // el simulacro también cuenta para el dominio de cada módulo
   }
   // misión diaria
-  const c=activeTest(),ms=getMission(k,PACKS[c.pack],c.d);
-  const tid=G.sim?'sim':G.mod;if(ms.tasks.includes(tid))ms.done[tid]=true;
-  if(!ms.awarded&&ms.tasks.every(t=>ms.done[t])){ms.awarded=true;total+=40;notes.push('🎯 ¡Misión de hoy cumplida! +40 ⭐');}
+  const vt=VT();
+  if(vt.upcoming){
+    const ms=getMission(k,PACKS[vt.c.pack],vt.c.d);
+    const tid=G.sim?'sim':G.mod;if(ms.tasks.includes(tid))ms.done[tid]=true;
+    if(!ms.awarded&&ms.tasks.every(t=>ms.done[t])){ms.awarded=true;total+=40;notes.push('🎯 ¡Misión de hoy cumplida! +40 ⭐');}
+  }
   k.xp+=total;k.stars+=total;
   const got=evalBadges(k,{perfect:acc===1,sim:G.sim?nota:undefined});
   save();
@@ -1023,8 +1056,9 @@ function showCal(){
     const d=parseD(c.d),mk=d.getFullYear()+'-'+d.getMonth();
     if(mk!==last){last=mk;h+=`<div class="mh">${['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][d.getMonth()]} ${d.getFullYear()}</div>`;}
     const past=d<t,n=daysUntil(c.d),isNext=first&&first.d===c.d&&first.s===c.s;
-    const tag=c.pack?`<span class="tag g">✅ Listo para estudiar</span>`:`<span class="tag y">🔜 Se prepara antes</span>`;
-    h+=`<div class="cal ${past?'past':''}" style="--c:${SUBJ[c.s].col};${isNext?'box-shadow:0 0 0 3px #4F46E5,var(--sh)':''}" ${c.pack?`onclick="${KID?'showHome()':'toast(\'Elige primero quién estudia 😉\')'}"`:''}>
+    const open=c.pack&&isOpen(c,S.unlockDays,S.unlock[testKey(c)]);
+    const tag=c.pack?(open?`<span class="tag g">✅ Repaso abierto</span>`:`<span class="tag" style="background:#E2E8F0;color:#334155">🔒 Se abre el ${fmtDate(dayKey(opensOnDate(c,S.unlockDays)))}</span>`):`<span class="tag y">🔜 Se prepara antes</span>`;
+    h+=`<div class="cal ${past?'past':''}" style="--c:${SUBJ[c.s].col};${isNext?'box-shadow:0 0 0 3px #4F46E5,var(--sh)':''}" ${c.pack?`onclick="${!KID?'toast(\'Elige primero quién estudia 😉\')':open?'showHome()':'toast(\'🔒 Todavía no está abierto\')'}"`:''}>
       <div class="dt">${d.getDate()}<b style="font-size:13px;color:var(--mu)">${MESES[d.getMonth()]}</b></div>
       <div class="info">${SUBJ[c.s].em} ${c.s} <span class="small">· ${c.n}</span><br>${past?'<span class="small">✔ Pasado</span>':tag+' <span class="small">'+countdownTxt(c.d)+'</span>'}
       ${c.topics?`<div class="tp">${esc(c.topics)}</div>`:''}${c.note?`<div class="tp">📝 ${esc(c.note)}</div>`:''}</div></div>`;
@@ -1113,6 +1147,9 @@ function parentPanel(){
     body=`<div class="card"><h2>Nombre y avatar</h2><input class="field" value="${esc(kid.name)}" onchange="S.kids[KID_P].name=this.value;save()">
       <div class="keys" style="margin-top:8px">${AVATARS.map(a=>`<button onclick="S.kids[KID_P].emoji='${a}';save();parentPanel()" style="${kid.emoji===a?'background:#4F46E5;color:#fff':''}">${a}</button>`).join('')}</div></div>
     <div class="card"><h2>Dar o quitar estrellas</h2><div class="row"><input class="field" id="mpts" type="number" placeholder="± estrellas"><button class="btn sm" style="width:90px;margin:0" onclick="manualPts()">Aplicar</button></div><p class="small">Para premiar deberes, buen comportamiento, etc.</p></div>
+    <div class="card"><h2>🔓 Apertura del repaso</h2><div class="small">El repaso de cada Cycle Test se abre unos días antes del examen.</div>
+      <div class="row"><span style="font-weight:800">Días de antelación:</span><select class="field" style="width:90px" onchange="S.unlockDays=parseInt(this.value);save();parentPanel()">${[0,1,2,3,4,5,7].map(n=>`<option value="${n}" ${S.unlockDays===n?'selected':''}>${n}</option>`).join('')}</select></div>
+      ${CAL.filter(c=>c.pack).map(c=>{const key=testKey(c),op=isOpen(c,S.unlockDays,S.unlock[key]),forced=!!S.unlock[key];return `<div class="row"><div style="flex:1;font-weight:800;font-size:14px">${SUBJ[c.s].em} ${c.s} · ${c.n}<div class="small">${fmtDate(c.d)} · ${op?'✅ abierto':'🔒 se abre el '+fmtDate(dayKey(opensOnDate(c,S.unlockDays)))}</div></div>${(!op||forced)?`<button class="btn sm ${forced?'':'g'}" style="width:auto;margin:0;padding:8px 12px" onclick="toggleUnlock('${key}')">${forced?'Volver a cerrar':'Abrir ya'}</button>`:''}</div>`;}).join('')}</div>
     <div class="card"><h2>Seguridad y datos</h2><button class="btn ghost sm" onclick="changePin()">Cambiar PIN</button><button class="btn ghost sm" onclick="S.sound=!S.sound;save();toast(S.sound?'Sonido activado':'Sonido desactivado')">🔊 Activar / desactivar sonidos</button>
     <button class="btn sm" style="background:#FEE2E2;color:#B91C1C;box-shadow:none" onclick="resetKid()">Reiniciar progreso de ${esc(kid.name)}</button></div>`;
   }
@@ -1123,6 +1160,7 @@ function claimsParent(kid){
   if(!pend.length)return '<div class="card small">No hay premios pendientes.</div>';
   return pend.map(c=>`<div class="card" style="margin:8px 16px;padding:12px;display:flex;gap:10px;align-items:center"><div style="font-size:30px">${esc(c.em)}</div><div style="flex:1;font-weight:800">${esc(c.nm)}<div class="small">${new Date(c.ts).toLocaleDateString('es-ES')}</div></div><button class="btn g sm" style="width:auto;margin:0;padding:8px 14px" onclick="deliver(${c.ts})">Entregado ✓</button></div>`).join('');
 }
+function toggleUnlock(k){if(S.unlock[k])delete S.unlock[k];else S.unlock[k]=true;save();parentPanel();}
 function deliver(ts){const c=S.kids[KID_P].claims.find(x=>x.ts===ts);if(c){c.done=true;save();parentPanel();}}
 function shopEdit(i,f,v){S.shop[i][f]=f==='cost'?Math.max(10,parseInt(v)||10):v;save();}
 function shopDel(i){if(confirm('¿Quitar este premio?')){S.shop.splice(i,1);save();parentPanel();}}
