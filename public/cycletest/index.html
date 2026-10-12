@@ -498,7 +498,7 @@ const ENG1={
 <p>🤝 <b>help</b> = ayudar<br>🍽️ <b>feed</b> = dar de comer<br>🛡️ <b>protect</b> = proteger<br>🤗 <b>hug</b> = abrazar<br>🎒 <b>carry</b> = llevar, cargar</p>
 <p>🐶 <b>take care of</b> = cuidar de (3 palabras)<br>🚿 <b>have a shower</b> = ducharse (3 palabras)<br>📚 <b>homework</b> = deberes (¡una sola palabra!)<br>🥣 <b>have breakfast</b> = desayunar<br>🍝 <b>have dinner</b> = cenar</p>
 <p>✏️ <b>Truco para escribirlas bien:</b><br>• <b>fe-e-d</b>: dos <b>e</b> · <b>pro-TECT</b>: acaba en <b>ct</b><br>• <b>ca-RR-y</b>: dos <b>r</b> · <b>HOME + WORK</b> = homework<br>• <b>break + fast</b> = breakfast · <b>di-NN-er</b>: dos <b>n</b><br>• <b>sho-WER</b>: s-h-o-w-e-r</p>
-<p>📣 <b>Ojo:</b> en el libro puede aparecer «have a breakfast», pero en inglés normal se dice <b>have breakfast</b> (sin «a»). La app acepta las dos al escribir.</p>`,
+<p>📣 <b>Ojo:</b> se dice <b>have breakfast</b> y <b>have dinner</b>, sin «a» (pero sí <b>have a shower</b>).</p>`,
     test:[
       mc('¿Qué significa «help»?','ayudar',['abrazar','proteger','cuidar']),
       mc('¿Qué significa «feed»?','dar de comer',['ayudar','llevar','abrazar']),
@@ -547,8 +547,8 @@ const ENG1={
       tx('✍️ Escribe en inglés: cuidar de 🐶',['take care of'],'loose'),
       tx('✍️ Escribe en inglés: ducharse 🚿',['have a shower'],'loose'),
       tx('✍️ Escribe en inglés: deberes 📚','homework','loose'),
-      tx('✍️ Escribe en inglés: desayunar 🥣',['have breakfast','have a breakfast'],'loose'),
-      tx('✍️ Escribe en inglés: cenar 🍝',['have dinner','have a dinner'],'loose'),
+      tx('✍️ Escribe en inglés: desayunar 🥣',['have breakfast'],'loose'),
+      tx('✍️ Escribe en inglés: cenar 🍝',['have dinner'],'loose'),
       tx('✍️ Escribe en español: protect',['proteger'],'loose'),
       tx('✍️ Escribe en español: feed',['dar de comer','alimentar','dar comida'],'loose'),
       tx('✍️ Escribe en español: carry',['llevar','cargar','llevar cargar','llevar, cargar'],'loose'),
@@ -561,8 +561,8 @@ const ENG1={
       tx('🎧 Listen and write the words.','take care of','loose',{say:'take care of',sayLang:EN}),
       tx('🎧 Listen and write the words.','have a shower','loose',{say:'have a shower',sayLang:EN}),
       tx('🎧 Listen and write the word.','homework','loose',{say:'homework',sayLang:EN}),
-      tx('🎧 Listen and write the words.',['have breakfast','have a breakfast'],'loose',{say:'have breakfast',sayLang:EN}),
-      tx('🎧 Listen and write the words.',['have dinner','have a dinner'],'loose',{say:'have dinner',sayLang:EN}),
+      tx('🎧 Listen and write the words.',['have breakfast'],'loose',{say:'have breakfast',sayLang:EN}),
+      tx('🎧 Listen and write the words.',['have dinner'],'loose',{say:'have dinner',sayLang:EN}),
       tx('✍️ Completa con la palabra que falta (help, feed, hug…):\nI ___ my mum with the shopping.','help','loose'),
       tx('✍️ Completa con la palabra que falta:\nShe ___ the dog every morning. (dar de comer)','feeds','loose',{hint:'Con she, el verbo lleva -s.'}),
       tx('✍️ Completa con la palabra que falta:\nI always do my ___ after school.','homework','loose'),
@@ -1079,7 +1079,7 @@ function getMission(kid,pack,testDate){
 if(typeof module!=='undefined') module.exports={viewTest,isOpen,opensOnDate,checkTx,genAlphaWords,buildSession,buildSimulacro};
 
 /* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
-const APP_VERSION='2026-10-12-d';
+const APP_VERSION='2026-10-12-e';
 const LS_KEY='ct_v1';
 const DEF_SHOP=[
  {id:'r1',em:'🍦',nm:'Un helado',cost:150},
