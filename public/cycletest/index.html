@@ -478,11 +478,320 @@ const LEN1={
 };
 if(typeof module!=='undefined') module.exports={LEN1,ALPHA_GROUPS,ALPHA_DISTINCT};
 
+/* ═══════════════════════════════════════════════
+   CONTENIDO — 1er Cycle Test de INGLÉS (13 oct 2026)
+   Unit 1 · Vocabulary 1 and 2 · Grammar 1 and 2 · Reading comprehension
+   (repaso general de nivel 3º: ajustable cuando se conozca el libro)
+═══════════════════════════════════════════════ */
+const EN='en-GB';
+const ENG1={
+  id:'eng1', subject:'Inglés', ct:'1er Cycle Test', date:'2026-10-13',
+  note:'Repaso general de nivel 3º (A1). Si tenéis el libro o el cuaderno de la Unit 1, mándame una foto de las listas de vocabulario y lo ajusto al detalle.',
+  modules:[
+/* ═════════ VOCABULARY 1: School ═════════ */
+  { id:'e_voc1', nm:'Vocabulary 1: School', em:'🎒', color:'#DC2626',
+    learn:`<h3>School & classroom 🎒</h3>
+<p>✏️ <b>pencil</b> = lápiz · 🖊️ <b>pen</b> = bolígrafo<br>🧽 <b>rubber</b> (o <i>eraser</i>) = goma · 📏 <b>ruler</b> = regla</p>
+<p>📕 <b>book</b> = libro · 📓 <b>notebook</b> = cuaderno<br>🎒 <b>schoolbag</b> = mochila · 👝 <b>pencil case</b> = estuche</p>
+<p>✂️ <b>scissors</b> = tijeras · 🖍️ <b>crayons</b> = ceras de colores<br>🧴 <b>glue</b> = pegamento</p>
+<p>🪑 <b>chair</b> = silla · <b>desk</b> = pupitre · <b>board</b> = pizarra<br>🚪 <b>door</b> = puerta · 🪟 <b>window</b> = ventana</p>
+<p>👩‍🏫 <b>teacher</b> = profesor/a · 🧒 <b>classmate</b> = compañero/a de clase</p>
+<p>🧠 Truco: lee en voz alta cada palabra y escríbela 2 veces. ¡Cuidado con <i>pencil</i>, <i>scissors</i> y <i>window</i>!</p>`,
+    test:[
+      mc('What is this? ✏️','pencil',['pen','ruler','rubber']),
+      mc('What is this? 🖊️','pen',['pencil','ruler','rubber']),
+      mc('What is this? 📏','ruler',['pencil','scissors','book']),
+      mc('What is this? 📕','book',['door','chair','pen']),
+      mc('What is this? 📓','notebook',['ruler','rubber','scissors']),
+      mc('What is this? ✂️','scissors',['glue','pencil','crayons']),
+      mc('What is this? 🎒','schoolbag',['pencil case','desk','notebook']),
+      mc('What is this? 🪑','chair',['desk','door','board']),
+      mc('What is this? 🚪','door',['window','board','desk']),
+      mc('What is this? 🪟','window',['door','chair','schoolbag']),
+      mc('What are these? 🖍️🖍️🖍️','crayons',['pens','rulers','books']),
+      mc('¿Cómo se dice «goma de borrar» en inglés?','rubber',['ruler','pen','glue'],'En inglés británico es rubber; en inglés americano, eraser.'),
+      mc('¿Cómo se dice «pizarra» en inglés?','board',['door','desk','chair']),
+      mc('¿Cómo se dice «estuche» en inglés?','pencil case',['schoolbag','notebook','ruler']),
+      mc('¿Cómo se dice «profesora» en inglés?','teacher',['classmate','friend','mother']),
+      mc('¿Cómo se dice «compañero de clase» en inglés?','classmate',['teacher','board','window']),
+      mc('¿Qué significa «notebook»?','cuaderno',['libro','regla','mochila']),
+      mc('¿Qué significa «ruler»?','regla',['goma','lápiz','tijeras']),
+      mc('¿Qué significa «desk»?','pupitre',['puerta','ventana','pizarra']),
+      mc('Which is NOT a school object?','banana',['pencil','ruler','book']),
+      mc('Which is a person?','teacher',['desk','board','door']),
+      mc('You write with a ___.','pencil',['door','chair','window']),
+      mc('You sit on a ___.','chair',['board','ruler','window']),
+      mc('You cut paper with ___.','scissors',['a rubber','a ruler','a book']),
+    ],
+    write:[
+      tx('✍️ Escribe en inglés: lápiz ✏️','pencil','loose'),
+      tx('✍️ Escribe en inglés: regla 📏','ruler','loose'),
+      tx('✍️ Escribe en inglés: goma de borrar',['rubber','eraser'],'loose'),
+      tx('✍️ Escribe en inglés: tijeras ✂️','scissors','loose'),
+      tx('✍️ Escribe en inglés: pizarra',['board','whiteboard','blackboard'],'loose'),
+      tx('✍️ Escribe en inglés: puerta 🚪','door','loose'),
+      tx('✍️ Escribe en inglés: ventana 🪟','window','loose'),
+      tx('✍️ Escribe en inglés: cuaderno 📓','notebook','loose'),
+      tx('✍️ Escribe en inglés: mochila 🎒',['schoolbag','bag','backpack','school bag'],'loose'),
+      tx('✍️ Escribe en inglés: profesora 👩‍🏫','teacher','loose'),
+      tx('✍️ Escribe en inglés: estuche',['pencil case'],'loose'),
+      tx('What is this? 🪑','chair','loose'),
+      tx('What is this? 📕','book','loose'),
+      tx('✍️ Escribe en español: desk',['pupitre','mesa','escritorio'],'loose'),
+      tx('✍️ Escribe en español: classmate',['compañero','compañera','compañero de clase','compañera de clase','companero','companera'],'loose'),
+      tx('🎧 Listen and write the word.','pencil','loose',{say:'pencil',sayLang:EN}),
+      tx('🎧 Listen and write the word.','ruler','loose',{say:'ruler',sayLang:EN}),
+      tx('🎧 Listen and write the word.','window','loose',{say:'window',sayLang:EN}),
+      tx('🎧 Listen and write the word.','teacher','loose',{say:'teacher',sayLang:EN}),
+      tx('🎧 Listen and write the word.','notebook','loose',{say:'notebook',sayLang:EN}),
+      tx('🎧 Listen and write the word.','scissors','loose',{say:'scissors',sayLang:EN}),
+    ]
+  },
+/* ═════════ VOCABULARY 2: Family ═════════ */
+  { id:'e_voc2', nm:'Vocabulary 2: Family & friends', em:'👨‍👩‍👧', color:'#EA580C',
+    learn:`<h3>My family 👨‍👩‍👧‍👦</h3>
+<p>👩 <b>mother</b> (<b>mum</b>) = madre (mamá) · 👨 <b>father</b> (<b>dad</b>) = padre (papá)</p>
+<p>👦 <b>brother</b> = hermano · 👧 <b>sister</b> = hermana</p>
+<p>👵 <b>grandmother</b> (<b>grandma</b>) = abuela · 👴 <b>grandfather</b> (<b>grandpa</b>) = abuelo</p>
+<p>👨 <b>uncle</b> = tío · 👩 <b>aunt</b> = tía · 🧒 <b>cousin</b> = primo/a</p>
+<p>👶 <b>baby</b> = bebé · 🧑‍🤝‍🧑 <b>friend</b> = amigo/a · 👦 <b>boy</b> = niño · 👧 <b>girl</b> = niña · 👪 <b>family</b> = familia</p>
+<p>🧠 Truco: <i>mum</i> = <i>mother</i> y <i>dad</i> = <i>father</i> (las formas cortas que usamos al hablar).</p>`,
+    test:[
+      mc('¿Cómo se dice «hermano» en inglés?','brother',['sister','father','uncle']),
+      mc('¿Cómo se dice «hermana» en inglés?','sister',['brother','mother','aunt']),
+      mc('¿Cómo se dice «abuela» en inglés?','grandmother',['mother','aunt','sister']),
+      mc('¿Cómo se dice «abuelo» en inglés?','grandfather',['father','uncle','brother']),
+      mc('¿Cómo se dice «tío» en inglés?','uncle',['aunt','cousin','father']),
+      mc('¿Cómo se dice «tía» en inglés?','aunt',['uncle','sister','mother']),
+      mc('¿Cómo se dice «primo» en inglés?','cousin',['brother','friend','baby']),
+      mc('¿Cómo se dice «bebé» en inglés?','baby',['boy','girl','friend']),
+      mc('¿Cómo se dice «amigo» en inglés?','friend',['family','brother','teacher']),
+      mc('¿Cómo se dice «niña» en inglés?','girl',['boy','baby','mother']),
+      mc('¿Qué significa «mother»?','madre',['padre','hermana','abuela']),
+      mc('¿Qué significa «father»?','padre',['madre','hermano','tío']),
+      mc('¿Qué significa «grandmother»?','abuela',['madre','tía','prima']),
+      mc('¿Qué significa «cousin»?','primo/a',['hermano/a','amigo/a','abuelo/a']),
+      mc('¿Qué significa «family»?','familia',['amigo','escuela','casa']),
+      mc('Mum is another word for…','mother',['father','sister','aunt']),
+      mc('Dad is another word for…','father',['brother','uncle','grandfather']),
+      mc('Grandma is another word for…','grandmother',['aunt','mother','sister']),
+      mc('My mother’s mother is my…','grandmother',['aunt','sister','cousin']),
+      mc('My father’s brother is my…','uncle',['cousin','grandfather','brother']),
+      mc('My mother’s sister is my…','aunt',['sister','cousin','grandmother']),
+      mc('My uncle’s son is my…','cousin',['brother','father','friend']),
+      mc('Which is NOT a family member?','pencil',['mother','uncle','sister']),
+      mc('Which one is a girl?','sister',['brother','father','uncle']),
+      mc('A very small child is a…','baby',['grandfather','teacher','uncle']),
+    ],
+    write:[
+      tx('✍️ Escribe en inglés: hermano','brother','loose'),
+      tx('✍️ Escribe en inglés: hermana','sister','loose'),
+      tx('✍️ Escribe en inglés: abuela',['grandmother','grandma'],'loose'),
+      tx('✍️ Escribe en inglés: abuelo',['grandfather','grandpa'],'loose'),
+      tx('✍️ Escribe en inglés: tío','uncle','loose'),
+      tx('✍️ Escribe en inglés: tía','aunt','loose'),
+      tx('✍️ Escribe en inglés: primo',['cousin'],'loose'),
+      tx('✍️ Escribe en inglés: bebé 👶','baby','loose'),
+      tx('✍️ Escribe en inglés: amigo',['friend'],'loose'),
+      tx('✍️ Escribe en inglés: familia 👪','family','loose'),
+      tx('✍️ Escribe en inglés: madre',['mother','mum','mom'],'loose'),
+      tx('✍️ Escribe en inglés: padre',['father','dad'],'loose'),
+      tx('✍️ Escribe en español: cousin',['primo','prima','primo/a'],'loose'),
+      tx('✍️ Escribe en español: aunt',['tía','tia'],'loose'),
+      tx('✍️ Escribe en español: grandmother',['abuela'],'loose'),
+      tx('🎧 Listen and write the word.','sister','loose',{say:'sister',sayLang:EN}),
+      tx('🎧 Listen and write the word.','brother','loose',{say:'brother',sayLang:EN}),
+      tx('🎧 Listen and write the word.','family','loose',{say:'family',sayLang:EN}),
+      tx('🎧 Listen and write the word.','grandmother','loose',{say:'grandmother',sayLang:EN}),
+      tx('🎧 Listen and write the word.','friend','loose',{say:'friend',sayLang:EN}),
+      tx('🎧 Listen and write the word.','cousin','loose',{say:'cousin',sayLang:EN}),
+    ]
+  },
+/* ═════════ GRAMMAR 1: verb to be ═════════ */
+  { id:'e_gram1', nm:'Grammar 1: am, is, are', em:'✏️', color:'#4F46E5',
+    learn:`<h3>El verbo «to be» (ser / estar)</h3>
+<p><b>I am</b> (I’m) · <b>you are</b> (you’re) · <b>he is</b> (he’s) · <b>she is</b> (she’s) · <b>it is</b> (it’s) · <b>we are</b> (we’re) · <b>they are</b> (they’re)</p>
+<p>❓ <b>Are</b> you eight? → Yes, I <b>am</b>. / No, I’m <b>not</b>.<br>❓ <b>Is</b> she your sister? → Yes, she <b>is</b>. / No, she <b>isn’t</b>.</p>
+<p>🗣️ <b>What’s your name?</b> → My name is Sam.<br>🗣️ <b>How old are you?</b> → I’m eight.<br>🗣️ <b>Where are you from?</b> → I’m from Spain.</p>
+<p>🅰️ <b>a / an</b>: usamos <b>an</b> delante de vocal (<i>an apple, an orange, an umbrella, an elephant</i>) y <b>a</b> delante de consonante (<i>a pencil, a book, a ruler</i>).</p>`,
+    test:[
+      mc('I ___ eight years old.','am',['is','are','be']),
+      mc('She ___ my sister.','is',['am','are','be']),
+      mc('They ___ my friends.','are',['is','am','be']),
+      mc('My brother ___ tall.','is',['am','are','be']),
+      mc('We ___ at school.','are',['is','am','be']),
+      mc('You ___ my best friend.','are',['is','am','be']),
+      mc('The cat ___ on the chair.','is',['are','am','be']),
+      mc('My parents ___ at home.','are',['is','am','be']),
+      mc('___ you a student?','Are',['Is','Am','Be']),
+      mc('___ he your uncle?','Is',['Are','Am','Be']),
+      mc('Are you eight? — Yes, I ___.','am',['are','is','do']),
+      mc('Is she your sister? — No, she ___.','isn’t',['aren’t','am not','don’t']),
+      mc('What is the short form of «I am»?','I’m',['Im','I’am','Am I']),
+      mc('What is the short form of «she is»?','she’s',['shes','she’is','she are']),
+      mc('What is the short form of «they are»?','they’re',['they’s','theyr','they is']),
+      mc('What is the short form of «is not»?','isn’t',['isnt','is’nt','not is']),
+      mc('What’s your name?','My name is Sam.',['I’m eight.','I’m from Spain.','It’s blue.']),
+      mc('How old are you?','I’m eight.',['My name is Ana.','I’m from Madrid.','It’s red.']),
+      mc('Where are you from?','I’m from Spain.',['I’m eight.','My name is Tom.','She is my sister.']),
+      mc('Choose: ___ apple','an',['a','the','these']),
+      mc('Choose: ___ pencil','a',['an','the','these']),
+      mc('Choose: ___ orange','an',['a','the','these']),
+      mc('Choose: ___ umbrella','an',['a','the','these']),
+      mc('Choose: ___ ruler','a',['an','the','these']),
+      chips('Order the words:',['name','is','My','Ana.'],['My name is Ana.']),
+      chips('Order the words:',['am','I','eight.'],['I am eight.']),
+      chips('Order the words:',['is','She','my','sister.'],['She is my sister.']),
+      chips('Order the words:',['you','Are','students?'],['Are you students?']),
+      chips('Order the words:',['am','I','from','Spain.'],['I am from Spain.']),
+    ],
+    write:[
+      tx('✍️ Write am, is or are:\nI ___ eight years old.','am','loose'),
+      tx('✍️ Write am, is or are:\nShe ___ my friend.','is','loose'),
+      tx('✍️ Write am, is or are:\nThey ___ at school.','are','loose'),
+      tx('✍️ Write am, is or are:\nMy dad ___ a teacher.','is','loose'),
+      tx('✍️ Write am, is or are:\nWe ___ in class 3A.','are','loose'),
+      tx('✍️ Write am, is or are:\nYou ___ very clever.','are','loose'),
+      tx('✍️ Write a or an:\n___ apple 🍎','an','loose'),
+      tx('✍️ Write a or an:\n___ ruler 📏','a','loose'),
+      tx('✍️ Write a or an:\n___ umbrella ☂️','an','loose'),
+      tx('✍️ Write the short form of «I am».',['I’m',"I'm"],'loose'),
+      tx('✍️ Write the short form of «she is».',['she’s',"she's"],'loose'),
+      tx('✍️ Write the short form of «they are».',['they’re',"they're"],'loose'),
+      tx('✍️ Write the full form of «he’s».',['he is'],'loose'),
+      tx('✍️ Escribe en inglés: Tengo ocho años.',['I am eight years old','I’m eight years old','I am eight','I’m eight'],'loose'),
+      tx('✍️ Escribe en inglés: Ella es mi hermana.',['She is my sister','She’s my sister'],'loose'),
+      tx('✍️ Escribe en inglés: Me llamo Ana.',['My name is Ana','I am Ana','I’m Ana','My name’s Ana'],'loose'),
+      tx('✍️ Answer: Are you a student?',['Yes, I am','Yes I am'],'loose',{hint:'Empieza con Yes, I…'}),
+      tx('✍️ Answer: How old are you? (escribe tu edad en inglés)',['I am eight','I’m eight','I am eight years old','I’m eight years old','eight','I am 8','I’m 8','8'],'loose'),
+    ]
+  },
+/* ═════════ GRAMMAR 2: have got & plurals ═════════ */
+  { id:'e_gram2', nm:'Grammar 2: have got & plurals', em:'🧸', color:'#0D9488',
+    learn:`<h3>Have got / has got (tener)</h3>
+<p>I / you / we / they → <b>have got</b><br>he / she / it → <b>has got</b></p>
+<p>❌ <b>haven’t got</b> / <b>hasn’t got</b><br>❓ <b>Have</b> you got a pen? → Yes, I <b>have</b>. / No, I <b>haven’t</b>.<br>❓ <b>Has</b> she got a bike? → Yes, she <b>has</b>.</p>
+<h3>Plurals (más de uno)</h3>
+<p>➕ Normal: <b>s</b> → book → books</p>
+<p>➕ Si acaba en s, x, ch, sh: <b>es</b> → box → boxes · bus → buses · watch → watches</p>
+<p>➕ Consonante + y → <b>ies</b>: baby → babies · family → families</p>
+<p>⭐ Irregulares: child → <b>children</b> · man → <b>men</b> · woman → <b>women</b> · foot → <b>feet</b> · tooth → <b>teeth</b></p>`,
+    test:[
+      mc('I ___ got a new pencil case.','have',['has','is','am']),
+      mc('She ___ got two brothers.','has',['have','is','are']),
+      mc('They ___ got a big dog.','have',['has','is','are']),
+      mc('My sister ___ got long hair.','has',['have','is','are']),
+      mc('We ___ got a blue car.','have',['has','is','are']),
+      mc('He ___ got a ruler.','has',['have','is','are']),
+      mc('___ you got a pen? — Yes, I have.','Have',['Has','Are','Do']),
+      mc('___ she got a bike?','Has',['Have','Is','Are']),
+      mc('Have you got a rubber? — No, I ___.','haven’t',['hasn’t','don’t','aren’t']),
+      mc('Has he got a sister? — Yes, he ___.','has',['have','is','does']),
+      mc('One book, two ___','books',['bookes','bookies','book']),
+      mc('One box, two ___','boxes',['boxs','boxies','box']),
+      mc('One bus, two ___','buses',['buss','busies','bus']),
+      mc('One watch, two ___','watches',['watchs','watchies','watch']),
+      mc('One baby, two ___','babies',['babys','babyes','babis']),
+      mc('One family, two ___','families',['familys','familyes','famileis']),
+      mc('One child, two ___','children',['childs','childes','childrens']),
+      mc('One man, two ___','men',['mans','manes','mens']),
+      mc('One woman, two ___','women',['womans','womanes','womens']),
+      mc('One foot, two ___','feet',['foots','feets','footes']),
+      mc('One tooth, two ___','teeth',['tooths','toothes','teeths']),
+      mc('One sandwich, two ___','sandwiches',['sandwichs','sandwichies','sandwich']),
+      mc('One pencil, three ___','pencils',['pencils’','pencilles','pencilies']),
+      mc('What is the short form of «have not»?','haven’t',['havent','have’nt','not have']),
+      mc('What is the short form of «has not»?','hasn’t',['hasnt','has’nt','not has']),
+    ],
+    write:[
+      tx('✍️ Write have or has:\nI ___ got a sister.','have','loose'),
+      tx('✍️ Write have or has:\nShe ___ got a new bag.','has','loose'),
+      tx('✍️ Write have or has:\nThey ___ got two dogs.','have','loose'),
+      tx('✍️ Write have or has:\nHe ___ got a bike.','has','loose'),
+      tx('✍️ Write have or has:\nWe ___ got a big house.','have','loose'),
+      tx('✍️ Write the plural: box','boxes','loose'),
+      tx('✍️ Write the plural: bus','buses','loose'),
+      tx('✍️ Write the plural: baby','babies','loose'),
+      tx('✍️ Write the plural: child','children','loose'),
+      tx('✍️ Write the plural: watch','watches','loose'),
+      tx('✍️ Write the plural: family','families','loose'),
+      tx('✍️ Write the plural: man','men','loose'),
+      tx('✍️ Write the plural: woman','women','loose'),
+      tx('✍️ Write the plural: foot','feet','loose'),
+      tx('✍️ Write the plural: tooth','teeth','loose'),
+      tx('✍️ Write the plural: dog','dogs','loose'),
+      tx('✍️ Write the plural: sandwich','sandwiches','loose'),
+      tx('✍️ Write the short form of «have not».',['haven’t',"haven't"],'loose'),
+      tx('✍️ Write the short form of «has not».',['hasn’t',"hasn't"],'loose'),
+      tx('✍️ Escribe en inglés: Tengo una hermana.',['I have got a sister','I’ve got a sister','I have a sister'],'loose'),
+      tx('✍️ Escribe en inglés: Ella tiene dos perros.',['She has got two dogs','She’s got two dogs','She has two dogs'],'loose'),
+      tx('🎧 Listen and write the word.','boxes','loose',{say:'boxes',sayLang:EN}),
+      tx('🎧 Listen and write the word.','children','loose',{say:'children',sayLang:EN}),
+      tx('🎧 Listen and write the word.','babies','loose',{say:'babies',sayLang:EN}),
+    ]
+  },
+/* ═════════ READING COMPREHENSION ═════════ */
+  { id:'e_read', nm:'Reading comprehension', em:'📖', color:'#CA8A04',
+    learn:`<h3>How to read in English 📖</h3>
+<p>1️⃣ Read the text <b>slowly</b>. No pasa nada si no entiendes todas las palabras.</p>
+<p>2️⃣ Read the question. Look for the <b>key words</b> in the text (names, numbers, colours, places).</p>
+<p>3️⃣ <b>Where</b> = dónde · <b>Who</b> = quién · <b>What</b> = qué · <b>How many</b> = cuántos · <b>How old</b> = qué edad · <b>What colour</b> = de qué color</p>
+<p>4️⃣ Answer with a short sentence if you can: <i>His name is Sam.</i></p>`,
+    texts:[
+      { id:'t1', title:'My name is Sam', em:'👦',
+        body:'Hi! My name is Sam. I am eight years old. I am from Madrid. I have got a sister called Ana. She is six. We have got a dog. His name is Max. Max is big and brown. I like my school. My teacher is Miss Clark.',
+        test:[
+          mc('What is the boy’s name?','Sam',['Max','Ana','Clark']),
+          mc('How old is Sam?','Eight',['Six','Ten','Seven']),
+          mc('Where is Sam from?','Madrid',['London','Barcelona','Paris']),
+          mc('Who is Max?','A dog',['A teacher','His brother','A cat']),
+          mc('Who is older?','Sam',['Ana','Max','Miss Clark'],'Sam is eight and Ana is six, so Sam is older.'),
+        ],
+        write:[
+          tx('How old is Ana?','She is six.','keys',{keys:[['six','6']]}),
+          tx('What colour is Max?','Max is brown.','keys',{keys:[['brown']]}),
+          tx('Who is Miss Clark?','She is the teacher.','keys',{keys:[['teacher']]}),
+          tx('What is Sam’s sister called?','Her name is Ana.','keys',{keys:[['ana']]}),
+        ]},
+      { id:'t2', title:'My classroom', em:'🏫',
+        body:'This is my classroom. There are twenty children in my class. There is a big board and there are two windows. I have got a blue schoolbag, a pencil case and three notebooks. My desk is next to the window. I sit next to my friend Lucy. We like English class.',
+        test:[
+          mc('How many children are in the class?','Twenty',['Ten','Two','Twelve']),
+          mc('What colour is the schoolbag?','Blue',['Red','Green','Yellow']),
+          mc('Where is the desk?','Next to the window',['Next to the door','Under the board','In the schoolbag']),
+          mc('Who does the child sit next to?','Lucy',['Ben','Sam','The teacher']),
+          mc('How many windows are there?','Two',['One','Three','Four']),
+        ],
+        write:[
+          tx('How many notebooks has the child got?','Three.','keys',{keys:[['three','3']]}),
+          tx('Who is the child’s friend?','Lucy.','keys',{keys:[['lucy']]}),
+          tx('What class do they like?','English.','keys',{keys:[['english']]}),
+        ]},
+      { id:'t3', title:'A rainy day', em:'🌧️',
+        body:'It is Monday. It is rainy and cold. Tom has got a red coat and a yellow umbrella. At school, he has got a new friend. His name is Ben. Ben is from London. At break, they play with a ball in the hall.',
+        test:[
+          mc('What day is it?','Monday',['Sunday','Friday','Tuesday']),
+          mc('What is the weather like?','Rainy and cold',['Sunny and hot','Windy and warm','Snowy']),
+          mc('What colour is Tom’s umbrella?','Yellow',['Red','Blue','Green']),
+          mc('Where is Ben from?','London',['Madrid','Paris','Rome']),
+          mc('What do they play with at break?','A ball',['A kite','A book','Cards']),
+        ],
+        write:[
+          tx('What colour is Tom’s coat?','It is red.','keys',{keys:[['red']]}),
+          tx('What is Tom’s new friend called?','His name is Ben.','keys',{keys:[['ben']]}),
+          tx('Where do they play?','In the hall.','keys',{keys:[['hall']]}),
+        ]},
+    ]
+  },
+  ]
+};
+if(typeof module!=='undefined') module.exports.ENG1=ENG1;
+
 /* ═══════════ CALENDARIO (del Excel «SC – Calendario Cycle Test 2026-2027») ═══════════ */
 const SUBJ={Lengua:{em:'📚',col:'#7C3AED'},'Inglés':{em:'🇬🇧',col:'#DC2626'},'Matemáticas':{em:'🔢',col:'#0EA5E9'},Science:{em:'🔬',col:'#16A34A'},Sociales:{em:'🌍',col:'#CA8A04'}};
 const CAL=[
  {d:'2026-10-06',s:'Lengua',n:'1º Cycle Test',pack:'len1',topics:'Comprensión lectora · Ortografía: mayúsculas y sonido K · Vocabulario: sinónimos y antónimos · Gramática: oraciones, palabras, sonidos y letras · Ordenar alfabéticamente'},
- {d:'2026-10-13',s:'Inglés',n:'1º CT (post-puente)',topics:'Unit 1 · Vocabulary 1 and 2 · Grammar 1 and 2 · Reading comprehension'},
+ {d:'2026-10-13',s:'Inglés',n:'1º CT (post-puente)',pack:'eng1',topics:'Unit 1 · Vocabulary 1 and 2 · Grammar 1 and 2 · Reading comprehension'},
  {d:'2026-10-20',s:'Matemáticas',n:'1º CT',topics:'Conteo 0–1.000 (de 1 en 1, 5 en 5, 10 en 10, 100 en 100) · Sumas y restas con recta numérica · Tablas del 2, 4 y 5 · Movimientos cardinales · Pares e impares · Ábaco'},
  {d:'2026-10-27',s:'Science',n:'1º CT',topics:'Unit 1: Scientific method steps · Unit 2: 3 vital functions, animal characteristics, vertebrates (5 types)'},
  {d:'2026-11-04',s:'Sociales',n:'1º CT',note:'Se hará el miércoles 4'},
@@ -518,7 +827,10 @@ const CAL=[
  {d:'2027-05-31',s:'Inglés',n:'Evaluación 3ª',ev:3},
  {d:'2027-06-01',s:'Matemáticas',n:'Evaluación 3ª',ev:3},
 ];
-const PACKS={len1:LEN1};
+const PACKS={len1:LEN1,eng1:ENG1};
+const allMods=()=>Object.values(PACKS).flatMap(p=>p.modules);
+const modOf=id=>allMods().find(m=>m.id===id);
+const packOfMod=id=>Object.values(PACKS).find(p=>p.modules.some(m=>m.id===id));
 
 /* ═══════════ UTILIDADES ═══════════ */
 const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -536,7 +848,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 /* ═══════════ CORRECCIÓN DE RESPUESTAS ESCRITAS ═══════════ */
 // quita tildes pero conserva la ñ (la ñ SÍ importa)
 function stripAcc(s){return s.replace(/ñ/g,'\u0001').replace(/Ñ/g,'\u0002').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\u0001/g,'ñ').replace(/\u0002/g,'Ñ');}
-function nl(s){return stripAcc(String(s).toLowerCase()).replace(/[¿?¡!.,;:"“”«»()\-–]/g,' ').replace(/\s+/g,' ').trim();}
+function nl(s){return stripAcc(String(s).toLowerCase().replace(/[’‘´`]/g,"'")).replace(/[¿?¡!.,;:"“”«»()\-–]/g,' ').replace(/\s+/g,' ').trim();}
 function capsCanon(s,keepAcc){let t=String(s).replace(/[¿¡]/g,'').replace(/\s+/g,' ').trim().replace(/[.!?]+$/,'').trim();return keepAcc?t:stripAcc(t);}
 function checkTx(q,raw){
   const user=String(raw||'').trim();
@@ -558,7 +870,7 @@ function checkTx(q,raw){
   }
   if(mode==='keys'){
     const u=' '+nl(user)+' ';
-    if(u.trim().length<3) return {ok:false};
+    if(!u.trim()) return {ok:false};
     const ok=q.keys.every(g=>g.some(k=>u.includes(nl(k))));
     return {ok};
   }
@@ -671,14 +983,14 @@ const BADGES=[
  {id:'perfect',em:'💯',nm:'¡Perfecto!',ds:'100 % en una ronda'},
  {id:'combo10',em:'⚡',nm:'Racha de 10',ds:'10 aciertos seguidos'},
  {id:'writer30',em:'✍️',nm:'Escritor/a',ds:'30 respuestas escritas correctas'},
- {id:'all6',em:'🧭',nm:'Explorador/a',ds:'Practica todos los módulos'},
+ {id:'all6',em:'🧭',nm:'Explorador/a',ds:'Practica todos los temas de un Cycle Test'},
  {id:'sim7',em:'🎓',nm:'Aprobado/a',ds:'Nota 7 o más en un simulacro'},
  {id:'sim9',em:'🏆',nm:'¡Sobresaliente!',ds:'Nota 9 o más en un simulacro'},
  {id:'xp1000',em:'💎',nm:'Mil estrellas',ds:'Consigue 1.000 ⭐ en total'},
  {id:'mission3',em:'📅',nm:'Misión cumplida x3',ds:'Completa 3 misiones diarias'},
 ];
 function modBadgeDefs(pack){return pack.modules.map(m=>({id:'m_'+m.id,em:'👑',nm:'Maestro: '+m.nm,ds:'Más de 80 % en test y en escribir'}));}
-function allBadgeDefs(){return [...BADGES,...modBadgeDefs(LEN1)];}
+function allBadgeDefs(){return [...BADGES,...Object.values(PACKS).flatMap(modBadgeDefs)];}
 function evalBadges(kid,ctx){
   const got=[];const has=id=>kid.badges.includes(id);const give=id=>{if(!has(id)){kid.badges.push(id);got.push(id);}};
   if(kid.hist.length>=1) give('first');
@@ -687,11 +999,11 @@ function evalBadges(kid,ctx){
   if(kid.stat.combo>=10) give('combo10');
   if(kid.stat.wrote>=30) give('writer30');
   const practiced=new Set(kid.hist.filter(h=>h.mod!=='sim').map(h=>h.mod));
-  if(LEN1.modules.every(m=>practiced.has(m.id))) give('all6');
+  if(Object.values(PACKS).some(p=>p.modules.every(m=>practiced.has(m.id)))) give('all6');
   if(ctx&&ctx.sim!==undefined){ if(ctx.sim>=7) give('sim7'); if(ctx.sim>=9) give('sim9'); }
   if(kid.xp>=1000) give('xp1000');
   if(Object.values(kid.missions||{}).filter(m=>m.awarded).length>=3) give('mission3');
-  LEN1.modules.forEach(m=>{if(modMastered(kid,m.id))give('m_'+m.id);});
+  allMods().forEach(m=>{if(modMastered(kid,m.id))give('m_'+m.id);});
   return got;
 }
 
@@ -786,13 +1098,12 @@ function beep(kind){
     seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=kind==='no'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);t+=d;});
   }catch(e){}
 }
-function speak(t,rate){
+function speak(t,rate,lang){
   if(!('speechSynthesis' in window)){toast('Este dispositivo no tiene voz 😕');return;}
-  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='es-ES';u.rate=rate||.8;
-  const v=speechSynthesis.getVoices().find(v=>/^es/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u);
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);lang=lang||'es-ES';u.lang=lang;u.rate=rate||.8;
+  const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().replace('_','-')===lang.toLowerCase())||speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));if(v)u.voice=v;speechSynthesis.speak(u);
 }
 const pct=v=>v===null||v===undefined?0:Math.round(v*100);
-const modOf=id=>LEN1.modules.find(m=>m.id===id);
 
 function navBar(on){
   const it=[['home','🏠','Inicio'],['cal','📅','Calendario'],['shop','🛍️','Tienda'],['ach','🏅','Logros'],['par','🔒','Padres']];
@@ -855,7 +1166,7 @@ function showHome(){
       <div class="mini">✍️<div class="bar"><i style="width:${pct(ma.write)}%"></i></div>${ma.write===null?'–':pct(ma.write)+'%'}</div></button>`;
   }).join('');
   const testCard=vt.upcoming
-    ?`<div class="card test-card"><div class="small" style="color:#CCFBF1">PRÓXIMO CYCLE TEST</div><div class="big">${SUBJ[c.s].em} ${c.s} · ${c.n}</div><div style="font-weight:800">${fmtDate(c.d)}</div><span class="cd">${countdownTxt(c.d)}</span><div style="font-size:13px;margin-top:10px;opacity:.95">${esc(c.topics||'')}</div></div>`
+    ?`<div class="card test-card"><div class="small" style="color:#CCFBF1">PRÓXIMO CYCLE TEST</div><div class="big">${SUBJ[c.s].em} ${c.s} · ${c.n}</div><div style="font-weight:800">${fmtDate(c.d)}</div><span class="cd">${countdownTxt(c.d)}</span><div style="font-size:13px;margin-top:10px;opacity:.95">${esc(c.topics||'')}</div>${pack.note?`<div style="font-size:12px;margin-top:10px;background:rgba(255,255,255,.18);border-radius:12px;padding:8px 10px">📝 ${esc(pack.note)}</div>`:''}</div>`
     :`<div class="card" style="background:#EEF2FF"><div class="small">🔁 REPASO LIBRE</div><div style="font-weight:900;font-size:19px">${SUBJ[c.s].em} ${c.s} · ${c.n} <span class="small">(${fmtDate(c.d)})</span></div><div class="small" style="margin-top:4px">Ese examen ya pasó, pero puedes seguir practicando para ganar ⭐.</div></div>`;
   render(`${topBar('Cycle Test Quest','showWelcome()')}${profile}${lockedHtml}${testCard}${missionHtml}
   <div class="mh">Todos los temas</div><div class="grid2" style="margin-top:10px">${mods}</div>
@@ -885,14 +1196,14 @@ function showLearn(id){
 /* ═══════════ JUEGO ═══════════ */
 function startMod(id,mode){
   if(!studyOK())return;
-  const k=K(),m=modOf(id),s=buildSession(k,LEN1,m,mode,10);
+  const k=K(),m=modOf(id),s=buildSession(k,packOfMod(id),m,mode,10);
   if(s.tids){s.tids.forEach(t=>k.textSeen[t]=Date.now());save();}
   G={mod:id,mode,qs:s.qs,i:0,right:0,combo:0,maxCombo:0,pts:0,mist:[],sim:false,locked:false,selfN:0,wrote:0};
   showQ();
 }
 function startSim(){
   if(!studyOK())return;
-  const k=K(),s=buildSimulacro(k,LEN1);
+  const k=K(),s=buildSimulacro(k,PACKS[VT().c.pack]);
   G={mod:'sim',mode:'sim',qs:s.qs,i:0,right:0,combo:0,maxCombo:0,pts:0,mist:[],sim:true,locked:false,selfN:0,wrote:0};
   modal(`<div class="e">🏆</div><h2>Simulacro del Cycle Test</h2><p>${G.qs.length} preguntas de todos los temas, como en el examen de verdad. ¡Escribe con cuidado y concéntrate!</p><button class="btn o" onclick="closeModal();showQ()">¡Empezar!</button><button class="btn ghost sm" onclick="closeModal()">Ahora no</button>`);
 }
@@ -907,7 +1218,7 @@ function showQ(){
   if(q.t==='mc'){
     body+='<div class="opts">'+q._o.map((o,i)=>`<button class="opt" onclick="ansMc(${i})">${esc(o)}</button>`).join('')+'</div>';
   } else if(q.t==='tx'){
-    if(q.say) body+=`<div class="speak"><button onclick="speak(G.qs[G.i].say,.8)">🔊 Escuchar</button><button onclick="speak(G.qs[G.i].say,.45)">🐢 Despacio</button></div>`;
+    if(q.say) body+=`<div class="speak"><button onclick="speak(G.qs[G.i].say,.8,G.qs[G.i].sayLang)">🔊 Escuchar</button><button onclick="speak(G.qs[G.i].say,.45,G.qs[G.i].sayLang)">🐢 Despacio</button></div>`;
     body+=`<input class="inp" id="ti" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…" onkeydown="if(event.key==='Enter')ansTx()">
       <div class="keys" id="kb"></div>
       <button class="btn g" id="chk" onclick="ansTx()">Comprobar ✓</button>`;
@@ -920,7 +1231,7 @@ function showQ(){
   <div class="prog"><div class="bar"><i style="width:${prog}%"></i></div><span class="small">${G.i+1}/${G.qs.length}</span>${G.combo>=2?`<span class="chip o">🔥 x${G.combo}</span>`:''}</div>
   <div class="q" id="qbox">${body}</div><div id="fbox"></div>`);
   G.locked=false;
-  if(q.t==='tx'){buildKeys();const i=document.getElementById('ti');if(i&&!q.say)setTimeout(()=>i.focus(),50);if(q.say)setTimeout(()=>speak(q.say,.8),350);}
+  if(q.t==='tx'){buildKeys();const i=document.getElementById('ti');if(i&&!q.say)setTimeout(()=>i.focus(),50);if(q.say)setTimeout(()=>speak(q.say,.8,q.sayLang),350);}
 }
 function quitGame(){if(confirm('¿Salir de la ronda? Perderás el progreso de esta ronda.')){G=null;showHome();}}
 let CAPS=false;
@@ -1057,7 +1368,7 @@ function showCal(){
     if(mk!==last){last=mk;h+=`<div class="mh">${['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][d.getMonth()]} ${d.getFullYear()}</div>`;}
     const past=d<t,n=daysUntil(c.d),isNext=first&&first.d===c.d&&first.s===c.s;
     const open=c.pack&&isOpen(c,S.unlockDays,S.unlock[testKey(c)]);
-    const tag=c.pack?(open?`<span class="tag g">✅ Repaso abierto</span>`:`<span class="tag" style="background:#E2E8F0;color:#334155">🔒 Se abre el ${fmtDate(dayKey(opensOnDate(c,S.unlockDays)))}</span>`):`<span class="tag y">🔜 Se prepara antes</span>`;
+    const tag=c.pack?(open?`<span class="tag g">✅ Repaso abierto</span>`:`<span class="tag" style="background:#E2E8F0;color:#334155">🔒 Se abre el ${fmtDate(dayKey(opensOnDate(c,S.unlockDays)))}</span>`):`<span class="tag y">🔜 Sin contenido aún</span>`;
     h+=`<div class="cal ${past?'past':''}" style="--c:${SUBJ[c.s].col};${isNext?'box-shadow:0 0 0 3px #4F46E5,var(--sh)':''}" ${c.pack?`onclick="${!KID?'toast(\'Elige primero quién estudia 😉\')':open?'showHome()':'toast(\'🔒 Todavía no está abierto\')'}"`:''}>
       <div class="dt">${d.getDate()}<b style="font-size:13px;color:var(--mu)">${MESES[d.getMonth()]}</b></div>
       <div class="info">${SUBJ[c.s].em} ${c.s} <span class="small">· ${c.n}</span><br>${past?'<span class="small">✔ Pasado</span>':tag+' <span class="small">'+countdownTxt(c.d)+'</span>'}
@@ -1130,7 +1441,7 @@ function parentPanel(){
   <div class="tabs">${['k1','k2'].map(id=>`<button class="${KID_P===id?'on':''}" onclick="KID_P='${id}';parentPanel()">${esc(S.kids[id].emoji)} ${esc(S.kids[id].name)}</button>`).join('')}</div>`;
   let body='';
   if(PTAB==='res'){
-    const rows=LEN1.modules.map(m=>{const a=modMastery(kid,m.id);return `<tr><td>${m.em} ${m.nm}</td><td>${a.test===null?'–':pct(a.test)+'%'}</td><td>${a.write===null?'–':pct(a.write)+'%'}</td><td>${a.n}</td></tr>`;}).join('');
+    const rows=Object.values(PACKS).map(p=>`<tr><th colspan="4" style="padding-top:10px">${SUBJ[p.subject].em} ${p.subject} · ${p.ct}</th></tr>`+p.modules.map(m=>{const a=modMastery(kid,m.id);return `<tr><td>${m.em} ${m.nm}</td><td>${a.test===null?'–':pct(a.test)+'%'}</td><td>${a.write===null?'–':pct(a.write)+'%'}</td><td>${a.n}</td></tr>`;}).join('')).join('');
     const miss=Object.values(kid.missed).sort((a,b)=>b.n-a.n).slice(0,8).map(m=>`<div class="miss">❓ ${esc(m.q)}<br>✅ <b>${esc(m.a)}</b> <span class="small">(falló ${m.n}×)</span></div>`).join('')||'<div class="small">Sin fallos registrados.</div>';
     const so=kid.selfOk.slice(-8).reverse().map(m=>`<div class="miss">🤔 ${esc(m.q)}<br>Escribió: <b>${esc(m.user)}</b> · Esperado: ${esc(m.a)}</div>`).join('')||'<div class="small">Ninguna.</div>';
     const sims=(kid.sim||[]).slice(-5).map(n=>n.toFixed(1)).join(' · ')||'–';
