@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#4F46E5"><meta name="robots" content="noindex">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"><meta name="theme-color" content="#4F46E5"><meta name="robots" content="noindex">
 <title>Cycle Test Quest 🦉</title>
 <style>:root{--in:#4F46E5;--il:#EEF2FF;--te:#0D9488;--tl:#CCFBF1;--pu:#7C3AED;--pk:#EC4899;--or:#F97316;--ye:#FACC15;--gr:#16A34A;--gl:#DCFCE7;--re:#DC2626;--rl:#FEE2E2;--bg:#F5F7FF;--tx:#1E293B;--mu:#64748B;--r:20px;--sh:0 6px 22px rgba(79,70,229,.14)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -116,7 +116,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 .tag.g{background:var(--gl);color:#166534}.tag.y{background:#FEF9C3;color:#854D0E}
 .mh{margin:18px 16px 0;font-weight:900;color:var(--mu);letter-spacing:1px;font-size:13px;text-transform:uppercase}
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#1E293B;color:#fff;padding:12px 18px;border-radius:16px;font-weight:800;z-index:99;max-width:90%;text-align:center;animation:pop .25s;box-shadow:var(--sh)}
-.modal{position:fixed;inset:0;background:rgba(15,23,42,.6);display:grid;place-items:center;z-index:50;padding:20px}
+.modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.6);display:grid;place-items:center;z-index:50;padding:20px}
 .modal .box{background:#fff;border-radius:24px;padding:22px;max-width:420px;width:100%;text-align:center;animation:pop .25s;max-height:90vh;overflow:auto}
 .modal .e{font-size:64px}
 .confetti{position:fixed;top:-30px;font-size:28px;z-index:80;pointer-events:none;animation:fall 1.8s ease-in forwards}
@@ -1045,15 +1045,18 @@ function planTasks(kid,pack,testDate){
   return tasks;
 }
 function getMission(kid,pack,testDate){
-  const k=dayKey();
+  // La misión es de un día Y de un examen concreto (si no, se quedaba la del examen anterior)
+  const k=dayKey()+'|'+pack.id;
   if(!kid.missions) kid.missions={};
-  if(!kid.missions[k]) kid.missions[k]={tasks:planTasks(kid,pack,testDate).map(t=>t.id),done:{},awarded:false};
+  const valid=m=>m&&m.tasks.every(t=>t==='sim'||pack.modules.some(x=>x.id===t));
+  if(!valid(kid.missions[k])) kid.missions[k]={tasks:planTasks(kid,pack,testDate).map(t=>t.id),done:{},awarded:false};
   return kid.missions[k];
 }
 
 if(typeof module!=='undefined') module.exports={viewTest,isOpen,opensOnDate,checkTx,genAlphaWords,buildSession,buildSimulacro};
 
 /* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
+const APP_VERSION='2026-10-12-c';
 const LS_KEY='ct_v1';
 const DEF_SHOP=[
  {id:'r1',em:'🍦',nm:'Un helado',cost:150},
@@ -1125,7 +1128,9 @@ function showWelcome(){
     <button class="kid k2" onclick="pick('k2')"><div class="av">${esc(b.emoji)}</div><div class="nm">${esc(b.name)}</div><div class="sub">⭐ ${b.stars} · 🔥 ${b.streak}</div></button>
   </div>
   <div class="pad" style="text-align:center"><p class="small">3º de Primaria · Colegio San Patricio</p>${nextTestLine()}</div>
-  <button class="lock" onclick="showParent()">🔒 Zona de padres</button>`);
+  <button class="lock" onclick="showParent()">🔒 Zona de padres</button>
+  <div class="small" style="text-align:center;opacity:.6;margin-top:6px">versión ${APP_VERSION}</div>`);
+  if(window.__newVer)showUpdateBanner();
 }
 function nextTestLine(){
   const c=nextAny()||activeTest();if(!c)return '';
@@ -1461,7 +1466,7 @@ function parentPanel(){
     <div class="card"><h2>🔓 Apertura del repaso</h2><div class="small">El repaso de cada Cycle Test se abre unos días antes del examen.</div>
       <div class="row"><span style="font-weight:800">Días de antelación:</span><select class="field" style="width:90px" onchange="S.unlockDays=parseInt(this.value);save();parentPanel()">${[0,1,2,3,4,5,7].map(n=>`<option value="${n}" ${S.unlockDays===n?'selected':''}>${n}</option>`).join('')}</select></div>
       ${CAL.filter(c=>c.pack).map(c=>{const key=testKey(c),op=isOpen(c,S.unlockDays,S.unlock[key]),forced=!!S.unlock[key];return `<div class="row"><div style="flex:1;font-weight:800;font-size:14px">${SUBJ[c.s].em} ${c.s} · ${c.n}<div class="small">${fmtDate(c.d)} · ${op?'✅ abierto':'🔒 se abre el '+fmtDate(dayKey(opensOnDate(c,S.unlockDays)))}</div></div>${(!op||forced)?`<button class="btn sm ${forced?'':'g'}" style="width:auto;margin:0;padding:8px 12px" onclick="toggleUnlock('${key}')">${forced?'Volver a cerrar':'Abrir ya'}</button>`:''}</div>`;}).join('')}</div>
-    <div class="card"><h2>Seguridad y datos</h2><button class="btn ghost sm" onclick="changePin()">Cambiar PIN</button><button class="btn ghost sm" onclick="S.sound=!S.sound;save();toast(S.sound?'Sonido activado':'Sonido desactivado')">🔊 Activar / desactivar sonidos</button>
+    <div class="card"><h2>Seguridad y datos</h2><div class="small">Versión de la app: ${APP_VERSION}</div><button class="btn ghost sm" onclick="changePin()">Cambiar PIN</button><button class="btn ghost sm" onclick="location.href=location.pathname+'?v='+Date.now()">🔄 Forzar actualización</button><button class="btn ghost sm" onclick="S.sound=!S.sound;save();toast(S.sound?'Sonido activado':'Sonido desactivado')">🔊 Activar / desactivar sonidos</button>
     <button class="btn sm" style="background:#FEE2E2;color:#B91C1C;box-shadow:none" onclick="resetKid()">Reiniciar progreso de ${esc(kid.name)}</button></div>`;
   }
   render(`<div class="top"><button class="back" onclick="${KID?'showHome()':'showWelcome()'}">←</button><div class="ttl">🔒 Zona de padres</div></div>${tabs}${body}`);
@@ -1480,6 +1485,24 @@ function manualPts(){const v=parseInt(document.getElementById('mpts').value);if(
 function changePin(){const v=prompt('Nuevo PIN (4 números):');if(v&&/^\d{4}$/.test(v)){S.pin=v;save();toast('PIN cambiado');}else if(v)toast('Debe tener 4 números');}
 function resetKid(){if(confirm('¿Seguro? Se borrará TODO el progreso de este niño/a.')&&confirm('Última confirmación: ¿borrar progreso?')){const k=S.kids[KID_P];S.kids[KID_P]=defKid(k.name,k.emoji);save();parentPanel();}}
 
+/* ═══════════ AUTO-ACTUALIZACIÓN (para tablets que guardan la versión vieja en caché) ═══════════ */
+function showUpdateBanner(){
+  if(document.getElementById('upd'))return;
+  const b=document.createElement('div');b.id='upd';
+  b.style.cssText='position:fixed;left:12px;right:12px;bottom:84px;max-width:536px;margin:0 auto;background:#16A34A;color:#fff;border-radius:18px;padding:14px 16px;z-index:70;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;gap:10px';
+  b.innerHTML='<span style="flex:1">🔄 ¡Hay una versión nueva con más contenido!</span><button style="background:#fff;color:#166534;border-radius:12px;padding:10px 14px;font-weight:900;font-size:15px" onclick="location.href=location.pathname+\'?v=\'+Date.now()">Actualizar</button>';
+  document.body.appendChild(b);
+}
+function checkNewVersion(){
+  try{
+    fetch(location.pathname+'?chk='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(t=>{
+      const m=t.match(/APP_VERSION='([^']+)'/);
+      if(m&&m[1]!==APP_VERSION){window.__newVer=m[1];showUpdateBanner();}
+    }).catch(()=>{});
+  }catch(e){}
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkNewVersion();});
+checkNewVersion();
 showWelcome();
 
 
