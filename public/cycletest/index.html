@@ -131,6 +131,8 @@ button{font-family:inherit;cursor:pointer;border:0}
 .tabs button.on{background:var(--in);color:#fff}
 .lock{background:none;color:var(--mu);font-weight:800;text-decoration:underline;display:block;margin:20px auto}
 .owl{font-size:46px}
+
+.vis{margin:10px 0 4px;text-align:center}.vis svg{max-width:100%;height:auto;max-height:250px}.learn .vis{background:#fff;border-radius:14px;padding:6px}
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -810,12 +812,582 @@ const ENG1={
 };
 if(typeof module!=='undefined') module.exports.ENG1=ENG1;
 
+/* ═══════════════════════════════════════════════
+   CONTENIDO — 1er Cycle Test de MATEMÁTICAS (20 oct 2026)
+   Temas del calendario:
+   · Conteo 0–1.000 (de 1 en 1, 5 en 5, 10 en 10, 100 en 100)
+   · Sumas y restas con la recta numérica
+   · Tablas del 2, 4 y 5
+   · Movimientos cardinales (norte, sur, este, oeste)
+   · Números pares e impares
+   · Ábaco (representación de números)
+   Todo se genera con reglas fijas (sin azar al abrir la app) y los dibujos
+   llevan datos ocultos para poder comprobar que dibujo y respuesta coinciden.
+═══════════════════════════════════════════════ */
+const MAT_R=(()=>{let a=0x2F6E2B1;return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};})();
+const mR=n=>Math.floor(MAT_R()*n);
+const mPick=a=>a[mR(a.length)];
+const fmtN=n=>n>=1000?String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.'):String(n);
+
+/* mc con números: el resto de opciones salen de «candidatos» típicos (errores habituales) */
+function mcNum(q,ans,cands,expl,extra){
+  const seen=new Set([ans]),w=[];
+  const add=c=>{if(Number.isInteger(c)&&c>=0&&c<=1000&&!seen.has(c)){seen.add(c);w.push(c);}};
+  cands.forEach(add);
+  [1,-1,10,-10,2,-2,100,-100,5,-5,3,-3,20,-20].forEach(d=>{if(w.length<3)add(ans+d);});
+  return Object.assign(mc(q,fmtN(ans),w.slice(0,3).map(fmtN),expl),extra||{});
+}
+const mcx=(q,ans,wrong,expl,extra)=>Object.assign(mc(q,ans,wrong,expl),extra||{});
+const txn=(q,ans,extra)=>tx(q,(Array.isArray(ans)?ans:[ans]).map(a=>typeof a==='number'?fmtN(a):a),'nums',extra);
+const uniqQ=list=>{const s=new Set();return list.filter(q=>{const k=q.q+'|'+(q.vis?q.vis.length:'')+'|'+(Array.isArray(q.ans)?q.ans[0]:q.ans);if(s.has(k))return false;s.add(k);return true;});};
+
+/* ───────────── DIBUJOS (SVG) ───────────── */
+const SVG=(w,h,inner,chk)=>`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" data-chk='${JSON.stringify(chk||{})}'>${inner}</svg>`;
+
+/* recta numérica «vacía»: puntos con los saltos dibujados arriba */
+function svgLine(start,jumps,o){
+  o=o||{};
+  const pts=[start];jumps.forEach(j=>pts.push(pts[pts.length-1]+j));
+  const n=pts.length,W=360,H=118,x0=34,x1=326,y=84,step=n>1?(x1-x0)/(n-1):0;
+  const dir=jumps.length&&jumps[0]<0?-1:1;
+  const xs=pts.map((_,i)=>dir>0?x0+i*step:x1-i*step);
+  let g='<defs><marker id="mkA" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4F46E5"/></marker><marker id="mkR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#DC2626"/></marker></defs>';
+  g+=`<line x1="10" y1="${y}" x2="350" y2="${y}" stroke="#475569" stroke-width="3" stroke-linecap="round"/>`;
+  pts.forEach((p,i)=>{
+    const unk=(o.unknownEnd&&i===n-1);
+    g+=`<line x1="${xs[i]}" y1="${y-8}" x2="${xs[i]}" y2="${y+8}" stroke="#475569" stroke-width="3"/>`;
+    g+=`<text class="pt" x="${xs[i]}" y="${y+30}" text-anchor="middle" font-size="18" font-weight="800" fill="${unk?'#EA580C':'#1E293B'}">${unk?'?':fmtN(p)}</text>`;
+  });
+  jumps.forEach((j,i)=>{
+    const a=xs[i],b=xs[i+1],mid=(a+b)/2,col=j>=0?'#4F46E5':'#DC2626',mk=j>=0?'mkA':'mkR',unkJ=o.unknownJump===i;
+    g+=`<path d="M${a},${y-6} Q${mid},${y-62} ${b},${y-6}" fill="none" stroke="${col}" stroke-width="3" marker-end="url(#${mk})"/>`;
+    g+=`<text class="jp" x="${mid}" y="${y-40}" text-anchor="middle" font-size="17" font-weight="800" fill="${unkJ?'#EA580C':col}">${unkJ?'?':(j>0?'+':'−')+fmtN(Math.abs(j))}</text>`;
+  });
+  return SVG(W,H,g,{k:'line',s:start,j:jumps,ue:!!o.unknownEnd,uj:o.unknownJump===undefined?-1:o.unknownJump});
+}
+
+/* ábaco: una varilla por orden (UM, C, D, U) con tantas bolas como indique la cifra */
+function svgAbaco(n){
+  const parts=n>=1000?[['UM',Math.floor(n/1000)],['C',Math.floor(n/100)%10],['D',Math.floor(n/10)%10],['U',n%10]]:[['C',Math.floor(n/100)%10],['D',Math.floor(n/10)%10],['U',n%10]];
+  const col={UM:'#8B5CF6',C:'#EF4444',D:'#3B82F6',U:'#22C55E'};
+  const gap=84,W=parts.length*gap+24,H=210,base=172;
+  let g=`<rect x="6" y="6" width="${W-12}" height="${H-12}" rx="16" fill="#FEF3C7" stroke="#B45309" stroke-width="4"/>`;
+  parts.forEach(([nm,c],i)=>{
+    const cx=12+gap/2+i*gap;
+    g+=`<line x1="${cx}" y1="22" x2="${cx}" y2="${base}" stroke="#92400E" stroke-width="5" stroke-linecap="round"/>`;
+    for(let k=0;k<c;k++) g+=`<circle class="bd" data-r="${nm}" cx="${cx}" cy="${base-10-k*17}" r="9" fill="${col[nm]}" stroke="#fff" stroke-width="2"/>`;
+    g+=`<text x="${cx}" y="${H-14}" text-anchor="middle" font-size="19" font-weight="900" fill="${col[nm]}">${nm}</text>`;
+  });
+  return SVG(W,H,g,{k:'abaco',n});
+}
+
+/* cuadrícula 5×5 con casillas A–E (columnas) y 1–5 (filas, la 1 abajo) y rosa de los vientos */
+const GCOLS='ABCDE';
+const gCode=(c,r)=>GCOLS[c]+(r+1);
+function svgGrid(start,end,o){
+  o=o||{};
+  const N=5,cell=40,gx=30,gy=12,W=gx+N*cell+130,H=gy+N*cell+34;
+  let g='';
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)g+=`<rect x="${gx+c*cell}" y="${gy+(N-1-r)*cell}" width="${cell}" height="${cell}" fill="${(r+c)%2?'#EEF2FF':'#fff'}" stroke="#A5B4FC" stroke-width="1.5"/>`;
+  g+=`<rect x="${gx}" y="${gy}" width="${N*cell}" height="${N*cell}" fill="none" stroke="#4338CA" stroke-width="3"/>`;
+  for(let c=0;c<N;c++)g+=`<text x="${gx+c*cell+cell/2}" y="${gy+N*cell+22}" text-anchor="middle" font-size="16" font-weight="800" fill="#334155">${GCOLS[c]}</text>`;
+  for(let r=0;r<N;r++)g+=`<text x="${gx-10}" y="${gy+(N-1-r)*cell+cell/2+6}" text-anchor="middle" font-size="16" font-weight="800" fill="#334155">${r+1}</text>`;
+  // rosa de los vientos
+  const rx=gx+N*cell+68,ry=gy+N*cell/2;
+  g+=`<g stroke="#334155" stroke-width="3" stroke-linecap="round"><line x1="${rx}" y1="${ry-34}" x2="${rx}" y2="${ry+34}"/><line x1="${rx-34}" y1="${ry}" x2="${rx+34}" y2="${ry}"/></g>`;
+  g+=`<path d="M${rx},${ry-40} l-7,12 h14 z" fill="#DC2626"/>`;
+  g+=`<text x="${rx}" y="${ry-46}" text-anchor="middle" font-size="16" font-weight="900" fill="#DC2626">N</text>`;
+  g+=`<text x="${rx}" y="${ry+58}" text-anchor="middle" font-size="16" font-weight="900" fill="#334155">S</text>`;
+  g+=`<text x="${rx+44}" y="${ry+6}" text-anchor="middle" font-size="16" font-weight="900" fill="#334155">E</text>`;
+  g+=`<text x="${rx-44}" y="${ry+6}" text-anchor="middle" font-size="16" font-weight="900" fill="#334155">O</text>`;
+  const mark=(p,lbl,colr,cls)=>`<circle class="${cls}" cx="${gx+p[0]*cell+cell/2}" cy="${gy+(N-1-p[1])*cell+cell/2}" r="14" fill="${colr}" stroke="#fff" stroke-width="2"/><text x="${gx+p[0]*cell+cell/2}" y="${gy+(N-1-p[1])*cell+cell/2+6}" text-anchor="middle" font-size="16" font-weight="900" fill="#fff">${lbl}</text>`;
+  if(o.path&&o.path.length>1){
+    const pp=o.path.map(p=>[gx+p[0]*cell+cell/2,gy+(N-1-p[1])*cell+cell/2]);
+    g+=`<polyline points="${pp.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#F59E0B" stroke-width="5" stroke-linejoin="round" stroke-dasharray="2 8" stroke-linecap="round"/>`;
+  }
+  if(end) g+=mark(end,'B','#DC2626','en');
+  g+=mark(start,'A','#2563EB','st');
+  return SVG(W,H,g,{k:'grid',s:start,e:end||null});
+}
+const DIRS={N:[0,1,'Norte'],S:[0,-1,'Sur'],E:[1,0,'Este'],O:[-1,0,'Oeste']};
+const inGrid=p=>p[0]>=0&&p[0]<5&&p[1]>=0&&p[1]<5;
+function walk(start,moves){ // moves: [['E',2],['N',1]]
+  let p=[...start];const path=[[...p]];
+  for(const [d,n] of moves){for(let i=0;i<n;i++){p=[p[0]+DIRS[d][0],p[1]+DIRS[d][1]];if(!inGrid(p))return null;}path.push([...p]);}
+  return {end:p,path};
+}
+const movesTxt=ms=>ms.map(([d,n])=>`${n} casilla${n>1?'s':''} al ${DIRS[d][2]}`).join(', luego ').replace(/(.*), luego /,'$1, y luego ');
+
+/* ═════════════ 1. CONTEO 0–1.000 ═════════════ */
+const seriesTxt=(a,s,n)=>Array.from({length:n||4},(_,i)=>fmtN(a+i*s)).join(', ');
+function buildCount(){
+  const T=[],W=[];
+  // después / antes
+  [99,199,299,399,499,599,699,799,899,999,109,129,219,349,459,569,679,789,909].forEach(x=>T.push(mcNum(`¿Qué número viene DESPUÉS de ${fmtN(x)}?`,x+1,[x-1,x+10,x+100,x+2],x%100===99?'Después de '+x+' cambia la cifra de las centenas.':'')));
+  [100,200,300,400,500,600,700,800,900,1000,110,250,320,430,540,650,760,870,980].forEach(x=>T.push(mcNum(`¿Qué número va ANTES de ${fmtN(x)}?`,x-1,[x+1,x-10,x-100,x-2],'')));
+  // de 5 en 5
+  [0,15,40,65,85,105,230,345,490,485,565,610,745,830,905,970].forEach(a=>{const ans=a+15;T.push(mcNum(`Cuenta de 5 en 5: ${fmtN(a)}, ${fmtN(a+5)}, ${fmtN(a+10)}, ___`,ans,[ans+5,ans-5,ans+1,ans+10],'De 5 en 5 los números acaban en 0 o en 5.'));});
+  // de 10 en 10
+  [20,57,134,250,376,370,481,593,615,728,865,902].forEach(a=>{const ans=a+30;T.push(mcNum(`Cuenta de 10 en 10: ${fmtN(a)}, ${fmtN(a+10)}, ${fmtN(a+20)}, ___`,ans,[ans+10,ans-10,ans+100,ans+1],'De 10 en 10 cambia la cifra de las decenas.'));});
+  // de 100 en 100
+  [0,50,100,150,215,300,420,550,640,700].forEach(a=>{const ans=a+300;T.push(mcNum(`Cuenta de 100 en 100: ${fmtN(a)}, ${fmtN(a+100)}, ${fmtN(a+200)}, ___`,ans,[ans+10,ans+100,ans-100,ans+1],'De 100 en 100 cambia la cifra de las centenas.'));});
+  // hacia atrás
+  [[5,80],[5,235],[5,500],[10,130],[10,560],[10,1000],[100,900],[100,750],[100,1000]].forEach(([s,a])=>{const ans=a-3*s;T.push(mcNum(`Cuenta hacia atrás de ${s} en ${s}: ${fmtN(a)}, ${fmtN(a-s)}, ${fmtN(a-2*s)}, ___`,ans,[ans+s,ans-s,ans+1,ans-1],''));});
+  // hueco en medio
+  [[5,340],[5,715],[10,640],[10,295],[100,200],[100,550]].forEach(([s,a])=>{const ans=a+s;T.push(mcNum(`Cuenta de ${s} en ${s}: ${fmtN(a)}, ___, ${fmtN(a+2*s)}`,ans,[ans+s,ans-s,ans+1,ans+10],''));});
+  // ¿qué serie cuenta de s en s?
+  const steps=[1,5,10,100];
+  [[5,[15,35,70,120,205,340]],[10,[25,48,130,210,375,560]],[100,[0,150,200,350,420,600]]].forEach(([s,starts])=>starts.forEach(a=>{
+    const ans=seriesTxt(a,s),wrong=steps.filter(x=>x!==s).map(x=>seriesTxt(a,x));
+    T.push(mc(`¿Qué serie cuenta de ${s} en ${s}?`,ans,wrong,'Mira cuánto cambia de un número al siguiente.'));
+  }));
+  // ¿de cuánto en cuánto?
+  [[5,35],[5,120],[5,610],[10,240],[10,375],[10,590],[100,100],[100,230],[100,400],[1,497],[1,658]].forEach(([s,a])=>{
+    const ans='de '+s+' en '+s;
+    T.push(mc(`¿De cuánto en cuánto cuenta esta serie?\n${seriesTxt(a,s)}`,ans,steps.filter(x=>x!==s).map(x=>'de '+x+' en '+x),''));
+  });
+  // cifras que cambian y otros hechos
+  T.push(mc('¿Qué cifra cambia cuando cuentas de 100 en 100? (234, 334, 434…)','La de las centenas (la primera)',['La de las decenas (la del medio)','La de las unidades (la última)','Cambian todas las cifras'],''));
+  T.push(mc('¿Qué cifra cambia cuando cuentas de 10 en 10? (234, 244, 254…)','La de las decenas (la del medio)',['La de las centenas (la primera)','La de las unidades (la última)','Cambian todas las cifras'],''));
+  T.push(mc('Cuando cuentas de 5 en 5 desde el 0, ¿en qué cifras acaban los números?','En 0 o en 5',['Solo en 5','En 0, 2, 4, 6 u 8','En 1, 3, 5, 7 o 9'],'5, 10, 15, 20, 25, 30…'));
+  T.push(mc('¿Cuántas centenas hay en 1.000?','10',['100','1','1.000'],'10 centenas = 1.000 (mil).'));
+  T.push(mc('10 centenas son…','1.000',['100','10','10.000'],''));
+  T.push(mc('Contamos de 100 en 100 desde el 0 hasta 1.000 (sin decir el 0). ¿Cuántos números decimos?','10',['9','100','11'],'100, 200, 300, 400, 500, 600, 700, 800, 900, 1.000.'));
+  T.push(mc('Contamos de 10 en 10 desde el 0 hasta el 100 (sin decir el 0). ¿Cuántos números decimos?','10',['9','100','11'],'10, 20, 30, 40, 50, 60, 70, 80, 90, 100.'));
+  T.push(mc('Contamos de 5 en 5 desde el 0 hasta el 100 (sin decir el 0). ¿Cuántos números decimos?','20',['10','25','50'],'Del 5 al 100: 20 números.'));
+  T.push(mc('¿Qué número viene justo después del 999?','1.000',['9.000','990','1.001'],'mil = 1.000'));
+  // mayor / menor
+  [[479,497,749,794],[308,380,803,830],[256,265,526,562],[612,621,126,216],[904,490,940,409],[135,315,513,351]].forEach(a=>{
+    T.push(mc('¿Cuál es el número MAYOR?',String(Math.max(...a)),a.filter(x=>x!==Math.max(...a)).map(String),'Compara primero las centenas.'));
+    T.push(mc('¿Cuál es el número MENOR?',String(Math.min(...a)),a.filter(x=>x!==Math.min(...a)).map(String),'Compara primero las centenas.'));
+  });
+  // leer números
+  [['quinientos veinte',520,[502,5020,250]],['cuatrocientos cinco',405,[450,45,4005]],['ochocientos sesenta y dos',862,[826,8062,682]],['setecientos',700,[70,7000,170]],['trescientos cuarenta',340,[304,3040,43]],['novecientos noventa y nueve',999,[99,909,990]],['seiscientos seis',606,[660,66,6006]]].forEach(([t,n,w])=>{
+    T.push(mc(`Escribe con cifras: «${t}»`,fmtN(n),w.map(fmtN),''));
+  });
+  // ordenar (fichas)
+  [[['408','84','480','840'],'84 408 480 840'],[['305','53','350','503'],'53 305 350 503'],[['712','217','127','721'],'127 217 712 721'],[['96','690','609','960'],'96 609 690 960'],[['250','25','52','205'],'25 52 205 250']].forEach(([tk,a])=>T.push(chips('Toca los números de MENOR a MAYOR:',tk,a,'Orden correcto: '+a.split(' ').join(', ')+'.')));
+  [[['408','84','480','840'],'840 480 408 84'],[['213','132','321','123'],'321 213 132 123']].forEach(([tk,a])=>T.push(chips('Toca los números de MAYOR a MENOR:',tk,a,'Orden correcto: '+a.split(' ').join(', ')+'.')));
+
+  // ───── escribir ─────
+  [199,299,509,649,799,899,989,999,319,429].forEach(x=>W.push(txn(`Escribe el número que va DESPUÉS de ${fmtN(x)}:`,x+1)));
+  [300,500,700,1000,410,620,850,540].forEach(x=>W.push(txn(`Escribe el número que va ANTES de ${fmtN(x)}:`,x-1)));
+  [[5,235],[5,445],[5,690],[5,820],[5,95],[10,350],[10,562],[10,790],[10,128],[100,200],[100,450],[100,600]].forEach(([s,a])=>{
+    const ans=a+2*s;W.push(txn(`Escribe el número que falta (de ${s} en ${s}):\n${fmtN(a)}, ${fmtN(a+s)}, ___, ${fmtN(a+3*s)}`,ans));
+  });
+  [[10,640],[10,375],[10,590],[5,720],[5,365],[100,300],[100,150]].forEach(([s,a])=>{
+    const nx=[1,2,3].map(i=>a+i*s);
+    W.push(txn(`Escribe los 3 números siguientes (de ${s} en ${s}):\n${fmtN(a)}, ___, ___, ___`,nx.map(fmtN).join(' '),{hint:'Sepáralos con comas o espacios.'}));
+  });
+  [[5,60],[5,300],[10,200],[10,820],[100,900],[100,500]].forEach(([s,a])=>{
+    W.push(txn(`Cuenta hacia atrás de ${s} en ${s} y escribe el número que falta:\n${fmtN(a)}, ${fmtN(a-s)}, ___, ${fmtN(a-3*s)}`,a-2*s));
+  });
+  W.push(txn('Cuenta de 100 en 100 y escribe los números que faltan:\n200, ___, 400, ___, 600','300 500',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Cuenta de 5 en 5 y escribe los números que faltan:\n740, ___, ___, ___, ___, 765','745 750 755 760',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Escribe con cifras: setecientos cinco',705));
+  W.push(txn('Escribe con cifras: cuatrocientos cincuenta',450));
+  W.push(txn('Escribe con cifras: ochocientos noventa y uno',891));
+  W.push(txn('Escribe con cifras: seiscientos',600));
+  W.push(txn('¿Cuántas centenas hay en 1.000?',10));
+  W.push(txn('Escribe el mayor número de 3 cifras:',999));
+  W.push(txn('Escribe el menor número de 3 cifras:',100));
+  return {T:uniqQ(T),W:uniqQ(W)};
+}
+
+/* ═════════════ 2. RECTA NUMÉRICA ═════════════ */
+const bits=b=>[Math.floor(b/100)*100,Math.floor(b/10)%10*10,b%10].filter(x=>x>0);
+function buildLine(){
+  const T=[],W=[];
+  const adds=[[35,[20,5]],[47,[20,5]],[28,[30,4]],[56,[10,10,3]],[63,[40,2]],[72,[20,6]],[84,[10,9]],[25,[50,8]],[350,[100,100]],[420,[300,20]]];
+  const subs=[[78,[-30,-4]],[92,[-20,-5]],[64,[-10,-10,-3]],[55,[-40,-2]],[81,[-30,-6]],[100,[-60,-8]],[640,[-100,-100]],[370,[-200,-30]]];
+  const endOf=(a,j)=>a+j.reduce((x,y)=>x+y,0);
+  // ¿a qué número llegas?
+  [...adds,...subs].forEach(([a,j])=>{
+    const end=endOf(a,j),first=a+j[0];
+    T.push(mcNum(`Empiezas en ${fmtN(a)}. Mira los saltos de la recta. ¿A qué número llegas?`,end,[first,end+10,end-10,end+1,end-1],'Suma (o resta) cada salto, uno detrás de otro.',{vis:svgLine(a,j,{unknownEnd:true})}));
+  });
+  // ¿qué operación representa?
+  [[35,[20,5]],[47,[30,6]],[28,[40,3]],[62,[10,10,4]]].forEach(([a,j])=>{
+    const tot=j.reduce((x,y)=>x+y,0),end=a+tot;
+    T.push(mcx(`¿Qué suma representa esta recta? (empieza en ${a})`,`${a} + ${tot}`,[`${a} + ${j[0]}`,`${a} + ${j[j.length-1]}`,`${end} + ${tot}`],`Los saltos suman ${tot}: ${a} + ${tot} = ${end}.`,{vis:svgLine(a,j)}));
+  });
+  [[78,[-30,-4]],[92,[-20,-5]],[64,[-10,-10,-3]],[85,[-40,-6]]].forEach(([a,j])=>{
+    const tot=-j.reduce((x,y)=>x+y,0),end=a-tot;
+    T.push(mcx(`¿Qué resta representa esta recta? (empieza en ${a})`,`${a} − ${tot}`,[`${a} − ${-j[0]}`,`${a} − ${-j[j.length-1]}`,`${a} + ${tot}`],`Los saltos hacia la izquierda suman ${tot}: ${a} − ${tot} = ${end}.`,{vis:svgLine(a,j)}));
+  });
+  // ¿cuánto has saltado?
+  [[34,59],[27,80],[46,71],[120,350],[58,93]].forEach(([a,b])=>{
+    T.push(mcNum(`Empiezas en ${fmtN(a)} y llegas a ${fmtN(b)} saltando hacia la derecha. ¿Cuánto has saltado?`,b-a,[b+a>1000?b-a+10:b+a,b-a+10,b-a-10,b-a+1],'Resta: el número de llegada menos el de salida.',{vis:svgLine(a,[b-a],{unknownJump:0})}));
+  });
+  [[82,57],[95,48],[140,90]].forEach(([a,b])=>{
+    T.push(mcNum(`Empiezas en ${fmtN(a)} y llegas a ${fmtN(b)} saltando hacia la izquierda. ¿Cuánto has saltado?`,a-b,[a+b>1000?a-b+10:a+b,a-b+10,a-b-10,a-b+1],'Resta: el número de salida menos el de llegada.',{vis:svgLine(a,[b-a],{unknownJump:0})}));
+  });
+  // texto
+  [[58,30],[43,20],[76,40],[125,100],[210,30]].forEach(([a,j])=>T.push(mcNum(`Estás en el ${a} de la recta y saltas ${j} hacia la DERECHA. ¿Dónde caes?`,a+j,[a-j,a+j+10,a+j-10,a+10],'')));
+  [[58,30],[93,20],[76,40],[125,100],[310,60]].forEach(([a,j])=>T.push(mcNum(`Estás en el ${a} de la recta y saltas ${j} hacia la IZQUIERDA. ¿Dónde caes?`,a-j,[a+j,a-j+10,a-j-10,a-10],'')));
+  T.push(mc('En la recta numérica, ¿hacia dónde saltas para SUMAR?','Hacia la derecha (números mayores)',['Hacia la izquierda (números menores)','Hacia arriba','No se salta'],''));
+  T.push(mc('En la recta numérica, ¿hacia dónde saltas para RESTAR?','Hacia la izquierda (números menores)',['Hacia la derecha (números mayores)','Hacia arriba','No se salta'],''));
+  // descomponer el sumando en saltos
+  [[47,25],[36,48],[58,34],[29,63],[75,16],[84,37]].forEach(([a,b])=>{
+    const t=Math.floor(b/10)*10,u=b%10;
+    T.push(mc(`Para calcular ${a} + ${b} con la recta, ¿qué saltos son correctos?`,`+${t} y +${u}`,[`+${t/10} y +${u}`,`+${t} y +${u+1}`,`+${t+10} y +${u}`],`${b} = ${t} + ${u}. Salta ${t} y después ${u}.`));
+  });
+  [[82,27],[73,35],[91,46],[64,29]].forEach(([a,b])=>{
+    const t=Math.floor(b/10)*10,u=b%10;
+    T.push(mc(`Para calcular ${a} − ${b} con la recta, ¿qué saltos hacia la izquierda son correctos?`,`−${t} y −${u}`,[`−${t/10} y −${u}`,`−${t} y −${u+1}`,`−${t+10} y −${u}`],`${b} = ${t} + ${u}. Salta ${t} y después ${u} hacia atrás.`));
+  });
+  // ───── escribir ─────
+  [[46,28],[37,45],[58,26],[29,34],[63,19],[75,18],[24,59],[86,9],[148,35],[230,150]].forEach(([a,b])=>{
+    const j=bits(b);
+    W.push(txn(`Usa la recta y escribe el resultado:\n${a} + ${b} = ?`,a+b,{vis:svgLine(a,j,{unknownEnd:true}),hint:`Salta ${j.join(' y luego ')}.`}));
+  });
+  [[83,27],[72,35],[91,46],[60,24],[54,18],[100,37],[65,29],[48,19],[236,41],[450,120]].forEach(([a,b])=>{
+    const bj=bits(b),j=bj.map(x=>-x);
+    W.push(txn(`Usa la recta y escribe el resultado:\n${a} − ${b} = ?`,a-b,{vis:svgLine(a,j,{unknownEnd:true}),hint:`Salta hacia atrás ${bj.join(' y luego ')}.`}));
+  });
+  [[39,25],[52,38],[67,24],[18,47],[45,36]].forEach(([a,b])=>W.push(txn(`Escribe el resultado:\n${a} + ${b} = ?`,a+b)));
+  [[62,17],[85,36],[93,28],[70,43],[56,38]].forEach(([a,b])=>W.push(txn(`Escribe el resultado:\n${a} − ${b} = ?`,a-b)));
+  [[34,59],[27,80],[46,71],[120,350]].forEach(([a,b])=>W.push(txn(`Empiezas en ${fmtN(a)} y llegas a ${fmtN(b)} saltando hacia la derecha. ¿Cuánto has saltado?`,b-a,{vis:svgLine(a,[b-a],{unknownJump:0})})));
+  [[82,57],[95,48],[140,90]].forEach(([a,b])=>W.push(txn(`Empiezas en ${fmtN(a)} y llegas a ${fmtN(b)} saltando hacia la izquierda. ¿Cuánto has saltado?`,a-b,{vis:svgLine(a,[b-a],{unknownJump:0})})));
+  return {T:uniqQ(T),W:uniqQ(W)};
+}
+
+/* ═════════════ 3. TABLAS DEL 2, 4 Y 5 ═════════════ */
+function buildTables(){
+  const T=[],W=[];
+  const WORD={
+    2:[b=>`Cada bici tiene 2 ruedas. ¿Cuántas ruedas hay en ${b} bicis?`,b=>`Hay ${b} parejas de zapatos. ¿Cuántos zapatos hay en total?`,b=>`Cada niño tiene 2 ojos. ¿Cuántos ojos tienen ${b} niños?`],
+    4:[b=>`Una mesa tiene 4 patas. ¿Cuántas patas tienen ${b} mesas?`,b=>`Un coche tiene 4 ruedas. ¿Cuántas ruedas tienen ${b} coches?`,b=>`Cada perro tiene 4 patas. ¿Cuántas patas tienen ${b} perros?`],
+    5:[b=>`Una mano tiene 5 dedos. ¿Cuántos dedos hay en ${b} manos?`,b=>`Hay ${b} bolsas con 5 caramelos cada una. ¿Cuántos caramelos hay?`,b=>`Cada caja trae 5 lápices. ¿Cuántos lápices hay en ${b} cajas?`],
+  };
+  for(const a of [2,4,5]){
+    for(let b=1;b<=10;b++){
+      const ans=a*b,flip=(a+b)%2===1;
+      const q=flip?`${b} × ${a} = ?`:`${a} × ${b} = ?`;
+      T.push(mcNum(q,ans,[ans+a,ans-a,ans+1,ans-1,ans+b],`Tabla del ${a}: ${a} × ${b} = ${ans}.`));
+      W.push(txn(flip?`${a} × ${b} = ?`:`${b} × ${a} = ?`,ans));
+    }
+    // factor que falta
+    [3,6,7,8,9].forEach(b=>{
+      const c=a*b,pos=(a+b)%2?`${a} × ___ = ${c}`:`___ × ${a} = ${c}`;
+      T.push(mcNum(`Completa: ${pos}`,b,[b+1,b-1,b+2,b-2],`${a} × ${b} = ${c}`));
+      W.push(txn(`Completa: ${(a+b)%2?`___ × ${a} = ${c}`:`${a} × ___ = ${c}`}`,b));
+    });
+    // problemas
+    [3,5,6,7,9,10].forEach((b,i)=>{
+      const ans=a*b,txt=WORD[a][i%3](b);
+      T.push(mcNum(txt,ans,[ans+a,ans-a,ans+b,a+b],`${a} × ${b} = ${ans}`));
+      if(i%2===0)W.push(txn(txt,ans));
+    });
+    // serie de la tabla
+    [[1,2,3],[2,3,4],[3,4,5],[5,6,7],[7,8,9]].forEach(([i,j,k])=>{
+      const ans=a*(k+1);
+      T.push(mcNum(`Completa la tabla del ${a}: ${a*i}, ${a*j}, ${a*k}, ___`,ans,[ans+a,ans-a,ans+1,ans-1],''));
+      W.push(txn(`Completa la tabla del ${a}: ${a*i}, ${a*j}, ${a*k}, ___`,ans));
+    });
+    // «si ya sé… entonces…»
+    [[6,7],[8,9],[4,5]].forEach(([b,c])=>{
+      T.push(mcNum(`Si ${a} × ${b} = ${a*b}, ¿cuánto es ${a} × ${c}?`,a*c,[a*c-a,a*c+a,a*b+c,a*c+1],`Suma ${a} una vez más: ${a*b} + ${a} = ${a*c}.`));
+    });
+  }
+  // el doble
+  [5,7,8,9,12,15,20,25].forEach(n=>{
+    T.push(mcNum(`¿Cuál es el doble de ${n}?`,2*n,[n+2,2*n+2,2*n-2,n*n],'El doble es multiplicar por 2.'));
+    W.push(txn(`Escribe el doble de ${n}:`,2*n));
+  });
+  [[6,24],[3,12],[7,28],[9,36],[5,20]].forEach(([n,r])=>{
+    T.push(mcNum(`El doble del doble de ${n} es…`,r,[2*n,r+4,r-4,n+4],`Doble de ${n} = ${2*n}; doble de ${2*n} = ${r}. ¡Eso es ${n} × 4!`));
+    W.push(txn(`Escribe el doble del doble de ${n}:`,r,{hint:'Dobla dos veces.'}));
+  });
+  // reglas
+  T.push(mc('¿Qué tabla es el doble de la tabla del 2?','La del 4',['La del 5','La del 3','La del 8'],'4 = 2 × 2, así que 4 × b es el doble de 2 × b.'));
+  T.push(mc('Los resultados de la tabla del 5 acaban siempre en…','0 o en 5',['1 o en 6','2 o en 7','0 o en 2'],'5, 10, 15, 20, 25, 30…'));
+  T.push(mc('Los resultados de la tabla del 2 son siempre números…','pares',['impares','de tres cifras','que acaban en 5'],'2, 4, 6, 8, 10… ¡todos pares!'));
+  T.push(mc('Los resultados de la tabla del 4 son siempre números…','pares',['impares','que acaban en 5','menores que 20'],'4, 8, 12, 16, 20, 24… ¡todos pares!'));
+  T.push(mc('¿Cuál de estos números está en la tabla del 5?','35',['32','38','54'],''));
+  T.push(mc('¿Cuál de estos números está en la tabla del 4?','28',['26','30','34'],''));
+  T.push(mc('¿Cuál de estos números NO está en la tabla del 2?','15',['12','18','20'],'Los de la tabla del 2 son pares.'));
+  T.push(mc('Sumar 4 + 4 + 4 + 4 + 4 es lo mismo que…','5 × 4',['4 × 4','4 + 5','5 × 5'],'Cinco veces el 4.'));
+  T.push(mc('Sumar 5 + 5 + 5 es lo mismo que…','3 × 5',['5 × 5','5 + 3','3 × 3'],'Tres veces el 5.'));
+  T.push(mc('Sumar 2 + 2 + 2 + 2 + 2 + 2 es lo mismo que…','6 × 2',['2 × 2','6 + 2','2 × 5'],'Seis veces el 2.'));
+  W.push(txn('Escribe la tabla del 5 hasta 5 × 5:\n5, 10, ___, ___, ___','15 20 25',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Escribe la tabla del 4 hasta 4 × 6:\n4, 8, ___, ___, ___, ___','12 16 20 24',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Escribe la tabla del 2 hasta 2 × 8:\n2, 4, ___, ___, ___, ___, ___, ___','6 8 10 12 14 16',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Calcula 5 + 5 + 5 + 5 usando la tabla del 5. Escribe el resultado:',20));
+  return {T:uniqQ(T),W:uniqQ(W)};
+}
+
+/* ═════════════ 4. MOVIMIENTOS CARDINALES ═════════════ */
+function buildCard(){
+  const T=[],W=[];
+  const K=(q,a,w,e)=>T.push(mc(q,a,w,e||''));
+  K('¿Cuáles son los cuatro puntos cardinales?','Norte, Sur, Este y Oeste',['Arriba, abajo, izquierda y derecha','Norte, Sur, Centro y Borde','Norte, Sur, Este y Centro'],'N (Norte), S (Sur), E (Este) y O (Oeste).');
+  K('¿Cuál es el punto cardinal opuesto al Norte?','Sur',['Este','Oeste','Centro']);
+  K('¿Cuál es el punto cardinal opuesto al Este?','Oeste',['Norte','Sur','Centro']);
+  K('¿Cuál es el punto cardinal opuesto al Sur?','Norte',['Este','Oeste','Centro']);
+  K('¿Cuál es el punto cardinal opuesto al Oeste?','Este',['Norte','Sur','Centro']);
+  K('El Sol sale por el…','Este',['Oeste','Norte','Sur'],'El Sol sale por el Este y se pone por el Oeste.');
+  K('El Sol se pone por el…','Oeste',['Este','Norte','Sur'],'El Sol sale por el Este y se pone por el Oeste.');
+  K('En un mapa, el Norte suele estar…','Arriba',['Abajo','A la derecha','A la izquierda']);
+  K('En un mapa, el Sur suele estar…','Abajo',['Arriba','A la derecha','A la izquierda']);
+  K('En un mapa, el Este suele estar…','A la derecha',['A la izquierda','Arriba','Abajo']);
+  K('En un mapa, el Oeste suele estar…','A la izquierda',['A la derecha','Arriba','Abajo']);
+  K('Si miras al Norte, ¿qué tienes a tu derecha?','El Este',['El Oeste','El Sur','El Norte'],'Mirando al Norte: derecha = Este, izquierda = Oeste, detrás = Sur.');
+  K('Si miras al Norte, ¿qué tienes a tu izquierda?','El Oeste',['El Este','El Sur','El Norte'],'Mirando al Norte: derecha = Este, izquierda = Oeste, detrás = Sur.');
+  K('Si miras al Norte, ¿qué tienes detrás de ti?','El Sur',['El Este','El Oeste','El Norte'],'Mirando al Norte: derecha = Este, izquierda = Oeste, detrás = Sur.');
+  K('¿Qué letra representa el Oeste?','O',['E','S','N'],'N (Norte), S (Sur), E (Este) y O (Oeste).');
+  K('¿Qué letra representa el Este?','E',['O','S','N'],'N (Norte), S (Sur), E (Este) y O (Oeste).');
+  K('Para saber dónde está el Norte usamos…','Una brújula',['Un termómetro','Una regla','Un reloj']);
+  K('Un pájaro vuela hacia el Sur. En el mapa, ¿hacia dónde se mueve?','Hacia abajo',['Hacia arriba','Hacia la derecha','Hacia la izquierda']);
+  K('En un mapa te mueves hacia la derecha. ¿Hacia qué punto cardinal vas?','Este',['Oeste','Norte','Sur']);
+  K('En un mapa te mueves hacia arriba. ¿Hacia qué punto cardinal vas?','Norte',['Sur','Este','Oeste']);
+  K('¿Qué es la rosa de los vientos?','Un dibujo que muestra los puntos cardinales',['Una flor del jardín','Un mapa de un país','Un reloj de sol']);
+
+  // cuadrícula: ¿en qué casilla acabas?
+  const cases=[
+    [[1,1],[['E',2],['N',1]]],[[0,0],[['N',3],['E',2]]],[[3,3],[['O',2],['S',1]]],[[2,0],[['N',2],['O',1]]],
+    [[4,4],[['S',3],['O',2]]],[[1,3],[['E',3],['S',2]]],[[0,2],[['E',4]]],[[2,4],[['S',3]]],
+    [[3,1],[['O',3],['N',2]]],[[1,0],[['N',1],['E',2],['N',2]]],[[4,0],[['N',2],['O',3],['S',1]]],[[2,2],[['E',2],['S',1],['O',3]]],
+    [[0,4],[['S',1],['E',2],['S',2]]],[[3,2],[['N',2],['O',1],['S',1]]],
+  ];
+  const gridQ=(start,moves)=>{
+    const r=walk(start,moves);if(!r)return null;
+    const endC=gCode(...r.end);
+    // distractores: cambiando E↔O, N↔S, o ambos
+    const swap=m=>m.map(([d,n])=>[({E:'O',O:'E',N:'S',S:'N'})[d],n]);
+    const swapH=m=>m.map(([d,n])=>[d==='E'?'O':d==='O'?'E':d,n]);
+    const swapV=m=>m.map(([d,n])=>[d==='N'?'S':d==='S'?'N':d,n]);
+    const wrong=[];
+    [swapH(moves),swapV(moves),swap(moves)].forEach(m=>{const w=walk(start,m);if(w){const c=gCode(...w.end);if(c!==endC&&!wrong.includes(c))wrong.push(c);}});
+    // casillas vecinas de la correcta
+    [[1,0],[0,1],[-1,0],[0,-1],[1,1],[-1,-1]].forEach(d=>{const p=[r.end[0]+d[0],r.end[1]+d[1]];if(wrong.length<3&&inGrid(p)){const c=gCode(...p);if(c!==endC&&!wrong.includes(c))wrong.push(c);}});
+    return {start,moves,r,endC,wrong:wrong.slice(0,3)};
+  };
+  const G=cases.map(([s,m])=>gridQ(s,m)).filter(Boolean);
+  G.forEach(g=>{
+    const q=`Estás en la casilla ${gCode(...g.start)} (el punto azul A). Te mueves: ${movesTxt(g.moves)}. ¿En qué casilla acabas?`;
+    T.push(mcx(q,g.endC,g.wrong,'Norte = arriba · Sur = abajo · Este = derecha · Oeste = izquierda.',{vis:svgGrid(g.start,null,{})}));
+    W.push(tx('✍️ '+q,[g.endC,g.endC[0]+' '+g.endC[1]],'loose',{vis:svgGrid(g.start,null,{}),hint:'Escribe la letra y el número, por ejemplo: C3.'}));
+  });
+  // ¿qué movimientos te llevan de A a B?
+  const pairs=[[[0,0],[2,1]],[[1,1],[4,3]],[[3,0],[1,2]],[[4,4],[2,3]],[[0,3],[3,1]],[[2,1],[0,4]],[[4,1],[1,0]],[[1,4],[3,2]]];
+  pairs.forEach(([s,e])=>{
+    const dx=e[0]-s[0],dy=e[1]-s[1],ax=Math.abs(dx),ay=Math.abs(dy);
+    if(!dx||!dy||ax===ay)return;
+    const fmt=(hx,hy,nx,ny)=>`${nx} al ${DIRS[hx][2]} y ${ny} al ${DIRS[hy][2]}`;
+    const hx=dx>0?'E':'O',hy=dy>0?'N':'S',ox=dx>0?'O':'E',oy=dy>0?'S':'N';
+    const ans=fmt(hx,hy,ax,ay);
+    T.push(mcx(`Mira el dibujo. ¿Qué movimientos te llevan del punto A (${gCode(...s)}) al punto B (${gCode(...e)})?`,ans,[fmt(ox,hy,ax,ay),fmt(hx,oy,ax,ay),fmt(hx,hy,ay,ax)],'Primero cuenta las casillas en horizontal y luego en vertical.',{vis:svgGrid(s,e,{})}));
+    W.push(txn(`Mira el dibujo. Para ir de A (${gCode(...s)}) a B (${gCode(...e)}) te mueves en horizontal hacia el ${DIRS[hx][2]}. ¿Cuántas casillas?`,ax,{vis:svgGrid(s,e,{})}));
+    W.push(txn(`Mira el dibujo. Para ir de A (${gCode(...s)}) a B (${gCode(...e)}) te mueves en vertical hacia el ${DIRS[hy][2]}. ¿Cuántas casillas?`,ay,{vis:svgGrid(s,e,{})}));
+  });
+  // dirección en línea recta
+  [[[0,2],[3,2]],[[4,1],[1,1]],[[2,0],[2,4]],[[3,4],[3,1]]].forEach(([s,e])=>{
+    const hx=e[0]>s[0]?'E':e[0]<s[0]?'O':null,hy=e[1]>s[1]?'N':e[1]<s[1]?'S':null,d=hx||hy,nm=DIRS[d][2];
+    T.push(mcx(`Mira el dibujo. Para ir del punto A (${gCode(...s)}) al punto B (${gCode(...e)}), ¿hacia qué punto cardinal te mueves?`,nm,['Norte','Sur','Este','Oeste'].filter(x=>x!==nm),'',{vis:svgGrid(s,e,{})}));
+    W.push(tx(`Mira el dibujo. Para ir del punto A (${gCode(...s)}) al punto B (${gCode(...e)}), ¿hacia qué punto cardinal te mueves? (Norte, Sur, Este u Oeste)`,[nm.toLowerCase()],'loose',{vis:svgGrid(s,e,{})}));
+  });
+  // preguntas escritas de conocimientos
+  W.push(tx('¿Cuál es el punto cardinal opuesto al Norte?',['sur'],'loose'));
+  W.push(tx('¿Cuál es el punto cardinal opuesto al Este?',['oeste'],'loose'));
+  W.push(tx('¿Cuál es el punto cardinal opuesto al Oeste?',['este'],'loose'));
+  W.push(tx('¿Cuál es el punto cardinal opuesto al Sur?',['norte'],'loose'));
+  W.push(tx('El Sol sale por el… (escribe el punto cardinal)',['este'],'loose'));
+  W.push(tx('El Sol se pone por el… (escribe el punto cardinal)',['oeste'],'loose'));
+  W.push(tx('Si miras al Norte, ¿qué punto cardinal tienes a tu derecha?',['este'],'loose'));
+  W.push(tx('Si miras al Norte, ¿qué punto cardinal tienes a tu izquierda?',['oeste'],'loose'));
+  W.push(tx('Si miras al Norte, ¿qué punto cardinal tienes detrás de ti?',['sur'],'loose'));
+  W.push(tx('En un mapa te mueves hacia abajo. ¿Hacia qué punto cardinal vas?',['sur'],'loose'));
+  W.push(tx('Escribe los cuatro puntos cardinales (separados por comas):',['norte sur este oeste'],'list',{hint:'Empieza por el Norte y ve en este orden: Norte, Sur, Este, Oeste.'}));
+  return {T:uniqQ(T),W:uniqQ(W)};
+}
+
+/* ═════════════ 5. PARES E IMPARES ═════════════ */
+function buildPar(){
+  const T=[],W=[];
+  const nextEven=n=>n%2?n+1:n+2,prevOdd=n=>n%2?n-2:n-1,nextOdd=n=>n%2?n+2:n+1,prevEven=n=>n%2?n-1:n-2;
+  [12,37,58,91,100,245,360,487,502,639,700,813,998,999,1000,246,351,164,877,420].forEach(n=>{
+    T.push(mc(`¿El número ${fmtN(n)} es par o impar?`,n%2?'Impar':'Par',[n%2?'Par':'Impar','Las dos cosas','Ninguna de las dos'],`Mira la última cifra: ${n%10}. ${n%2?'Acaba en impar, así que es IMPAR':'Acaba en par, así que es PAR'}.`));
+    if(n!==1000)W.push(tx(`Escribe PAR o IMPAR: ${fmtN(n)}`,[n%2?'impar':'par'],'loose'));
+  });
+  // ¿cuál es par? / ¿cuál es impar?
+  [[346,347,435,523],[78,71,95,163],[508,509,617,731],[130,121,339,455],[864,865,977,293],[612,611,827,405]].forEach(([e,...o])=>{
+    T.push(mc('¿Cuál de estos números es PAR?',String(e),o.map(String),'Los pares acaban en 0, 2, 4, 6 u 8.'));
+  });
+  [[347,346,584,820],[91,90,32,64],[605,604,712,938],[273,272,150,486],[419,418,360,242],[883,882,500,666]].forEach(([e,...o])=>{
+    T.push(mc('¿Cuál de estos números es IMPAR?',String(e),o.map(String),'Los impares acaban en 1, 3, 5, 7 o 9.'));
+  });
+  // siguiente par / anterior impar...
+  [98,45,211,350,687,999,124,501].forEach(n=>{
+    const a=nextEven(n);T.push(mcNum(`¿Cuál es el siguiente número PAR después de ${fmtN(n)}?`,a,[n+1,a+2,a-2,n-1],''));
+    W.push(txn(`Escribe el siguiente número PAR después de ${fmtN(n)}:`,a));
+  });
+  [100,44,302,658,820,17,333].forEach(n=>{
+    const a=prevOdd(n);if(a<0)return;T.push(mcNum(`¿Cuál es el número IMPAR anterior a ${fmtN(n)}?`,a,[n-2,a+2,a-2,n+1],''));
+    W.push(txn(`Escribe el número IMPAR anterior a ${fmtN(n)}:`,a));
+  });
+  [50,19,203,476,998].forEach(n=>{
+    const a=nextOdd(n);T.push(mcNum(`¿Cuál es el siguiente número IMPAR después de ${fmtN(n)}?`,a,[n+2===a?a+2:n+2,a-2,n-1,n+3],''));
+    W.push(txn(`Escribe el siguiente número IMPAR después de ${fmtN(n)}:`,a));
+  });
+  // series
+  [[2,'pares'],[1,'impares'],[30,'pares'],[31,'impares'],[116,'pares'],[221,'impares'],[598,'pares'],[781,'impares']].forEach(([a,k])=>{
+    const ans=a+8;T.push(mcNum(`Completa la serie de números ${k}: ${a}, ${a+2}, ${a+4}, ${a+6}, ___`,ans,[ans+2,ans-2,ans+1,ans-1],''));
+    W.push(txn(`Completa la serie de números ${k}: ${a}, ${a+2}, ___, ${a+6}`,a+4));
+  });
+  // reglas
+  T.push(mc('Un número es PAR si acaba en…','0, 2, 4, 6 u 8',['1, 3, 5, 7 o 9','0 o 5','Solo en 2'],'Par = se puede repartir en parejas sin que sobre nada.'));
+  T.push(mc('Un número es IMPAR si acaba en…','1, 3, 5, 7 o 9',['0, 2, 4, 6 u 8','0 o 5','Solo en 1'],'Impar = al hacer parejas sobra uno.'));
+  T.push(mc('Para saber si un número es par o impar, ¿qué cifra miras?','La última (las unidades)',['La primera (las centenas)','La del medio (las decenas)','Todas a la vez'],''));
+  T.push(mc('Repartes 15 caramelos entre 2 niños en partes iguales. ¿Qué pasa?','Sobra 1 caramelo',['No sobra ninguno','Sobran 2','Sobran 3'],'15 es impar: siempre sobra 1.'));
+  T.push(mc('Haces parejas con 18 cromos. ¿Sobra alguno?','No, no sobra ninguno',['Sí, sobra 1','Sí, sobran 2','Sí, sobran 3'],'18 es par.'));
+  T.push(mc('Haces parejas con 17 galletas. ¿Sobra alguna?','Sí, sobra 1',['No, no sobra ninguna','Sí, sobran 2','Sí, sobran 3'],'17 es impar.'));
+  T.push(mc('Al sumar dos números impares (por ejemplo 7 + 5) el resultado es…','Par',['Impar','Siempre 10','Siempre 0'],'7 + 5 = 12, 3 + 9 = 12, 5 + 5 = 10… siempre sale par.'));
+  T.push(mc('Al sumar dos números pares (por ejemplo 6 + 4) el resultado es…','Par',['Impar','Siempre 10','Siempre 0'],'6 + 4 = 10, 8 + 2 = 10, 4 + 4 = 8… siempre sale par.'));
+  T.push(mc('Al sumar un número par y uno impar (por ejemplo 6 + 3) el resultado es…','Impar',['Par','Siempre 9','Siempre 0'],'6 + 3 = 9, 4 + 7 = 11… siempre sale impar.'));
+  T.push(mc('Del 1 al 10, ¿cuántos números impares hay?','5',['4','6','10'],'1, 3, 5, 7, 9.'));
+  T.push(mc('Del 1 al 20, ¿cuántos números pares hay?','10',['9','11','20'],'2, 4, 6, 8, 10, 12, 14, 16, 18, 20.'));
+  T.push(mc('¿Cuál es el mayor número PAR de dos cifras?','98',['99','100','90'],'99 es impar; el par anterior es 98.'));
+  T.push(mc('¿Cuál es el mayor número IMPAR de dos cifras?','99',['98','97','91'],''));
+  T.push(mc('¿Cuál es el menor número PAR de dos cifras?','10',['11','12','20'],''));
+  T.push(mc('¿Cuál es el menor número IMPAR de tres cifras?','101',['100','102','111'],'El menor de tres cifras es 100 (par), así que el impar siguiente es 101.'));
+  T.push(mc('¿Qué números PARES hay entre 11 y 19?','12, 14, 16, 18',['11, 13, 15, 17','12, 13, 14, 15','14, 16, 18, 20'],''));
+  T.push(mc('¿Qué números IMPARES hay entre 20 y 30?','21, 23, 25, 27, 29',['22, 24, 26, 28','21, 22, 23, 24, 25','23, 25, 27, 29, 31'],''));
+  // reto: mayor par con cifras
+  [[[4,7,2],742],[[3,5,8],538],[[6,1,9],916],[[2,9,5],952]].forEach(([d,r])=>{
+    T.push(mc(`Con las cifras ${d[0]}, ${d[1]} y ${d[2]} (sin repetir) forma el mayor número PAR posible.`,String(r),[...new Set(perms(d).filter(x=>x!==r).sort((a,b)=>b-a))].slice(0,3).map(String),'Un número es par si acaba en cifra par: elige la cifra par para el final y ordena las demás de mayor a menor.'));
+  });
+  W.push(txn('Escribe los 4 números PARES siguientes a 20:\n20, ___, ___, ___, ___','22 24 26 28',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Escribe los números IMPARES entre 10 y 20:','11 13 15 17 19',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('Escribe los números PARES entre 31 y 41:','32 34 36 38 40',{hint:'Sepáralos con comas o espacios.'}));
+  W.push(txn('¿Cuál es el mayor número PAR de dos cifras?',98));
+  W.push(txn('¿Cuál es el mayor número IMPAR de dos cifras?',99));
+  W.push(txn('¿Cuál es el menor número IMPAR de tres cifras?',101));
+  W.push(txn('¿Cuál es el menor número PAR de tres cifras?',100));
+  W.push(txn('Con las cifras 4, 7 y 2 (sin repetir) escribe el mayor número PAR posible:',742,{hint:'Tiene que acabar en cifra par.'}));
+  W.push(tx('Escribe PAR o IMPAR: la suma de dos números impares (como 3 + 5)',['par'],'loose'));
+  W.push(tx('Escribe PAR o IMPAR: la suma de un par y un impar (como 4 + 3)',['impar'],'loose'));
+  return {T:uniqQ(T),W:uniqQ(W)};
+}
+function perms(d){const out=[];const [a,b,c]=d;[[a,b,c],[a,c,b],[b,a,c],[b,c,a],[c,a,b],[c,b,a]].forEach(p=>{out.push(p[0]*100+p[1]*10+p[2]);});return out;}
+
+/* ═════════════ 6. ÁBACO ═════════════ */
+function buildAbaco(){
+  const T=[],W=[];
+  const place=(n,k)=>Math.floor(n/k)%10;
+  const NS=[345,206,470,128,509,732,860,415,603,999,87,150,901,264,38,481,720,555];
+  NS.forEach(n=>{
+    const c=place(n,100),d=place(n,10),u=n%10;
+    const rev=u*100+d*10+c,sw1=c*100+u*10+d,sw2=d*100+c*10+u;
+    T.push(mcNum('¿Qué número representa este ábaco?',n,[rev,sw1,sw2,n+100,n+10],`${c} centenas + ${d} decenas + ${u} unidades = ${n}.`,{vis:svgAbaco(n)}));
+    W.push(txn('¿Qué número representa este ábaco?',n,{vis:svgAbaco(n),hint:'C = centenas, D = decenas, U = unidades. Cuenta las bolas de cada varilla.'}));
+  });
+  T.push(mcx('¿Qué número representa este ábaco?','1.000',['100','10','10.000'],'Una bola en la varilla de las unidades de millar (UM) vale 1.000.',{vis:svgAbaco(1000)}));
+  W.push(txn('¿Qué número representa este ábaco?',1000,{vis:svgAbaco(1000),hint:'UM = unidades de millar.'}));
+  // descomponer
+  [427,308,650,512,790,239,864,105].forEach(n=>{
+    const c=place(n,100),d=place(n,10),u=n%10;
+    const f=(c,d,u)=>`${c} centena${c===1?'':'s'}, ${d} decena${d===1?'':'s'} y ${u} unidad${u===1?'':'es'}`;
+    const wr=[f(d,c,u),f(c,u,d),f(u,d,c)].filter(x=>x!==f(c,d,u));
+    T.push(mc(`¿Cómo se descompone ${n}?`,f(c,d,u),[...new Set(wr)].slice(0,3),`${n} = ${c*100} + ${d*10} + ${u}.`));
+    W.push(txn(`Escribe el número que tiene ${f(c,d,u)}:`,n));
+  });
+  // valor de una cifra
+  [[586,8,80],[586,5,500],[586,6,6],[342,4,40],[342,3,300],[907,9,900],[815,1,10],[630,3,30],[274,7,70],[409,4,400]].forEach(([n,dg,v])=>{
+    T.push(mcNum(`En el número ${n}, ¿qué valor tiene la cifra ${dg}?`,v,[dg,dg*10===v?dg*100:dg*10,dg*100===v?dg*10:dg*100,dg*11],'El valor depende del lugar donde está la cifra.'));
+    W.push(txn(`En el número ${n}, ¿qué valor tiene la cifra ${dg}?`,v));
+  });
+  // reglas del ábaco
+  T.push(mc('En el ábaco, una bola de la varilla de las DECENAS vale…','10',['1','100','1.000'],''));
+  T.push(mc('En el ábaco, una bola de la varilla de las CENTENAS vale…','100',['1','10','1.000'],''));
+  T.push(mc('En el ábaco, una bola de la varilla de las UNIDADES vale…','1',['10','100','1.000'],''));
+  T.push(mc('Si tienes 10 bolas en la varilla de las unidades, las cambias por…','1 bola en las decenas',['1 bola en las centenas','10 bolas en las decenas','1 bola en las unidades'],'10 unidades = 1 decena.'));
+  T.push(mc('Si tienes 10 bolas en la varilla de las decenas, las cambias por…','1 bola en las centenas',['1 bola en las unidades','10 bolas en las centenas','1 bola en las decenas'],'10 decenas = 1 centena.'));
+  T.push(mc('Si tienes 10 bolas en la varilla de las centenas, las cambias por…','1 bola en las unidades de millar (1.000)',['1 bola en las decenas','100 bolas en las unidades','1 bola en las centenas'],'10 centenas = 1.000.'));
+  T.push(mc('En un ábaco hay 3 bolas en las centenas, 0 en las decenas y 7 en las unidades. ¿Qué número es?','307',['370','37','703'],'El 0 significa que la varilla de las decenas está vacía.'));
+  T.push(mc('Para representar 603 en el ábaco, ¿cuántas bolas pones en la varilla de las decenas?','Ninguna (0)',['6','3','60'],'603 = 6 centenas, 0 decenas y 3 unidades.'));
+  T.push(mc('Para representar 450 en el ábaco, ¿cuántas bolas pones en la varilla de las unidades?','Ninguna (0)',['4','5','50'],'450 = 4 centenas, 5 decenas y 0 unidades.'));
+  T.push(mc('¿Cuántas bolas hay en total en el ábaco de 232? (suma las de las tres varillas)','7',['6','8','232'],'2 + 3 + 2 = 7 bolas.'));
+  W.push(txn('¿Cuántas bolas hay en total en el ábaco de 232? (suma las de las tres varillas)',7));
+  W.push(txn('¿Cuántas unidades vale 1 centena?',100));
+  W.push(txn('¿Cuántas decenas hacen 1 centena?',10));
+  W.push(txn('¿Cuántas unidades vale 1 decena?',10));
+  W.push(txn('¿Qué número es: 7 centenas, 0 decenas y 4 unidades?',704));
+  W.push(txn('¿Qué cifra está en el lugar de las decenas en el número 482?',8));
+  W.push(txn('¿Qué cifra está en el lugar de las centenas en el número 713?',7));
+  return {T:uniqQ(T),W:uniqQ(W)};
+}
+
+/* ═════════════ ENSAMBLAJE ═════════════ */
+const MAT_B={count:buildCount(),line:buildLine(),tab:buildTables(),card:buildCard(),par:buildPar(),abaco:buildAbaco()};
+/* clave única por pregunta (la clave normal usa solo la 1ª letra de la respuesta en las de test) */
+Object.values(MAT_B).forEach(b=>[...b.T,...b.W].forEach(q=>{if(q.t==='mc')q._u=q.ans;}));
+const MAT_LEARN_LINE=`<h3>Sumar y restar con la recta numérica 📏</h3>
+<p>➕ <b>Sumar = saltar hacia la DERECHA</b> (números más grandes).<br>➖ <b>Restar = saltar hacia la IZQUIERDA</b> (números más pequeños).</p>
+<p>🧩 <b>Truco:</b> separa el segundo número en decenas y unidades.<br><b>47 + 25</b> → 25 = 20 + 5<br>Empiezas en 47, saltas <b>+20</b> y llegas a 67, saltas <b>+5</b> y llegas a <b>72</b>.</p>
+<div class="vis">${svgLine(47,[20,5])}</div>
+<p>⬅️ <b>83 − 27</b> → 27 = 20 + 7<br>Empiezas en 83, saltas <b>−20</b> y llegas a 63, saltas <b>−7</b> y llegas a <b>56</b>.</p>
+<div class="vis">${svgLine(83,[-20,-7])}</div>
+<p>🎯 <b>Mira siempre hacia dónde apunta el salto:</b> si va hacia la derecha suma, si va hacia la izquierda resta.</p>`;
+const MAT_LEARN_ABACO=`<h3>El ábaco 🧮</h3>
+<p>Cada varilla es un <b>lugar</b> del número. De derecha a izquierda:<br>🟢 <b>U</b> = unidades (cada bola vale 1)<br>🔵 <b>D</b> = decenas (cada bola vale 10)<br>🔴 <b>C</b> = centenas (cada bola vale 100)<br>🟣 <b>UM</b> = unidad de millar (cada bola vale 1.000)</p>
+<div class="vis">${svgAbaco(345)}</div>
+<p>Este ábaco tiene <b>3</b> bolas en C, <b>4</b> en D y <b>5</b> en U:<br>300 + 40 + 5 = <b>345</b>.</p>
+<p>0️⃣ <b>Una varilla vacía es un 0.</b> Por ejemplo, 306 tiene 3 centenas, <b>0 decenas</b> y 6 unidades.</p>
+<div class="vis">${svgAbaco(306)}</div>
+<p>🔁 <b>Máximo 9 bolas por varilla.</b> Si juntas 10 bolas, las cambias por 1 bola de la varilla de la izquierda:<br>10 U = 1 D · 10 D = 1 C · 10 C = 1 UM (1.000).</p>`;
+const MAT_LEARN_CARD=`<h3>Movimientos cardinales 🧭</h3>
+<p>🧭 Los <b>cuatro puntos cardinales</b> son:<br><b>N</b>orte (arriba) · <b>S</b>ur (abajo) · <b>E</b>ste (derecha) · <b>O</b>este (izquierda).</p>
+<p>☀️ El Sol <b>sale por el Este</b> y <b>se pone por el Oeste</b>.<br>🙋 Si miras al Norte: a tu derecha tienes el Este, a tu izquierda el Oeste y detrás el Sur.</p>
+<p>🧩 En una cuadrícula, cada paso es <b>una casilla</b>:<br>⬆️ Norte = 1 casilla hacia arriba<br>⬇️ Sur = 1 casilla hacia abajo<br>➡️ Este = 1 casilla a la derecha<br>⬅️ Oeste = 1 casilla a la izquierda</p>
+<p>Ejemplo: sales de <b>B2</b> (punto A), vas <b>2 al Este</b> y <b>1 al Norte</b> y llegas a <b>D3</b> (punto B).</p>
+<div class="vis">${svgGrid([1,1],[3,2],{path:[[1,1],[2,1],[3,1],[3,2]]})}</div>
+<p>📍 La casilla se dice con <b>letra y número</b>: primero la columna (A–E) y luego la fila (1–5).</p>`;
+const MAT1={
+  id:'mat1', subject:'Matemáticas', ct:'1er Cycle Test', date:'2026-10-20',
+  note:'Hecho con los temas del calendario. «Movimientos cardinales» lo he preparado como moverse por una cuadrícula con Norte, Sur, Este y Oeste. Si en clase lo llaman de otra manera, dímelo y lo cambio.',
+  modules:[
+  { id:'m_count', nm:'Contar hasta 1.000', em:'🔢', color:'#0EA5E9',
+    learn:`<h3>Contar hasta 1.000 🔢</h3>
+<p>1️⃣ <b>De 1 en 1:</b> ojo con los cambios: 9 → 10 · 99 → 100 · 199 → 200 · <b>999 → 1.000</b> (mil).</p>
+<p>5️⃣ <b>De 5 en 5:</b> 5, 10, 15, 20, 25… Los números acaban siempre en <b>0 o en 5</b>.</p>
+<p>🔟 <b>De 10 en 10:</b> 340, 350, 360, 370… Cambia la cifra de las <b>decenas</b>. Si llegas a 90, el siguiente es el 100 (¡cambia la centena!).</p>
+<p>💯 <b>De 100 en 100:</b> 100, 200, 300… 900, <b>1.000</b>. Cambia la cifra de las <b>centenas</b>.</p>
+<p>⬅️ <b>Hacia atrás</b> también se puede: 100, 90, 80… o 500, 400, 300…</p>
+<p>📏 <b>Para comparar:</b> mira primero las centenas, luego las decenas y al final las unidades.</p>`,
+    test:MAT_B.count.T, write:MAT_B.count.W },
+  { id:'m_line', nm:'Sumas y restas con recta numérica', em:'📏', color:'#8B5CF6',
+    learn:MAT_LEARN_LINE, test:MAT_B.line.T, write:MAT_B.line.W },
+  { id:'m_tab', nm:'Tablas del 2, 4 y 5', em:'✖️', color:'#F59E0B',
+    learn:`<h3>Las tablas del 2, 4 y 5 ✖️</h3>
+<p>✌️ <b>Tabla del 2</b> (el doble): 2, 4, 6, 8, 10, 12, 14, 16, 18, 20. ¡Todos son <b>pares</b>!</p>
+<p>🍀 <b>Tabla del 4</b> (el doble del doble): 4, 8, 12, 16, 20, 24, 28, 32, 36, 40.</p>
+<p>🖐️ <b>Tabla del 5:</b> 5, 10, 15, 20, 25, 30, 35, 40, 45, 50. Acaban en <b>0 o en 5</b>.</p>
+<p>💡 <b>Trucos:</b><br>• 4 × 6 es el doble de 2 × 6 (12 + 12 = 24).<br>• Si sabes 5 × 6 = 30, entonces 5 × 7 = 30 + 5 = 35.<br>• El orden no importa: 4 × 5 = 5 × 4 = 20.</p>
+<p>🐶 <b>Problemas:</b> 6 perros con 4 patas cada uno → 6 × 4 = 24 patas.</p>`,
+    test:MAT_B.tab.T, write:MAT_B.tab.W },
+  { id:'m_card', nm:'Movimientos cardinales', em:'🧭', color:'#16A34A',
+    learn:MAT_LEARN_CARD, test:MAT_B.card.T, write:MAT_B.card.W },
+  { id:'m_par', nm:'Números pares e impares', em:'⚖️', color:'#EC4899',
+    learn:`<h3>Pares e impares ⚖️</h3>
+<p>👫 <b>PAR:</b> se pueden hacer parejas y <b>no sobra ninguno</b>. Acaban en <b>0, 2, 4, 6 u 8</b>.<br>Ejemplos: 2, 8, 14, 50, 346.</p>
+<p>🧍 <b>IMPAR:</b> al hacer parejas <b>sobra uno</b>. Acaban en <b>1, 3, 5, 7 o 9</b>.<br>Ejemplos: 1, 7, 19, 55, 347.</p>
+<p>👀 <b>Truco:</b> solo mira la <b>última cifra</b>. 1.248 es par (acaba en 8); 1.247 es impar (acaba en 7).</p>
+<p>🔢 <b>Series:</b> los pares van de 2 en 2 (2, 4, 6, 8…) y los impares también (1, 3, 5, 7…).</p>
+<p>➕ <b>Al sumar:</b><br>par + par = <b>par</b> · impar + impar = <b>par</b> · par + impar = <b>impar</b></p>`,
+    test:MAT_B.par.T, write:MAT_B.par.W },
+  { id:'m_abaco', nm:'El ábaco', em:'🧮', color:'#EF4444',
+    learn:MAT_LEARN_ABACO, test:MAT_B.abaco.T, write:MAT_B.abaco.W },
+  ]
+};
+if(typeof module!=='undefined') module.exports={MAT1,svgLine,svgAbaco,svgGrid,walk,gCode,DIRS};
+
 /* ═══════════ CALENDARIO (del Excel «SC – Calendario Cycle Test 2026-2027») ═══════════ */
 const SUBJ={Lengua:{em:'📚',col:'#7C3AED'},'Inglés':{em:'🇬🇧',col:'#DC2626'},'Matemáticas':{em:'🔢',col:'#0EA5E9'},Science:{em:'🔬',col:'#16A34A'},Sociales:{em:'🌍',col:'#CA8A04'}};
 const CAL=[
  {d:'2026-10-06',s:'Lengua',n:'1º Cycle Test',pack:'len1',topics:'Comprensión lectora · Ortografía: mayúsculas y sonido K · Vocabulario: sinónimos y antónimos · Gramática: oraciones, palabras, sonidos y letras · Ordenar alfabéticamente'},
  {d:'2026-10-13',s:'Inglés',n:'1º CT (post-puente)',pack:'eng1',topics:'Unit 1 · Spelling: help, feed, protect, hug, carry, take care of, have a shower, homework, have breakfast, have dinner · Grammar: does/doesn’t, before/after, always/usually/sometimes/never · Reading comprehension'},
- {d:'2026-10-20',s:'Matemáticas',n:'1º CT',topics:'Conteo 0–1.000 (de 1 en 1, 5 en 5, 10 en 10, 100 en 100) · Sumas y restas con recta numérica · Tablas del 2, 4 y 5 · Movimientos cardinales · Pares e impares · Ábaco'},
+ {d:'2026-10-20',s:'Matemáticas',n:'1º CT',pack:'mat1',topics:'Conteo 0–1.000 (de 1 en 1, 5 en 5, 10 en 10, 100 en 100) · Sumas y restas con recta numérica · Tablas del 2, 4 y 5 · Movimientos cardinales · Pares e impares · Ábaco'},
  {d:'2026-10-27',s:'Science',n:'1º CT',topics:'Unit 1: Scientific method steps · Unit 2: 3 vital functions, animal characteristics, vertebrates (5 types)'},
  {d:'2026-11-04',s:'Sociales',n:'1º CT',note:'Se hará el miércoles 4'},
  {d:'2026-11-11',s:'Lengua',n:'2º CT',note:'Se hará el miércoles 11'},
@@ -850,7 +1422,7 @@ const CAL=[
  {d:'2027-05-31',s:'Inglés',n:'Evaluación 3ª',ev:3},
  {d:'2027-06-01',s:'Matemáticas',n:'Evaluación 3ª',ev:3},
 ];
-const PACKS={len1:LEN1,eng1:ENG1};
+const PACKS={len1:LEN1,eng1:ENG1,mat1:MAT1};
 const allMods=()=>Object.values(PACKS).flatMap(p=>p.modules);
 const modOf=id=>allMods().find(m=>m.id===id);
 const packOfMod=id=>Object.values(PACKS).find(p=>p.modules.some(m=>m.id===id));
@@ -885,6 +1457,13 @@ function checkTx(q,raw){
       }
     }
     return {ok:false};
+  }
+  if(mode==='nums'){
+    // números en orden; acepta 1.000 y 1000, y separadores como espacios o comas
+    const P=x=>(String(x).replace(/(\d)\.(?=\d{3}(?!\d))/g,'$1').match(/\d+/g)||[]).map(Number);
+    const u=P(user);
+    if(!u.length) return {ok:false};
+    return {ok:q.ans.some(a=>{const t=P(a);return t.length===u.length&&t.every((x,i)=>x===u[i]);})};
   }
   if(mode==='list'){
     const u=nl(user).split(/[\s,;]+/).filter(Boolean);
@@ -938,7 +1517,7 @@ function poolOf(pack,mod,mode){
   }
   return (mode==='test'?mod.test:mod.write).map(q=>Object.assign({},q));
 }
-function qKey(q){return hash((q.q||'')+'|'+(q.ans&&q.ans[0]!==undefined?q.ans[0]:q.ans));}
+function qKey(q){return hash((q.q||'')+'|'+(q.ans&&q.ans[0]!==undefined?q.ans[0]:q.ans)+(q.vis?'|'+hash(q.vis):'')+(q._u?'|'+q._u:''));}
 function prepQ(q){q._k=qKey(q);if(q.t==='mc'){q._o=shuffle(q.opts);}if(q.t==='chips'){let s=shuffle(q.tokens);for(let i=0;i<9&&s.join(' ')===q.ans[0];i++)s=shuffle(q.tokens);q._tk=s;}return q;}
 // elige n preguntas, dando prioridad a las falladas
 function pickWeighted(items,weak,n){
@@ -1079,7 +1658,7 @@ function getMission(kid,pack,testDate){
 if(typeof module!=='undefined') module.exports={viewTest,isOpen,opensOnDate,checkTx,genAlphaWords,buildSession,buildSimulacro};
 
 /* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
-const APP_VERSION='2026-10-12-e';
+const APP_VERSION='2026-10-17-a';
 const LS_KEY='ct_v1';
 const DEF_SHOP=[
  {id:'r1',em:'🍦',nm:'Un helado',cost:150},
@@ -1242,12 +1821,13 @@ function showQ(){
   if(q._text) body+=`<div class="text"><b class="t">${q._text.em} ${esc(q._text.title)}</b>${esc(q._text.body)}</div>`;
   const lbl=(G.sim?'SIMULACRO · ':'')+m.em+' '+m.nm.toUpperCase();
   body+=`<div class="lbl">${esc(lbl)}</div><div class="qt">${esc(q.q)}</div>`;
+  if(q.vis) body+=`<div class="vis">${q.vis}</div>`;
   if(q.hint) body+=`<div class="hint">💡 ${esc(q.hint)}</div>`;
   if(q.t==='mc'){
     body+='<div class="opts">'+q._o.map((o,i)=>`<button class="opt" onclick="ansMc(${i})">${esc(o)}</button>`).join('')+'</div>';
   } else if(q.t==='tx'){
     if(q.say) body+=`<div class="speak"><button onclick="speak(G.qs[G.i].say,.8,G.qs[G.i].sayLang)">🔊 Escuchar</button><button onclick="speak(G.qs[G.i].say,.45,G.qs[G.i].sayLang)">🐢 Despacio</button></div>`;
-    body+=`<input class="inp" id="ti" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…" onkeydown="if(event.key==='Enter')ansTx()">
+    body+=`<input class="inp" id="ti" type="text"${q.mode==='nums'&&/^[\d.]+$/.test(q.ans[0])?' inputmode="numeric"':''} autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Escribe aquí…" onkeydown="if(event.key==='Enter')ansTx()">
       <div class="keys" id="kb"></div>
       <button class="btn g" id="chk" onclick="ansTx()">Comprobar ✓</button>`;
   } else if(q.t==='chips'){
@@ -1265,6 +1845,7 @@ function quitGame(){if(confirm('¿Salir de la ronda? Perderás el progreso de es
 let CAPS=false;
 function buildKeys(){
   const kb=document.getElementById('kb');if(!kb)return;
+  if(G&&G.qs[G.i]&&G.qs[G.i].mode==='nums'){kb.innerHTML='';return;}
   const set=CAPS?['Á','É','Í','Ó','Ú','Ñ','¿','¡']:['á','é','í','ó','ú','ñ','ü','¿','¡'];
   kb.innerHTML=set.map(c=>`<button type="button" onclick="insCh('${c}')">${c}</button>`).join('')+`<button type="button" onclick="CAPS=!CAPS;buildKeys()">${CAPS?'abc':'ABC'}</button>`;
 }
