@@ -1382,13 +1382,1024 @@ const MAT1={
 };
 if(typeof module!=='undefined') module.exports={MAT1,svgLine,svgAbaco,svgGrid,walk,gCode,DIRS};
 
+/* ═══════════════════════════════════════════════
+   CONTENIDO — 1er Cycle Test de SCIENCE (27 oct 2026)
+   Temario del cole:
+   · Unit 1: pasos del método científico
+   · Unit 2: las 3 funciones vitales (nutrition, interaction, reproduction),
+     animales/plantas, vertebrados/invertebrados, los 5 grupos de vertebrados
+     y clasificar animales por cómo nacen, qué comen, dónde viven,
+     cómo se mueven y qué aspecto tienen.
+   Todo se genera con reglas fijas (sin azar al abrir la app) y cada pregunta
+   generada se comprueba contra la tabla de animales (S_ANIM).
+═══════════════════════════════════════════════ */
+const SCI_R=(()=>{let a=0x1B5C07D;return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};})();
+const sR=n=>Math.floor(SCI_R()*n);
+const sShuf=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=sR(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const sSample=(a,n)=>sShuf(a).slice(0,n);
+const capF=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const art=w=>/^[aeiou]/i.test(w)?'an':'a';
+const withArt=w=>art(w)+' '+w;
+const sDedupe=list=>{const s=new Set();return list.filter(q=>{const k=q.t+'|'+q.q+'|'+(Array.isArray(q.ans)?q.ans[0]:q.ans);if(s.has(k))return false;s.add(k);return true;});};
+/* respuestas aceptadas para un sustantivo: «mammal», «mammals», «a mammal», «it is a mammal»… */
+const V=(w,pl)=>{const p=pl||(w+'s');const a=withArt(w);return [w,p,a,'it is '+a,'it’s '+a,'they are '+p];};
+/* respuestas aceptadas para un concepto sin artículo («nutrition», «it is nutrition») */
+const VC=(...ws)=>{const o=[];ws.forEach(w=>{o.push(w,'it is '+w,'it’s '+w);});return o;};
+const vowelsMix=(w)=>{ // palabra desordenada (sin azar al abrir la app)
+  const L=w.toUpperCase().split('');
+  for(let t=0;t<30;t++){const s=sShuf(L);if(s.join('')!==L.join('')&&s[0]!==L[0])return s.join(' ');}
+  return sShuf(L).join(' ');
+};
+function mcS(q,ans,pool,expl,extra){
+  const w=sSample([...new Set(pool.filter(x=>x!==ans))],3);
+  if(w.length<3)throw new Error('pocos distractores: '+q);
+  return Object.assign(mc(q,ans,w,expl||''),extra||{});
+}
+
+/* ───────────── TABLA DE ANIMALES (fuente de verdad) ─────────────
+   cls: mammal | bird | reptile | amphibian | fish | invertebrate
+   born: v (viviparous) | o (oviparous) | null (no se pregunta)
+   diet / hab / mv / baby: solo si es seguro y sin discusión; si no, null */
+const an=(n,em,cls,o)=>Object.assign({n,em,cls,born:cls==='mammal'?'v':'o',diet:null,hab:null,mv:null,baby:null},o||{});
+const S_ANIM=[
+ /* mamíferos */
+ an('dog','🐶','mammal',{baby:'puppy'}),
+ an('cat','🐱','mammal',{baby:'kitten',diet:'carnivore'}),
+ an('horse','🐴','mammal',{baby:'foal',diet:'herbivore',hab:'farm',mv:'run'}),
+ an('cow','🐄','mammal',{baby:'calf',diet:'herbivore',hab:'farm',mv:'walk'}),
+ an('pig','🐷','mammal',{baby:'piglet',diet:'omnivore',hab:'farm',mv:'walk'}),
+ an('sheep','🐑','mammal',{baby:'lamb',diet:'herbivore',hab:'farm',mv:'walk'}),
+ an('goat','🐐','mammal',{baby:'kid',diet:'herbivore',hab:'farm'}),
+ an('elephant','🐘','mammal',{baby:'calf',diet:'herbivore',mv:'walk'}),
+ an('lion','🦁','mammal',{baby:'cub',diet:'carnivore',hab:'savanna'}),
+ an('tiger','🐯','mammal',{baby:'cub',diet:'carnivore'}),
+ an('cheetah','🐆','mammal',{baby:'cub',diet:'carnivore',hab:'savanna',mv:'run'}),
+ an('giraffe','🦒','mammal',{baby:'calf',diet:'herbivore',hab:'savanna',mv:'walk'}),
+ an('zebra','🦓','mammal',{baby:'foal',diet:'herbivore',hab:'savanna',mv:'run'}),
+ an('monkey','🐒','mammal',{hab:'jungle',mv:'climb'}),
+ an('gorilla','🦍','mammal',{hab:'jungle'}),
+ an('sloth','🦥','mammal',{diet:'herbivore',hab:'jungle',mv:'climb'}),
+ an('koala','🐨','mammal',{diet:'herbivore',hab:'forest',mv:'climb'}),
+ an('kangaroo','🦘','mammal',{baby:'joey',diet:'herbivore',mv:'hop'}),
+ an('camel','🐪','mammal',{diet:'herbivore',hab:'desert',mv:'walk'}),
+ an('brown bear','🐻','mammal',{baby:'cub',diet:'omnivore',hab:'forest',mv:'walk'}),
+ an('polar bear','🐻‍❄️','mammal',{baby:'cub',diet:'carnivore',hab:'polar region'}),
+ an('rabbit','🐰','mammal',{diet:'herbivore',mv:'hop'}),
+ an('squirrel','🐿️','mammal',{hab:'forest',mv:'climb'}),
+ an('deer','🦌','mammal',{baby:'fawn',diet:'herbivore',hab:'forest'}),
+ an('wolf','🐺','mammal',{diet:'carnivore'}),
+ an('raccoon','🦝','mammal',{diet:'omnivore',hab:'forest'}),
+ an('mouse','🐭','mammal',{diet:'omnivore'}),
+ an('hippo','🦛','mammal',{diet:'herbivore',hab:'river or lake'}),
+ an('rhino','🦏','mammal',{diet:'herbivore'}),
+ an('llama','🦙','mammal',{diet:'herbivore',hab:'mountains'}),
+ an('snow leopard','🐆','mammal',{diet:'carnivore',hab:'mountains'}),
+ an('bat','🦇','mammal',{mv:'fly'}),
+ an('dolphin','🐬','mammal',{diet:'carnivore',hab:'ocean',mv:'swim'}),
+ an('whale','🐋','mammal',{baby:'calf',hab:'ocean',mv:'swim'}),
+ an('human','🧑','mammal',{baby:'baby',diet:'omnivore'}),
+ /* aves */
+ an('eagle','🦅','bird',{diet:'carnivore',mv:'fly'}),
+ an('owl','🦉','bird',{diet:'carnivore',mv:'fly'}),
+ an('parrot','🦜','bird',{diet:'herbivore',hab:'jungle',mv:'fly'}),
+ an('penguin','🐧','bird',{diet:'carnivore',hab:'polar region',mv:'swim'}),
+ an('ostrich','','bird',{hab:'savanna',mv:'run'}),
+ an('duck','🦆','bird',{baby:'duckling',hab:'river or lake'}),
+ an('hen','🐔','bird',{baby:'chick',hab:'farm'}),
+ an('sparrow','🐦','bird',{mv:'fly'}),
+ an('swan','🦢','bird',{}),
+ an('flamingo','🦩','bird',{}),
+ an('peacock','🦚','bird',{}),
+ /* reptiles */
+ an('snake','🐍','reptile',{diet:'carnivore',mv:'slither'}),
+ an('lizard','🦎','reptile',{}),
+ an('crocodile','🐊','reptile',{diet:'carnivore'}),
+ an('turtle','🐢','reptile',{}),
+ an('chameleon','','reptile',{}),
+ /* anfibios */
+ an('frog','🐸','amphibian',{baby:'tadpole',mv:'hop'}),
+ an('toad','','amphibian',{mv:'hop'}),
+ an('salamander','','amphibian',{}),
+ /* peces */
+ an('goldfish','🐟','fish',{hab:'river or lake',mv:'swim'}),
+ an('clownfish','🐠','fish',{hab:'ocean',mv:'swim'}),
+ an('salmon','🐟','fish',{mv:'swim'}),
+ an('tuna','🐟','fish',{diet:'carnivore',hab:'ocean',mv:'swim'}),
+ an('trout','','fish',{hab:'river or lake',mv:'swim'}),
+ an('shark','🦈','fish',{diet:'carnivore',hab:'ocean',mv:'swim',born:null}),
+ /* invertebrados */
+ an('spider','🕷️','invertebrate',{diet:'carnivore'}),
+ an('snail','🐌','invertebrate',{mv:'crawl'}),
+ an('worm','🪱','invertebrate',{mv:'crawl'}),
+ an('butterfly','🦋','invertebrate',{mv:'fly'}),
+ an('bee','🐝','invertebrate',{mv:'fly'}),
+ an('ant','🐜','invertebrate',{}),
+ an('ladybird','🐞','invertebrate',{mv:'fly'}),
+ an('grasshopper','🦗','invertebrate',{diet:'herbivore',mv:'hop'}),
+ an('caterpillar','🐛','invertebrate',{diet:'herbivore',mv:'crawl'}),
+ an('crab','🦀','invertebrate',{hab:'ocean'}),
+ an('octopus','🐙','invertebrate',{diet:'carnivore',hab:'ocean'}),
+ an('jellyfish','','invertebrate',{hab:'ocean'}),
+ an('shrimp','🦐','invertebrate',{hab:'ocean'}),
+ an('scorpion','🦂','invertebrate',{diet:'carnivore',hab:'desert',born:'v'}),
+];
+S_ANIM.find(a=>a.n==='ant').born='o';
+const CLS5=['mammal','bird','reptile','amphibian','fish'];
+const CLSP={mammal:'mammals',bird:'birds',reptile:'reptiles',amphibian:'amphibians',fish:'fish'};
+const VERT=S_ANIM.filter(a=>CLS5.includes(a.cls));
+const INVERT=S_ANIM.filter(a=>a.cls==='invertebrate');
+const lab=a=>(a.em?a.em+' ':'')+a.n;
+const Aa=a=>withArt(a.n);
+const byCls=c=>S_ANIM.filter(a=>a.cls===c);
+const namesOf=list=>{const o=[];list.forEach(a=>{o.push(a.n,withArt(a.n));if(/ bear$/.test(a.n))o.push('bear','a bear');if(a.n==='human')o.push('person','a person');});return o;};
+/* «Which animal …?»: good = animal correcto, bad = animales que seguro NO cumplen */
+/* etiquetas coherentes: o todas con emoji o todas sin él (así el emoji no delata la respuesta) */
+const labAll=list=>list.every(a=>a.em)?list.map(lab):list.map(a=>a.n);
+function qWhich(text,good,bad,expl){
+  const w=sSample(bad.filter(b=>b!==good&&b.n!==good.n),3);
+  if(w.length<3)throw new Error('pocos animales: '+text);
+  const L=labAll([good,...w]);
+  return mc(text,L[0],L.slice(1),expl||'');
+}
+/* «Which one is NOT …?»: odd = el que no cumple, three = tres que sí cumplen */
+function qNot(text,odd,three,expl){
+  if(three.length<3)throw new Error('pocos animales: '+text);
+  const L=labAll([odd,...three.slice(0,3)]);
+  return mc(text,L[0],L.slice(1),expl||'');
+}
+/* seguridad: comprueba que las preguntas generadas cumplen la tabla */
+const S_CHECKS=[];
+
+/* ═══════════ MÓDULO 1 · MÉTODO CIENTÍFICO ═══════════ */
+const S_SCEN=[
+ {topic:'plants and light',
+  obs:'I see that the plant near the window is tall and green, but the plant in the dark cupboard is small and yellow.',
+  q:'Do plants need light to grow?',
+  hyp:'I think plants need light to grow.',
+  exp:'Put one plant by the window and one in a dark cupboard. Give both the same water. Look at them every day for two weeks.',
+  res:'After two weeks, the plant in the light is tall and green. The plant in the dark is small and yellow.',
+  conc:'My hypothesis was right: plants need light to grow.'},
+ {topic:'melting ice',
+  obs:'I see that an ice cube in the sun looks smaller than an ice cube in the shade.',
+  q:'Does ice melt faster in the sun or in the shade?',
+  hyp:'I think ice melts faster in the sun.',
+  exp:'Put two identical ice cubes on two plates, one in the sun and one in the shade. Use a stopwatch to time how long each one takes to melt.',
+  res:'The ice cube in the sun melted in 10 minutes. The ice cube in the shade melted in 25 minutes.',
+  conc:'My hypothesis was right: ice melts faster in the sun because it is warmer there.'},
+ {topic:'floating and sinking',
+  obs:'I see that a heavy stone sinks in the pond but a light leaf floats.',
+  q:'Do heavy objects sink and light objects float?',
+  hyp:'I think heavy objects sink and light objects float.',
+  exp:'Put a heavy wooden log, a light paper clip, a heavy rock and a light cork in a tub of water.',
+  res:'The heavy wooden log and the light cork floated. The heavy rock and the light paper clip sank.',
+  conc:'My hypothesis was wrong: weight does not decide if an object floats or sinks. It depends on what it is made of.'},
+ {topic:'sugar and water',
+  obs:'I see that sugar disappears when I stir it into my tea.',
+  q:'Does sugar dissolve faster in warm water or in cold water?',
+  hyp:'I think sugar dissolves faster in warm water.',
+  exp:'Put one spoon of sugar in a glass of warm water and one spoon in a glass of cold water. Use the same amount of water and stir the same number of times.',
+  res:'The sugar in the warm water disappeared in 20 seconds. The sugar in the cold water took two minutes.',
+  conc:'My hypothesis was right: sugar dissolves faster in warm water.'},
+ {topic:'shadows',
+  obs:'I see that my shadow is long in the evening but short at midday.',
+  q:'Does the length of a shadow change during the day?',
+  hyp:'I think shadows are shorter when the sun is high in the sky.',
+  exp:'Put a stick in the ground. Measure the length of its shadow with a ruler at 9 am, at 12 noon and at 5 pm.',
+  res:'The shadow was 40 cm at 9 am, 10 cm at noon and 60 cm at 5 pm.',
+  conc:'My hypothesis was right: shadows are shortest when the sun is highest.'},
+ {topic:'seeds and water',
+  obs:'I see that the bean seeds in my garden grow when it rains.',
+  q:'Do seeds need water to start growing?',
+  hyp:'I think seeds need water to start growing.',
+  exp:'Put five bean seeds on wet cotton and five bean seeds on dry cotton. Keep both in the same warm place.',
+  res:'After a week, the seeds on the wet cotton had little roots. The seeds on the dry cotton did not change.',
+  conc:'My hypothesis was right: seeds need water to start growing.'},
+];
+const S_STEPNM={obs:'OBSERVATION',q:'QUESTION',hyp:'HYPOTHESIS',exp:'EXPERIMENT',res:'RESULTS',conc:'CONCLUSION'};
+const S_STEPW={ // lo que escribe el niño al nombrar el paso
+  obs:['observe','observation','observations','observing','an observation','it is an observation','it’s an observation'],
+  q:VC('question','a question','ask a question','the question'),
+  hyp:VC('hypothesis','a hypothesis','make a hypothesis','the hypothesis'),
+  exp:VC('experiment','an experiment','do an experiment','the experiment'),
+  res:VC('results','result','a result','the results','record the results','record results'),
+  conc:VC('conclusion','a conclusion','draw a conclusion','the conclusion')
+};
+function buildMethod(){
+  const T=[],W=[];
+  const ST=['Observe','Question','Hypothesis','Experiment','Results','Conclusion'];
+  /* — test: conceptos — */
+  T.push(
+   mc('What do scientists use to look for answers to their questions?','The scientific method',['Magic tricks','A guess without testing','A story book'],'The scientific method is a list of steps to find out how things work.'),
+   mc('Which is the FIRST step of the scientific method?','Observe',['Make a hypothesis','Do an experiment','Draw a conclusion'],'Science starts when you look carefully at something and wonder why.'),
+   mc('Which is the LAST step of the scientific method?','Draw a conclusion',['Observe','Ask a question','Make a hypothesis'],'At the end you say if your hypothesis was right or wrong.'),
+   mc('What is a hypothesis?','An idea about what will happen that you can test',['The result of the experiment','A tool for measuring','A question with “why”'],'Example: “I think plants need light to grow.”'),
+   mc('What do you do in an experiment?','You do a test to check your hypothesis',['You ask a question','You just guess','You write the conclusion'],'An experiment is a test.'),
+   mc('In the RESULTS step, you…','write down what happened in the experiment',['guess what will happen','ask a new question','say if you like science'],'Results are what really happened (numbers, drawings, notes).'),
+   mc('In the CONCLUSION, you say…','if your hypothesis was right or wrong',['what you will eat for lunch','which tool you used','what you see in the picture'],'The conclusion answers your question.'),
+   mc('A hypothesis often starts with…','“I think that…”',['“Why…?”','“The result was…”','“Put the plant…”'],'“I think that…” shows what you believe will happen.'),
+   mc('Can a hypothesis be wrong?','Yes, and we still learn something new',['No, never','Yes, then the experiment was useless','Only scientists make wrong hypotheses'],'A wrong hypothesis is not a failure: now we know more!'),
+   mc('What is a FAIR TEST?','A test where you change only one thing',['A test where you change everything','A test with no results','A test with only one try and no notes'],'If you change many things, you cannot know what caused the result.'),
+   mc('What comes AFTER the hypothesis?','The experiment',['The conclusion','The observation','The results'],'First you think, then you test.'),
+   mc('What comes BEFORE the experiment?','The hypothesis',['The conclusion','The results','Nothing'],'You need an idea to test.'),
+   mc('What comes AFTER the experiment?','The results',['The question','The hypothesis','The observation'],'First you test, then you write the results.'),
+   mc('What comes BEFORE the conclusion?','The results',['The question','The hypothesis','The observation'],'You need the results to decide if you were right.'),
+   mc('“Why do my plants turn yellow in the dark?” is a…','question',['hypothesis','result','conclusion'],'It asks about something we want to find out.'),
+   mc('“The ice melted in 10 minutes.” is part of the…','results',['hypothesis','question','observation'],'It tells what happened in the experiment.'),
+   mc('Which tool measures TEMPERATURE?','Thermometer',['Ruler','Stopwatch','Scale'],'🌡️ °C'),
+   mc('Which tool measures LENGTH?','Ruler',['Thermometer','Stopwatch','Scale'],'📏 cm'),
+   mc('Which tool measures how HEAVY something is?','Scale',['Ruler','Thermometer','Stopwatch'],'⚖️ kg and g'),
+   mc('Which tool measures TIME?','Stopwatch',['Ruler','Thermometer','Scale'],'⏱️ seconds and minutes'),
+   mc('Which tool helps you see a tiny insect bigger?','Magnifying glass',['Thermometer','Ruler','Stopwatch'],'🔍 It makes small things look bigger.'),
+   mc('Which tool lets you see things too tiny for your eyes?','Microscope',['Ruler','Scale','Stopwatch'],'🔬 It shows very, very tiny things.'),
+   mc('Which tool measures how much liquid there is?','Measuring jug',['Ruler','Thermometer','Magnifying glass'],'It has numbers (ml) on its side.'),
+   mc('What should you wear to protect your eyes in a science lab?','Safety goggles',['A hat','A scarf','Sunglasses only'],'🥽 Safety first!'),
+  );
+  T.push(chips('Put the steps of the scientific method in ORDER:',ST,[ST.join(' ')],'Observe → Question → Hypothesis → Experiment → Results → Conclusion.'));
+  T.push(chips('Put the end of the scientific method in ORDER:',['Hypothesis','Experiment','Results','Conclusion'],['Hypothesis Experiment Results Conclusion'],'Hypothesis → Experiment → Results → Conclusion.'));
+  /* — test: ¿qué frase es qué paso? (6 experimentos) — */
+  S_SCEN.forEach((s,i)=>{
+    const keys=i%2===0?['hyp','q','res','conc','exp']:['hyp','q','res','conc','obs'];
+    keys.forEach(k=>{
+      const others=['obs','q','hyp','exp','res','conc'].filter(x=>x!==k).map(x=>s[x]);
+      const three=sSample(others,3);
+      T.push(mc(`🔬 Experiment: ${s.topic}.\nWhich sentence is the ${S_STEPNM[k]}?`,s[k],three,'This sentence is the '+S_STEPNM[k].toLowerCase()+'.'));
+    });
+  });
+  /* — escribir — */
+  const seqMiss=[[2,'hypothesis'],[3,'experiment'],[4,'results'],[5,'conclusion'],[1,'question'],[0,'observe']];
+  seqMiss.forEach(([i,w])=>{
+    const row=ST.map((x,j)=>j===i?'___':x).join(' → ');
+    W.push(tx('✍️ Write the missing step:\n'+row,w==='observe'?S_STEPW.obs:S_STEPW[({hypothesis:'hyp',experiment:'exp',results:'res',conclusion:'conc',question:'q'})[w]],'loose'));
+  });
+  W.push(tx('✍️ Write the 6 steps of the scientific method IN ORDER, separated by commas.','observe, question, hypothesis, experiment, results, conclusion','list',{hint:'One word for each step.'}));
+  W.push(tx('✍️ Write the 4 steps that come AFTER the question, IN ORDER, separated by commas.','hypothesis, experiment, results, conclusion','list'));
+  S_SCEN.forEach(s=>{
+    ['hyp','q','res','conc'].forEach((k,j)=>{
+      if((s.topic.length+j)%2===0)W.push(tx(`✍️ Which step is this? (write the name)\n“${s[k]}”`,S_STEPW[k],'loose'));
+    });
+  });
+  W.push(tx('✍️ Which step is this? (write the name)\n“'+S_SCEN[2].exp+'”',S_STEPW.exp,'loose'));
+  W.push(tx('✍️ Which step is this? (write the name)\n“'+S_SCEN[1].obs+'”',S_STEPW.obs,'loose'));
+  W.push(tx('✍️ Complete: A hypothesis starts with “I ___ that…”',['think','I think'],'loose'));
+  W.push(tx('✍️ Complete: In a fair test you change only ___ thing.',['one','1'],'loose'));
+  W.push(tx('✍️ Complete: In the ___ step you write down what happened.',S_STEPW.res,'loose'));
+  W.push(tx('✍️ Complete: At the end, the ___ says if the hypothesis was right or wrong.',S_STEPW.conc,'loose'));
+  W.push(tx('✍️ Which tool do you use to measure temperature?',V('thermometer'),'loose'));
+  W.push(tx('✍️ Which tool do you use to measure time?',V('stopwatch'),'loose'));
+  W.push(tx('✍️ Which tool do you use to measure length?',V('ruler'),'loose'));
+  W.push(tx('✍️ Escribe en inglés: hipótesis','hypothesis','loose'));
+  W.push(tx('✍️ Escribe en inglés: experimento','experiment','loose'));
+  W.push(tx('✍️ Escribe en inglés: conclusión','conclusion','loose'));
+  W.push(tx('✍️ Escribe en inglés: resultados',['results','result'],'loose'));
+  W.push(tx('✍️ Escribe en inglés: pregunta',['question','a question'],'loose'));
+  W.push(tx('✍️ Escribe en inglés: lupa',['magnifying glass','a magnifying glass','magnifier'],'loose'));
+  W.push(tx('✍️ Escribe en inglés: termómetro',V('thermometer'),'loose'));
+  W.push(tx('✍️ Escribe en inglés: cronómetro',['stopwatch','a stopwatch','timer'],'loose'));
+  ['hypothesis','experiment','conclusion','thermometer','microscope','scientist'].forEach(w=>W.push(tx('🎧 Listen and write the word.',w==='scientist'?V(w):[w],'loose',{say:w,sayLang:EN})));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_METHOD=`<h3>The Scientific Method 🔬</h3>
+<p>Los científicos siguen unos <b>pasos</b> (<i>steps</i>) para descubrir cosas. ¡Siempre en este orden!</p>
+<p>1️⃣ 👀 <b>Observe</b>: miras con atención y te fijas en algo curioso.<br>2️⃣ ❓ <b>Question</b>: te preguntas «¿por qué…?» o «¿qué pasa si…?».<br>3️⃣ 💡 <b>Hypothesis</b>: dices lo que <i>crees</i> que va a pasar. Empieza con «<b>I think that…</b>».<br>4️⃣ 🧪 <b>Experiment</b>: haces una prueba para comprobar tu idea.<br>5️⃣ 📊 <b>Results</b>: apuntas lo que ha pasado de verdad.<br>6️⃣ ✅ <b>Conclusion</b>: dices si tu hipótesis era correcta o no.</p>
+<p>🌱 <b>Ejemplo (plants):</b><br>👀 «The plant in the dark is yellow.»<br>❓ «Do plants need light to grow?»<br>💡 «I think plants need light to grow.»<br>🧪 One plant in the light, one in the dark, <b>the same water</b>.<br>📊 «The plant in the dark is small and yellow.»<br>✅ «My hypothesis was right: plants need light.»</p>
+<p>⚖️ <b>Fair test</b> (prueba justa): cambias <b>una sola cosa</b>; todo lo demás es igual. Si tu hipótesis es <b>wrong</b> (incorrecta), ¡no pasa nada! Has aprendido algo nuevo.</p>
+<p>🧰 <b>Herramientas:</b> 🌡️ <b>thermometer</b> (temperatura) · 📏 <b>ruler</b> (longitud) · ⚖️ <b>scale</b> (cuánto pesa) · ⏱️ <b>stopwatch</b> (tiempo) · 🧪 <b>measuring jug</b> (líquidos) · 🔍 <b>magnifying glass</b> (lupa) · 🔬 <b>microscope</b> (cosas diminutas) · 🥽 <b>safety goggles</b> (gafas de seguridad)</p>`;
+
+/* ═══════════ MÓDULO 2 · LAS 3 FUNCIONES VITALES ═══════════ */
+const S_VF={
+ nutrition:[
+  'A cow eats grass in the field.','A baby drinks milk.','A fish takes oxygen from the water with its gills.','A tree takes in water through its roots.',
+  'A lion eats a zebra.','You breathe air through your nose.','A bee drinks nectar from a flower.','A plant uses sunlight, water and air to make its food.',
+  'A rabbit nibbles a carrot.','A frog eats a fly.'],
+ interaction:[
+  'A cat jumps when it hears a loud noise.','A sunflower turns to face the sun.','A zebra runs away from a lion.','A dog wags its tail when it sees its owner.',
+  'A snail hides in its shell when you touch it.','A bird sees a cat and flies away.','You smell a rose with your nose.','A flower closes its petals at night.',
+  'A baby smiles when she sees her mum.','A bat uses its ears to find its way in the dark.'],
+ reproduction:[
+  'A hen lays eggs.','A cat has four kittens.','A plant makes seeds.','A frog lays eggs in a pond.',
+  'A horse gives birth to a foal.','A dolphin gives birth to a baby dolphin.','An apple tree makes seeds inside its apples.','A turtle lays eggs on the beach.',
+  'A kangaroo has a baby joey.','A butterfly lays tiny eggs on a leaf.']
+};
+const S_VFW={nutrition:VC('nutrition'),interaction:VC('interaction','relation','relationship'),reproduction:VC('reproduction')};
+const S_LIVING=[['🐶','dog'],['🌳','tree'],['🐟','fish'],['🌻','sunflower'],['🐦','bird'],['🌵','cactus'],['🐝','bee'],['🌷','tulip'],['🦋','butterfly'],['🐸','frog'],['🌲','pine tree'],['🐢','turtle']];
+const S_NONLIV=[['🪨','rock'],['🚗','toy car'],['🧸','teddy bear'],['🤖','robot'],['☁️','cloud'],['💧','drop of water'],['✏️','pencil'],['⚽','football'],['🚲','bicycle'],['🪑','chair'],['📖','book'],['☀️','sun']];
+const S_SENSE=[['see','eyes','sight'],['hear','ears','hearing'],['smell','nose','smell'],['taste','tongue','taste'],['touch','skin','touch']];
+function buildVital(){
+  const T=[],W=[];
+  const FN=['nutrition','interaction','reproduction'];
+  /* — test: ¿cuál de estas frases es un ejemplo de…? — */
+  FN.forEach(f=>{
+    const others=FN.filter(x=>x!==f).flatMap(x=>S_VF[x]);
+    S_VF[f].slice(0,6).forEach(s=>{
+      T.push(mc(`Which of these is an example of ${f.toUpperCase()}?`,s,sSample(others,3),capF(f)+': '+(f==='nutrition'?'to eat, drink and breathe.':f==='interaction'?'to sense the world and react.':'to make new living things.')));
+    });
+  });
+  T.push(
+   mc('Which vital function means “to make new living things”?','Reproduction',['Nutrition','Interaction','Hibernation'],'Animals lay eggs or give birth. Plants make seeds.'),
+   mc('Which vital function means “to eat, drink and breathe”?','Nutrition',['Reproduction','Interaction','Hibernation'],'Living things need food, water and air.'),
+   mc('Which vital function means “to sense the world and react to it”?','Interaction',['Nutrition','Reproduction','Hibernation'],'We use our senses and our body to react.'),
+   mc('What are the three vital functions?','Nutrition, interaction and reproduction',['Eating, sleeping and playing','Walking, running and flying','Birth, growth and size'],'Every living thing does these three.'),
+   mc('Which of these is a LIVING thing?',`${S_LIVING[0][0]} ${S_LIVING[0][1]}`,S_NONLIV.slice(0,3).map(x=>x[0]+' '+x[1]),'Living things do the three vital functions.'),
+   mc('Which of these is a LIVING thing?',`${S_LIVING[1][0]} ${S_LIVING[1][1]}`,S_NONLIV.slice(3,6).map(x=>x[0]+' '+x[1]),'Plants are living things too.'),
+   mc('Which of these is a LIVING thing?',`${S_LIVING[3][0]} ${S_LIVING[3][1]}`,S_NONLIV.slice(6,9).map(x=>x[0]+' '+x[1]),'A sunflower is born, grows, reacts to the sun and makes seeds.'),
+   mc('Which of these is a LIVING thing?',`${S_LIVING[8][0]} ${S_LIVING[8][1]}`,S_NONLIV.slice(9,12).map(x=>x[0]+' '+x[1]),'A butterfly is an animal.'),
+   mc('Which of these is NOT a living thing?',`${S_NONLIV[0][0]} ${S_NONLIV[0][1]}`,S_LIVING.slice(0,3).map(x=>x[0]+' '+x[1]),'A rock does not eat, react or reproduce.'),
+   mc('Which of these is NOT a living thing?',`${S_NONLIV[2][0]} ${S_NONLIV[2][1]}`,S_LIVING.slice(3,6).map(x=>x[0]+' '+x[1]),'A teddy bear looks like an animal, but it is a toy!'),
+   mc('Which of these is NOT a living thing?',`${S_NONLIV[3][0]} ${S_NONLIV[3][1]}`,S_LIVING.slice(6,9).map(x=>x[0]+' '+x[1]),'A robot moves, but it does not eat or have babies.'),
+   mc('Which of these is NOT a living thing?',`${S_NONLIV[4][0]} ${S_NONLIV[4][1]}`,S_LIVING.slice(9,12).map(x=>x[0]+' '+x[1]),'A cloud moves, but it is not alive.'),
+   mc('Why is a rock NOT a living thing?','It does not do the three vital functions',['It is too heavy','It is not green','It is very old'],'It does not eat, does not react and does not reproduce.'),
+   mc('Do plants do the three vital functions?','Yes: they make their food, react to light and make seeds',['No, plants are not alive','Only nutrition','Only reproduction'],'Plants are living things.'),
+   mc('A sunflower turns to face the sun. Which vital function is it?','Interaction',['Nutrition','Reproduction','Hibernation'],'It reacts to light.'),
+   mc('A hen lays eggs. Which vital function is it?','Reproduction',['Nutrition','Interaction','Hibernation'],'New hens can grow from the eggs.'),
+   mc('A cow eats grass. Which vital function is it?','Nutrition',['Interaction','Reproduction','Hibernation'],'It gets food and energy.'),
+   mc('A zebra runs away from a lion. Which vital function is it?','Interaction',['Nutrition','Reproduction','Hibernation'],'It sees danger and reacts.'),
+   mc('A plant makes seeds. Which vital function is it?','Reproduction',['Nutrition','Interaction','Hibernation'],'Seeds can grow into new plants.'),
+   mc('Breathing is part of which vital function?','Nutrition',['Interaction','Reproduction','Hibernation'],'We take in air (oxygen) to live.'),
+  );
+  /* sentidos = interacción */
+  S_SENSE.forEach(([v,organ])=>{
+    const orgs=S_SENSE.map(x=>x[1]).filter(x=>x!==organ);
+    T.push(mc(`We use our senses to interact with the world. Which part of the body do we use to ${v}?`,capF(organ),orgs.map(capF).slice(0,3),'See: eyes · hear: ears · smell: nose · taste: tongue · touch: skin.'));
+  });
+  T.push(mc('How many senses do we have?','Five',['Two','Three','Ten'],'Sight, hearing, smell, taste and touch.'));
+  T.push(mc('Senses help us with which vital function?','Interaction',['Nutrition','Reproduction','Hibernation'],'They tell us what is around us.'));
+  /* — escribir — */
+  FN.forEach(f=>{
+    S_VF[f].slice(4).forEach(s=>W.push(tx(`✍️ Which vital function is this? (nutrition, interaction or reproduction)\n“${s}”`,S_VFW[f],'loose')));
+  });
+  W.push(tx('✍️ Complete: Living things do three vital functions: nutrition, ___ and reproduction.',S_VFW.interaction,'loose'));
+  W.push(tx('✍️ Complete: Eating, drinking and breathing are part of ___.',S_VFW.nutrition,'loose'));
+  W.push(tx('✍️ Complete: Making new living things is called ___.',S_VFW.reproduction,'loose'));
+  W.push(tx('✍️ Complete: Using our senses and reacting to the world is called ___.',S_VFW.interaction,'loose'));
+  W.push(tx('✍️ Write the names of the three vital functions.','nutrition, interaction, reproduction','keys',{keys:[['nutrition'],['interaction','relation'],['reproduction']]}));
+  W.push(tx('✍️ A rock does not do the three vital functions. It is a ___ thing.',['non-living','non living','nonliving','not living'],'loose'));
+  W.push(tx('✍️ A dog, a tree and a fish do the three vital functions. They are ___ things.',['living'],'loose'));
+  S_SENSE.forEach(([v,organ,sense])=>W.push(tx(`✍️ Complete: We ${v} with our ___.`,v==='touch'?['skin','hands','fingers']:[organ],'loose')));
+  W.push(tx('✍️ How many senses do we have? (write the number or the word)',['5','five'],'loose'));
+  W.push(tx('✍️ Escribe en inglés: nutrición','nutrition','loose'));
+  W.push(tx('✍️ Escribe en inglés: interacción',['interaction','relation','relationship'],'loose'));
+  W.push(tx('✍️ Escribe en inglés: reproducción','reproduction','loose'));
+  W.push(tx('✍️ Escribe en inglés: ser vivo',['living thing','a living thing','living being','living organism'],'loose'));
+  ['nutrition','interaction','reproduction'].forEach(w=>W.push(tx('🎧 Listen and write the word.',[w],'loose',{say:w,sayLang:EN})));
+  W.push(tx('✍️ Unscramble the vital function:\n'+vowelsMix('reproduction'),'reproduction','loose',{hint:'To make new living things.'}));
+  W.push(tx('✍️ Unscramble the vital function:\n'+vowelsMix('interaction'),VC('interaction'),'loose',{hint:'Senses and reacting.'}));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_VITAL=`<h3>The 3 vital functions 🌱</h3>
+<p>Todos los <b>living things</b> (seres vivos: animales y plantas) hacen <b>tres funciones vitales</b>. Las cosas que no están vivas (<b>non-living things</b>: una roca, un coche, un peluche) no las hacen.</p>
+<p>🍎 <b>NUTRITION</b> (nutrición): conseguir lo que necesitan para vivir: <b>eat, drink and breathe</b> (comer, beber y respirar). Las plantas hacen su propio alimento con la luz del sol, agua y aire.</p>
+<p>👀 <b>INTERACTION</b> (relación): <b>sentir lo que pasa alrededor y reaccionar</b>. Usamos los 5 sentidos: <b>see</b> (eyes 👀), <b>hear</b> (ears 👂), <b>smell</b> (nose 👃), <b>taste</b> (tongue 👅) y <b>touch</b> (skin ✋). Ej.: una cebra huye de un león; un girasol gira hacia el sol.</p>
+<p>🥚 <b>REPRODUCTION</b> (reproducción): <b>hacer nuevos seres vivos</b>. Los animales ponen huevos (<i>lay eggs</i>) o tienen crías (<i>give birth</i>). Las plantas hacen <b>seeds</b> (semillas).</p>
+<p>📌 <b>Truco:</b> pregúntate «¿esto es comer/respirar, reaccionar o tener crías?» → nutrition / interaction / reproduction.</p>
+<p>🔤 Algunos libros lo llaman <i>relation</i> en vez de <i>interaction</i>: es lo mismo.</p>`;
+
+/* ═══════════ AJUSTES SEGUROS DE LA TABLA (animales con excepciones: no se preguntan) ═══════════ */
+['snake','chameleon','salamander','jellyfish','caterpillar','worm'].forEach(n=>{S_ANIM.find(a=>a.n===n).born=null;});
+
+/* ═══════════ MÓDULO 3 · ANIMALES, PLANTAS, VERTEBRADOS E INVERTEBRADOS ═══════════ */
+const S_PLANTS=[['🌳','tree'],['🌻','sunflower'],['🌵','cactus'],['🌷','tulip'],['🌲','pine tree'],['🌹','rose'],['🌴','palm tree'],['🌿','grass']];
+const plLab=p=>p[0]+' '+p[1];
+function buildLiving(){
+  const T=[],W=[];
+  /* planta o animal */
+  const animEm=S_ANIM.filter(a=>a.em&&a.cls!=='invertebrate');
+  const invEm=INVERT.filter(a=>a.em);
+  S_PLANTS.slice(0,6).forEach((p,i)=>{
+    const an3=sSample(i%2?animEm:[...animEm,...invEm],3);
+    T.push(mc('Which of these is a PLANT?',plLab(p),an3.map(lab),'Plants have roots, make their own food and stay in one place.'));
+  });
+  sSample(S_ANIM.filter(a=>a.em),6).forEach(a=>{
+    T.push(mc('Which of these is an ANIMAL?',lab(a),sSample(S_PLANTS,3).map(plLab),'Animals can move from place to place and eat plants or other animals.'));
+  });
+  /* vertebrado o invertebrado */
+  const vEm=VERT.filter(a=>a.em),iEm=INVERT.filter(a=>a.em);
+  sSample(vEm,6).forEach(a=>T.push(mc('Which of these is a VERTEBRATE?',lab(a),sSample(iEm,3).map(lab),'Vertebrates have a backbone. '+capF(a.n)+' is a '+a.cls+'.')));
+  sSample(iEm,6).forEach(a=>T.push(mc('Which of these is an INVERTEBRATE?',lab(a),sSample(vEm,3).map(lab),'Invertebrates have no backbone. '+capF(a.n)+' has no backbone.')));
+  T.push(
+   mc('Which living things can make their own food using sunlight?','Plants',['Mammals','Birds','Fish'],'Plants use sunlight, water and air to make food.'),
+   mc('Which living things usually move from place to place?','Animals',['Plants','Trees','Flowers'],'Most animals can walk, swim, fly or crawl. Plants stay in one place.'),
+   mc('Which living things have roots, a stem and leaves?','Plants',['Mammals','Insects','Reptiles'],'Roots take water from the soil.'),
+   mc('Plants take water from the soil with their…','roots',['leaves','flowers','seeds'],'Roots also hold the plant in the ground.'),
+   mc('Animals get their food by eating…','plants or other animals',['sunlight','the soil','water only'],'Animals cannot make their own food.'),
+   mc('Which of these is NOT an animal?','A rose',['A bee','A frog','A spider'],'A rose is a plant.'),
+   mc('Which of these is NOT a plant?','A butterfly',['A tulip','A pine tree','A cactus'],'A butterfly is an animal (an insect).'),
+   mc('Animals with a backbone are called…','vertebrates',['invertebrates','plants','insects'],'Vertebrate = has a backbone (vertebra = bone of the spine).'),
+   mc('Animals with NO backbone are called…','invertebrates',['vertebrates','mammals','birds'],'In = without.'),
+   mc('Where is the backbone?','On your back, inside your body',['Inside your head','In your tummy','Outside, like a shell'],'The backbone (spine) goes down your back.'),
+   mc('Which group of animals has a skeleton inside the body AND a backbone?','Vertebrates',['Invertebrates','Plants','Fungi'],'Fish, amphibians, reptiles, birds and mammals.'),
+   mc('Which of these groups are ALL vertebrates?','Mammals, birds, reptiles, amphibians and fish',['Mammals, birds, spiders and fish','Insects, snails, worms and jellyfish','Reptiles, amphibians, crabs and bees'],'These five groups have a backbone.'),
+   mc('Which of these groups are ALL invertebrates?','Insects, snails, worms and jellyfish',['Mammals, birds, reptiles and fish','Frogs, snakes, ducks and cats','Insects, frogs, spiders and fish'],'No backbone!'),
+   mc('How many legs does an insect have?','Six',['Four','Eight','Ten'],'Insects: 6 legs. Examples: bee, ant, butterfly, ladybird.'),
+   mc('How many legs does a spider have?','Eight',['Four','Six','Ten'],'Spiders have 8 legs. They are not insects!'),
+   mc('Which of these is NOT an insect?','A spider',['A bee','An ant','A butterfly'],'A spider has 8 legs, so it is not an insect.'),
+   mc('The soft body of a snail is protected by a…','shell',['backbone','beak','fur'],'Snails are invertebrates with a shell.'),
+   mc('Most animals on Earth are…','invertebrates',['vertebrates','mammals','birds'],'There are many more invertebrates than vertebrates!'),
+   mc('A butterfly has no backbone. It is a…','invertebrate',['vertebrate','mammal','bird'],'Butterflies are insects.'),
+   mc('A frog has a backbone. It is a…','vertebrate',['invertebrate','plant','insect'],'Frogs are amphibians.'),
+  );
+  /* escribir */
+  sSample(S_PLANTS,5).forEach(p=>W.push(tx(`✍️ Is it a plant or an animal?\n${plLab(p)}`,['plant','a plant','it is a plant','it’s a plant'],'loose')));
+  sSample(S_ANIM.filter(a=>a.em),5).forEach(a=>W.push(tx(`✍️ Is it a plant or an animal?\n${lab(a)}`,['animal','an animal','it is an animal','it’s an animal'],'loose')));
+  sSample(vEm,6).forEach(a=>W.push(tx(`✍️ Vertebrate or invertebrate?\n${lab(a)}`,V('vertebrate'),'loose',{hint:'Does it have a backbone?'})));
+  sSample(iEm,6).forEach(a=>W.push(tx(`✍️ Vertebrate or invertebrate?\n${lab(a)}`,V('invertebrate'),'loose',{hint:'Does it have a backbone?'})));
+  W.push(
+   tx('✍️ Complete: Vertebrates have a ___ inside their body.',['backbone','a backbone','spine','a spine','vertebral column','skeleton','a skeleton'],'loose'),
+   tx('✍️ Complete: Invertebrates do not have a ___.',['backbone','a backbone','spine','a spine','vertebral column'],'loose'),
+   tx('✍️ Complete: Insects have ___ legs.',['6','six'],'loose'),
+   tx('✍️ Complete: Spiders have ___ legs.',['8','eight'],'loose'),
+   tx('✍️ Complete: Plants make their own food using ___ from the sun.',['light','sunlight','sun light','the sun','sun'],'loose'),
+   tx('✍️ Complete: Plants take water from the soil with their ___.',['roots','root','their roots'],'loose'),
+   tx('✍️ Animals with a backbone are called…',V('vertebrate'),'loose'),
+   tx('✍️ Animals without a backbone are called…',V('invertebrate'),'loose'),
+   tx('✍️ Escribe en inglés: vertebrado',V('vertebrate'),'loose'),
+   tx('✍️ Escribe en inglés: invertebrado',V('invertebrate'),'loose'),
+   tx('✍️ Escribe en inglés: columna vertebral',['backbone','a backbone','spine','a spine','vertebral column'],'loose'),
+   tx('✍️ Escribe en inglés: planta',['plant','a plant','plants'],'loose'),
+   tx('✍️ Escribe en inglés: raíz',['root','roots','a root'],'loose'),
+   tx('✍️ Escribe en inglés: hoja (de una planta)',['leaf','a leaf','leaves'],'loose'),
+   tx('✍️ Write ONE invertebrate animal.',namesOf(INVERT),'loose',{hint:'Insects, spiders, snails, worms, crabs…'}),
+   tx('✍️ Write ONE vertebrate animal.',namesOf(VERT),'loose',{hint:'A mammal, a bird, a reptile, an amphibian or a fish.'}),
+   tx('✍️ Write ONE plant.',['tree','a tree','flower','a flower','rose','a rose','tulip','a tulip','cactus','a cactus','sunflower','a sunflower','grass','palm','a palm tree','pine','a pine tree','bush','a bush','daisy','a daisy','oak','an oak','lettuce','carrot'],'loose'),
+  );
+  ['vertebrate','invertebrate','backbone','insect'].forEach(w=>W.push(tx('🎧 Listen and write the word.',[w,...(w==='insect'?['an insect']:[])],'loose',{say:w,sayLang:EN})));
+  ['backbone','insect','vertebrate'].forEach(w=>W.push(tx('✍️ Unscramble the word:\n'+vowelsMix(w),[w],'loose',{hint:w==='backbone'?'It goes down your back.':w==='insect'?'A bee is one.':'It has a backbone.'})));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_LIVING=`<h3>Animals, plants and… backbones! 🦴</h3>
+<p>🌱 <b>Plants</b>: se quedan en un sitio (<b>roots</b> = raíces), tienen <b>stem</b> (tallo), <b>leaves</b> (hojas), flores y <b>seeds</b> (semillas). <b>Hacen su propia comida</b> con la luz del sol, agua y aire.</p>
+<p>🐾 <b>Animals</b>: casi todos <b>se mueven</b> de un sitio a otro y <b>se alimentan</b> de plantas o de otros animales.</p>
+<p>🦴 <b>Vertebrates</b> (vertebrados): tienen <b>backbone</b> (columna vertebral) y esqueleto dentro del cuerpo. Son 5 grupos: <b>mammals, birds, reptiles, amphibians and fish</b>.</p>
+<p>🐝 <b>Invertebrates</b> (invertebrados): <b>NO tienen backbone</b>. ¡La mayoría de los animales del planeta son invertebrados! Ejemplos: 🐝 bee, 🐜 ant, 🦋 butterfly (insects: <b>6 legs</b>), 🕷️ spider (<b>8 legs</b>, no es un insecto), 🐌 snail (con <b>shell</b>), 🪱 worm, 🦀 crab, 🐙 octopus.</p>
+<p>📌 <b>Truco:</b> <i>in-</i> = sin. <b>In</b>vertebrate = <b>sin</b> columna.</p>`;
+
+/* ═══════════ MÓDULO 4 · LOS 5 GRUPOS DE VERTEBRADOS ═══════════ */
+const S_CLSN=c=>capF(c);
+function buildVert(){
+  const T=[],W=[];
+  const optsFor=c=>CLS5.map(S_CLSN);
+  /* ¿a qué grupo pertenece? */
+  const per={mammal:4,bird:3,reptile:3,amphibian:2,fish:3};
+  CLS5.forEach(c=>{
+    sSample(byCls(c).filter(a=>a.em),per[c]).forEach(a=>{
+      T.push(mc(`Which vertebrate group does ${Aa(a)} belong to?\n${a.em}`,S_CLSN(c),sSample(CLS5.filter(x=>x!==c).map(S_CLSN),3),capF(a.n)+' is '+withArt(c)+'.'));
+    });
+  });
+  /* ¿qué animal es de este grupo? */
+  CLS5.forEach(c=>{
+    const good=sSample(byCls(c).filter(a=>a.em),2);
+    good.forEach(g=>{
+      const bad=VERT.filter(a=>a.em&&a.cls!==c);
+      T.push(qWhich(`Which of these animals is ${withArt(c)}?`,g,bad,capF(g.n)+' is '+withArt(c)+'.'));
+    });
+  });
+  /* el que NO es del grupo */
+  CLS5.forEach(c=>{
+    const three=sSample(byCls(c),3);
+    const odd=sSample(VERT.filter(a=>a.cls!==c&&(three.every(t=>t.em)?a.em:true)),1)[0];
+    T.push(qNot(`Which one is NOT ${withArt(c)}?`,odd,three,capF(odd.n)+' is '+withArt(odd.cls)+'.'));
+  });
+  /* adivinanzas y rasgos */
+  T.push(
+   mc('I have fur. My babies grow inside my body and drink my milk. What group am I?','Mammal',['Bird','Reptile','Fish'],'Mammals have fur or hair and feed their babies with milk.'),
+   mc('I have feathers, wings and a beak. I lay eggs. What group am I?','Bird',['Mammal','Reptile','Amphibian'],'Birds are the only animals with feathers.'),
+   mc('I have dry, scaly skin and I lay eggs on land. What group am I?','Reptile',['Amphibian','Fish','Mammal'],'Snakes, lizards, crocodiles and turtles are reptiles.'),
+   mc('My skin is smooth and moist. I start life in the water as a tadpole. What group am I?','Amphibian',['Reptile','Fish','Bird'],'Frogs, toads and salamanders are amphibians.'),
+   mc('I live in the water. I have fins and gills. What group am I?','Fish',['Amphibian','Mammal','Reptile'],'Fish breathe with gills.'),
+   mc('Which group of vertebrates has hair or fur?','Mammals',['Birds','Reptiles','Fish'],'Mammals.'),
+   mc('Which group of vertebrates has feathers?','Birds',['Mammals','Reptiles','Amphibians'],'Birds.'),
+   mc('Which group of vertebrates has dry, scaly skin and lays eggs on land?','Reptiles',['Amphibians','Mammals','Birds'],'Reptiles.'),
+   mc('Which group of vertebrates has smooth, moist skin?','Amphibians',['Reptiles','Birds','Mammals'],'Amphibians.'),
+   mc('Which group of vertebrates breathes with gills all its life?','Fish',['Mammals','Birds','Reptiles'],'Fish.'),
+   mc('Which group of vertebrates drinks milk from its mother?','Mammals',['Birds','Reptiles','Fish'],'Mammals.'),
+   mc('Which group has a beak, wings and feathers?','Birds',['Mammals','Reptiles','Fish'],'Birds.'),
+   mc('Which group of vertebrates has fins to swim?','Fish',['Mammals','Birds','Reptiles'],'Fish.'),
+   mc('Which group has babies that grow inside their mother?','Mammals',['Birds','Reptiles','Amphibians'],'Mammals give birth.'),
+   mc('Which group starts life with gills in the water and later breathes with lungs?','Amphibians',['Fish','Reptiles','Birds'],'The tadpole changes into a frog.'),
+  );
+  /* los «tramposos» */
+  T.push(
+   mc('A bat can fly, but it is not a bird. It is a…','Mammal',['Bird','Reptile','Fish'],'A bat has fur, gives birth and feeds its babies with milk.'),
+   mc('A dolphin lives in the sea, but it is not a fish. It is a…','Mammal',['Fish','Reptile','Amphibian'],'Dolphins breathe air with lungs and give milk to their calves.'),
+   mc('A whale breathes air with lungs and feeds its calf with milk. It is a…','Mammal',['Fish','Reptile','Amphibian'],'The whale is the biggest mammal.'),
+   mc('A penguin cannot fly, but it has feathers and lays eggs. It is a…','Bird',['Mammal','Fish','Reptile'],'Penguins are flightless birds.'),
+   mc('A shark lives in the sea and has fins and gills. It is a…','Fish',['Mammal','Reptile','Amphibian'],'Sharks breathe with gills.'),
+   mc('A snake has no legs and has dry, scaly skin. It is a…','Reptile',['Amphibian','Fish','Mammal'],'Snakes are reptiles.'),
+   mc('A frog starts life as a tadpole in the water and then lives on land and in water. What group is it?','Amphibian',['Reptile','Fish','Mammal'],'Amphibian means “double life”.'),
+   mc('An ostrich cannot fly, but it has feathers and lays eggs. It is a…','Bird',['Mammal','Reptile','Fish'],'Ostriches are the biggest birds.'),
+  );
+  T.push(
+   mc('How many groups of vertebrates are there?','Five',['Three','Four','Seven'],'Mammals, birds, reptiles, amphibians and fish.'),
+   mc('Which of these is NOT a group of vertebrates?','Insects',['Mammals','Birds','Fish'],'Insects are invertebrates.'),
+   mc('Which sentence is TRUE?','Birds have feathers and lay eggs.',['Fish have fur and lungs.','Reptiles have smooth, moist skin.','Mammals lay eggs and have gills.'],'Check each group again!'),
+   mc('Which sentence is TRUE?','Amphibians lay their eggs in the water.',['Reptiles breathe with gills.','Mammals have scales and fins.','Birds are covered with fur.'],'Frog eggs are laid in ponds.'),
+   mc('Which sentence is TRUE?','All vertebrates have a backbone.',['All vertebrates can fly.','All vertebrates live in the water.','All vertebrates have fur.'],'That is what makes them vertebrates.'),
+   mc('Which sentence is TRUE?','A whale is a mammal.',['A whale is a fish.','A whale is a reptile.','A whale is a bird.'],'A whale is a mammal.'),
+  );
+  [['Fish','breathe','with','gills.'],['Birds','have','feathers','and','wings.'],['Reptiles','have','dry','scaly','skin.'],['Mammals','drink','milk','from','their','mother.'],['Amphibians','have','smooth,','moist','skin.']].forEach(t=>T.push(chips('Order the words:',t,[t.join(' ')],'')));
+  /* escribir */
+  CLS5.forEach(c=>{
+    sSample(byCls(c).filter(a=>a.em),c==='amphibian'?1:2).forEach(a=>W.push(tx(`✍️ What vertebrate group is it? (mammal, bird, reptile, amphibian or fish)\n${lab(a)}`,V(c,CLSP[c]),'loose')));
+  });
+  [
+   ['I have fur. My babies drink my milk.','mammal'],
+   ['I have feathers and a beak. I lay eggs.','bird'],
+   ['I have dry, scaly skin. I lay eggs on land.','reptile'],
+   ['My skin is smooth and moist. I was a tadpole.','amphibian'],
+   ['I live in the water. I have fins and gills.','fish']
+  ].forEach(([r,c])=>W.push(tx(`✍️ Riddle! What group am I?\n${r}`,V(c,CLSP[c]),'loose')));
+  W.push(
+   tx('✍️ Complete: Birds are covered with ___.',['feathers','feather','their feathers'],'loose'),
+   tx('✍️ Complete: Fish breathe with ___.',['gills','their gills'],'loose'),
+   tx('✍️ Complete: Mammals feed their babies with ___.',['milk','their milk','mother’s milk'],'loose'),
+   tx('✍️ Complete: Reptiles have dry, ___ skin.',['scaly','scales','with scales'],'loose'),
+   tx('✍️ Complete: Amphibians have smooth, ___ skin.',['moist','wet','damp','slimy'],'loose'),
+   tx('✍️ Complete: Fish use their ___ to swim.',['fins','fin','their fins'],'loose'),
+   tx('✍️ Complete: Birds have ___ to fly.',['wings','wing','their wings'],'loose'),
+   tx('✍️ Complete: Mammals have fur or ___.',['hair','fur'],'loose'),
+   tx('✍️ A bat flies, but it is not a bird. What group is it?',V('mammal'),'loose'),
+   tx('✍️ A dolphin lives in the sea, but it is not a fish. What group is it?',V('mammal'),'loose'),
+   tx('✍️ A penguin cannot fly. What group is it?',V('bird'),'loose'),
+   tx('✍️ Write the names of the 5 groups of vertebrates.','mammals, birds, reptiles, amphibians, fish','keys',{keys:[['mammal'],['bird'],['reptile'],['amphibian'],['fish']]}),
+   tx('✍️ Write ONE mammal.',namesOf(byCls('mammal')),'loose'),
+   tx('✍️ Write ONE bird.',namesOf(byCls('bird')),'loose'),
+   tx('✍️ Write ONE reptile.',namesOf(byCls('reptile')),'loose'),
+   tx('✍️ Write ONE amphibian.',namesOf(byCls('amphibian')),'loose'),
+   tx('✍️ Write ONE fish.',namesOf(byCls('fish')),'loose'),
+   tx('✍️ Escribe en inglés: mamífero',V('mammal'),'loose'),
+   tx('✍️ Escribe en inglés: ave / pájaro',V('bird'),'loose'),
+   tx('✍️ Escribe en inglés: reptil',V('reptile'),'loose'),
+   tx('✍️ Escribe en inglés: anfibio',V('amphibian'),'loose'),
+   tx('✍️ Escribe en inglés: pez',['fish','a fish','fishes'],'loose'),
+   tx('✍️ True or false? Spiders are vertebrates.',['false','it is false','it’s false','no'],'loose'),
+   tx('✍️ True or false? A whale is a mammal.',['true','it is true','it’s true','yes'],'loose'),
+   tx('✍️ True or false? Frogs are reptiles.',['false','it is false','it’s false','no'],'loose'),
+  );
+  ['mammal','reptile','amphibian','feathers','scales','gills','fins'].forEach(w=>W.push(tx('🎧 Listen and write the word.',[w],'loose',{say:w,sayLang:EN})));
+  [['mammal','Fur and milk.'],['reptile','Snakes and lizards.'],['amphibian','Frogs.'],['feathers','Birds have them.']].forEach(([w,h])=>W.push(tx('✍️ Unscramble the word:\n'+vowelsMix(w),[w],'loose',{hint:h})));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_VERT=`<h3>The 5 groups of vertebrates 🦴</h3>
+<p>🐕 <b>MAMMALS</b> (mamíferos): <b>fur or hair</b> · los bebés crecen dentro de la madre (<b>give birth</b>) y beben <b>milk</b> · respiran con lungs.<br><small>Dog, cat, horse, lion, human… y también 🦇 bat, 🐬 dolphin y 🐋 whale (¡no son ni aves ni peces!).</small></p>
+<p>🦅 <b>BIRDS</b> (aves): <b>feathers</b>, <b>wings</b> y <b>beak</b> · ponen huevos (<b>lay eggs</b>).<br><small>Eagle, owl, parrot… y 🐧 penguin y ostrich, que no vuelan.</small></p>
+<p>🐍 <b>REPTILES</b> (reptiles): piel <b>seca con escamas</b> (<b>dry, scaly skin</b>) · ponen huevos en tierra.<br><small>Snake, lizard, crocodile, turtle.</small></p>
+<p>🐸 <b>AMPHIBIANS</b> (anfibios): piel <b>lisa y húmeda</b> (<b>smooth, moist skin</b>) · ponen huevos en el agua · las crías (<b>tadpoles</b>) viven en el agua y de adultos viven en agua y tierra.<br><small>Frog, toad, salamander.</small></p>
+<p>🐟 <b>FISH</b> (peces): <b>scales</b> (escamas), <b>fins</b> (aletas) y <b>gills</b> (branquias) · viven en el agua · ponen huevos.<br><small>Salmon, tuna, goldfish, 🦈 shark.</small></p>
+<p>📌 Los 5 grupos tienen <b>backbone</b>: son vertebrates.</p>`;
+
+/* ═══════════ MÓDULO 5 · CÓMO NACEN LOS ANIMALES ═══════════ */
+const S_BABIES=['puppy','kitten','foal','calf','lamb','piglet','chick','duckling','cub','joey','tadpole','fawn'];
+function buildBorn(){
+  const T=[],W=[];
+  const ovi=S_ANIM.filter(a=>a.born==='o'&&a.em);
+  const viv=S_ANIM.filter(a=>a.born==='v'&&a.cls==='mammal'&&a.em);
+  const OV='It hatches from an egg',VV='It grows inside its mother and is born alive';
+  const how=(a,i)=>({q:`How is ${Aa(a)} born?\n${a.em}`,ans:a.born==='o'?OV:VV,pool:[a.born==='o'?VV:OV,'It grows from a seed','It splits into two animals']});
+  [...sSample(ovi,7),...sSample(viv,6)].forEach(a=>{const h=how(a);T.push(mc(h.q,h.ans,h.pool,a.born==='o'?capF(a.n)+' is oviparous: it is born from an egg.':capF(a.n)+' is viviparous: it is born alive.'));});
+  /* ¿qué animal pone huevos / nace vivo? */
+  sSample(ovi,6).forEach(g=>T.push(qWhich('Which animal lays eggs?',g,viv,capF(g.n)+' lays eggs (oviparous).')));
+  sSample(viv,6).forEach(g=>T.push(qWhich('Which animal is born alive (it grows inside its mother)?',g,ovi,capF(g.n)+' is a mammal: viviparous.')));
+  sSample(viv,3).forEach(g=>T.push(qWhich('Which animal does NOT come from an egg?',g,ovi,capF(g.n)+' is viviparous.')));
+  T.push(
+   mc('Oviparous animals are born from…','an egg',['a seed','the mother’s milk','a cocoon only'],'Ovum = egg.'),
+   mc('Viviparous animals are born from…','their mother’s body',['an egg','a seed','the water only'],'The baby grows inside the mother.'),
+   mc('Which word means “born from an egg”?','Oviparous',['Viviparous','Herbivorous','Nocturnal'],'Oviparous = lays eggs.'),
+   mc('Which word means “born alive from the mother”?','Viviparous',['Oviparous','Carnivorous','Nocturnal'],'Viviparous = gives birth.'),
+   mc('Which group of vertebrates is viviparous?','Mammals',['Birds','Reptiles','Fish'],'All the others are oviparous.'),
+   mc('Birds, reptiles, amphibians and fish are all…','oviparous',['viviparous','herbivores','mammals'],'They all lay eggs.'),
+   mc('Where does a frog lay its eggs?','In the water',['In a nest in a tree','Inside its body','In the sand of a desert'],'Amphibians lay eggs in water.'),
+   mc('Mammal babies drink…','milk from their mother',['water only','insects','nothing'],'Mammary glands make milk.'),
+   mc('What comes out of a hen’s egg?','A chick',['A duckling','A tadpole','A kitten'],'Egg → chick → hen.'),
+   mc('What does a tadpole become?','A frog',['A fish','A snake','A lizard'],'Egg → tadpole → frog.'),
+   mc('A caterpillar changes into a…','butterfly',['bee','frog','beetle'],'Egg → caterpillar → chrysalis → butterfly.'),
+  );
+  /* nombres de las crías */
+  const bab=S_ANIM.filter(a=>a.baby&&a.baby!=='baby'&&S_BABIES.includes(a.baby));
+  sSample(bab,9).forEach(a=>{
+    const w=S_BABIES.filter(b=>b!==a.baby);
+    T.push(mcS(`A baby ${a.n} is called a…\n${a.em}`,a.baby,w,'A baby '+a.n+' is a '+a.baby+'.'));
+  });
+  const uni=bab.filter(a=>bab.filter(b=>b.baby===a.baby).length===1);
+  sSample(uni,5).forEach(a=>T.push(mcS(`Which animal has a baby called a “${a.baby}”?`,lab(a),S_ANIM.filter(b=>b.em&&b.baby&&b.baby!==a.baby&&b.cls==='mammal').map(lab),'A '+a.baby+' is a baby '+a.n+'.')));
+  /* ciclos de vida */
+  T.push(chips('Put the life of a frog in ORDER:',['Egg','Tadpole','Frog'],['Egg Tadpole Frog'],'Egg → tadpole → frog.'));
+  T.push(chips('Put the life of a hen in ORDER:',['Egg','Chick','Hen'],['Egg Chick Hen'],'Egg → chick → hen.'));
+  T.push(chips('Put the life of a butterfly in ORDER:',['Egg','Caterpillar','Chrysalis','Butterfly'],['Egg Caterpillar Chrysalis Butterfly'],'Egg → caterpillar → chrysalis → butterfly.'));
+  /* escribir */
+  sSample(ovi,6).forEach(a=>W.push(tx(`✍️ Oviparous or viviparous?\n${lab(a)}`,VC('oviparous'),'loose',{hint:'Is it born from an egg?'})));
+  sSample(viv,6).forEach(a=>W.push(tx(`✍️ Oviparous or viviparous?\n${lab(a)}`,VC('viviparous'),'loose',{hint:'Is it born alive?'})));
+  sSample(bab,10).forEach(a=>W.push(tx(`✍️ A baby ${a.n} is called a ___ ${a.em}`,[a.baby,'a '+a.baby,'an '+a.baby],'loose')));
+  W.push(
+   tx('✍️ Complete: Oviparous animals are born from an ___.',['egg','an egg'],'loose'),
+   tx('✍️ Complete: A hen lays ___.',['eggs','egg'],'loose'),
+   tx('✍️ Complete: Viviparous animals grow inside their mother’s ___.',['body','belly','tummy','womb','stomach'],'loose'),
+   tx('✍️ Complete: Mammals feed their babies with ___.',['milk','their milk','mother’s milk'],'loose'),
+   tx('✍️ Life of a frog: egg → ___ → frog',['tadpole','a tadpole'],'loose'),
+   tx('✍️ Life of a hen: egg → ___ → hen',['chick','a chick'],'loose'),
+   tx('✍️ Life of a butterfly: egg → caterpillar → ___ → butterfly',['chrysalis','a chrysalis','pupa','a pupa','cocoon','a cocoon'],'loose'),
+   tx('✍️ Escribe en inglés: ovíparo',['oviparous','it is oviparous'],'loose'),
+   tx('✍️ Escribe en inglés: vivíparo',['viviparous','it is viviparous'],'loose'),
+   tx('✍️ Escribe en inglés: huevo',['egg','an egg','eggs'],'loose'),
+   tx('✍️ Escribe en inglés: renacuajo',['tadpole','a tadpole'],'loose'),
+   tx('✍️ Escribe en inglés: leche',['milk'],'loose'),
+   tx('✍️ Write ONE animal that is oviparous.',namesOf(S_ANIM.filter(a=>a.born==='o')),'loose',{hint:'It lays eggs.'}),
+   tx('✍️ Write ONE animal that is viviparous.',namesOf(byCls('mammal')),'loose',{hint:'A mammal!'}),
+   tx('✍️ True or false? All mammals are oviparous.',['false','it is false','it’s false','no'],'loose'),
+   tx('✍️ True or false? Birds are oviparous.',['true','it is true','it’s true','yes'],'loose'),
+  );
+  ['oviparous','viviparous','tadpole','chick','kitten','caterpillar','duckling'].forEach(w=>W.push(tx('🎧 Listen and write the word.',[w],'loose',{say:w,sayLang:EN})));
+  [['tadpole','A baby frog.'],['kitten','A baby cat.'],['chick','A baby hen.'],['caterpillar','It becomes a butterfly.']].forEach(([w,h])=>W.push(tx('✍️ Unscramble the word:\n'+vowelsMix(w),[w],'loose',{hint:h})));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_BORN=`<h3>How are animals born? 🥚</h3>
+<p>🥚 <b>OVIPAROUS</b> (ovíparos): la madre pone <b>eggs</b> (huevos) y el bebé nace del huevo (<i>hatches</i>).<br><small>Birds, reptiles, amphibians, most fish, insects, spiders…</small></p>
+<p>🤱 <b>VIVIPAROUS</b> (vivíparos): el bebé <b>crece dentro de su madre</b> y nace vivo (<i>born alive</i>). Después bebe <b>milk</b>.<br><small>Mammals: dog, cat, horse, whale, human…</small></p>
+<p>👶 <b>Baby animals:</b> 🐶 puppy · 🐱 kitten · 🐴 foal · 🐄 calf · 🐑 lamb · 🐷 piglet · 🐔 chick · 🦆 duckling · 🦁 cub · 🦘 joey · 🐸 tadpole · 🦌 fawn · 🐐 kid</p>
+<p>🔁 <b>Life cycles:</b><br>🐸 egg → tadpole → frog<br>🐔 egg → chick → hen<br>🦋 egg → caterpillar → chrysalis → butterfly</p>`;
+
+/* ═══════════ MÓDULO 6 · QUÉ COMEN LOS ANIMALES ═══════════ */
+const S_DIETS=['herbivore','carnivore','omnivore'];
+const S_EATS={herbivore:'Only plants',carnivore:'Only meat (other animals)',omnivore:'Both plants and animals'};
+function buildDiet(){
+  const T=[],W=[];
+  const known=S_ANIM.filter(a=>a.diet);
+  const withEm=known.filter(a=>a.em);
+  S_DIETS.forEach(d=>{
+    const good=withEm.filter(a=>a.diet===d);
+    sSample(good,4).forEach(g=>T.push(qWhich(`Which animal is ${withArt(d)}?`,g,withEm.filter(a=>a.diet!==d),capF(g.n)+' is '+withArt(d)+'.')));
+  });
+  S_DIETS.forEach(d=>{
+    const three=sSample(withEm.filter(a=>a.diet===d),3);
+    const odd=sSample(withEm.filter(a=>a.diet!==d),1)[0];
+    T.push(qNot(`Which one is NOT ${withArt(d)}?`,odd,three,capF(odd.n)+' is '+withArt(odd.diet)+'.'));
+  });
+  /* qué come: animales sin duda (no son comedores de insectos) */
+  ['lion','tiger','cheetah','wolf','eagle','polar bear','dolphin','shark','cow','horse','sheep','giraffe','elephant','rabbit','zebra','deer','koala','hippo','pig','brown bear','human','raccoon','mouse'].forEach(n=>{
+    const a=S_ANIM.find(x=>x.n===n);
+    if(!['lion','cow','pig','giraffe','brown bear','shark','rabbit','human','tiger','zebra'].includes(n))return;
+    T.push(mc(`What does ${Aa(a)} eat?\n${a.em}`,S_EATS[a.diet],Object.values(S_EATS).filter(x=>x!==S_EATS[a.diet]).concat(['Only insects']),capF(a.n)+' is '+withArt(a.diet)+': it eats '+S_EATS[a.diet].toLowerCase()+'.'));
+  });
+  T.push(
+   mc('What do HERBIVORES eat?','Only plants',['Only meat','Plants and meat','Only insects'],'Grass, leaves, fruit, seeds…'),
+   mc('What do CARNIVORES eat?','Meat (other animals)',['Only plants','Plants and meat','Only seeds'],'They hunt other animals.'),
+   mc('What do OMNIVORES eat?','Both plants and animals',['Only plants','Only meat','Only fruit'],'Omni = all.'),
+   mc('What do we call an animal that eats only plants?','Herbivore',['Carnivore','Omnivore','Vertebrate'],'Herb = plant.'),
+   mc('What do we call an animal that eats only meat?','Carnivore',['Herbivore','Omnivore','Vertebrate'],'Carne = meat.'),
+   mc('What do we call an animal that eats plants AND meat?','Omnivore',['Herbivore','Carnivore','Vertebrate'],'Omni = all.'),
+   mc('Which menu is for a HERBIVORE?','Leaves, grass and fruit',['Meat and fish','Pizza and sweets','Rocks and sand'],'Plants only.'),
+   mc('Which menu is for a CARNIVORE?','Meat and fish',['Leaves, grass and fruit','Carrots and lettuce','Rocks and sand'],'Meat only.'),
+   mc('Which menu is for an OMNIVORE?','Vegetables and chicken',['Only grass','Only fish','Rocks and sand'],'Plants and animals.'),
+   mc('I eat only grass and leaves. What am I?','A herbivore',['A carnivore','An omnivore','A decomposer'],'Herbivores eat plants.'),
+   mc('I hunt other animals for food. What am I?','A carnivore',['A herbivore','An omnivore','A decomposer'],'Carnivores eat meat.'),
+   mc('I eat fruit, vegetables and meat. What am I?','An omnivore',['A herbivore','A carnivore','A decomposer'],'Omnivores eat everything.'),
+   mc('Which animals have sharp teeth and claws to hunt?','Carnivores',['Herbivores','Plants','Decomposers'],'Lions and wolves have them.'),
+   mc('Which animals have flat teeth to grind grass?','Herbivores',['Carnivores','Omnivores','Decomposers'],'Cows and horses have them.'),
+   mc('People eat vegetables, fruit, meat and fish. We are…','omnivores',['herbivores','carnivores','decomposers'],'Humans are omnivores.'),
+  );
+  /* escribir */
+  S_DIETS.forEach(d=>sSample(withEm.filter(a=>a.diet===d),4).forEach(a=>W.push(tx(`✍️ Herbivore, carnivore or omnivore?\n${lab(a)}`,VC(d),'loose',{hint:d==='herbivore'?'Does it eat plants?':d==='carnivore'?'Does it eat meat?':'Plants and meat?'}))));
+  W.push(
+   tx('✍️ Complete: Herbivores eat only ___.',['plants','plant','grass','leaves','vegetation'],'loose'),
+   tx('✍️ Complete: Carnivores eat ___.',['meat','animals','other animals','meat and fish'],'loose'),
+   tx('✍️ Complete: Omnivores eat plants and ___.',['animals','meat','other animals'],'loose'),
+   tx('✍️ A lion eats meat. It is a ___.',V('carnivore'),'loose'),
+   tx('✍️ A cow eats grass. It is a ___.',V('herbivore'),'loose'),
+   tx('✍️ A pig eats plants and animals. It is an ___.',V('omnivore'),'loose'),
+   tx('✍️ People eat plants and animals. We are ___.',['omnivores','omnivore','omnivorous'],'loose'),
+   tx('✍️ What does a lion eat? (write one word)',['meat','animals','zebras','antelopes','other animals','fish'],'loose',{hint:'Carnivore.'}),
+   tx('✍️ What does a rabbit eat? (write one word)',['plants','grass','carrots','vegetables','leaves','lettuce','plant','carrot','vegetation','hay','fruit'],'loose',{hint:'Herbivore.'}),
+   tx('✍️ Escribe en inglés: herbívoro',V('herbivore'),'loose'),
+   tx('✍️ Escribe en inglés: carnívoro',V('carnivore'),'loose'),
+   tx('✍️ Escribe en inglés: omnívoro',V('omnivore'),'loose'),
+   tx('✍️ Escribe en inglés: carne',['meat'],'loose'),
+   tx('✍️ Escribe en inglés: plantas',['plants','plant'],'loose'),
+   tx('✍️ Write ONE herbivore.',namesOf(known.filter(a=>a.diet==='herbivore')),'loose'),
+   tx('✍️ Write ONE carnivore.',namesOf(known.filter(a=>a.diet==='carnivore')),'loose'),
+   tx('✍️ Write ONE omnivore.',namesOf(known.filter(a=>a.diet==='omnivore')),'loose'),
+   tx('✍️ True or false? Lions are herbivores.',['false','it is false','it’s false','no'],'loose'),
+   tx('✍️ True or false? Pigs are omnivores.',['true','it is true','it’s true','yes'],'loose'),
+   tx('✍️ True or false? Rabbits eat meat.',['false','it is false','it’s false','no'],'loose'),
+  );
+  ['herbivore','carnivore','omnivore','meat','plants'].forEach(w=>W.push(tx('🎧 Listen and write the word.',[w],'loose',{say:w,sayLang:EN})));
+  [['herbivore','It eats plants.'],['carnivore','It eats meat.'],['omnivore','It eats everything.']].forEach(([w,h])=>W.push(tx('✍️ Unscramble the word:\n'+vowelsMix(w),[w],'loose',{hint:h})));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_DIET=`<h3>What do animals eat? 🍽️</h3>
+<p>🌿 <b>HERBIVORES</b> (herbívoros): comen <b>solo plantas</b> (grass, leaves, fruit, seeds).<br><small>🐄 cow, 🐴 horse, 🐰 rabbit, 🦒 giraffe, 🐘 elephant, 🐨 koala</small></p>
+<p>🥩 <b>CARNIVORES</b> (carnívoros): comen <b>carne</b> (otros animales). Tienen dientes y garras afilados para cazar.<br><small>🦁 lion, 🐯 tiger, 🐺 wolf, 🦅 eagle, 🦈 shark</small></p>
+<p>🍽️ <b>OMNIVORES</b> (omnívoros): comen <b>plantas y animales</b>.<br><small>🐷 pig, 🐻 brown bear, 🧑 human, 🦝 raccoon</small></p>
+<p>📌 <b>Truco:</b> <i>herb</i> = hierba · <i>carne</i> = carne · <i>omni</i> = todo.</p>`;
+
+/* ═══════════ MÓDULO 7 · HÁBITATS ═══════════ */
+const S_HABW={ // hábitats que seguro NO son para los animales de ese hábitat
+ 'forest':['desert','ocean','polar region','savanna'],
+ 'jungle':['desert','ocean','polar region','farm'],
+ 'desert':['ocean','polar region','jungle','farm'],
+ 'savanna':['ocean','polar region','farm','jungle'],
+ 'ocean':['desert','forest','savanna','farm'],
+ 'polar region':['desert','jungle','savanna','farm'],
+ 'mountains':['ocean','jungle','farm','savanna'],
+ 'farm':['desert','ocean','polar region','jungle'],
+ 'river or lake':['desert','polar region','ocean','savanna']
+};
+const S_HABS=Object.keys(S_HABW);
+const S_HABV={
+ 'forest':['forest','the forest','in the forest','woods','a forest'],
+ 'jungle':['jungle','the jungle','in the jungle','rainforest','rain forest','the rainforest','tropical rainforest','a jungle'],
+ 'desert':['desert','the desert','in the desert','a desert'],
+ 'savanna':['savanna','savannah','the savanna','the savannah','in the savanna','grassland','a savanna'],
+ 'ocean':['ocean','sea','the ocean','the sea','in the ocean','in the sea','an ocean'],
+ 'polar region':['polar region','polar regions','the polar regions','north pole','south pole','the north pole','the south pole','arctic','the arctic','antarctica','the antarctic','poles','polar','pole','a polar region'],
+ 'mountains':['mountains','mountain','the mountains','in the mountains','a mountain'],
+ 'farm':['farm','the farm','on the farm','a farm','on a farm'],
+ 'river or lake':['river','lake','pond','river or lake','a river','a lake','a pond','the river','the lake','the pond','fresh water','freshwater','water','in the water','in a river','in a lake','in a pond']
+};
+function buildHabitat(){
+  const T=[],W=[];
+  const withH=S_ANIM.filter(a=>a.hab);
+  const withHE=withH.filter(a=>a.em);
+  /* ¿dónde vive? */
+  sSample(withHE,16).forEach(a=>T.push(mcS(`Where does ${Aa(a)} live?\n${a.em}`,capF(a.hab),S_HABW[a.hab].map(capF),capF(a.n)+' lives in the '+a.hab+'.')));
+  /* ¿qué animal vive en…? */
+  S_HABS.forEach(h=>{
+    const good=sSample(withHE.filter(a=>a.hab===h),1)[0];
+    const bad=withHE.filter(a=>S_HABW[h].includes(a.hab));
+    T.push(qWhich(`Which animal lives ${h==='farm'?'on the farm':h==='river or lake'?'in a river or lake':h==='polar region'?'in the polar regions':'in the '+h}?`,good,bad,capF(good.n)+' lives in the '+h+'.'));
+  });
+  T.push(
+   mc('A habitat is…','the place where an animal lives',['the food an animal eats','the baby of an animal','the sound an animal makes'],'It gives food, water and shelter.'),
+   mc('Which habitat is very hot and dry, with sand and little water?','Desert',['Ocean','Jungle','Forest'],'Camels and scorpions live there.'),
+   mc('Which habitat is very cold, with ice and snow?','Polar region',['Desert','Savanna','Jungle'],'Polar bears and penguins live there.'),
+   mc('Which habitat is hot and rainy, with tall trees and lots of animals?','Jungle',['Desert','Polar region','Savanna'],'Monkeys, parrots and sloths live there.'),
+   mc('Which habitat is a big flat area of grass, with few trees and lions?','Savanna',['Jungle','Ocean','Forest'],'Lions, giraffes and zebras live there.'),
+   mc('Which habitat has salty water and is home to whales and sharks?','Ocean',['River or lake','Desert','Savanna'],'The ocean covers most of the Earth.'),
+   mc('Which habitat has fresh water that flows or stays still?','River or lake',['Ocean','Desert','Mountains'],'Ducks, hippos and trout live there.'),
+   mc('Which habitat is full of trees, with bears, deer and squirrels?','Forest',['Desert','Ocean','Polar region'],'Many animals live in the forest.'),
+   mc('Which habitat is high, with rocks and snow, and has llamas and snow leopards?','Mountains',['Ocean','Jungle','Farm'],'The mountains are cold and high.'),
+   mc('Where do people keep cows, pigs and hens?','On a farm',['In the desert','In the ocean','At the North Pole'],'Farm animals are looked after by farmers.'),
+   mc('Fish live in the water. Where do they get oxygen?','From the water, with their gills',['From the air with lungs','From the sand','From the sun'],'Gills take oxygen from water.'),
+   mc('Why do polar animals have thick fur, feathers or a layer of fat?','To keep warm in the cold',['To hide in the desert','To swim faster','To look beautiful'],'Polar bears have thick fur and a layer of fat.'),
+   mc('Which animal does NOT live in the water?','🐪 camel',['🐬 dolphin','🐙 octopus','🦀 crab'],'The camel lives in the desert.'),
+   mc('Which animal does NOT live in cold places?','🦒 giraffe',['🐧 penguin','🐻‍❄️ polar bear','🐆 snow leopard'],'The giraffe lives in the warm savanna.'),
+  );
+  /* escribir */
+  sSample(withHE,14).forEach(a=>W.push(tx(`✍️ Where does it live? (forest, jungle, desert, savanna, ocean, polar region, mountains, farm, river or lake)\n${lab(a)}`,S_HABV[a.hab],'loose')));
+  [['desert','Write ONE animal that lives in the DESERT.'],['ocean','Write ONE animal that lives in the OCEAN.'],['polar region','Write ONE animal that lives in the POLAR REGIONS.'],['savanna','Write ONE animal that lives in the SAVANNA.'],['jungle','Write ONE animal that lives in the JUNGLE.'],['farm','Write ONE animal that lives on the FARM.'],['forest','Write ONE animal that lives in the FOREST.'],['river or lake','Write ONE animal that lives in a RIVER or LAKE.']].forEach(([h,q])=>W.push(tx('✍️ '+q,namesOf(S_ANIM.filter(a=>a.hab===h)),'loose')));
+  W.push(
+   tx('✍️ Complete: A ___ is the place where an animal lives.',['habitat','a habitat'],'loose'),
+   tx('✍️ A very hot and dry habitat with sand is a ___.',S_HABV.desert,'loose'),
+   tx('✍️ A habitat with ice and snow, at the top or the bottom of the Earth, is a ___ region.',['polar','the polar'],'loose'),
+   tx('✍️ A habitat with grass and lions in Africa is the ___.',S_HABV.savanna,'loose'),
+   tx('✍️ A hot, rainy habitat with tall trees and monkeys is the ___.',S_HABV.jungle,'loose'),
+   tx('✍️ Fish, whales and sharks live in the ___.',S_HABV.ocean,'loose'),
+   tx('✍️ Escribe en inglés: hábitat',['habitat','a habitat'],'loose'),
+   tx('✍️ Escribe en inglés: selva',['jungle','the jungle','rainforest','rain forest'],'loose'),
+   tx('✍️ Escribe en inglés: desierto',['desert','a desert'],'loose'),
+   tx('✍️ Escribe en inglés: bosque',['forest','a forest','woods'],'loose'),
+   tx('✍️ Escribe en inglés: montaña',['mountain','a mountain','mountains'],'loose'),
+   tx('✍️ Escribe en inglés: granja',['farm','a farm'],'loose'),
+   tx('✍️ Escribe en inglés: sabana',['savanna','savannah','a savanna'],'loose'),
+   tx('✍️ Escribe en inglés: océano / mar',['ocean','sea','the ocean','the sea','an ocean'],'loose'),
+  );
+  ['habitat','desert','savanna','jungle','forest','ocean','mountains','farm'].forEach(w=>W.push(tx('🎧 Listen and write the word.',w==='savanna'?['savanna','savannah']:[w],'loose',{say:w,sayLang:EN})));
+  ['desert','jungle','forest','ocean','farm'].forEach(w=>W.push(tx('✍️ Unscramble the habitat:\n'+vowelsMix(w),[w],'loose')));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_HAB=`<h3>Habitats 🏞️</h3>
+<p>El <b>habitat</b> es el lugar donde vive un animal: allí encuentra comida, agua y refugio.</p>
+<p>🌲 <b>Forest</b>: muchos árboles. 🐻 brown bear, 🦌 deer, 🐿️ squirrel<br>🌴 <b>Jungle</b> (rainforest): calor, lluvia y árboles altísimos. 🐒 monkey, 🦜 parrot, 🦥 sloth<br>🏜️ <b>Desert</b>: muy caluroso y seco. 🐪 camel, 🦂 scorpion<br>🦁 <b>Savanna</b>: llanura de hierba con pocos árboles. 🦁 lion, 🦒 giraffe, 🦓 zebra<br>🌊 <b>Ocean</b>: agua salada. 🐬 dolphin, 🦈 shark, 🐙 octopus<br>🏞️ <b>River or lake</b>: agua dulce. 🦛 hippo, 🦆 duck, trout<br>❄️ <b>Polar regions</b>: hielo y frío. 🐻‍❄️ polar bear, 🐧 penguin<br>⛰️ <b>Mountains</b>: altas, con rocas y nieve. 🦙 llama, snow leopard<br>🚜 <b>Farm</b>: donde cuidan los animales. 🐄 cow, 🐷 pig, 🐔 hen</p>`;
+
+/* ═══════════ MÓDULO 8 · CÓMO SE MUEVEN Y CÓMO SON ═══════════ */
+const S_V3={fly:'flies',swim:'swims',run:'runs',hop:'hops',walk:'walks',climb:'climbs',crawl:'crawls',slither:'slithers',gallop:'gallops'};
+const S_MVW={ // verbos que seguro NO son para ese grupo
+ fly:['swim','slither','crawl','gallop'],swim:['fly','run','hop','climb'],run:['fly','swim','slither','crawl'],hop:['fly','slither','crawl','gallop'],
+ walk:['fly','slither','hop','crawl'],climb:['fly','slither','gallop','swim'],crawl:['fly','run','hop','gallop'],slither:['fly','hop','run','gallop']
+};
+const S_COVN={fur:'Fur or hair',feathers:'Feathers',scales:'Scales',skin:'Smooth, moist skin'};
+const S_COVW={fur:['fur','hair','fur or hair','its fur','their fur'],feathers:['feathers','feather','its feathers'],scales:['scales','scale','its scales'],skin:['moist skin','smooth skin','skin','smooth, moist skin','smooth moist skin','wet skin','moist','wet skin']};
+const covOf=a=>a.cls==='mammal'?'fur':a.cls==='bird'?'feathers':(a.cls==='reptile'||a.cls==='fish')?'scales':a.cls==='amphibian'?'skin':null;
+function buildMove(){
+  const T=[],W=[];
+  const mv=S_ANIM.filter(a=>a.mv&&a.n!=='penguin');
+  const mvE=mv.filter(a=>a.em);
+  /* ¿cómo se mueve? */
+  Object.keys(S_MVW).forEach(v=>{
+    sSample(mvE.filter(a=>a.mv===v),v==='swim'||v==='fly'||v==='walk'?3:2).forEach(a=>{
+      const wrong=S_MVW[v].map(x=>'It '+S_V3[x]);
+      T.push(mc(`How does ${Aa(a)} move?\n${a.em}`,'It '+S_V3[v],wrong.slice(0,3),capF(a.n)+' '+S_V3[v]+'.'));
+    });
+  });
+  /* ¿qué animal…? */
+  const grp=v=>mvE.filter(a=>a.mv===v);
+  [['fly','Which animal can fly?',['swim','slither','crawl','walk']],['swim','Which animal lives and swims in the water?',['fly']],['hop','Which animal hops?',['swim','crawl','slither','walk']],
+   ['run','Which animal runs very fast?',['crawl','slither','swim']],['climb','Which animal climbs trees?',['swim','walk']],['crawl','Which animal crawls slowly?',['fly','run']],['slither','Which animal slithers on the ground?',['fly','run','hop','swim'] ]]
+  .forEach(([v,q,badV])=>{
+    const g=sSample(grp(v),v==='slither'?1:2);
+    g.forEach(x=>{
+      const bad=mvE.filter(a=>badV.includes(a.mv)&&a.n!==x.n&&a.n!=='brown bear'&&a.n!=='squirrel');
+      if(bad.length>=3)T.push(qWhich(q,x,bad,capF(x.n)+' '+S_V3[v]+'.'));
+    });
+  });
+  T.push(
+   mc('Birds, bats and butterflies move through the…','air',['water','soil','snow'],'They fly.'),
+   mc('Fish, dolphins and whales move through the…','water',['air','desert sand','trees'],'They swim.'),
+   mc('Snakes, cows and horses move on…','land',['water only','air','clouds'],'They live on land.'),
+   mc('Which animal moves by slithering?','🐍 snake',['🐄 cow','🐰 rabbit','🦅 eagle'],'A snake has no legs.'),
+   mc('Which animal cannot fly, but runs very fast?','ostrich',['eagle','owl','parrot'],'The ostrich is the fastest bird on land.'),
+   mc('Which bird cannot fly but swims very well?','🐧 penguin',['🦅 eagle','🦉 owl','🦜 parrot'],'Penguins use their wings like flippers.'),
+   mc('Which mammal can fly?','🦇 bat',['🐶 dog','🐰 rabbit','🐒 monkey'],'A bat is the only mammal that really flies.'),
+  );
+  /* aspecto: ¿qué cubre su cuerpo? */
+  const looks=S_ANIM.filter(a=>a.em&&covOf(a)&&!['whale','dolphin','human','pig','sheep','elephant','hippo','rhino','turtle','shark','bat','camel','giraffe','zebra'].includes(a.n));
+  sSample(looks,12).forEach(a=>{
+    const c=covOf(a);
+    T.push(mc(`What covers the body of ${Aa(a)}?\n${a.em}`,S_COVN[c],Object.keys(S_COVN).filter(x=>x!==c).map(x=>S_COVN[x]),capF(a.n)+' is '+withArt(a.cls)+': '+S_COVN[c].toLowerCase()+'.'));
+  });
+  /* partes del cuerpo */
+  const P=(q,good,bad,ex)=>T.push(mc(q,good,bad,ex||''));
+  P('Which animal has a TRUNK?','🐘 elephant',['🐄 cow','🐴 horse','🦒 giraffe'],'The elephant uses its trunk to drink, smell and pick up food.');
+  P('Which animal has a very long NECK?','🦒 giraffe',['🐘 elephant','🐄 cow','🐴 horse'],'The giraffe eats leaves from tall trees.');
+  P('Which animal has a HUMP?','🐪 camel',['🐴 horse','🐄 cow','🐑 sheep'],'The camel lives in the desert.');
+  P('Which animal carries its baby in a POUCH?','🦘 kangaroo',['🐄 cow','🐶 dog','🐰 rabbit'],'A baby kangaroo is called a joey.');
+  P('Which animal has ANTLERS?','🦌 deer',['🐄 cow','🐶 dog','🐴 horse'],'Male deer have antlers.');
+  P('Which animal has a SHELL on its back?','🐢 turtle',['🐍 snake','🐸 frog','🦎 lizard'],'The shell protects the turtle.');
+  P('Which animal has a hard SHELL and leaves a slimy trail?','🐌 snail',['🪱 worm','🐛 caterpillar','🐜 ant'],'A snail carries its shell.');
+  P('Which animal has black and white STRIPES?','🦓 zebra',['🐴 horse','🐄 cow','🐑 sheep'],'Each zebra has different stripes.');
+  P('Which animal has WEBBED FEET for swimming?','🦆 duck',['🐱 cat','🐰 rabbit','🦅 eagle'],'Webbed feet are like paddles.');
+  P('Which animal has EIGHT legs?','🕷️ spider',['🐝 bee','🐜 ant','🦋 butterfly'],'Insects have 6 legs; spiders have 8.');
+  P('Which animal has SIX legs?','🐜 ant',['🕷️ spider','🐍 snake','🐶 dog'],'Ants are insects.');
+  P('Which reptile has NO legs?','🐍 snake',['🦎 lizard','🐊 crocodile','🐢 turtle'],'Snakes slither.');
+  P('Which invertebrate has two big CLAWS (pincers)?','🦀 crab',['🐌 snail','🪱 worm','🦋 butterfly'],'Crabs live near the sea.');
+  P('Which animal has EIGHT arms?','🐙 octopus',['🦀 crab','🐌 snail','🐝 bee'],'An octopus is an invertebrate.');
+  P('Which animal has a MANE (the males)?','🦁 lion',['🐱 cat','🐶 dog','🐻 brown bear'],'The male lion has a mane.');
+  P('Wings are used for…','flying',['swimming','digging','climbing'],'Birds, bats and butterflies have wings.');
+  P('Fins are used for…','swimming',['flying','running','climbing'],'Fish have fins.');
+  P('Gills are used for…','breathing underwater',['flying','eating','hearing'],'Fish breathe with gills.');
+  P('A bird’s beak is used for…','picking up and eating food',['swimming','hearing','running'],'Different birds have different beaks.');
+  P('A giraffe’s long neck helps it to…','reach leaves on tall trees',['swim fast','dig holes','fly'],'It eats the highest leaves.');
+  P('A kangaroo’s strong back legs help it to…','hop',['swim','fly','slither'],'Kangaroos hop very far.');
+  P('A snake’s long body without legs helps it to…','slither',['hop','fly','gallop'],'Snakes slither on the ground.');
+  /* escribir */
+  sSample(mvE.filter(a=>a.mv!=='walk'),14).forEach(a=>W.push(tx(`✍️ How does it move? (write the verb: fly, swim, run, hop, climb, crawl, slither…)\n${lab(a)}`,[a.mv,S_V3[a.mv],'it '+S_V3[a.mv],'it '+a.mv+'s'],'loose')));
+  sSample(looks,10).forEach(a=>W.push(tx(`✍️ What covers its body? (fur, feathers, scales or moist skin)\n${lab(a)}`,S_COVW[covOf(a)],'loose')));
+  [['eagle','air'],['bat','air'],['butterfly','air'],['shark','water'],['dolphin','water'],['goldfish','water'],['cow','land'],['snake','land'],['zebra','land'],['kangaroo','land']].forEach(([n,e])=>{
+    const a=S_ANIM.find(x=>x.n===n);
+    const ok={air:['air','in the air','the air','through the air'],water:['water','in the water','the water','through the water'],land:['land','on land','the land','on the ground','ground','on the land']}[e];
+    W.push(tx(`✍️ Land, water or air? Where does it move?\n${lab(a)}`,ok,'loose'));
+  });
+  W.push(
+   tx('✍️ Complete: A snake ___ on the ground.',['slithers','slither','slithers along'],'loose'),
+   tx('✍️ Complete: A fish ___ in the water.',['swims','swim'],'loose'),
+   tx('✍️ Complete: A kangaroo ___ very far.',['hops','hop','jumps','jump'],'loose'),
+   tx('✍️ Complete: A snail ___ slowly.',['crawls','crawl'],'loose'),
+   tx('✍️ Complete: A cheetah ___ very fast.',['runs','run'],'loose'),
+   tx('✍️ Complete: A monkey ___ trees.',['climbs','climb'],'loose'),
+   tx('✍️ Complete: Birds use their ___ to fly.',['wings','wing'],'loose'),
+   tx('✍️ Complete: Fish use their ___ to swim.',['fins','fin'],'loose'),
+   tx('✍️ Complete: An elephant has a long ___.',['trunk','a trunk','nose'],'loose'),
+   tx('✍️ Complete: A camel has a ___ on its back.',['hump','a hump','humps'],'loose'),
+   tx('✍️ Complete: A kangaroo carries its baby in a ___.',['pouch','a pouch'],'loose'),
+   tx('✍️ Complete: A turtle has a hard ___ on its back.',['shell','a shell'],'loose'),
+   tx('✍️ Complete: A spider has ___ legs.',['8','eight'],'loose'),
+   tx('✍️ Complete: A zebra has black and white ___.',['stripes','stripe'],'loose'),
+   tx('✍️ Complete: A deer has ___ on its head.',['antlers','horns','antler'],'loose'),
+   tx('✍️ Riddle! I have a very long neck and brown spots. I live in the savanna. Who am I?',V('giraffe'),'loose'),
+   tx('✍️ Riddle! I have a trunk and big ears. Who am I?',V('elephant'),'loose'),
+   tx('✍️ Riddle! I hop and carry my baby in a pouch. Who am I?',V('kangaroo'),'loose'),
+   tx('✍️ Riddle! I have a hump and I live in the desert. Who am I?',V('camel'),'loose'),
+   tx('✍️ Riddle! I have eight legs and I make a web. Who am I?',V('spider'),'loose'),
+   tx('✍️ Riddle! I have black and white stripes. I look like a horse. Who am I?',V('zebra'),'loose'),
+   tx('✍️ Escribe en inglés: ala',['wing','a wing','wings'],'loose'),
+   tx('✍️ Escribe en inglés: aleta',['fin','a fin','fins'],'loose'),
+   tx('✍️ Escribe en inglés: pico (de un ave)',['beak','a beak','bill'],'loose'),
+   tx('✍️ Escribe en inglés: plumas',['feathers','feather'],'loose'),
+   tx('✍️ Escribe en inglés: escamas',['scales','scale'],'loose'),
+   tx('✍️ Escribe en inglés: cola',['tail','a tail'],'loose'),
+   tx('✍️ Escribe en inglés: caparazón',['shell','a shell'],'loose'),
+   tx('✍️ Escribe en inglés: trompa (de elefante)',['trunk','a trunk'],'loose'),
+  );
+  ['wings','feathers','fins','scales','beak','tail','shell','slither','crawl'].forEach(w=>W.push(tx('🎧 Listen and write the word.',[w],'loose',{say:w,sayLang:EN})));
+  [['feathers','Birds have them.'],['scales','Fish and reptiles.'],['slither','A snake does it.'],['crawl','A snail does it.']].forEach(([w,h])=>W.push(tx('✍️ Unscramble the word:\n'+vowelsMix(w),[w],'loose',{hint:h})));
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_MOVE=`<h3>How animals move and what they look like 🦘</h3>
+<p>🚶 <b>How they move:</b><br>🦅 <b>fly</b> (volar: wings) · 🐟 <b>swim</b> (nadar: fins) · 🐆 <b>run</b> (correr) · 🦘 <b>hop</b> (saltar) · 🐄 <b>walk</b> (caminar) · 🐒 <b>climb</b> (trepar) · 🐌 <b>crawl</b> (arrastrarse) · 🐍 <b>slither</b> (reptar sin patas)<br>🏞️ Por <b>air</b> (aire), <b>water</b> (agua) o <b>land</b> (tierra).</p>
+<p>🪶 <b>What covers their body:</b><br>🐕 mammals: <b>fur / hair</b> · 🦅 birds: <b>feathers</b> · 🐍🐟 reptiles y fish: <b>scales</b> (reptiles secas, peces mojadas) · 🐸 amphibians: <b>smooth, moist skin</b> · 🐢 turtle / 🐌 snail: <b>shell</b></p>
+<p>🔍 <b>Body parts:</b> <b>wings</b> (alas) · <b>beak</b> (pico) · <b>fins</b> (aletas) · <b>gills</b> (branquias) · <b>tail</b> (cola) · <b>claws</b> (garras) · <b>trunk</b> (trompa) · <b>hump</b> (joroba) · <b>pouch</b> (bolsa) · <b>antlers</b> (cuernos del ciervo) · <b>mane</b> (melena) · <b>stripes</b> (rayas) · <b>webbed feet</b> (patas con membranas)</p>
+<p>🦵 Insects: <b>6 legs</b> · Spiders: <b>8 legs</b> · Octopus: <b>8 arms</b> · Snakes: <b>no legs</b></p>`;
+
+/* ═══════════ MÓDULO 9 · DETECTIVES DE ANIMALES (todo junto) ═══════════ */
+function buildMix(){
+  const T=[],W=[];
+  const full=S_ANIM.filter(a=>a.em&&a.cls!=='invertebrate'&&a.born&&a.diet&&a.hab&&CLS5.includes(a.cls));
+  const BP={o:'It is born from an egg',v:'It is born alive from its mother'};
+  const desc=(a,over)=>{const x=Object.assign({cls:a.cls,born:a.born,diet:a.diet,hab:a.hab},over||{});return `${capF(withArt(x.cls))} that is ${x.born==='o'?'oviparous':'viviparous'}, eats ${x.diet==='herbivore'?'only plants':x.diet==='carnivore'?'meat':'plants and animals'} and lives in the ${x.hab}`;};
+  /* ¿qué descripción es de este animal? */
+  sSample(full,8).forEach(a=>{
+    const wrong=[];
+    const alt=(k)=>{
+      if(k==='cls'){const c=CLS5.filter(x=>x!==a.cls&&!(x==='mammal'&&a.born==='v')&&!(x!=='mammal'&&a.born==='o'));return {cls:sSample(c.length?c:CLS5.filter(x=>x!==a.cls),1)[0]};}
+      if(k==='diet')return {diet:sSample(S_DIETS.filter(x=>x!==a.diet),1)[0]};
+      if(k==='hab')return {hab:sSample(S_HABW[a.hab],1)[0]};
+      if(k==='born')return {born:a.born==='o'?'v':'o'};
+    };
+    ['diet','hab','born'].forEach(k=>wrong.push(desc(a,alt(k))));
+    T.push(mc(`Which description matches ${Aa(a)}? ${a.em}`,desc(a),wrong,capF(a.n)+': '+desc(a)+'.'));
+  });
+  /* adivinanzas largas */
+  T.push(
+   mc('I am a mammal. I eat only plants. I live in the savanna. I have a very long neck. Who am I?','🦒 giraffe',['🦁 lion','🐘 elephant','🐪 camel'],'A giraffe is a herbivorous mammal of the savanna.'),
+   mc('I am a mammal. I live in the sea. I breathe air and I am not a fish. I eat fish. Who am I?','🐬 dolphin',['🦈 shark','🐙 octopus','🐟 tuna'],'A dolphin is a carnivorous mammal.'),
+   mc('I am a bird. I cannot fly but I swim very well. I live in the polar regions. Who am I?','🐧 penguin',['🦅 eagle','🦜 parrot','🦆 duck'],'The penguin is a carnivorous bird.'),
+   mc('I am a reptile. I have no legs. I slither and I eat meat. Who am I?','🐍 snake',['🦎 lizard','🐢 turtle','🐸 frog'],'A snake is a carnivorous reptile.'),
+   mc('I am an amphibian. I was a tadpole. I hop. Who am I?','🐸 frog',['🐍 snake','🐊 crocodile','🐟 fish'],'Egg → tadpole → frog.'),
+   mc('I am a fish. I have fins and gills. I live in the ocean, I have sharp teeth and I eat other animals. Who am I?','🦈 shark',['🐬 dolphin','🐋 whale','🐙 octopus'],'A shark is a carnivorous fish.'),
+   mc('I am an invertebrate. I have eight legs and I eat insects. Who am I?','🕷️ spider',['🐝 bee','🐜 ant','🦋 butterfly'],'Spiders are not insects.'),
+   mc('I am an invertebrate with six legs and wings. I am born from an egg and I was a caterpillar. Who am I?','🦋 butterfly',['🕷️ spider','🐌 snail','🪱 worm'],'Egg → caterpillar → chrysalis → butterfly.'),
+   mc('I am a mammal with thick fur. I live in the polar regions and I eat meat. Who am I?','🐻‍❄️ polar bear',['🐧 penguin','🐻 brown bear','🦁 lion'],'The polar bear is a carnivorous mammal.'),
+   mc('I am a mammal. I have a hump and I live in the desert. I eat only plants. Who am I?','🐪 camel',['🦁 lion','🐘 elephant','🦒 giraffe'],'A camel is a herbivore of the desert.'),
+   mc('I am a mammal. I carry my baby in a pouch and I hop. Who am I?','🦘 kangaroo',['🐰 rabbit','🐨 koala','🐒 monkey'],'The baby is a joey.'),
+   mc('I am a bird with feathers. I live on the farm and I lay eggs. My babies are chicks. Who am I?','🐔 hen',['🦆 duck','🦅 eagle','🦜 parrot'],'Egg → chick → hen.'),
+  );
+  /* quién es el intruso en un mini-grupo */
+  T.push(
+   mc('Which one is an INVERTEBRATE?','🦋 butterfly',['🐟 fish','🐸 frog','🐍 snake'],'No backbone.'),
+   mc('Which one is a vertebrate, oviparous and has feathers?','Bird',['Mammal','Reptile','Fish'],'Birds.'),
+   mc('Which animal is a herbivore AND a mammal AND lives on a farm?','🐄 cow',['🦁 lion','🐍 snake','🦅 eagle'],'Cow: herbivore, mammal, farm.'),
+   mc('Which animal is an omnivore AND a mammal?','🐷 pig',['🐄 cow','🦁 lion','🦅 eagle'],'Pig: omnivore, mammal.'),
+   mc('Which animal is a carnivore AND lives in the ocean AND is a fish?','🦈 shark',['🐬 dolphin','🐙 octopus','🐠 clownfish'],'Shark: carnivore, fish, ocean.'),
+  );
+  /* ficha de animal: 4 datos en una respuesta */
+  const card=(a)=>{
+    const hb=S_HABV[a.hab].slice(0,3);
+    return tx(`✍️ ANIMAL CARD ${a.em} ${a.n}\nWrite 4 words: group, oviparous or viviparous, diet, and habitat.\n(example: reptile, oviparous, carnivore, jungle)`,`${a.cls}, ${a.born==='o'?'oviparous':'viviparous'}, ${a.diet}, ${a.hab}`,'keys',{keys:[[a.cls],[a.born==='o'?'oviparous':'viviparous'],[a.diet],S_HABV[a.hab].filter(x=>!/^(a|an|the|in|on) /.test(x))]});
+  };
+  sSample(full,8).forEach(a=>W.push(card(a)));
+  /* escribir: quién soy */
+  [
+   ['I am a mammal. I eat only plants. I live in the savanna. I have a very long neck.','giraffe'],
+   ['I am a mammal. I live in the sea and I breathe air. I am not a fish. I am small and very playful.','dolphin'],
+   ['I am a bird. I cannot fly but I swim. I live in the polar regions.','penguin'],
+   ['I am a reptile. I have no legs and I slither.','snake'],
+   ['I am an amphibian. I was a tadpole and now I hop. I have smooth, moist skin.','frog'],
+   ['I am an invertebrate with eight legs. I make a web. I am not an insect.','spider'],
+   ['I am a mammal with a trunk. I eat only plants.','elephant'],
+   ['I am a mammal. I carry my baby in a pouch and I hop.','kangaroo'],
+   ['I am a big carnivore mammal. The male has a mane. I live in the savanna.','lion'],
+   ['I am an invertebrate with eight arms and I live in the ocean.','octopus'],
+  ].forEach(([r,n])=>W.push(tx('✍️ Who am I?\n'+r,n==='frog'?[...V('frog'),...V('toad')]:n==='dolphin'?[...V('dolphin'),...V('porpoise')]:V(n),'loose')));
+  W.push(
+   tx('✍️ A dog has fur, drinks its mother’s milk and is born alive. What group is it?',V('mammal'),'loose'),
+   tx('✍️ A hen has feathers, a beak and lays eggs. What group is it?',V('bird'),'loose'),
+   tx('✍️ A salmon has scales, fins and gills. What group is it?',V('fish'),'loose'),
+   tx('✍️ A crocodile has dry scaly skin and lays eggs on land. What group is it?',V('reptile'),'loose'),
+   tx('✍️ A toad has moist skin and starts life in the water. What group is it?',V('amphibian'),'loose'),
+   tx('✍️ A bee has six legs and no backbone. Is it a vertebrate or an invertebrate?',V('invertebrate'),'loose'),
+   tx('✍️ A lion eats only meat. Is it a herbivore, a carnivore or an omnivore?',V('carnivore'),'loose'),
+   tx('✍️ A cow lives on a farm and eats only grass. Is it a herbivore, a carnivore or an omnivore?',V('herbivore'),'loose'),
+   tx('✍️ Is a whale oviparous or viviparous?',VC('viviparous'),'loose'),
+   tx('✍️ Is an eagle oviparous or viviparous?',VC('oviparous'),'loose'),
+   tx('✍️ Name the 3 vital functions.','nutrition, interaction, reproduction','keys',{keys:[['nutrition'],['interaction','relation'],['reproduction']]}),
+   tx('✍️ Name the 5 groups of vertebrates.','mammals, birds, reptiles, amphibians, fish','keys',{keys:[['mammal'],['bird'],['reptile'],['amphibian'],['fish']]}),
+   tx('✍️ Name the 3 types of animals according to what they eat.','herbivores, carnivores, omnivores','keys',{keys:[['herbivore'],['carnivore'],['omnivore']]}),
+   tx('✍️ Name the 2 ways animals are born.','oviparous, viviparous','keys',{keys:[['oviparous'],['viviparous']]}),
+  );
+  return {T:sDedupe(T),W:sDedupe(W)};
+}
+const SCI_LEARN_MIX=`<h3>Animal detectives 🕵️</h3>
+<p>Ahora lo juntamos todo. Para cada animal, pregúntate:</p>
+<p>🦴 ¿Tiene <b>backbone</b>? → <b>vertebrate</b> / <b>invertebrate</b><br>🐕🦅🐍🐸🐟 ¿Qué grupo es? → <b>mammal, bird, reptile, amphibian, fish</b><br>🥚 ¿Cómo nace? → <b>oviparous</b> (huevo) / <b>viviparous</b> (vivo)<br>🍽️ ¿Qué come? → <b>herbivore, carnivore, omnivore</b><br>🏞️ ¿Dónde vive? → su <b>habitat</b><br>🚶 ¿Cómo se mueve? → <b>fly, swim, run, hop, crawl, slither…</b><br>🪶 ¿Qué cubre su cuerpo? → <b>fur, feathers, scales, moist skin</b></p>
+<p>🦁 <b>Ejemplo:</b> a lion is a <b>mammal</b>, <b>viviparous</b>, a <b>carnivore</b>, and it lives in the <b>savanna</b>.</p>`;
+
+/* ═══════════ EL PACK ═══════════ */
+const SCI_B={
+ method:buildMethod(),vital:buildVital(),living:buildLiving(),vert:buildVert(),born:buildBorn(),
+ diet:buildDiet(),hab:buildHabitat(),move:buildMove(),mix:buildMix()
+};
+Object.values(SCI_B).forEach(b=>[...b.T,...b.W].forEach(q=>{if(q.t==='mc')q._u=q.ans;}));
+const SCI1={
+  id:'sci1', subject:'Science', ct:'1er Cycle Test', date:'2026-10-27',
+  note:'Hecho con el temario del calendario y los objetivos de la unidad: pasos del método científico, las 3 funciones vitales, animales y plantas, vertebrados/invertebrados, los 5 grupos de vertebrados y clasificar animales por cómo nacen, qué comen, dónde viven, cómo se mueven y su aspecto. Si en su libro los pasos del método científico tienen otros nombres, dímelo y lo ajusto.',
+  modules:[
+  { id:'s_method', nm:'The scientific method', em:'🔬', color:'#16A34A', learn:SCI_LEARN_METHOD, test:SCI_B.method.T, write:SCI_B.method.W },
+  { id:'s_vital', nm:'The 3 vital functions', em:'🌱', color:'#22C55E', learn:SCI_LEARN_VITAL, test:SCI_B.vital.T, write:SCI_B.vital.W },
+  { id:'s_living', nm:'Animals, plants & backbones', em:'🦴', color:'#0EA5E9', learn:SCI_LEARN_LIVING, test:SCI_B.living.T, write:SCI_B.living.W },
+  { id:'s_vert', nm:'The 5 vertebrate groups', em:'🐸', color:'#7C3AED', learn:SCI_LEARN_VERT, test:SCI_B.vert.T, write:SCI_B.vert.W },
+  { id:'s_born', nm:'How animals are born', em:'🥚', color:'#F59E0B', learn:SCI_LEARN_BORN, test:SCI_B.born.T, write:SCI_B.born.W },
+  { id:'s_diet', nm:'What animals eat', em:'🍽️', color:'#EF4444', learn:SCI_LEARN_DIET, test:SCI_B.diet.T, write:SCI_B.diet.W },
+  { id:'s_hab', nm:'Habitats', em:'🏞️', color:'#14B8A6', learn:SCI_LEARN_HAB, test:SCI_B.hab.T, write:SCI_B.hab.W },
+  { id:'s_move', nm:'Movement & body', em:'🦘', color:'#EC4899', learn:SCI_LEARN_MOVE, test:SCI_B.move.T, write:SCI_B.move.W },
+  { id:'s_mix', nm:'Animal detectives', em:'🕵️', color:'#6366F1', learn:SCI_LEARN_MIX, test:SCI_B.mix.T, write:SCI_B.mix.W },
+  ]
+};
+if(typeof module!=='undefined') module.exports.SCI1=SCI1;
+
 /* ═══════════ CALENDARIO (del Excel «SC – Calendario Cycle Test 2026-2027») ═══════════ */
 const SUBJ={Lengua:{em:'📚',col:'#7C3AED'},'Inglés':{em:'🇬🇧',col:'#DC2626'},'Matemáticas':{em:'🔢',col:'#0EA5E9'},Science:{em:'🔬',col:'#16A34A'},Sociales:{em:'🌍',col:'#CA8A04'}};
 const CAL=[
  {d:'2026-10-06',s:'Lengua',n:'1º Cycle Test',pack:'len1',topics:'Comprensión lectora · Ortografía: mayúsculas y sonido K · Vocabulario: sinónimos y antónimos · Gramática: oraciones, palabras, sonidos y letras · Ordenar alfabéticamente'},
  {d:'2026-10-13',s:'Inglés',n:'1º CT (post-puente)',pack:'eng1',topics:'Unit 1 · Spelling: help, feed, protect, hug, carry, take care of, have a shower, homework, have breakfast, have dinner · Grammar: does/doesn’t, before/after, always/usually/sometimes/never · Reading comprehension'},
  {d:'2026-10-20',s:'Matemáticas',n:'1º CT',pack:'mat1',topics:'Conteo 0–1.000 (de 1 en 1, 5 en 5, 10 en 10, 100 en 100) · Sumas y restas con recta numérica · Tablas del 2, 4 y 5 · Movimientos cardinales · Pares e impares · Ábaco'},
- {d:'2026-10-27',s:'Science',n:'1º CT',topics:'Unit 1: Scientific method steps · Unit 2: 3 vital functions, animal characteristics, vertebrates (5 types)'},
+ {d:'2026-10-27',s:'Science',n:'1º CT',pack:'sci1',topics:'Unit 1: Scientific method steps · Unit 2: the 3 vital functions (nutrition, interaction, reproduction), animals and plants, vertebrates and invertebrates, the 5 vertebrate groups, and animal characteristics (how they are born, what they eat, habitat, how they move, what they look like)'},
  {d:'2026-11-04',s:'Sociales',n:'1º CT',note:'Se hará el miércoles 4'},
  {d:'2026-11-11',s:'Lengua',n:'2º CT',note:'Se hará el miércoles 11'},
  {d:'2026-11-17',s:'Inglés',n:'2º CT'},
@@ -1422,7 +2433,7 @@ const CAL=[
  {d:'2027-05-31',s:'Inglés',n:'Evaluación 3ª',ev:3},
  {d:'2027-06-01',s:'Matemáticas',n:'Evaluación 3ª',ev:3},
 ];
-const PACKS={len1:LEN1,eng1:ENG1,mat1:MAT1};
+const PACKS={len1:LEN1,eng1:ENG1,mat1:MAT1,sci1:SCI1};
 const allMods=()=>Object.values(PACKS).flatMap(p=>p.modules);
 const modOf=id=>allMods().find(m=>m.id===id);
 const packOfMod=id=>Object.values(PACKS).find(p=>p.modules.some(m=>m.id===id));
@@ -1658,7 +2669,7 @@ function getMission(kid,pack,testDate){
 if(typeof module!=='undefined') module.exports={viewTest,isOpen,opensOnDate,checkTx,genAlphaWords,buildSession,buildSimulacro};
 
 /* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
-const APP_VERSION='2026-10-17-a';
+const APP_VERSION='2026-10-25-a';
 const LS_KEY='ct_v1';
 const DEF_SHOP=[
  {id:'r1',em:'🍦',nm:'Un helado',cost:150},
