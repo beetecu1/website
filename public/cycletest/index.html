@@ -2669,7 +2669,7 @@ function getMission(kid,pack,testDate){
 if(typeof module!=='undefined') module.exports={viewTest,isOpen,opensOnDate,checkTx,genAlphaWords,buildSession,buildSimulacro};
 
 /* ═══════════ ESTADO Y ALMACENAMIENTO ═══════════ */
-const APP_VERSION='2026-10-25-a';
+const APP_VERSION='2026-10-26-a';
 const LS_KEY='ct_v1';
 const DEF_SHOP=[
  {id:'r1',em:'🍦',nm:'Un helado',cost:150},
@@ -2775,7 +2775,8 @@ function showHome(){
       const isSim=t==='sim',m=isSim?null:modOf(t),d=!!ms.done[t];
       return `<div class="task ${d?'done':''}" onclick="${isSim?'startSim()':`openMod('${t}')`}"><div class="ck">${d?'✓':''}</div><div style="flex:1">${isSim?'🏆 Simulacro del Cycle Test':m.em+' '+m.nm}</div><span class="small">${d?'¡hecho!':'Jugar ▸'}</span></div>`;
     }).join('');
-    missionHtml=`<div class="card"><h2>🎯 Misión de hoy <span class="small">(${doneN}/${ms.tasks.length})</span></h2>${tasks}<div class="small" style="margin-top:10px">${ms.awarded?'✅ Misión cumplida · +40 ⭐ ganadas':'Completa la misión y gana <b>+40 ⭐</b> extra'}</div></div>`;
+    const nMod=ms.tasks.filter(t=>t!=='sim').length,moreHint=nMod<pack.modules.length?`<div class="small" style="margin:2px 0 8px">Hoy te toca practicar <b>${nMod} de los ${pack.modules.length} temas</b>. Los demás están abajo, en «Todos los temas» ⬇️</div>`:'';
+    missionHtml=`<div class="card"><h2>🎯 Misión de hoy <span class="small">(${doneN}/${ms.tasks.length})</span></h2>${moreHint}${tasks}<div class="small" style="margin-top:10px">${ms.awarded?'✅ Misión cumplida · +40 ⭐ ganadas':'Completa la misión y gana <b>+40 ⭐</b> extra'}</div></div>`;
   }
   const mods=pack.modules.map(m=>{
     const ma=modMastery(k,m.id);
