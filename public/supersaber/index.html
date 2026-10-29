@@ -117,6 +117,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .lv-card.u-sci:active{transform:scale(.98)}
 .lv-card.done-sci{border-left-color:#0891B2}
 .lv-badge-sci{background:#0891B2}
+.hm-cole{border-top-color:#DB2777}
+.lv-card.u-cole{border-left-color:#DB2777;cursor:pointer;transition:transform .12s}
+.lv-card.u-cole:active{transform:scale(.98)}
+.lv-card.done-cole{border-left-color:#DB2777}
+.lv-badge-cole{background:#DB2777}
+.cole-box{border-radius:12px;padding:12px 14px;font-size:15px;line-height:1.7;width:100%;box-sizing:border-box}
+.cole-links{display:flex;gap:8px;flex-wrap:wrap;width:100%}
+.hm-plan{border-top-color:#F59E0B}
+.plan-day{background:#fff;border-radius:16px;box-shadow:var(--sh);padding:12px;margin-bottom:12px;border:3px solid transparent}
+.plan-day.today{border-color:#F59E0B}
+.plan-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-top:1px solid #F3F4F6}
+.plan-chk{flex:none;width:38px;height:38px;border-radius:10px;border:2px solid #D1D5DB;background:#fff;font-size:20px;cursor:pointer}
+.plan-chk.on{background:#DCFCE7;border-color:#16A34A}
+.plan-go{flex:none;border:none;border-radius:10px;background:#7C3AED;color:#fff;font-weight:800;font-size:13px;padding:8px 10px;cursor:pointer}
 /* SEPARAR EN SÍLABAS */
 .syl-word{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 0;width:100%;margin:6px 0 2px;min-height:56px}
 .syl-l{min-width:32px;height:52px;padding:0 4px;border:2px solid #C4B5FD;border-radius:10px;font-size:28px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#4C1D95;font-family:inherit;margin:0 1px}
@@ -468,7 +482,8 @@ const ACHS = [
   {id:'vocab_done',  em:'📜', nm:'Máster de Palabras',   ds:'Supera todos los niveles de Vocabulario y Palabras'},
   {id:'geoloc_done', em:'🗺️', nm:'Gran Geógrafo',        ds:'Supera todos los niveles de Mi Tierra'},
   {id:'memoria_done',em:'🐘', nm:'Memoria de Elefante',  ds:'Supera todos los niveles de Memoria y Atención'},
-  {id:'sci_done',    em:'🥼', nm:'Young Scientist',      ds:'Complete every level of Science (English)'}
+  {id:'sci_done',    em:'🥼', nm:'Young Scientist',      ds:'Complete every level of Science (English)'},
+  {id:'cole_done',   em:'🎒', nm:'Alumno Estrella',      ds:'Completa todas las Misiones del Cole'}
 ];
 
 const SHOP_ITEMS = [
@@ -597,6 +612,81 @@ const GEOLOC_LVS=[
   {id:2,nm:'Castilla-La Mancha',    em:'🌾',df:2,ds:'Las 5 provincias y sus curiosidades',      tp:'geoloc',p:{cat:'clm'}},
   {id:3,nm:'España de norte a sur', em:'🇪🇸',df:3,ds:'Montañas, ríos y comunidades de España',  tp:'geoloc',p:{cat:'spain'}},
   {id:4,nm:'¡Gran Geógrafo! ✨',    em:'🏆',df:4,ds:'El reto final con todo el mapa',           tp:'geoloc',p:{cat:'all'}}
+];
+const COLE_LVS=[
+  {"id":1,"nm":"Français 🇫🇷","em":"🥐","df":2,"ds":"Palabras, un chiste, sopa de letras, sudoku y una encrucijada","tp":"cole","p":{"s":"fr"},"free":true},
+  {"id":2,"nm":"Deutsch 🇩🇪","em":"🥨","df":2,"ds":"Hallo! Chistes, sopa de letras, sudoku y puertas misteriosas","tp":"cole","p":{"s":"de"},"free":true},
+  {"id":3,"nm":"Our World 🌍 (Sociales)","em":"🗺️","df":3,"ds":"Mapas, ríos y brújulas: ¡con chistes, sopa y sudoku!","tp":"cole","p":{"s":"soc"},"free":true},
+  {"id":4,"nm":"English Lab 🇬🇧","em":"🎬","df":3,"ds":"Riddles, jokes, word search, sudoku and a thief to catch","tp":"cole","p":{"s":"en"},"free":true},
+  {"id":5,"nm":"Mates con ingenio 🧮","em":"🧩","df":3,"ds":"Acertijos, chistes, sopa de letras, sudoku y números secretos","tp":"cole","p":{"s":"mat"},"free":true}
+];
+/* Misiones del Cole: Francés, Alemán, Our World, Inglés, Mates. Retos cortos.
+   k: quiz | chiste | sopa | sudoku | investiga | escribe | pinta   (tag:"🚦 Encrucijada" = quiz de lógica) */
+const coleQ=[
+  {"s":"fr","k":"quiz","em":"👋","q":"¿Qué significa «Bonjour»?","opts":["Hola / buenos días","Gracias","Adiós","Perdón"],"ans":"Hola / buenos días","fact":"¡Literalmente «buen día»!","say":"Bonjour"},
+  {"s":"fr","k":"quiz","em":"🙏","q":"«Merci» significa…","opts":["Gracias","Por favor","Lo siento","Adiós"],"ans":"Gracias","fact":"«Merci beaucoup» = muchas gracias.","say":"Merci beaucoup"},
+  {"s":"fr","k":"chiste","em":"🐟","q":"¿Por qué a los peces no les gusta jugar al tenis?","a":"¡Porque tienen miedo de la red! 🎾","x":"En francés «le filet» es la red (y también el filete 😄)."},
+  {"s":"fr","k":"quiz","em":"7️⃣","q":"¿Qué número es «sept»?","opts":["6","7","8","10"],"ans":"7","fact":"Un, deux, trois, quatre, cinq, six, sept…","say":"sept"},
+  {"s":"fr","k":"sopa","em":"🔍","nm":"Mots français","size":7,"words":["CHAT","CHIEN","PAIN","ROUGE","SEPT"],"placements":[{"w":"CHIEN","r":2,"c":0,"dir":"h"},{"w":"ROUGE","r":0,"c":2,"dir":"h"},{"w":"CHAT","r":6,"c":3,"dir":"h"},{"w":"PAIN","r":5,"c":3,"dir":"h"},{"w":"SEPT","r":4,"c":3,"dir":"h"}]},
+  {"s":"fr","k":"quiz","em":"🐶","q":"«Le chien» es…","opts":["El perro","El gato","El pájaro","El pez"],"ans":"El perro","fact":"Le chat = gato · l'oiseau = pájaro · le poisson = pez.","say":"le chien"},
+  {"s":"fr","k":"quiz","em":"🚦","q":"Dos guardianes: uno siempre MIENTE y otro siempre dice la VERDAD. Solo puedes hacer UNA pregunta para saber el camino bueno. ¿Cuál eliges?","opts":["«¿Qué camino me diría tu compañero que es el bueno?» y voy por el otro","«¿Eres el que miente?»","«¿Cuál es tu camino favorito?»","Echo a suertes"],"ans":"«¿Qué camino me diría tu compañero que es el bueno?» y voy por el otro","fact":"El que miente te señalaría el camino malo y el sincero te dirá lo que diría el mentiroso: ¡siempre te señalan el camino malo! Vas por el contrario.","tag":"🚦 Encrucijada"},
+  {"s":"fr","k":"investiga","em":"🎵","prompt":"Busca «Frère Jacques» en YouTube. Escribe 3 palabras que oigas.","yt":"Frère Jacques chanson enfants","tip":"Pista: «dormez-vous» ≈ ¿duermes?","fact":"«Frère Jacques» = Hermano Jacobo. «Dormez-vous?» = ¿Duermes?"},
+  {"s":"fr","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[0,0,0,2],[0,2,4,0],[0,1,2,3],[2,3,0,0]],"sol":[[1,4,3,2],[3,2,4,1],[4,1,2,3],[2,3,1,4]]},
+  {"s":"fr","k":"pinta","em":"🇫🇷","prompt":"Pinta la bandera de Francia: azul, blanco y rojo (bleu, blanc, rouge).","tip":"Tres franjas verticales."},
+  {"s":"fr","k":"quiz","em":"🌙","q":"Antes de dormir dices…","opts":["Bonne nuit","Bonne chance","Bon appétit","Bonne journée"],"ans":"Bonne nuit","fact":"Bon appétit = buen provecho · bonne chance = buena suerte.","say":"Bonne nuit"},
+  {"s":"fr","k":"escribe","em":"✍️","prompt":"Preséntate: «Je m'appelle … et j'ai … ans.»","tip":"8 = huit · 9 = neuf"},
+  {"s":"de","k":"quiz","em":"👋","q":"«Hallo» significa…","opts":["Hola","Gracias","Adiós","Por favor"],"ans":"Hola","fact":"En alemán los nombres de cosas llevan mayúscula: der Hund, das Haus.","say":"Hallo"},
+  {"s":"de","k":"quiz","em":"🙏","q":"«Danke» significa…","opts":["Gracias","Por favor","Hola","Perdón"],"ans":"Gracias","fact":"«Bitte» = por favor y también de nada.","say":"Danke"},
+  {"s":"de","k":"chiste","em":"👻","q":"¿Por qué los fantasmas mienten tan mal?","a":"¡Porque se les ve a través! 👀","x":"En alemán «durchschauen» = ver a través… ¡y también calar a alguien!"},
+  {"s":"de","k":"quiz","em":"6️⃣","q":"¿Qué número es «sechs»?","opts":["5","6","7","8"],"ans":"6","fact":"sieben 7 · acht 8 · neun 9 · zehn 10.","say":"sechs"},
+  {"s":"de","k":"sopa","em":"🔍","nm":"Wörter","size":7,"words":["HUND","KATZE","APFEL","HAUS","ROT"],"placements":[{"w":"KATZE","r":6,"c":0,"dir":"h"},{"w":"APFEL","r":2,"c":0,"dir":"h"},{"w":"HUND","r":0,"c":1,"dir":"h"},{"w":"HAUS","r":1,"c":1,"dir":"h"},{"w":"ROT","r":5,"c":3,"dir":"h"}]},
+  {"s":"de","k":"quiz","em":"🐱","q":"«Die Katze» es…","opts":["El gato","El pájaro","El caballo","El pez"],"ans":"El gato","fact":"Der Hund = perro · das Pferd = caballo · der Fisch = pez.","say":"die Katze"},
+  {"s":"de","k":"quiz","em":"🚪","q":"3 puertas y UN tesoro. P1: «El tesoro está aquí». P2: «El tesoro NO está aquí». P3: «El tesoro NO está en la P1». Solo UNA frase es verdad. ¿Dónde está?","opts":["Puerta 2","Puerta 1","Puerta 3","En ninguna"],"ans":"Puerta 2","fact":"Si estuviera en la 1 o en la 3, habría dos frases verdaderas. Solo con la 2 hay una única verdad.","tag":"🚦 Encrucijada"},
+  {"s":"de","k":"chiste","em":"🥬","q":"Was ist grün und klopft an die Tür?","a":"¡Ein Klopfsalat! 🥬🚪","x":"«klopfen» = llamar a la puerta y «Kopfsalat» = lechuga. ¡Suenan casi igual!"},
+  {"s":"de","k":"investiga","em":"🔢","prompt":"Busca los números del 1 al 10 en alemán en YouTube. Apunta del 6 al 10.","yt":"números en alemán del 1 al 10 para niños","tip":"Pista: «sieben» ≈ seven.","fact":"6 sechs · 7 sieben · 8 acht · 9 neun · 10 zehn."},
+  {"s":"de","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[3,4,0,0],[0,1,0,0],[1,0,2,0],[4,0,3,1]],"sol":[[3,4,1,2],[2,1,4,3],[1,3,2,4],[4,2,3,1]]},
+  {"s":"de","k":"quiz","em":"🍎","q":"«Der Apfel» es una…","opts":["Manzana","Pera","Naranja","Uva"],"ans":"Manzana","fact":"Die Banane = plátano · die Traube = uva.","say":"der Apfel"},
+  {"s":"de","k":"pinta","em":"🇩🇪","prompt":"Pinta la bandera de Alemania: negro, rojo y dorado (schwarz, rot, gold).","tip":"Tres franjas horizontales."},
+  {"s":"de","k":"escribe","em":"✍️","prompt":"Preséntate: «Hallo! Ich heiße … und ich bin … Jahre alt.»","tip":"8 = acht · 9 = neun"},
+  {"s":"soc","k":"quiz","em":"🏔️","q":"Un río empieza en su…","opts":["Nacimiento (source)","Desembocadura (mouth)","Afluente","Meandro"],"ans":"Nacimiento (source)","fact":"Y acaba en la desembocadura (mouth), en el mar o en otro río."},
+  {"s":"soc","k":"quiz","em":"🧭","q":"El Sol sale por el…","opts":["Este (East)","Oeste (West)","Norte (North)","Sur (South)"],"ans":"Este (East)","fact":"Sale por el Este y se pone por el Oeste."},
+  {"s":"soc","k":"chiste","em":"🌊","q":"What did the ocean say to the beach?","a":"Nothing, it just waved! 👋","x":"«To wave» = saludar con la mano… ¡y también hacer olas!"},
+  {"s":"soc","k":"quiz","em":"🧲","q":"La aguja de una brújula señala siempre al…","opts":["Norte (North)","Sur (South)","Este (East)","Oeste (West)"],"ans":"Norte (North)","fact":"La Tierra funciona como un gran imán."},
+  {"s":"soc","k":"sopa","em":"🔍","nm":"Our World","size":7,"words":["RIO","MAR","ISLA","NORTE","VALLE"],"placements":[{"w":"NORTE","r":6,"c":1,"dir":"h"},{"w":"VALLE","r":2,"c":0,"dir":"h"},{"w":"ISLA","r":3,"c":3,"dir":"h"},{"w":"RIO","r":1,"c":4,"dir":"h"},{"w":"MAR","r":1,"c":1,"dir":"h"}]},
+  {"s":"soc","k":"quiz","em":"🏝️","q":"Tierra rodeada de agua por todas partes menos por una:","opts":["Península","Isla","Cabo","Golfo"],"ans":"Península","fact":"España y Portugal forman la Península Ibérica."},
+  {"s":"soc","k":"quiz","em":"🧭","q":"Sales de casa 3 calles al Norte, giras 2 calles al Este y luego 3 calles al Sur. ¿Dónde estás respecto a tu casa?","opts":["2 calles al Este","2 calles al Oeste","3 calles al Norte","En casa"],"ans":"2 calles al Este","fact":"Norte 3 y Sur 3 se cancelan. Solo queda el Este: 2 calles.","tag":"🚦 Encrucijada"},
+  {"s":"soc","k":"investiga","em":"💧","prompt":"Busca el ciclo del agua en YouTube. Cuenta los pasos de una gota con tus palabras.","yt":"ciclo del agua para niños","tip":"Pista: evaporación → condensación → …","fact":"El Sol evapora el agua, se forman nubes (condensación), llueve o nieva (precipitación) y vuelve a ríos y mar."},
+  {"s":"soc","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[0,4,0,0],[1,2,0,0],[4,0,0,2],[2,1,0,3]],"sol":[[3,4,2,1],[1,2,3,4],[4,3,1,2],[2,1,4,3]]},
+  {"s":"soc","k":"pinta","em":"🗺️","prompt":"Dibuja el mapa del tesoro de tu casa con rosa de los vientos (N, S, E, O) y una X.","tip":"Añade una leyenda con 3 símbolos."},
+  {"s":"soc","k":"chiste","em":"🤿","q":"¿Cómo se llama el campeón japonés de buceo?","a":"¡Tokofondo! 🇯🇵","x":"Y el subcampeón: Kasitoko. 😄"},
+  {"s":"soc","k":"quiz","em":"🌍","q":"¿Cuál es el continente más grande?","opts":["Asia","África","América","Europa"],"ans":"Asia","fact":"Ocupa casi un tercio de toda la tierra firme."},
+  {"s":"soc","k":"escribe","em":"🏞️","prompt":"Eres una gota de lluvia. Cuenta tu viaje de la montaña al mar.","tip":"Usa: nacimiento, afluente, valle, desembocadura."},
+  {"s":"en","k":"quiz","em":"🎹","q":"Riddle: I have keys but no locks. I have a space but no room. You can enter, but can't go outside. What am I?","opts":["A keyboard","A house","A piano","A map"],"ans":"A keyboard","fact":"Keys, space bar, enter… Smart thinking!","say":"I have keys but no locks. I have a space but no room. You can enter, but you can't go outside. What am I?"},
+  {"s":"en","k":"quiz","em":"🐭","q":"One mouse, two ___ .","opts":["mice","mouses","mices","mouse"],"ans":"mice","fact":"child → children · foot → feet · tooth → teeth.","say":"one mouse, two mice"},
+  {"s":"en","k":"chiste","em":"🔢","q":"Why was six afraid of seven?","a":"Because seven ate nine! 😱","x":"«Ate» suena como «eight»: 7, 8 (ate), 9."},
+  {"s":"en","k":"quiz","em":"🗣️","q":"Choose the correct sentence.","opts":["She likes pizza.","She like pizza.","She liking pizza.","She are like pizza."],"ans":"She likes pizza.","fact":"He / she / it + -s: he plays, she likes.","say":"She likes pizza."},
+  {"s":"en","k":"sopa","em":"🔍","nm":"English words","size":7,"words":["BOOK","MOUSE","GREEN","TREE","SUN"],"placements":[{"w":"MOUSE","r":5,"c":1,"dir":"h"},{"w":"GREEN","r":4,"c":2,"dir":"h"},{"w":"BOOK","r":0,"c":3,"dir":"v"},{"w":"TREE","r":6,"c":2,"dir":"h"},{"w":"SUN","r":3,"c":0,"dir":"h"}]},
+  {"s":"en","k":"quiz","em":"👂","q":"Which word sounds like «sea»?","opts":["see","say","sew","sun"],"ans":"see","fact":"Same sound, different spelling = homophones (two / too / to).","say":"see"},
+  {"s":"en","k":"quiz","em":"🕵️","q":"Tom says «It wasn't me». Sam says «It was Tom». Kim says «It wasn't me». Only ONE tells the truth. Who is the thief?","opts":["Kim","Tom","Sam","Nobody"],"ans":"Kim","fact":"If Kim is the thief, only Tom tells the truth. With Tom or Sam as thief, two would be telling the truth.","tag":"🚦 Encrucijada"},
+  {"s":"en","k":"investiga","em":"🎶","prompt":"Watch «Super Simple Songs» on YouTube. Write 5 words you hear.","yt":"Super Simple Songs","tip":"Tip: repeated words are the key words.","fact":"Repeated words are usually the key words of the song!"},
+  {"s":"en","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[3,1,0,4],[0,0,1,0],[4,0,0,1],[1,0,4,0]],"sol":[[3,1,2,4],[2,4,1,3],[4,2,3,1],[1,3,4,2]]},
+  {"s":"en","k":"quiz","em":"☔","q":"«It's raining cats and dogs» means…","opts":["It's raining very hard","Cats are falling","It's sunny","It's snowing"],"ans":"It's raining very hard","fact":"It's an idiom!","say":"It's raining cats and dogs"},
+  {"s":"en","k":"pinta","em":"👾","prompt":"Paint a crazy monster and label 6 parts: «three green eyes»…","tip":"Number + colour + body part."},
+  {"s":"en","k":"chiste","em":"🧸","q":"What do you call a bear with no teeth?","a":"A gummy bear! 🍬","x":"«Gummy» = sin dientes… ¡y también de goma!"},
+  {"s":"en","k":"escribe","em":"🎤","prompt":"Invent a tongue twister with your name. (Try: «She sells seashells».)","tip":"Same first sound = fun!"},
+  {"s":"mat","k":"quiz","em":"🎒","q":"3 bolsas con 4 canicas cada una; regalo 5. ¿Cuántas me quedan?","opts":["7","9","12","17"],"ans":"7","fact":"3 × 4 = 12 y 12 − 5 = 7."},
+  {"s":"mat","k":"quiz","em":"🐑","q":"17 ovejas: se escapan todas menos 9. ¿Cuántas quedan?","opts":["9","8","17","26"],"ans":"9","fact":"«Todas menos 9» = se quedan 9. ¡Lee con cuidado!"},
+  {"s":"mat","k":"chiste","em":"0️⃣","q":"¿Qué le dice un 0 a un 8?","a":"¡Bonito cinturón! 🥋","x":"El 8 es como un 0 con cinturón en el medio."},
+  {"s":"mat","k":"quiz","em":"🪞","q":"¿Cuál es el doble de la mitad de 14?","opts":["14","7","28","21"],"ans":"14","fact":"Mitad: 7. Doble de 7: 14. ¡Vuelves al principio!"},
+  {"s":"mat","k":"sopa","em":"🔍","nm":"Palabras de mates","size":7,"words":["SUMA","RESTA","PAR","DOBLE","MITAD"],"placements":[{"w":"RESTA","r":2,"c":2,"dir":"v"},{"w":"DOBLE","r":2,"c":0,"dir":"v"},{"w":"MITAD","r":1,"c":1,"dir":"v"},{"w":"SUMA","r":0,"c":6,"dir":"v"},{"w":"PAR","r":5,"c":3,"dir":"h"}]},
+  {"s":"mat","k":"quiz","em":"🔲","q":"Un cuadrado de 6 cm de lado: ¿cuánto mide su perímetro?","opts":["24 cm","12 cm","36 cm","18 cm"],"ans":"24 cm","fact":"4 lados × 6 cm = 24 cm."},
+  {"s":"mat","k":"quiz","em":"🔢","q":"Número secreto: mayor que 20, menor que 30, impar y sus cifras suman 7. ¿Cuál es?","opts":["25","23","27","29"],"ans":"25","fact":"Impares entre 20 y 30: 21, 23, 25, 27, 29. Solo 2 + 5 = 7.","tag":"🚦 Encrucijada"},
+  {"s":"mat","k":"investiga","em":"🏛️","prompt":"Busca números romanos en YouTube. Escribe tu año de nacimiento en romanos.","yt":"números romanos para niños","tip":"Pista: M = 1000.","fact":"I=1 · V=5 · X=10 · L=50 · C=100 · M=1000. Ej.: 2018 = MMXVIII."},
+  {"s":"mat","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[0,0,2,3],[0,2,0,0],[1,4,0,2],[0,0,1,0]],"sol":[[4,1,2,3],[3,2,4,1],[1,4,3,2],[2,3,1,4]]},
+  {"s":"mat","k":"quiz","em":"🔢","q":"3, 6, 12, 24… ¿qué número sigue?","opts":["48","30","36","27"],"ans":"48","fact":"Cada número es el doble del anterior."},
+  {"s":"mat","k":"pinta","em":"🦋","prompt":"Pinta una mariposa simétrica: copia un ala como si fuera su reflejo.","tip":"El eje de simetría es la línea del medio."},
+  {"s":"mat","k":"chiste","em":"📕","q":"¿Por qué el libro de mates está triste?","a":"¡Porque tiene muchos problemas! 😅","x":"Los libros de mates están llenos de problemas."},
+  {"s":"mat","k":"escribe","em":"🍦","prompt":"Inventa un problema con una heladería y escribe la solución.","tip":"Usa una multiplicación."}
 ];
 const MEMORIA_LVS=[
   {id:1,nm:'Parejas fáciles',      em:'🃏',df:2,ds:'Encuentra las parejas iguales (4 parejas)',        tp:'pairs', p:{pairs:4,rounds:3}},
@@ -3807,7 +3897,7 @@ const ATTN_PAIRS=[['🟢','🟩'],['🔵','🟦'],['🔴','🟥'],['🟡','🟨'
 ══════════════════════════════════════ */
 function blankT(){ return {unlocked:1,done:{}}; }
 function blankWeak(){ return {comp:{},ana:{},err:{},dict:{},geo:{},logic:{},calc:{},prob:{},lect:{},grp:{},seq:{},curio:{},frac:{},med:{},sinan:{},tippal:{},analog:{},matrix:{},cien:{},acent:{},detect:{},cross:{},explora:{},creative:{},vocab:{},geoloc:{},genus:{},syl:{},sylc:{},sci:{}}; }
-function blankP(n,e){ return {name:n,emoji:e,math:blankT(),lang:blankT(),logic:blankT(),curio:blankT(),cien:blankT(),detect:blankT(),explora:blankT(),creative:blankT(),vocab:blankT(),geoloc:blankT(),memoria:blankT(),sci:blankT(),coins:0,earned:0,maxStreak:0,hadPerfect:false,achievements:[],avatars:[e],weak:blankWeak(),creativeLog:[]}; }
+function blankP(n,e){ return {name:n,emoji:e,math:blankT(),lang:blankT(),logic:blankT(),curio:blankT(),cien:blankT(),detect:blankT(),explora:blankT(),creative:blankT(),vocab:blankT(),geoloc:blankT(),memoria:blankT(),sci:blankT(),cole:blankT(),coins:0,earned:0,maxStreak:0,hadPerfect:false,achievements:[],avatars:[e],weak:blankWeak(),creativeLog:[]}; }
 
 function loadProfiles(){
   try{
@@ -3833,6 +3923,7 @@ function loadProfiles(){
         if(!d[id].geoloc)d[id].geoloc={unlocked:1,done:{}};
         if(!d[id].memoria)d[id].memoria={unlocked:1,done:{}};
         if(!d[id].sci)d[id].sci={unlocked:1,done:{}};
+        if(!d[id].cole)d[id].cole={unlocked:1,done:{}};
         if(!d[id].creativeLog)d[id].creativeLog=[];
       });
       return d;
@@ -3854,6 +3945,7 @@ function loadProfiles(){
         if(!d[id].geoloc)d[id].geoloc={unlocked:1,done:{}};
         if(!d[id].memoria)d[id].memoria={unlocked:1,done:{}};
         if(!d[id].sci)d[id].sci={unlocked:1,done:{}};
+        if(!d[id].cole)d[id].cole={unlocked:1,done:{}};
         if(!d[id].creativeLog)d[id].creativeLog=[];
       });
       return d;
@@ -4045,6 +4137,7 @@ function totalStars(p){
   if(p.geoloc) for(const v of Object.values(p.geoloc.done)) t+=v;
   if(p.memoria) for(const v of Object.values(p.memoria.done)) t+=v;
   if(p.sci) for(const v of Object.values(p.sci.done)) t+=v;
+  if(p.cole) for(const v of Object.values(p.cole.done)) t+=v;
   return t;
 }
 
@@ -4064,7 +4157,8 @@ function checkAchs(){
   const glD=Object.values(p.geoloc?.done||{});
   const mrD=Object.values(p.memoria?.done||{});
   const scD=Object.values(p.sci?.done||{});
-  const aD=[...mD,...lD,...lgD,...cD,...ciD,...dtD,...exD,...crD,...voD,...glD,...mrD,...scD];
+  const coD=Object.values(p.cole?.done||{});
+  const aD=[...mD,...lD,...lgD,...cD,...ciD,...dtD,...exD,...crD,...voD,...glD,...mrD,...scD,...coD];
   const cond={
     first_pass:  ()=>aD.length>=1,
     perfect_10:  ()=>p.hadPerfect,
@@ -4089,6 +4183,7 @@ function checkAchs(){
     geoloc_done: ()=>glD.length>=GEOLOC_LVS.length,
     memoria_done:()=>mrD.length>=MEMORIA_LVS.length,
     sci_done:    ()=>scD.length>=SCI_LVS.length,
+    cole_done:   ()=>coD.length>=COLE_LVS.length,
     master:      ()=>mD.length>=MATH_LVS.length&&lD.length>=LANG_LVS.length&&lgD.length>=LOGIC_LVS.length&&cD.length>=CURIO_LVS.length&&ciD.length>=CIENCIA_LVS.length&&dtD.length>=DETECT_LVS.length&&exD.length>=EXPLORA_LVS.length&&crD.length>=CREATIVE_LVS.length&&voD.length>=VOCAB_LVS.length&&glD.length>=GEOLOC_LVS.length&&mrD.length>=MEMORIA_LVS.length&&scD.length>=SCI_LVS.length
   };
   const news=[];
@@ -4292,9 +4387,9 @@ function relTime(ts){
   const d=Math.floor((Date.now()-ts)/864e5);
   if(d===0)return'Hoy';if(d===1)return'Ayer';return`Hace ${d} días`;
 }
-function trkArr(t){return {math:MATH_LVS,lang:LANG_LVS,logic:LOGIC_LVS,curio:CURIO_LVS,cien:CIENCIA_LVS,detect:DETECT_LVS,explora:EXPLORA_LVS,creative:CREATIVE_LVS,vocab:VOCAB_LVS,geoloc:GEOLOC_LVS,memoria:MEMORIA_LVS,sci:SCI_LVS}[t]||CURIO_LVS;}
-function trackEmoji(t){return{sci:'🥼',math:'🔢',lang:'📝',logic:'🧠',curio:'🔭',cien:'🔬',detect:'🕵️',explora:'🌍',creative:'🎨',vocab:'📜',geoloc:'🗺️',memoria:'🧩'}[t]||'📚';}
-function trackName(t){return{sci:'Science (English)',math:'Matemáticas',lang:'Lengua',logic:'Lógica',curio:'Curiosidad',cien:'Ciencias',detect:'Detective de Textos',explora:'Explorador Naturalista',creative:'Taller Creativo',vocab:'Vocabulario y Palabras',geoloc:'Mi Tierra',memoria:'Memoria y Atención'}[t]||t;}
+function trkArr(t){return {math:MATH_LVS,lang:LANG_LVS,logic:LOGIC_LVS,curio:CURIO_LVS,cien:CIENCIA_LVS,detect:DETECT_LVS,explora:EXPLORA_LVS,creative:CREATIVE_LVS,vocab:VOCAB_LVS,geoloc:GEOLOC_LVS,memoria:MEMORIA_LVS,sci:SCI_LVS,cole:COLE_LVS}[t]||CURIO_LVS;}
+function trackEmoji(t){return{cole:'🎒',sci:'🥼',math:'🔢',lang:'📝',logic:'🧠',curio:'🔭',cien:'🔬',detect:'🕵️',explora:'🌍',creative:'🎨',vocab:'📜',geoloc:'🗺️',memoria:'🧩'}[t]||'📚';}
+function trackName(t){return{cole:'Misiones del Cole',sci:'Science (English)',math:'Matemáticas',lang:'Lengua',logic:'Lógica',curio:'Curiosidad',cien:'Ciencias',detect:'Detective de Textos',explora:'Explorador Naturalista',creative:'Taller Creativo',vocab:'Vocabulario y Palabras',geoloc:'Mi Tierra',memoria:'Memoria y Atención'}[t]||t;}
 function lvName(track,id){
   const arr=trkArr(track);
   return(arr.find(l=>l.id===id)||{nm:'?'}).nm;
@@ -4315,6 +4410,8 @@ function go(s){
   else if(s==='geoloc') showTrack('geoloc');
   else if(s==='memoria')showTrack('memoria');
   else if(s==='sci')   showTrack('sci');
+  else if(s==='cole')  showTrack('cole');
+  else if(s==='plan')  showPlan();
   else if(s==='team')  showTeam();
   else if(s==='shop')  showShop();
   else if(s==='tro')   showTrophies();
@@ -4584,6 +4681,7 @@ function showHome(){
   const glD=Object.keys(p.geoloc?.done||{}).length;
   const mrD=Object.keys(p.memoria?.done||{}).length;
   const scD=Object.keys(p.sci?.done||{}).length;
+  const coD=Object.keys(p.cole?.done||{}).length;
   const wk=totalWeak(p);
   const mySessions=getHistory().filter(x=>x.pid===ST.pid).length;
   render(`
@@ -4595,11 +4693,21 @@ function showHome(){
         <div class="av-stats">
           <div class="stat-chip">⭐ ${totalStars(p)} estrellas</div>
           <div class="stat-chip">🏅 ${achN} logros</div>
-          <div class="stat-chip">📚 ${mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD+scD}/${MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length+SCI_LVS.length} niveles</div>
+          <div class="stat-chip">📚 ${mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD+scD+coD}/${MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length+SCI_LVS.length+COLE_LVS.length} niveles</div>
         </div>
         ${wk>0?`<div style="margin-top:8px"><span class="repaso-tag">💪 ${wk} ítem${wk>1?'s':''} guardado${wk>1?'s':''} para repasar</span></div>`:''}
       </div>
       <div class="hm-grid">
+        <button class="hm-btn hm-cole" onclick="showTrack('cole')" style="grid-column:1/-1">
+          <div class="hm-em">🎒</div>
+          <div class="hm-nm">Misiones del Cole: Francés · Alemán · Our World · Inglés · Mates</div>
+          <div class="hm-su">${coD}/${COLE_LVS.length} misiones · ¡investiga, escribe y pinta!</div>
+        </button>
+        <button class="hm-btn hm-plan" onclick="showPlan()" style="grid-column:1/-1">
+          <div class="hm-em">📅</div>
+          <div class="hm-nm">Plan de Aventuras de la semana</div>
+          <div class="hm-su">${planCounts().done}/${planCounts().total} actividades hechas · ¡pinta, escribe e investiga!</div>
+        </button>
         <button class="hm-btn hm-math" onclick="showTrack('math')">
           <div class="hm-em">🔢</div>
           <div class="hm-nm">Matemáticas</div>
@@ -4699,9 +4807,9 @@ function showTrack(track){
   const lvs=trkArr(track);
   const maxLvs=lvs.length;
   const td=P()[track]||(P()[track]={unlocked:1,done:{}});
-  const titles={math:'Matemáticas 🔢',lang:'Lengua 📝',logic:'Lógica 🧠',curio:'Curiosidad 🔭',cien:'Ciencias 🔬',detect:'Detective de Textos 🕵️',explora:'Explorador Naturalista 🌍',creative:'Taller Creativo 🎨',vocab:'Vocabulario y Palabras 📜',geoloc:'Mi Tierra 🗺️',memoria:'Memoria y Atención 🧩',sci:'Science 🥼'};
+  const titles={math:'Matemáticas 🔢',lang:'Lengua 📝',logic:'Lógica 🧠',curio:'Curiosidad 🔭',cien:'Ciencias 🔬',detect:'Detective de Textos 🕵️',explora:'Explorador Naturalista 🌍',creative:'Taller Creativo 🎨',vocab:'Vocabulario y Palabras 📜',geoloc:'Mi Tierra 🗺️',memoria:'Memoria y Atención 🧩',sci:'Science 🥼',cole:'Misiones del Cole 🎒'};
   const title=titles[track];
-  const badgeCls=track==='lang'?'lv-badge-g':track==='logic'?'lv-badge-logic':track==='cien'?'lv-badge-cien':track==='detect'?'lv-badge-detect':track==='explora'?'lv-badge-explora':track==='creative'?'lv-badge-creative':track==='vocab'?'lv-badge-vocab':track==='geoloc'?'lv-badge-geoloc':track==='memoria'?'lv-badge-memoria':track==='sci'?'lv-badge-sci':'lv-badge-curio';
+  const badgeCls=track==='lang'?'lv-badge-g':track==='logic'?'lv-badge-logic':track==='cien'?'lv-badge-cien':track==='detect'?'lv-badge-detect':track==='explora'?'lv-badge-explora':track==='creative'?'lv-badge-creative':track==='vocab'?'lv-badge-vocab':track==='geoloc'?'lv-badge-geoloc':track==='memoria'?'lv-badge-memoria':track==='sci'?'lv-badge-sci':track==='cole'?'lv-badge-cole':'lv-badge-curio';
   const doneN=Object.keys(td.done).length;
 
   const cards=lvs.map(lv=>{
@@ -4995,6 +5103,9 @@ function startLv(track,id){
     const all=sylcQ.filter(x=>lv.p.cats.includes(x.cat));
     const pool=smartPool('sylc',all,x=>x.k,x=>x.k);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderSylc();
+  } else if(lv.tp==='cole'){
+    const pool=coleQ.filter(x=>x.s===lv.p.s).map(x=>({...x}));
+    ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[],sopaState:null,sudState:null,nextRender:renderCole}; renderCole();
   } else if(lv.tp==='sci'){
     const all=lv.p.cat==='all'?sciQ:sciQ.filter(x=>x.cat===lv.p.cat);
     const pool=smartPool('sci',all,x=>x.q,x=>x.ans);
@@ -5790,7 +5901,7 @@ function renderSopa(){
     return `<div class="sopa-cell ${fCls} ${isSel?'sel':''}" onclick="tapSopa(${cell.r},${cell.c})">${cell.letter}</div>`;
   }).join('')).join('');
   const wordList=s.words.map(w=>`<div class="word-chip ${s.foundWords.has(w)?'done':''}">${w}</div>`).join('');
-  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'logic',`Nivel ${gs.lvId}`)}
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,gs.track==='cole'?'cole':'logic',`${gs.track==='cole'?'Reto '+(gs.idx+1)+'/'+gs.total:'Nivel '+gs.lvId}`)}
   <div class="gw" style="overflow-y:auto">
     ${progRow()}
     <div class="qc" style="gap:10px;flex:none;padding:14px 12px">
@@ -5824,7 +5935,7 @@ function tapSopa(r,c){
         gs.coinsThis+=coins;
         gs.maxStreak=Math.max(gs.maxStreak,gs.streak);
         renderSopa();
-        setTimeout(()=>{gs.lock=false;nextOrEnd(renderSopa);},1200);
+        setTimeout(()=>{gs.lock=false;nextOrEnd(gs.nextRender||renderSopa);},1200);
         return;
       }
     }
@@ -5860,7 +5971,7 @@ function renderSudoku(){
       cells.push(`<div class="${cls.trim()}"${fn}>${val||''}</div>`);
     }
   }
-  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,'logic',`Nivel ${gs.lvId}`)}
+  render(`${hdr(`${gs.lv.em} ${gs.lv.nm}`,gs.track==='cole'?'cole':'logic',`${gs.track==='cole'?'Reto '+(gs.idx+1)+'/'+gs.total:'Nivel '+gs.lvId}`)}
   <div class="gw">
     ${progRow()}
     <div class="qc" style="gap:12px">
@@ -5899,7 +6010,7 @@ function numSdk(n){
       gs.coinsThis+=coins;
       gs.maxStreak=Math.max(gs.maxStreak,gs.streak);
       renderSudoku();
-      setTimeout(()=>{gs.lock=false;nextOrEnd(renderSudoku);},1000);
+      setTimeout(()=>{gs.lock=false;nextOrEnd(gs.nextRender||renderSudoku);},1000);
       return;
     }
     renderSudoku();
@@ -6186,6 +6297,226 @@ function ansSci(idx){
 }
 
 /* ══════════════════════════════════════
+   GAME: MISIONES DEL COLE (Francés, Alemán, Our World, Inglés, Mates)
+   Retos mezclados: quiz, escribir, investigar (YouTube) y pintar
+══════════════════════════════════════ */
+const COLE_LANG={fr:'fr-FR',de:'de-DE',en:'en-GB',soc:'es-ES',mat:'es-ES'};
+const COLE_TAG={quiz:'🧩 Pregunta',escribe:'✍️ Reto de escritura',investiga:'🔎 Misión de investigación',pinta:'🎨 Reto para pintar',chiste:'😂 Chiste del día'};
+const COLE_STY={escribe:['#FFF7ED','#EA580C'],investiga:['#EFF6FF','#2563EB'],pinta:['#FDF4FF','#A21CAF']};
+function speakCole(){
+  const gs=ST.gs, item=gs&&gs.probs&&gs.probs[gs.idx];
+  if(!item||!item.say||!window.speechSynthesis)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(item.say);
+  u.lang=COLE_LANG[item.s]||'es-ES';u.rate=.85;
+  speechSynthesis.speak(u);
+}
+function renderCole(){
+  const gs=ST.gs, item=gs.probs[gs.idx];
+  // Sopas de letras y sudokus reutilizan los juegos de Lógica
+  if(item.k==='sopa'){ renderSopa(); return; }
+  if(item.k==='sudoku'){ renderSudoku(); return; }
+  const head=hdr(`${gs.lv.em} ${gs.lv.nm}`,'cole',`Reto ${gs.idx+1}/${gs.total}`);
+  const say=item.say?'<button class="btn btn-gh" style="padding:6px 14px;font-size:14px" onclick="speakCole()">🔊 Escuchar</button>':'';
+  if(item.k==='quiz'){
+    const opts=gs.curOpts=shuffle([...item.opts]);
+    const long=Math.max(...opts.map(o=>o.length))>26;
+    render(`${head}
+    <div class="gw">
+      ${progRow()}
+      <div class="qc" style="gap:12px">
+        <div class="ql">${item.tag||COLE_TAG.quiz}</div>
+        <div style="font-size:46px">${item.em}</div>
+        <div class="qt" style="font-size:17px;line-height:1.5">${item.q}</div>
+        ${say}
+        <div class="opts"${long?' style="grid-template-columns:1fr"':''}>${opts.map((o,i)=>`<button class="opt" onclick="ansCole(${i})" style="font-size:14px;text-align:left;padding:10px 12px;min-height:46px">${o}</button>`).join('')}</div>
+      </div>
+    </div>`);
+    return;
+  }
+  if(item.k==='chiste'){
+    const shown=gs.jokeIdx===gs.idx;
+    render(`${head}
+    <div class="gw" style="overflow-y:auto">
+      ${progRow()}
+      <div class="qc" style="gap:14px;flex:none;padding:16px 14px">
+        <div class="ql">${COLE_TAG.chiste}</div>
+        <div style="font-size:56px">${item.em}</div>
+        <div class="qt" style="font-size:18px;line-height:1.5">${item.q}</div>
+        ${shown
+          ?`<div class="cole-box" style="background:#FEFCE8;border-left:4px solid #EAB308;font-weight:800;font-size:17px">${item.a}</div>
+            <div style="font-size:12px;color:var(--mu)">💡 ${item.x}</div>
+            <button class="btn btn-gr btn-bl" onclick="nextJoke()">😂 ¡Siguiente reto!</button>`
+          :`<button class="btn btn-gr btn-bl" onclick="showJoke()">🤔 ¡Dime la respuesta!</button>`}
+      </div>
+    </div>`);
+    return;
+  }
+  const [bg,bd]=COLE_STY[item.k]||COLE_STY.escribe;
+  let links='';
+  if(item.k==='investiga'){
+    const q=encodeURIComponent(item.yt);
+    links=`<div class="cole-links"><a class="curio-link curio-link-yt" href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener">▶️ Buscar vídeos en YouTube</a><a class="curio-link" href="https://www.google.com/search?q=${q}" target="_blank" rel="noopener">🔍 Buscar en internet</a></div>`;
+  }
+  const writing=item.k!=='pinta';
+  const box=writing
+    ?`<textarea id="cole-ta" rows="4" placeholder="${item.k==='investiga'?'Escribe aquí lo que has descubierto…':'Escribe aquí…'}" style="width:100%;box-sizing:border-box;border:2px solid #E5E7EB;border-radius:12px;padding:10px;font-size:14px;font-family:inherit;resize:vertical"></textarea>`
+    :`<div style="font-size:13px;color:var(--mu);width:100%">📸 Cuando termines, ¡enséñaselo a mamá o a papá!</div><input id="cole-ta" type="text" placeholder="Ponle un título a tu obra (opcional)" style="width:100%;box-sizing:border-box;border:2px solid #E5E7EB;border-radius:12px;padding:10px;font-size:14px;font-family:inherit">`;
+  const btn=item.k==='pinta'?'🎨 ¡Ya lo he pintado!':item.k==='investiga'?'✅ ¡He investigado!':'✅ ¡He terminado!';
+  render(`${head}
+  <div class="gw" style="overflow-y:auto">
+    ${progRow()}
+    <div class="qc" style="gap:12px;align-items:flex-start;flex:none;padding:16px 14px">
+      <div class="ql" style="align-self:center">${item.em} ${COLE_TAG[item.k]}</div>
+      <div class="cole-box" style="background:${bg};border-left:4px solid ${bd}">${item.prompt}</div>
+      ${links}
+      <div style="font-size:12px;color:var(--mu);width:100%">💡 ${item.tip}</div>
+      ${box}
+      <button class="btn btn-gr btn-bl" onclick="doneCole()">${btn}</button>
+    </div>
+  </div>`);
+}
+function showJoke(){
+  const gs=ST.gs; if(!gs||gs.lock)return;
+  gs.jokeIdx=gs.idx; renderCole();
+}
+function nextJoke(){
+  const gs=ST.gs; if(!gs||gs.lock)return;
+  gs.lock=true;
+  onCorrect();
+  nextOrEnd(renderCole);
+}
+function ansCole(idx){
+  const gs=ST.gs; if(gs.lock)return; gs.lock=true;
+  const item=gs.probs[gs.idx], sel=gs.curOpts[idx], ok=sel===item.ans;
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    if(gs.curOpts[i]===item.ans)b.classList.add('ok');
+    else if(i===idx&&!ok)b.classList.add('no');
+  });
+  trackResult(item,ok);
+  if(ok){onCorrect();showFb(true,item.fact,()=>nextOrEnd(renderCole),ST.gs.streak);}
+  else{onWrong();showFb(false,`${item.ans} — ${item.fact}`,()=>nextOrEnd(renderCole),0);}
+}
+function doneCole(){
+  const gs=ST.gs; if(gs.lock)return;
+  const item=gs.probs[gs.idx];
+  const ta=document.getElementById('cole-ta');
+  const text=((ta&&ta.value)||'').trim();
+  if(item.k!=='pinta'&&text.length<8){ if(ta)ta.style.borderColor='#EF4444'; return; }
+  gs.lock=true;
+  const p=P();
+  if(!p.creativeLog) p.creativeLog=[];
+  p.creativeLog.push({ts:Date.now(),cat:'cole-'+item.s+'-'+item.k,prompt:item.prompt.slice(0,80),text:text.slice(0,600)});
+  if(p.creativeLog.length>200) p.creativeLog.splice(0,p.creativeLog.length-200);
+  onCorrect();
+  const msg=item.k==='investiga'
+    ?'¡Gran detective! 🔎 '+(item.fact||'')
+    :item.k==='pinta'?rnd(['¡Qué obra de arte! 🎨','¡Me encantan tus colores!','¡Artista a la vista! 🖌️'])
+    :rnd(['¡Qué imaginación!','¡Muy buen trabajo escribiendo!','¡Me encanta cómo piensas!']);
+  showFb(true,msg,()=>nextOrEnd(renderCole),ST.gs.streak);
+}
+
+/* ══════════════════════════════════════
+   PLAN DE AVENTURAS (semana en casa)
+   Casillas guardadas en el perfil. Completar los retos de un día = +60 monedas (una vez).
+══════════════════════════════════════ */
+const PLAN_DAYS=[
+ {id:'lun',wd:1,d:'Lunes',em:'🥐',t:'Día Français',blocks:[
+  {id:'lun1',em:'🎒',t:'Misión: Français',m:25,x:'Chiste, sopa de letras, sudoku, una encrucijada y retos para pintar.',go:"startLv('cole',1)"},
+  {id:'lun2',em:'💃',t:'Descanso activo',m:10,x:'Estira, respira hondo y baila 2 canciones. Agua y fruta.'},
+  {id:'lun3',em:'🎨',t:'Taller: «Le menu»',m:20,x:'Diseña la carta de un restaurante francés: croissant, baguette, chocolat chaud… con precios en euros.'},
+  {id:'lun4',em:'🕵️',t:'Reto de cabeza: Detective de Textos',m:15,x:'Pistas y deducciones: ¡piensa como un detective!',go:"showTrack('detect')"},
+  {id:'lun5',em:'📓',t:'Diario del explorador',m:10,x:'Escribe 5 frases sobre tu día y enseña a tu familia 3 palabras nuevas en francés.'},
+  {id:'lun6',em:'🌟',t:'Bonus: Taller Creativo',m:15,x:'Solo si te encuentras con fuerzas.',go:"showTrack('creative')",bonus:true}]},
+ {id:'mar',wd:2,d:'Martes',em:'🥨',t:'Día Deutsch',blocks:[
+  {id:'mar1',em:'🎒',t:'Misión: Deutsch',m:25,x:'Chistes, sopa de letras, sudoku y una puerta misteriosa.',go:"startLv('cole',2)"},
+  {id:'mar2',em:'🧘',t:'Descanso activo',m:10,x:'Juega a «Simón dice» con los números del 1 al 10 en alemán.'},
+  {id:'mar3',em:'🎨',t:'Taller: póster de números',m:20,x:'Haz un póster con eins, zwei, drei… zehn, cada número con su dibujo.'},
+  {id:'mar4',em:'🧩',t:'Reto de cabeza: Lógica',m:15,x:'Sopa de letras, sudokus y autodefinidos.',go:"showTrack('logic')"},
+  {id:'mar5',em:'📓',t:'Diario del explorador',m:10,x:'Cuéntale a tu hermano o hermana el cuento Grimm que investigaste.'},
+  {id:'mar6',em:'🌟',t:'Bonus: Curiosidad',m:15,x:'Datos alucinantes del mundo.',go:"showTrack('curio')",bonus:true}]},
+ {id:'mie',wd:3,d:'Miércoles',em:'🌍',t:'Día Our World',blocks:[
+  {id:'mie1',em:'🎒',t:'Misión: Our World',m:25,x:'Mapas y brújulas con chistes, sopa de letras y sudoku.',go:"startLv('cole',3)"},
+  {id:'mie2',em:'🪟',t:'Descanso: mira por la ventana',m:10,x:'Observa el cielo: ¿qué nubes ves? ¿Qué tiempo hace? Apúntalo.'},
+  {id:'mie3',em:'🎨',t:'Taller: maqueta de paisaje',m:25,x:'Con plastilina, cartón o papel: montaña, valle, río, llanura y costa.'},
+  {id:'mie4',em:'🗺️',t:'Reto de cabeza: Mi Tierra',m:15,x:'Guadalajara, Castilla-La Mancha y España.',go:"showTrack('geoloc')"},
+  {id:'mie5',em:'📓',t:'Diario del explorador',m:10,x:'Escribe el viaje de una gota de lluvia desde la montaña hasta el mar.'},
+  {id:'mie6',em:'🌟',t:'Bonus: Explorador Naturalista',m:15,x:'Misiones de observación de la naturaleza.',go:"showTrack('explora')",bonus:true}]},
+ {id:'jue',wd:4,d:'Jueves',em:'🎬',t:'Día English Lab',blocks:[
+  {id:'jue1',em:'🎒',t:'Misión: English Lab',m:25,x:'Riddles, jokes, word search, sudoku y un ladrón que atrapar.',go:"startLv('cole',4)"},
+  {id:'jue2',em:'🎤',t:'Descanso activo',m:10,x:'Canta una canción en inglés y haz los gestos.'},
+  {id:'jue3',em:'🎨',t:'Taller: monstruo y cómic',m:25,x:'Pinta tu monstruo, dale nombre y escribe lo que dice en una viñeta.'},
+  {id:'jue4',em:'🥼',t:'Reto de cabeza: Science (English)',m:15,x:'Preguntas de ciencias en inglés.',go:"showTrack('sci')"},
+  {id:'jue5',em:'📓',t:'Diario del explorador',m:10,x:'Write 3 sentences about your best friend in English.'},
+  {id:'jue6',em:'🌟',t:'Bonus: Vocabulario y Palabras',m:15,x:'De dónde vienen las palabras.',go:"showTrack('vocab')",bonus:true}]},
+ {id:'vie',wd:5,d:'Viernes',em:'🧮',t:'Día Mates con ingenio',blocks:[
+  {id:'vie1',em:'🎒',t:'Misión: Mates con ingenio',m:25,x:'Acertijos, chiste, sopa de letras, sudoku y un número secreto.',go:"startLv('cole',5)"},
+  {id:'vie2',em:'🎲',t:'Descanso: juego de mesa',m:15,x:'Un juego de cartas o de mesa en familia.'},
+  {id:'vie3',em:'🎨',t:'Taller: mosaico simétrico',m:20,x:'Crea un mosaico con triángulos y cuadrados con un patrón de colores.'},
+  {id:'vie4',em:'🔢',t:'Reto de cabeza: Matemáticas',m:15,x:'Tablas, divisiones, problemas y fracciones.',go:"showTrack('math')"},
+  {id:'vie5',em:'🖼️',t:'¡Gran exposición!',m:15,x:'Cuelga tus dibujos de la semana. Cada hermano presenta su obra favorita y la otra persona le da una medalla.'},
+  {id:'vie6',em:'🌟',t:'Bonus: Memoria y Atención',m:15,x:'Parejas, secuencias y atención al detalle.',go:"showTrack('memoria')",bonus:true}]}
+];
+function planGet(){const p=P(); if(!p.plan)p.plan={}; return p.plan;}
+function planCounts(){
+  const pl=planGet(); let done=0,total=0;
+  PLAN_DAYS.forEach(d=>d.blocks.filter(b=>!b.bonus).forEach(b=>{total++; if(pl[b.id])done++;}));
+  return {done,total};
+}
+function planToggle(id){
+  const pl=planGet(), p=P();
+  if(pl[id]) delete pl[id]; else pl[id]=true;
+  const day=PLAN_DAYS.find(d=>d.blocks.some(b=>b.id===id));
+  const core=day.blocks.filter(b=>!b.bonus);
+  if(pl[id] && core.every(b=>pl[b.id]) && !pl['award_'+day.id]){
+    pl['award_'+day.id]=true; p.coins+=60; p.earned+=60;
+    try{ boom(); }catch(e){}
+    ST.planMsg='🎉 ¡Día completado! +60 monedas 🪙';
+  } else ST.planMsg='';
+  saveP(); showPlan();
+}
+function planReset(){
+  if(!confirm('¿Empezar una semana nueva? Se borrarán las casillas marcadas.'))return;
+  P().plan={}; saveP(); ST.planMsg=''; showPlan();
+}
+function showPlan(){
+  ST.curScreen='plan';
+  const pl=planGet(), c=planCounts(), wd=new Date().getDay();
+  const days=PLAN_DAYS.map(d=>{
+    const core=d.blocks.filter(b=>!b.bonus), n=core.filter(b=>pl[b.id]).length;
+    const rows=d.blocks.map(b=>`<div class="plan-row">
+      <button class="plan-chk ${pl[b.id]?'on':''}" onclick="planToggle('${b.id}')">${pl[b.id]?'✅':''}</button>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:800;font-size:14px">${b.em} ${b.t} <span style="font-weight:600;color:var(--mu);font-size:12px">· ${b.m} min${b.bonus?' · opcional':''}</span></div>
+        <div style="font-size:13px;color:var(--mu);line-height:1.4">${b.x}</div>
+      </div>
+      ${b.go?`<button class="plan-go" onclick="${b.go}">▶ Ir</button>`:''}
+    </div>`).join('');
+    return `<div class="plan-day ${d.wd===wd?'today':''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+        <div style="font-weight:900;font-size:17px">${d.em} ${d.d} — ${d.t}${d.wd===wd?' <span class="repaso-tag" style="font-size:11px;padding:2px 8px">HOY</span>':''}</div>
+        <div style="font-weight:800;font-size:13px;color:${n===core.length?'var(--gr)':'var(--mu)'}">${n===core.length?'🏅':''} ${n}/${core.length}</div>
+      </div>
+      ${rows}
+    </div>`;
+  }).join('');
+  render(`${hdr('Plan de Aventuras 📅','home')}
+  <div class="screen">
+    <div class="card" style="padding:14px">
+      <div style="font-weight:900;font-size:16px">¡Semana de exploradores en casa! 🧭</div>
+      <div style="font-size:13px;color:var(--mu);line-height:1.5;margin-top:6px">Cada día: una misión del cole, un descanso, un taller para pintar o construir, un reto de cabeza y tu diario. Marca cada casilla al terminar. <b>Si hoy no te encuentras bien, haz solo la misión</b> y descansa. Trabajad en equipo como en el tenis de dobles: uno lee, el otro responde, ¡y luego cambiáis!</div>
+      <div style="margin-top:10px;height:10px;background:#E5E7EB;border-radius:999px;overflow:hidden"><div style="height:100%;width:${Math.round(c.done/c.total*100)}%;background:#F59E0B;border-radius:999px"></div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--mu);margin-top:4px">${c.done}/${c.total} actividades · +60 🪙 por cada día completado</div>
+      ${ST.planMsg?`<div style="margin-top:8px;font-weight:900;color:var(--gr)">${ST.planMsg}</div>`:''}
+    </div>
+    ${days}
+    <button class="btn btn-gh btn-bl" onclick="planReset()">🔄 Empezar semana nueva</button>
+    <div style="height:8px"></div>
+  </div>`);
+}
+
+
+/* ══════════════════════════════════════
    GAME: TIPOS DE PALABRAS
 ══════════════════════════════════════ */
 function renderTippal(){
@@ -6382,13 +6713,13 @@ function showStats(){
   const activeDays=Object.values(dayMap).filter(v=>v>0).length;
 
   // By track
-  const tracks={math:{n:0,stars:0,tot:MATH_LVS.length},lang:{n:0,stars:0,tot:LANG_LVS.length},logic:{n:0,stars:0,tot:LOGIC_LVS.length},curio:{n:0,stars:0,tot:CURIO_LVS.length},cien:{n:0,stars:0,tot:CIENCIA_LVS.length},detect:{n:0,stars:0,tot:DETECT_LVS.length},explora:{n:0,stars:0,tot:EXPLORA_LVS.length},creative:{n:0,stars:0,tot:CREATIVE_LVS.length},vocab:{n:0,stars:0,tot:VOCAB_LVS.length},geoloc:{n:0,stars:0,tot:GEOLOC_LVS.length},memoria:{n:0,stars:0,tot:MEMORIA_LVS.length},sci:{n:0,stars:0,tot:SCI_LVS.length}};
+  const tracks={math:{n:0,stars:0,tot:MATH_LVS.length},lang:{n:0,stars:0,tot:LANG_LVS.length},logic:{n:0,stars:0,tot:LOGIC_LVS.length},curio:{n:0,stars:0,tot:CURIO_LVS.length},cien:{n:0,stars:0,tot:CIENCIA_LVS.length},detect:{n:0,stars:0,tot:DETECT_LVS.length},explora:{n:0,stars:0,tot:EXPLORA_LVS.length},creative:{n:0,stars:0,tot:CREATIVE_LVS.length},vocab:{n:0,stars:0,tot:VOCAB_LVS.length},geoloc:{n:0,stars:0,tot:GEOLOC_LVS.length},memoria:{n:0,stars:0,tot:MEMORIA_LVS.length},sci:{n:0,stars:0,tot:SCI_LVS.length},cole:{n:0,stars:0,tot:COLE_LVS.length}};
   hist.forEach(h=>{if(tracks[h.track]){tracks[h.track].n++;tracks[h.track].stars+=h.stars;}});
   const maxTrackN=Math.max(...Object.values(tracks).map(t=>t.n),1);
 
   const trackRows=Object.entries(tracks).map(([k,t])=>{
     const pct=t.n?Math.round(t.n/maxTrackN*100):0;
-    const col={math:'#7C3AED',lang:'#16A34A',logic:'#7C3AED',curio:'#0EA5E9',cien:'#0D9488',detect:'#92400E',explora:'#15803D',creative:'#A21CAF',vocab:'#EA580C',geoloc:'#0369A1',memoria:'#4338CA',sci:'#0891B2'}[k];
+    const col={math:'#7C3AED',lang:'#16A34A',logic:'#7C3AED',curio:'#0EA5E9',cien:'#0D9488',detect:'#92400E',explora:'#15803D',creative:'#A21CAF',vocab:'#EA580C',geoloc:'#0369A1',memoria:'#4338CA',sci:'#0891B2',cole:'#DB2777'}[k];
     const avg=t.n?'⭐'.repeat(Math.round(t.stars/t.n)):'-';
     return `<div class="stat-track-row">
       <div class="stat-track-em">${trackEmoji(k)}</div>
@@ -6515,8 +6846,9 @@ function profileCard(pid){
   const glD=Object.keys(p.geoloc?.done||{}).length;
   const mrD=Object.keys(p.memoria?.done||{}).length;
   const scD=Object.keys(p.sci?.done||{}).length;
-  const totalLvs=MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length+SCI_LVS.length;
-  const doneLvs=mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD+scD;
+  const coD=Object.keys(p.cole?.done||{}).length;
+  const totalLvs=MATH_LVS.length+LANG_LVS.length+LOGIC_LVS.length+CURIO_LVS.length+CIENCIA_LVS.length+DETECT_LVS.length+EXPLORA_LVS.length+CREATIVE_LVS.length+VOCAB_LVS.length+GEOLOC_LVS.length+MEMORIA_LVS.length+SCI_LVS.length+COLE_LVS.length;
+  const doneLvs=mD+lD+lgD+cD+ciD+dtD+exD+crD+voD+glD+mrD+scD+coD;
   const weak=topWeak(p);
   const weakHtml=weak.length
     ?weak.map(w=>`<span class="weak-chip">💪 ${w.key.slice(0,18)} (${w.cnt}x)</span>`).join('')
@@ -6535,7 +6867,8 @@ function profileCard(pid){
     {k:'vocab',nm:'Vocabulario',done:voD,tot:VOCAB_LVS.length,col:'#EA580C'},
     {k:'geoloc',nm:'Mi Tierra',done:glD,tot:GEOLOC_LVS.length,col:'#0369A1'},
     {k:'memoria',nm:'Memoria',done:mrD,tot:MEMORIA_LVS.length,col:'#4338CA'},
-    {k:'sci',nm:'Science',done:scD,tot:SCI_LVS.length,col:'#0891B2'}
+    {k:'sci',nm:'Science',done:scD,tot:SCI_LVS.length,col:'#0891B2'},
+    {k:'cole',nm:'Cole',done:coD,tot:COLE_LVS.length,col:'#DB2777'}
   ];
   const tBars=tdata.map(t=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
