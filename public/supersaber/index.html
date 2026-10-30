@@ -618,7 +618,15 @@ const COLE_LVS=[
   {"id":2,"nm":"Deutsch 🇩🇪","em":"🥨","df":2,"ds":"Hallo! Chistes, sopa de letras, sudoku y puertas misteriosas","tp":"cole","p":{"s":"de"},"free":true},
   {"id":3,"nm":"Our World 🌍 (Sociales)","em":"🗺️","df":3,"ds":"Mapas, ríos y brújulas: ¡con chistes, sopa y sudoku!","tp":"cole","p":{"s":"soc"},"free":true},
   {"id":4,"nm":"English Lab 🇬🇧","em":"🎬","df":3,"ds":"Riddles, jokes, word search, sudoku and a thief to catch","tp":"cole","p":{"s":"en"},"free":true},
-  {"id":5,"nm":"Mates con ingenio 🧮","em":"🧩","df":3,"ds":"Acertijos, chistes, sopa de letras, sudoku y números secretos","tp":"cole","p":{"s":"mat"},"free":true}
+  {"id":5,"nm":"Mates con ingenio 🧮","em":"🧩","df":3,"ds":"Acertijos, chistes, sopa de letras, sudoku y números secretos","tp":"cole","p":{"s":"mat"},"free":true},
+  {"id":6,"nm":"Palabras al ataque ⚔️","em":"⚔️","df":3,"ds":"Partes de la oración y género de los sustantivos, con chiste","tp":"cole","p":{"s":"h1"},"free":true},
+  {"id":7,"nm":"Sílabas y palabras con doble vida ✂️","em":"✂️","df":3,"ds":"Separa en sílabas y descubre palabras polisémicas","tp":"cole","p":{"s":"h2"},"free":true},
+  {"id":8,"nm":"Ortografía sin red ✍️","em":"✍️","df":4,"ds":"Escribe tú la palabra que falta: ¡cuidado con las tildes!","tp":"cole","p":{"s":"h3"},"free":true},
+  {"id":9,"nm":"Tablas relámpago ⚡","em":"⚡","df":4,"ds":"Multiplicar y dividir sin pistas: escribe el resultado","tp":"cole","p":{"s":"h4","gen":"tablas"},"free":true},
+  {"id":10,"nm":"Problemas de detective 🔍","em":"🔍","df":4,"ds":"Problemas de varios pasos para resolver con el cerebro","tp":"cole","p":{"s":"h5"},"free":true},
+  {"id":11,"nm":"Zoo de curiosidades 🕷️🐍🐦","em":"🦉","df":3,"ds":"Arañas, serpientes y pájaros: lee, deduce y ríete","tp":"cole","p":{"s":"h6"},"free":true},
+  {"id":12,"nm":"Cuento de relax 📖","em":"📖","df":3,"ds":"Dos cuentos cortos, un chiste y mucha imaginación","tp":"cole","p":{"s":"h7"},"free":true},
+  {"id":13,"nm":"Vuelta al mundo 🌍","em":"🌍","df":3,"ds":"Océanos, montañas, ríos y España","tp":"cole","p":{"s":"h8"},"free":true}
 ];
 /* Misiones del Cole: Francés, Alemán, Our World, Inglés, Mates. Retos cortos.
    k: quiz | chiste | sopa | sudoku | investiga | escribe | pinta   (tag:"🚦 Encrucijada" = quiz de lógica) */
@@ -686,7 +694,86 @@ const coleQ=[
   {"s":"mat","k":"quiz","em":"🔢","q":"3, 6, 12, 24… ¿qué número sigue?","opts":["48","30","36","27"],"ans":"48","fact":"Cada número es el doble del anterior."},
   {"s":"mat","k":"pinta","em":"🦋","prompt":"Pinta una mariposa simétrica: copia un ala como si fuera su reflejo.","tip":"El eje de simetría es la línea del medio."},
   {"s":"mat","k":"chiste","em":"📕","q":"¿Por qué el libro de mates está triste?","a":"¡Porque tiene muchos problemas! 😅","x":"Los libros de mates están llenos de problemas."},
-  {"s":"mat","k":"escribe","em":"🍦","prompt":"Inventa un problema con una heladería y escribe la solución.","tip":"Usa una multiplicación."}
+  {"s":"mat","k":"escribe","em":"🍦","prompt":"Inventa un problema con una heladería y escribe la solución.","tip":"Usa una multiplicación."},
+  {"s":"h1","k":"quiz","em":"🔎","q":"En «El gato negro duerme en el sofá», ¿qué clase de palabra es «negro»?","opts":["Adjetivo","Sustantivo","Verbo","Artículo"],"ans":"Adjetivo","fact":"El adjetivo dice cómo es el sustantivo: gato negro."},
+  {"s":"h1","k":"quiz","em":"😴","q":"En la misma frase, ¿qué clase de palabra es «duerme»?","opts":["Verbo","Adjetivo","Adverbio","Pronombre"],"ans":"Verbo","fact":"El verbo dice lo que hace el sujeto: el gato duerme."},
+  {"s":"h1","k":"quiz","em":"🧩","q":"Y la palabra «El» del principio, ¿qué es?","opts":["Artículo","Pronombre","Preposición","Sustantivo"],"ans":"Artículo","fact":"El, la, los, las, un, una acompañan al sustantivo y nos dicen su género."},
+  {"s":"h1","k":"quiz","em":"🔗","q":"Y «en», ¿qué clase de palabra es?","opts":["Preposición","Adverbio","Artículo","Verbo"],"ans":"Preposición","fact":"Las preposiciones unen palabras: en, de, con, por, para, sin, sobre…"},
+  {"s":"h1","k":"quiz","em":"👩","q":"En «Ella lee un libro grande», ¿cuál es el pronombre?","opts":["Ella","lee","libro","grande"],"ans":"Ella","fact":"El pronombre sustituye a un nombre: ella = Marta, mi hermana…"},
+  {"s":"h1","k":"quiz","em":"🐆","q":"En «El guepardo corre rápidamente», ¿qué es «rápidamente»?","opts":["Adverbio","Adjetivo","Sustantivo","Verbo"],"ans":"Adverbio","fact":"El adverbio dice cómo, cuándo o dónde ocurre la acción: corre rápidamente."},
+  {"s":"h1","k":"chiste","em":"🥱","q":"¿Por qué estaba agotado el verbo?","a":"¡Porque lo habían conjugado todo el día! 😅","x":"Conjugar es decir un verbo en todos sus tiempos: canto, cantas, canta, cantamos…"},
+  {"s":"h1","k":"quiz","em":"🗺️","q":"«Mapa» es un sustantivo…","opts":["Masculino","Femenino","Ni masculino ni femenino","Las dos cosas"],"ans":"Masculino","fact":"Aunque acabe en -a, decimos «el mapa», como «el día», «el planeta» y «el problema»."},
+  {"s":"h1","k":"quiz","em":"👑","q":"¿Cuál es el femenino de «el rey»?","opts":["la reina","la reya","la reyesa","la rey"],"ans":"la reina","fact":"Algunos femeninos son palabras distintas: rey/reina, caballo/yegua, toro/vaca, padre/madre."},
+  {"s":"h1","k":"quiz","em":"💧","q":"Decimos «el agua fría». ¿Por qué usamos «el» si agua es femenino?","opts":["Por el sonido: agua empieza por una «a» fuerte y usa «el»","Porque agua es masculino","Porque va con fría","Porque sí, sin motivo"],"ans":"Por el sonido: agua empieza por una «a» fuerte y usa «el»","fact":"Agua es femenino: por eso decimos «el agua fría» (con adjetivo femenino) y «las aguas»."},
+  {"s":"h1","k":"quiz","em":"🎹","q":"¿Cuál de estas palabras sirve igual para él y para ella (solo cambia el artículo)?","opts":["pianista","gato","profesor","rey"],"ans":"pianista","fact":"El pianista / la pianista. Pasa igual con artista, periodista y astronauta."},
+  {"s":"h1","k":"quiz","em":"🐝","q":"¿Cuál de estas palabras nombra a un GRUPO?","opts":["enjambre","abeja","zumbar","pequeña"],"ans":"enjambre","fact":"Un enjambre es un grupo de abejas. Y también: manada de lobos, banco de peces, bandada de pájaros."},
+  {"s":"h2","k":"sil","em":"✂️","w":"chocolate","ans":"cho-co-la-te","fact":"Cho-co-la-te: 4 sílabas."},
+  {"s":"h2","k":"sil","em":"✂️","w":"murciélago","ans":"mur-cié-la-go","fact":"Mur-cié-la-go: «ié» va junta en la misma sílaba (diptongo)."},
+  {"s":"h2","k":"quiz","em":"🐱","q":"¿En cuál de estas frases «gato» NO es el animal?","opts":["Papá usó el gato para levantar el coche.","El gato maulló en el tejado.","Mi gato duerme en el sofá.","Ese gato tiene bigotes largos."],"ans":"Papá usó el gato para levantar el coche.","fact":"Gato es una palabra polisémica: es un animal y también un aparato para levantar coches."},
+  {"s":"h2","k":"chiste","em":"🌹","q":"¿Cuál es el colmo de un jardinero?","a":"¡Que su novia se llame Rosa y lo deje plantado! 🌷","x":"«Plantar» es poner una planta… y también dejar a alguien esperando. ¡Doble significado!"},
+  {"s":"h2","k":"sil","em":"✂️","w":"país","ans":"pa-ís","fact":"Pa-ís: la «í» con tilde rompe el grupo (hiato), por eso son 2 sílabas."},
+  {"s":"h2","k":"quiz","em":"⛰️","q":"¿En qué frase «sierra» significa MONTAÑAS?","opts":["Esquiamos en la sierra de Guadarrama.","El carpintero cortó la madera con una sierra.","Esa sierra está muy afilada.","La sierra cortó el tronco."],"ans":"Esquiamos en la sierra de Guadarrama.","fact":"Sierra: herramienta para cortar y también cadena de montañas."},
+  {"s":"h2","k":"sil","em":"✂️","w":"ciudad","ans":"ciu-dad","fact":"Ciu-dad: «iu» va junta (diptongo)."},
+  {"s":"h2","k":"quiz","em":"💰","q":"¿En qué frase «capital» significa DINERO?","opts":["Con su capital montó una tienda.","Madrid es la capital de España.","La capital de Francia es París.","Visitamos la capital en autobús."],"ans":"Con su capital montó una tienda.","fact":"Capital: ciudad principal de un país o dinero que se tiene."},
+  {"s":"h2","k":"quiz","em":"📞","q":"¿Cuál es la sílaba tónica (la que suena más fuerte) de «teléfono»?","opts":["té","le","fo","no"],"ans":"té","fact":"Té-le-fo-no es esdrújula: su sílaba tónica es la antepenúltima y siempre lleva tilde."},
+  {"s":"h2","k":"sil","em":"✂️","w":"serpiente","ans":"ser-pien-te","fact":"Ser-pien-te: «ie» va junta (diptongo)."},
+  {"s":"h2","k":"quiz","em":"🧴","q":"¿En qué frase «cola» significa PEGAMENTO?","opts":["Pegó el papel con cola.","El perro mueve la cola.","Hay mucha cola en el cine.","La cola del cometa es larga."],"ans":"Pegó el papel con cola.","fact":"Cola: rabo de un animal, fila de gente o pegamento."},
+  {"s":"h2","k":"sil","em":"✂️","w":"pingüino","ans":"pin-güi-no","fact":"Pin-güi-no: la diéresis (ü) hace que suene la u: «güi»."},
+  {"s":"h3","k":"fill","em":"✍️","q":"La ___ es el animal más grande del mundo y vive en el mar.","ans":"ballena","fact":"Ballena se escribe con ll."},
+  {"s":"h3","k":"fill","em":"✍️","q":"Las aves ponen ___ y de ellos salen los polluelos.","ans":"huevos","fact":"Huevos lleva h al principio y v en medio."},
+  {"s":"h3","k":"fill","em":"✍️","q":"La ___ tiene el cuello larguísimo y vive en la sabana africana.","ans":"jirafa","fact":"Jirafa se escribe con j."},
+  {"s":"h3","k":"chiste","em":"🤫","q":"¿Cuál es la letra más callada del abecedario?","a":"¡La H, porque es muda! 🤐","x":"La h casi nunca suena: hola, huevo, hormiga… ¡pero hay que escribirla!"},
+  {"s":"h3","k":"fill","em":"✍️","q":"Cuando soplas las velas de la tarta es porque celebras tu ___.","ans":"cumpleaños","fact":"Antes de p se escribe m (cumpleaños) y lleva ñ."},
+  {"s":"h3","k":"fill","em":"✍️","q":"El ___ es un mamífero que vuela de noche y duerme colgado boca abajo.","ans":"murciélago","fact":"Murciélago es esdrújula: lleva tilde en la é."},
+  {"s":"h3","k":"fill","em":"✍️","q":"Para freír un huevo usamos una ___ con aceite.","ans":"sartén","fact":"Sartén es aguda acabada en n: lleva tilde en la é."},
+  {"s":"h3","k":"fill","em":"✍️","q":"Un ___ tiene tronco, ramas y hojas, y da sombra.","ans":"árbol","fact":"Árbol es llana acabada en l: lleva tilde en la á."},
+  {"s":"h3","k":"fill","em":"✍️","q":"Mi abuelo toca la ___, un instrumento con seis cuerdas.","ans":"guitarra","fact":"Guitarra: «gui» con u muda y rr entre vocales."},
+  {"s":"h3","k":"fill","em":"✍️","q":"¿___ muchos pájaros en el parque?","ans":"hay","fact":"Hay (del verbo haber) · ahí (lugar) · ay (queja)."},
+  {"s":"h3","k":"fill","em":"✍️","q":"¡___, qué dolor! Me he pillado el dedo con la puerta.","ans":"ay","fact":"Ay es una interjección que expresa dolor. No se confunde con hay ni con ahí."},
+  {"s":"h3","k":"fill","em":"✍️","q":"Al borde de la carretera hay una ___ publicitaria enorme.","ans":"valla","fact":"Valla (cerca o cartel) lleva v y ll. No es «vaya» (del verbo ir) ni «baya» (un fruto)."},
+  {"s":"h5","k":"num","em":"🐦","q":"En el zoo hay 6 jaulas con 8 pájaros cada una. Si 15 pájaros salen volando, ¿cuántos quedan?","fact":"6 × 8 = 48 pájaros y 48 − 15 = 33.","ans":33},
+  {"s":"h5","k":"num","em":"🕷️","q":"Una araña tiene 8 patas. ¿Cuántas patas tienen en total 9 arañas?","fact":"8 × 9 = 72 patas.","ans":72},
+  {"s":"h5","k":"num","em":"🐍","q":"Imagina que una serpiente cambia de piel 4 veces al año. ¿Cuántas veces habrá cambiado de piel en 7 años?","fact":"4 × 7 = 28 veces.","ans":28},
+  {"s":"h5","k":"num","em":"📚","q":"Pedro tiene 45 € y compra 3 libros de 12 € cada uno. ¿Cuántos euros le quedan?","fact":"3 × 12 = 36 € y 45 − 36 = 9 €.","ans":9},
+  {"s":"h5","k":"num","em":"🚆","q":"Un tren sale con 120 viajeros. En la primera parada bajan 35 y suben 18. ¿Cuántos viajeros hay ahora?","fact":"120 − 35 = 85 y 85 + 18 = 103.","ans":103},
+  {"s":"h5","k":"num","em":"🍬","q":"Mamá reparte 72 caramelos entre 6 sobrinos a partes iguales y cada uno se come 4. ¿Cuántos caramelos le quedan a cada sobrino?","fact":"72 ÷ 6 = 12 y 12 − 4 = 8.","ans":8},
+  {"s":"h5","k":"num","em":"🦜","q":"En una pajarería hay el triple de canarios que de loros. Si hay 9 loros, ¿cuántas aves hay en total?","fact":"Canarios: 3 × 9 = 27. Total: 27 + 9 = 36.","ans":36},
+  {"s":"h5","k":"num","em":"✏️","q":"Un cuaderno cuesta 3 € y un bolígrafo 2 €. Si compro 4 cuadernos y 5 bolígrafos, ¿cuántos euros pago?","fact":"4 × 3 = 12 € y 5 × 2 = 10 €; 12 + 10 = 22 €.","ans":22},
+  {"s":"h5","k":"escribe","em":"🧠","prompt":"Inventa un problema con 5 arañas y escribe también la solución.","tip":"Usa una multiplicación y una resta."},
+  {"s":"h6","k":"quiz","em":"🕷️","q":"¿Cuántas patas tiene una araña?","opts":["8","6","10","4"],"ans":"8","fact":"Insectos: 6 patas. Arañas: 8.","txt":"Las arañas no son insectos. Los insectos tienen seis patas, pero las arañas tienen ocho. Su cuerpo se divide en dos partes y la mayoría tiene ocho ojos. Con unas glándulas del abdomen fabrican seda, y con ella tejen telarañas. Pero no todas tejen telas: las arañas lobo y las saltadoras cazan saltando sobre su presa.","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"🕷️","q":"Según el texto, ¿por qué una araña NO es un insecto?","opts":["Porque tiene ocho patas y el cuerpo en dos partes","Porque no tiene ojos","Porque vive en las casas","Porque teje telas"],"ans":"Porque tiene ocho patas y el cuerpo en dos partes","fact":"Los insectos tienen seis patas y el cuerpo en tres partes.","txt":"Las arañas no son insectos. Los insectos tienen seis patas, pero las arañas tienen ocho. Su cuerpo se divide en dos partes y la mayoría tiene ocho ojos. Con unas glándulas del abdomen fabrican seda, y con ella tejen telarañas. Pero no todas tejen telas: las arañas lobo y las saltadoras cazan saltando sobre su presa.","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"🕷️","q":"Una araña lobo no teje telarañas. ¿Cómo consigue comida?","opts":["Saltando sobre su presa","Esperando en una tela","Comiendo plantas","Pidiéndola"],"ans":"Saltando sobre su presa","fact":"Cada tipo de araña tiene su forma de cazar.","txt":"Las arañas no son insectos. Los insectos tienen seis patas, pero las arañas tienen ocho. Su cuerpo se divide en dos partes y la mayoría tiene ocho ojos. Con unas glándulas del abdomen fabrican seda, y con ella tejen telarañas. Pero no todas tejen telas: las arañas lobo y las saltadoras cazan saltando sobre su presa.","tag":"📖 Lectura"},
+  {"s":"h6","k":"chiste","em":"🕸️","q":"¿Por qué las arañas son tan buenas programadoras?","a":"¡Porque trabajan en la web! 🕸️💻","x":"En inglés «web» significa telaraña… y también la red de internet."},
+  {"s":"h6","k":"quiz","em":"🦉","q":"¿Cuántos grados puede girar la cabeza un búho?","opts":["Unos 270°","Solo 90°","360°, una vuelta entera","Unos 45°"],"ans":"Unos 270°","fact":"Los búhos no mueven los ojos, así que giran muchísimo la cabeza para mirar a su alrededor."},
+  {"s":"h6","k":"quiz","em":"🐍","q":"¿Para qué saca la lengua una serpiente?","opts":["Para «oler» lo que hay en el aire","Para beber","Para asustar","Para hacer ruido"],"ans":"Para «oler» lo que hay en el aire","fact":"Su lengua recoge olores del aire.","txt":"Las serpientes no tienen párpados: sus ojos están cubiertos por una escama transparente, así que parece que nunca parpadean. Para «oler» sacan la lengua, que recoge partículas del aire y las lleva a un órgano especial de la boca. No mastican: tragan la presa entera porque sus mandíbulas son muy flexibles. Y de vez en cuando cambian de piel: se llama muda.","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"🐍","q":"Según el texto, ¿por qué parece que las serpientes no parpadean?","opts":["Porque sus ojos están cubiertos por una escama transparente","Porque no ven nada","Porque duermen con los ojos abiertos","Porque llevan gafas"],"ans":"Porque sus ojos están cubiertos por una escama transparente","fact":"No tienen párpados.","txt":"Las serpientes no tienen párpados: sus ojos están cubiertos por una escama transparente, así que parece que nunca parpadean. Para «oler» sacan la lengua, que recoge partículas del aire y las lleva a un órgano especial de la boca. No mastican: tragan la presa entera porque sus mandíbulas son muy flexibles. Y de vez en cuando cambian de piel: se llama muda.","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"🐍","q":"En el texto, «muda» significa…","opts":["Cambio de piel","Que no puede hablar","Ropa limpia","Un sonido"],"ans":"Cambio de piel","fact":"«Muda» es una palabra polisémica: cambio de piel, persona que no habla o ropa limpia.","txt":"Las serpientes no tienen párpados: sus ojos están cubiertos por una escama transparente, así que parece que nunca parpadean. Para «oler» sacan la lengua, que recoge partículas del aire y las lleva a un órgano especial de la boca. No mastican: tragan la presa entera porque sus mandíbulas son muy flexibles. Y de vez en cuando cambian de piel: se llama muda.","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"💙","q":"¿De qué color es la «sangre» de las arañas?","opts":["Azulada","Roja","Verde","Negra"],"ans":"Azulada","fact":"Su sangre lleva cobre en vez de hierro y por eso se vuelve azulada al mezclarse con el oxígeno."},
+  {"s":"h6","k":"quiz","em":"🐦","q":"¿Cuántos kilómetros recorre al año el charrán ártico?","opts":["Unos 70.000","Unos 700","Unos 7.000","Unos 700.000"],"ans":"Unos 70.000","fact":"Casi dos vueltas a la Tierra cada año.","txt":"El colibrí pesa unos dos gramos, pero bate las alas más de cincuenta veces por segundo y puede volar hacia atrás. El avestruz, en cambio, es el ave más grande del mundo: no vuela, pero corre a unos 70 km/h. Y el charrán ártico gana el premio al mayor viajero: cada año vuela del Polo Norte al Polo Sur y vuelve, ¡unos 70.000 kilómetros!","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"🐦","q":"Si el avestruz corre a unos 70 km/h, ¿qué podemos deducir?","opts":["Que corre tan rápido como un coche por ciudad","Que vuela muy alto","Que es más pequeña que un colibrí","Que vive en el Polo Norte"],"ans":"Que corre tan rápido como un coche por ciudad","fact":"Los coches en ciudad suelen ir a 30-50 km/h: ¡el avestruz los adelanta!","txt":"El colibrí pesa unos dos gramos, pero bate las alas más de cincuenta veces por segundo y puede volar hacia atrás. El avestruz, en cambio, es el ave más grande del mundo: no vuela, pero corre a unos 70 km/h. Y el charrán ártico gana el premio al mayor viajero: cada año vuela del Polo Norte al Polo Sur y vuelve, ¡unos 70.000 kilómetros!","tag":"📖 Lectura"},
+  {"s":"h6","k":"quiz","em":"🐦","q":"¿Qué ave del texto NO puede volar?","opts":["El avestruz","El colibrí","El charrán ártico","Todas pueden volar"],"ans":"El avestruz","fact":"El avestruz es enorme y corre, pero no vuela.","txt":"El colibrí pesa unos dos gramos, pero bate las alas más de cincuenta veces por segundo y puede volar hacia atrás. El avestruz, en cambio, es el ave más grande del mundo: no vuela, pero corre a unos 70 km/h. Y el charrán ártico gana el premio al mayor viajero: cada año vuela del Polo Norte al Polo Sur y vuelve, ¡unos 70.000 kilómetros!","tag":"📖 Lectura"},
+  {"s":"h7","k":"quiz","em":"🐍","q":"¿Qué problema tenía Sisi?","opts":["Hipo","Tos","No tenía cola","Miedo a los ratones"],"ans":"Hipo","fact":"Sisi tenía hipo.","txt":"En la selva vivía una serpiente llamada Sisi que tenía un problema: ¡hipo! Cada vez que hacía «hic», su cuerpo daba un salto y se hacía un nudo. Un día quiso cazar un ratón y, justo cuando saltó, hizo «hic» y acabó enredada en una rama. El ratón se rió tanto que se le olvidó huir. Entonces el loro Paco le dijo: «Aguanta la respiración y cuenta hasta diez». Sisi contó, el hipo desapareció y desde ese día el ratón y la serpiente fueron amigos… aunque el ratón siempre dormía con un ojo abierto.","tag":"📖 Lectura"},
+  {"s":"h7","k":"quiz","em":"🐍","q":"¿Por qué no huyó el ratón?","opts":["Porque se rió tanto que se le olvidó huir","Porque estaba dormido","Porque ya era amigo de Sisi","Porque no la vio"],"ans":"Porque se rió tanto que se le olvidó huir","fact":"La risa le distrajo.","txt":"En la selva vivía una serpiente llamada Sisi que tenía un problema: ¡hipo! Cada vez que hacía «hic», su cuerpo daba un salto y se hacía un nudo. Un día quiso cazar un ratón y, justo cuando saltó, hizo «hic» y acabó enredada en una rama. El ratón se rió tanto que se le olvidó huir. Entonces el loro Paco le dijo: «Aguanta la respiración y cuenta hasta diez». Sisi contó, el hipo desapareció y desde ese día el ratón y la serpiente fueron amigos… aunque el ratón siempre dormía con un ojo abierto.","tag":"📖 Lectura"},
+  {"s":"h7","k":"quiz","em":"🐍","q":"¿Por qué el ratón dormía con un ojo abierto?","opts":["Porque aún no se fiaba del todo de una serpiente","Porque tenía hipo","Porque era un loro","Porque le gustaba mirar"],"ans":"Porque aún no se fiaba del todo de una serpiente","fact":"Eran amigos, ¡pero más vale prevenir!","txt":"En la selva vivía una serpiente llamada Sisi que tenía un problema: ¡hipo! Cada vez que hacía «hic», su cuerpo daba un salto y se hacía un nudo. Un día quiso cazar un ratón y, justo cuando saltó, hizo «hic» y acabó enredada en una rama. El ratón se rió tanto que se le olvidó huir. Entonces el loro Paco le dijo: «Aguanta la respiración y cuenta hasta diez». Sisi contó, el hipo desapareció y desde ese día el ratón y la serpiente fueron amigos… aunque el ratón siempre dormía con un ojo abierto.","tag":"📖 Lectura"},
+  {"s":"h7","k":"pinta","em":"🎨","prompt":"Dibuja a Sisi con su hipo en 3 viñetas: antes del «hic», durante el «hic» y después, enredada en la rama.","tip":"Usa colores brillantes para la selva."},
+  {"s":"h7","k":"chiste","em":"🐦","q":"¿Por qué los pájaros vuelan hacia el sur en invierno?","a":"¡Porque es muy lejos para ir andando! 🚶‍♂️","x":"Muchas aves emigran al sur para evitar el frío y encontrar comida."},
+  {"s":"h7","k":"quiz","em":"🕷️","q":"¿Dónde se quedó pegado Pip?","opts":["En una telaraña","En un nido","En el río","En una rama seca"],"ans":"En una telaraña","fact":"Pip quedó atrapado en la tela de Telma.","txt":"Pip era un pájaro pequeño que siempre llegaba tarde. Una mañana quiso volar al río, pero se quedó pegado a una telaraña enorme entre dos ramas. «¡Socorro!», pió. La araña Telma bajó despacio y le dijo: «No grites, que espantas a mis invitados». Con sus patitas fue cortando los hilos uno a uno. «¿Por qué me ayudas?», preguntó Pip. «Porque ayer un pájaro como tú me regaló la rama donde tejo», respondió Telma. Desde entonces Pip llega puntual… ¡a visitar a Telma!","tag":"📖 Lectura"},
+  {"s":"h7","k":"quiz","em":"🕷️","q":"¿Qué quiere decir Telma con «no grites, que espantas a mis invitados»?","opts":["Que los insectos que quiere cazar se asustarían","Que tenía una fiesta de cumpleaños","Que le molestan los gritos","Que había invitado a más pájaros"],"ans":"Que los insectos que quiere cazar se asustarían","fact":"Los «invitados» de una araña son los insectos que caen en su tela. ¡Humor de araña!","txt":"Pip era un pájaro pequeño que siempre llegaba tarde. Una mañana quiso volar al río, pero se quedó pegado a una telaraña enorme entre dos ramas. «¡Socorro!», pió. La araña Telma bajó despacio y le dijo: «No grites, que espantas a mis invitados». Con sus patitas fue cortando los hilos uno a uno. «¿Por qué me ayudas?», preguntó Pip. «Porque ayer un pájaro como tú me regaló la rama donde tejo», respondió Telma. Desde entonces Pip llega puntual… ¡a visitar a Telma!","tag":"📖 Lectura"},
+  {"s":"h7","k":"quiz","em":"🕷️","q":"¿Qué enseñanza deja el cuento?","opts":["Una buena acción puede volver en forma de ayuda","Hay que llegar siempre tarde","Las arañas son peligrosas","Los pájaros no deben volar"],"ans":"Una buena acción puede volver en forma de ayuda","fact":"Telma ayudó a Pip porque otro pájaro había sido amable con ella.","txt":"Pip era un pájaro pequeño que siempre llegaba tarde. Una mañana quiso volar al río, pero se quedó pegado a una telaraña enorme entre dos ramas. «¡Socorro!», pió. La araña Telma bajó despacio y le dijo: «No grites, que espantas a mis invitados». Con sus patitas fue cortando los hilos uno a uno. «¿Por qué me ayudas?», preguntó Pip. «Porque ayer un pájaro como tú me regaló la rama donde tejo», respondió Telma. Desde entonces Pip llega puntual… ¡a visitar a Telma!","tag":"📖 Lectura"},
+  {"s":"h7","k":"escribe","em":"📖","prompt":"Inventa otro final para el cuento de Pip y Telma. ¿Qué pasa si Pip llega tarde otra vez?","tip":"Escribe 3 o 4 frases."},
+  {"s":"h8","k":"quiz","em":"🌊","q":"¿Cuál es el océano más grande del mundo?","opts":["Pacífico","Atlántico","Índico","Ártico"],"ans":"Pacífico","fact":"El Pacífico ocupa casi la mitad de toda el agua del planeta."},
+  {"s":"h8","k":"quiz","em":"🏜️","q":"¿En qué continente está el desierto del Sahara?","opts":["África","Asia","América","Oceanía"],"ans":"África","fact":"Es el mayor desierto cálido del mundo."},
+  {"s":"h8","k":"quiz","em":"🏔️","q":"¿Cuál es la montaña más alta del mundo?","opts":["Everest","Mont Blanc","Teide","Aconcagua"],"ans":"Everest","fact":"El Everest está en el Himalaya (Asia) y mide unos 8.849 metros."},
+  {"s":"h8","k":"quiz","em":"🌳","q":"¿Qué río lleva más agua de todo el mundo?","opts":["Amazonas","Nilo","Ebro","Támesis"],"ans":"Amazonas","fact":"Nace en los Andes y desemboca en el océano Atlántico."},
+  {"s":"h8","k":"chiste","em":"🥶","q":"¿Cuál es el país más frío del mundo?","a":"¡Chile! 🇨🇱🥶","x":"Chile suena a «chill» (frío) y a «¡qué frío!»… ¡aunque en realidad hace calor en el norte!"},
+  {"s":"h8","k":"quiz","em":"🏝️","q":"¿Qué islas españolas están en el océano Atlántico, frente a la costa de África?","opts":["Las Canarias","Las Baleares","Las Cíes","Las Azores"],"ans":"Las Canarias","fact":"Las Baleares están en el Mediterráneo y las Azores son de Portugal."},
+  {"s":"h8","k":"quiz","em":"🌋","q":"¿Cuál es la montaña más alta de España?","opts":["El Teide","El Mulhacén","El Aneto","El Moncayo"],"ans":"El Teide","fact":"El Teide (Tenerife) mide 3.718 m. El Mulhacén (3.479 m) es el más alto de la península."},
+  {"s":"h8","k":"quiz","em":"🏙️","q":"¿Qué río pasa por Madrid?","opts":["El Manzanares","El Ebro","El Tajo","El Duero"],"ans":"El Manzanares","fact":"Nace en la sierra de Guadarrama."},
+  {"s":"h8","k":"quiz","em":"🧭","q":"¿Con qué países tiene frontera España?","opts":["Portugal, Francia, Andorra, Marruecos y Gibraltar","Solo Portugal y Francia","Italia y Francia","Portugal e Italia"],"ans":"Portugal, Francia, Andorra, Marruecos y Gibraltar","fact":"Con Marruecos limita en Ceuta y Melilla, y Gibraltar es un territorio británico."},
+  {"s":"h8","k":"quiz","em":"🧊","q":"¿Dónde viven los osos polares?","opts":["En el Polo Norte","En el Polo Sur","En el Sahara","En el Amazonas"],"ans":"En el Polo Norte","fact":"Los osos polares son del Ártico.","txt":"El Polo Norte está en un océano helado, el Ártico, y no es tierra firme sino hielo flotante. El Polo Sur, en cambio, está sobre un continente: la Antártida, cubierta de hielo y rodeada de océano. En el Polo Norte viven los osos polares; en el Polo Sur, los pingüinos.","tag":"📖 Lectura"},
+  {"s":"h8","k":"quiz","em":"🧊","q":"¿Por qué los osos polares y los pingüinos no se encuentran en libertad?","opts":["Porque viven en polos opuestos","Porque se llevan mal","Porque los pingüinos vuelan","Porque no existen"],"ans":"Porque viven en polos opuestos","fact":"Uno vive en el norte del planeta y otro en el sur.","txt":"El Polo Norte está en un océano helado, el Ártico, y no es tierra firme sino hielo flotante. El Polo Sur, en cambio, está sobre un continente: la Antártida, cubierta de hielo y rodeada de océano. En el Polo Norte viven los osos polares; en el Polo Sur, los pingüinos.","tag":"📖 Lectura"},
+  {"s":"h8","k":"pinta","em":"🗺️","prompt":"Dibuja un mapamundi y pinta cada continente de un color distinto.","tip":"Escribe el nombre de cada continente que conozcas."},
+  {"s":"h4","k":"chiste","em":"🔢","q":"¿Qué le dice el 3 al 30?","a":"¡Para ser como yo tienes que ser sincero! 😄","x":"Sincero = «sin cero». ¡El 30 tiene un cero de más!"}
 ];
 const MEMORIA_LVS=[
   {id:1,nm:'Parejas fáciles',      em:'🃏',df:2,ds:'Encuentra las parejas iguales (4 parejas)',        tp:'pairs', p:{pairs:4,rounds:3}},
@@ -4412,6 +4499,7 @@ function go(s){
   else if(s==='sci')   showTrack('sci');
   else if(s==='cole')  showTrack('cole');
   else if(s==='plan')  showPlan();
+  else if(s==='planhoy') showPlanHoy();
   else if(s==='team')  showTeam();
   else if(s==='shop')  showShop();
   else if(s==='tro')   showTrophies();
@@ -4698,6 +4786,11 @@ function showHome(){
         ${wk>0?`<div style="margin-top:8px"><span class="repaso-tag">💪 ${wk} ítem${wk>1?'s':''} guardado${wk>1?'s':''} para repasar</span></div>`:''}
       </div>
       <div class="hm-grid">
+        <button class="hm-btn hm-plan" onclick="showPlanHoy()" style="grid-column:1/-1;border-top-color:#16A34A">
+          <div class="hm-em">🌴</div>
+          <div class="hm-nm">Plan de HOY: la selva de las palabras</div>
+          <div class="hm-su">${planHoyCounts().done}/${planHoyCounts().total} actividades · lengua, tablas, animales, cuentos y chistes</div>
+        </button>
         <button class="hm-btn hm-cole" onclick="showTrack('cole')" style="grid-column:1/-1">
           <div class="hm-em">🎒</div>
           <div class="hm-nm">Misiones del Cole: Francés · Alemán · Our World · Inglés · Mates</div>
@@ -5104,7 +5197,8 @@ function startLv(track,id){
     const pool=smartPool('sylc',all,x=>x.k,x=>x.k);
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[]}; renderSylc();
   } else if(lv.tp==='cole'){
-    const pool=coleQ.filter(x=>x.s===lv.p.s).map(x=>({...x}));
+    let pool=coleQ.filter(x=>x.s===lv.p.s).map(x=>({...x}));
+    if(lv.p.gen==='tablas'){ const g=genHoyTablas(), j=pool.filter(x=>x.k==='chiste'); pool=g.slice(0,7).concat(j,g.slice(7)); }
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[],sopaState:null,sudState:null,nextRender:renderCole}; renderCole();
   } else if(lv.tp==='sci'){
     const all=lv.p.cat==='all'?sciQ:sciQ.filter(x=>x.cat===lv.p.cat);
@@ -6301,7 +6395,7 @@ function ansSci(idx){
    Retos mezclados: quiz, escribir, investigar (YouTube) y pintar
 ══════════════════════════════════════ */
 const COLE_LANG={fr:'fr-FR',de:'de-DE',en:'en-GB',soc:'es-ES',mat:'es-ES'};
-const COLE_TAG={quiz:'🧩 Pregunta',escribe:'✍️ Reto de escritura',investiga:'🔎 Misión de investigación',pinta:'🎨 Reto para pintar',chiste:'😂 Chiste del día'};
+const COLE_TAG={quiz:'🧩 Pregunta',escribe:'✍️ Reto de escritura',investiga:'🔎 Misión de investigación',pinta:'🎨 Reto para pintar',chiste:'😂 Chiste del día',fill:'✍️ Completa la palabra',num:'🔢 Escribe el resultado',sil:'✂️ Separa en sílabas'};
 const COLE_STY={escribe:['#FFF7ED','#EA580C'],investiga:['#EFF6FF','#2563EB'],pinta:['#FDF4FF','#A21CAF']};
 function speakCole(){
   const gs=ST.gs, item=gs&&gs.probs&&gs.probs[gs.idx];
@@ -6310,6 +6404,23 @@ function speakCole(){
   const u=new SpeechSynthesisUtterance(item.say);
   u.lang=COLE_LANG[item.s]||'es-ES';u.rate=.85;
   speechSynthesis.speak(u);
+}
+/* Tablas relámpago: se generan al jugar, sin pistas ni opciones */
+function genHoyTablas(){
+  const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+  const types=['mul','mul','mul','mul','mul','mul','div','div','div','miss','miss','miss','mul','div'];
+  const used=new Set(), out=[];
+  let guard=0;
+  while(out.length<14&&guard++<1000){
+    const t=types[out.length%types.length];
+    const a=ri(3,12), b=ri(6,12), p=a*b;
+    const key=t+':'+Math.min(a,b)+'x'+Math.max(a,b);
+    if(used.has(key))continue; used.add(key);
+    if(t==='mul') out.push({s:'h4',k:'num',em:'⚡',q:`${a} × ${b} = ?`,ans:p,fact:`${a} × ${b} = ${p}`});
+    else if(t==='div') out.push({s:'h4',k:'num',em:'⚡',q:`${p} ÷ ${a} = ?`,ans:b,fact:`${p} ÷ ${a} = ${b}, porque ${a} × ${b} = ${p}`});
+    else out.push({s:'h4',k:'num',em:'⚡',q:`? × ${a} = ${p}`,ans:b,fact:`${b} × ${a} = ${p}`});
+  }
+  return out;
 }
 function renderCole(){
   const gs=ST.gs, item=gs.probs[gs.idx];
@@ -6321,17 +6432,38 @@ function renderCole(){
   if(item.k==='quiz'){
     const opts=gs.curOpts=shuffle([...item.opts]);
     const long=Math.max(...opts.map(o=>o.length))>26;
+    const passage=item.txt?`<div class="cole-box" style="background:#EFF6FF;border-left:4px solid #3B82F6;font-size:14px;line-height:1.7">${item.txt}</div>`:'';
     render(`${head}
-    <div class="gw">
+    <div class="gw"${item.txt?' style="overflow-y:auto"':''}>
       ${progRow()}
-      <div class="qc" style="gap:12px">
-        <div class="ql">${item.tag||COLE_TAG.quiz}</div>
-        <div style="font-size:46px">${item.em}</div>
+      <div class="qc" style="gap:12px${item.txt?';align-items:flex-start;flex:none;padding:16px 14px':''}">
+        <div class="ql"${item.txt?' style="align-self:center"':''}>${item.tag||COLE_TAG.quiz}</div>
+        ${item.txt?'':`<div style="font-size:46px">${item.em}</div>`}
+        ${passage}
         <div class="qt" style="font-size:17px;line-height:1.5">${item.q}</div>
         ${say}
-        <div class="opts"${long?' style="grid-template-columns:1fr"':''}>${opts.map((o,i)=>`<button class="opt" onclick="ansCole(${i})" style="font-size:14px;text-align:left;padding:10px 12px;min-height:46px">${o}</button>`).join('')}</div>
+        <div class="opts"${long?' style="grid-template-columns:1fr;align-self:stretch"':(item.txt?' style="align-self:stretch"':'')}>${opts.map((o,i)=>`<button class="opt" onclick="ansCole(${i})" style="font-size:14px;text-align:left;padding:10px 12px;min-height:46px">${o}</button>`).join('')}</div>
       </div>
     </div>`);
+    return;
+  }
+  if(item.k==='fill'||item.k==='num'||item.k==='sil'){
+    let body='',ph='',mode='text';
+    if(item.k==='fill'){ body=`<div class="qt" style="font-size:19px;line-height:1.6">${item.q.replace('___','<span style="border-bottom:3px solid #7C3AED;padding:0 18px">&nbsp;&nbsp;&nbsp;&nbsp;</span>')}</div>`; ph='Escribe la palabra…'; }
+    if(item.k==='num'){ body=`<div class="qt" style="font-size:${item.q.length>14?'17':'28'}px;font-weight:900;line-height:1.5">${item.q}</div>`; ph='Escribe el número'; mode='numeric'; }
+    if(item.k==='sil'){ body=`<div style="font-size:34px;font-weight:900;letter-spacing:1px">${item.w}</div><div style="font-size:13px;color:var(--mu)">Sepárala en sílabas con guiones. Ejemplo: ca-sa</div>`; ph='sí-la-bas'; }
+    render(`${head}
+    <div class="gw" style="overflow-y:auto">
+      ${progRow()}
+      <div class="qc" style="gap:12px;flex:none;padding:16px 14px">
+        <div class="ql">${COLE_TAG[item.k]}</div>
+        <div style="font-size:46px">${item.em}</div>
+        ${body}
+        <input id="cole-in" type="text" inputmode="${mode}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="${ph}" onkeydown="if(event.key==='Enter')ansColeInput()" style="width:100%;box-sizing:border-box;border:2px solid #E5E7EB;border-radius:12px;padding:12px;font-size:20px;text-align:center;font-family:inherit">
+        <button class="btn btn-gr btn-bl" onclick="ansColeInput()">✅ Comprobar</button>
+      </div>
+    </div>`);
+    setTimeout(()=>{const el=document.getElementById('cole-in'); if(el&&el.focus)el.focus();},60);
     return;
   }
   if(item.k==='chiste'){
@@ -6396,6 +6528,37 @@ function ansCole(idx){
   trackResult(item,ok);
   if(ok){onCorrect();showFb(true,item.fact,()=>nextOrEnd(renderCole),ST.gs.streak);}
   else{onWrong();showFb(false,`${item.ans} — ${item.fact}`,()=>nextOrEnd(renderCole),0);}
+}
+/* Respuestas escritas: palabra (ortografía estricta), número o sílabas */
+function ansColeInput(){
+  const gs=ST.gs; if(gs.lock)return;
+  const item=gs.probs[gs.idx];
+  const el=document.getElementById('cole-in');
+  const raw=((el&&el.value)||'').trim();
+  if(!raw){ if(el)el.style.borderColor='#EF4444'; return; }
+  gs.lock=true;
+  let ok=false, near=false, shown='';
+  if(item.k==='fill'){
+    const want=[].concat(item.ans), val=raw.toLowerCase().replace(/\s+/g,' ');
+    shown=want[0];
+    ok=want.includes(val);
+    near=!ok&&want.map(norm).includes(norm(val));
+  } else if(item.k==='num'){
+    const val=Number(raw.replace(/[\s.]/g,'').replace(',','.'));
+    shown=String(item.ans);
+    ok=val===item.ans;
+  } else {
+    const val=raw.toLowerCase().replace(/[\s·.•–—_/]+/g,'-').replace(/^-+|-+$/g,'');
+    shown=item.ans;
+    ok=norm(val)===norm(item.ans);
+  }
+  if(el)el.style.borderColor=ok?'#16A34A':'#EF4444';
+  if(ok){onCorrect();showFb(true,item.fact||'¡Correcto!',()=>nextOrEnd(renderCole),ST.gs.streak);}
+  else{
+    onWrong();
+    const lead=near?`¡Casi! Revisa las tildes y la ñ: se escribe «${shown}». `:(item.k==='num'?`Era ${shown}. `:`Era «${shown}». `);
+    showFb(false,lead+(item.fact||''),()=>nextOrEnd(renderCole),0);
+  }
 }
 function doneCole(){
   const gs=ST.gs; if(gs.lock)return;
@@ -6463,21 +6626,70 @@ function planCounts(){
   PLAN_DAYS.forEach(d=>d.blocks.filter(b=>!b.bonus).forEach(b=>{total++; if(pl[b.id])done++;}));
   return {done,total};
 }
+/* ── Plan de Aventuras #2 (hoy): La selva de las palabras ── */
+const PLAN_HOY={id:'hoy',coins:80,blocks:[
+  {id:'hoy0',em:'🥤',t:'Arranque suave',m:5,x:'Un vaso de agua y a ponerse cómodos con una manta. Di a mamá o a papá cómo te encuentras (del 1 al 10).'},
+  {id:'hoy1',em:'⚔️',t:'Palabras al ataque',m:10,x:'Partes de la oración y género de los sustantivos, con un chiste de verbos.',go:"startLv('cole',6)",star:true},
+  {id:'hoy2',em:'✂️',t:'Sílabas y palabras con doble vida',m:10,x:'Separa en sílabas y descubre palabras polisémicas (gato, sierra, cola…).',go:"startLv('cole',7)"},
+  {id:'hoy3',em:'🧘',t:'Descanso: estírate y respira',m:5,x:'Respira hondo 5 veces, estira brazos y piernas despacio y bebe agua.'},
+  {id:'hoy4',em:'✍️',t:'Ortografía sin red',m:10,x:'Escribe tú cada palabra, sin ayuda. ¡Ojo con las tildes, la h y la ll!',go:"startLv('cole',8)",star:true},
+  {id:'hoy5',em:'⚡',t:'Tablas relámpago',m:10,x:'Multiplicar y dividir sin pistas ni listas: escribe tú el resultado.',go:"startLv('cole',9)",star:true},
+  {id:'hoy6',em:'🔍',t:'Problemas de detective',m:10,x:'Problemas de varios pasos: lee con atención y calcula.',go:"startLv('cole',10)"},
+  {id:'hoy7',em:'🍎',t:'Merienda y mantita',m:15,x:'Merienda tranquila. Si os apetece, leed en voz alta o mirad fotos de animales raros.'},
+  {id:'hoy8',em:'🕷️',t:'Zoo de curiosidades: arañas, serpientes y pájaros',m:15,x:'Lecturas con preguntas de deducción, un chiste y datos alucinantes.',go:"startLv('cole',11)",star:true},
+  {id:'hoy9',em:'📖',t:'Cuento de relax',m:10,x:'Dos cuentos cortos (una serpiente con hipo y un pájaro con una araña), un chiste y un dibujo.',go:"startLv('cole',12)",star:true},
+  {id:'hoy10',em:'🌍',t:'Vuelta al mundo',m:10,x:'Océanos, montañas, ríos, España… y un chiste frío.',go:"startLv('cole',13)"},
+  {id:'hoy11',em:'🎨',t:'Taller: tu animal inventado',m:20,x:'Dibuja y pinta un animal mezcla de araña, serpiente y pájaro. Ponle nombre, di dónde vive y qué come.'},
+  {id:'hoy12',em:'📓',t:'Diario del explorador',m:10,x:'Escribe 3 cosas nuevas que has aprendido hoy y cuéntale a tu familia tu chiste favorito.'},
+  {id:'hoy13',em:'🌟',t:'Bonus: sopas de letras y sudokus',m:15,x:'Solo si te encuentras con fuerzas: ¡a por la Lógica!',go:"showTrack('logic')",bonus:true}
+]};
+function planHoyCounts(){
+  const pl=planGet(), core=PLAN_HOY.blocks.filter(b=>!b.bonus);
+  return {done:core.filter(b=>pl[b.id]).length,total:core.length};
+}
+function showPlanHoy(){
+  ST.curScreen='planhoy';
+  const pl=planGet(), c=planHoyCounts();
+  const rows=PLAN_HOY.blocks.map(b=>`<div class="plan-row">
+      <button class="plan-chk ${pl[b.id]?'on':''}" onclick="planToggle('${b.id}')">${pl[b.id]?'✅':''}</button>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:800;font-size:14px">${b.em} ${b.t}${b.star?' ⭐':''} <span style="font-weight:600;color:var(--mu);font-size:12px">· ${b.m} min${b.bonus?' · opcional':''}</span></div>
+        <div style="font-size:13px;color:var(--mu);line-height:1.4">${b.x}</div>
+      </div>
+      ${b.go?`<button class="plan-go" onclick="${b.go}">▶ Ir</button>`:''}
+    </div>`).join('');
+  render(`${hdr('Plan de HOY 🌴','home')}
+  <div class="screen">
+    <div class="card" style="padding:14px">
+      <div style="font-weight:900;font-size:16px">Aventura #2: ¡La selva de las palabras! 🌴</div>
+      <div style="font-size:13px;color:var(--mu);line-height:1.5;margin-top:6px">Hoy: lengua, tablas, problemas, animales alucinantes (arañas, serpientes y pájaros), cuentos, chistes y geografía. Id poquito a poco, bebed agua y descansad entre actividades. <b>Los bloques con ⭐ son los esenciales:</b> si hoy os encontráis peor, haced solo esos y descansad. Si os encontráis mal de verdad, avisad a mamá o a papá. ¡Ánimo, que vais a poder con todo!</div>
+      <div style="margin-top:10px;height:10px;background:#E5E7EB;border-radius:999px;overflow:hidden"><div style="height:100%;width:${Math.round(c.done/c.total*100)}%;background:#16A34A;border-radius:999px"></div></div>
+      <div style="font-size:12px;font-weight:700;color:var(--mu);margin-top:4px">${c.done}/${c.total} actividades · +${PLAN_HOY.coins} 🪙 al completar el día</div>
+      ${ST.planMsg?`<div style="margin-top:8px;font-weight:900;color:var(--gr)">${ST.planMsg}</div>`:''}
+    </div>
+    <div class="plan-day">${rows}</div>
+    <button class="btn btn-gh btn-bl" onclick="planReset('hoy')">🔄 Borrar las casillas de hoy</button>
+    <div style="height:8px"></div>
+  </div>`);
+}
 function planToggle(id){
   const pl=planGet(), p=P();
   if(pl[id]) delete pl[id]; else pl[id]=true;
-  const day=PLAN_DAYS.find(d=>d.blocks.some(b=>b.id===id));
-  const core=day.blocks.filter(b=>!b.bonus);
+  const day=PLAN_DAYS.concat([PLAN_HOY]).find(d=>d.blocks.some(b=>b.id===id));
+  const core=day.blocks.filter(b=>!b.bonus), prize=day.coins||60;
   if(pl[id] && core.every(b=>pl[b.id]) && !pl['award_'+day.id]){
-    pl['award_'+day.id]=true; p.coins+=60; p.earned+=60;
+    pl['award_'+day.id]=true; p.coins+=prize; p.earned+=prize;
     try{ boom(); }catch(e){}
-    ST.planMsg='🎉 ¡Día completado! +60 monedas 🪙';
+    ST.planMsg='🎉 ¡Día completado! +'+prize+' monedas 🪙';
   } else ST.planMsg='';
-  saveP(); showPlan();
+  saveP(); if(day.id==='hoy') showPlanHoy(); else showPlan();
 }
-function planReset(){
-  if(!confirm('¿Empezar una semana nueva? Se borrarán las casillas marcadas.'))return;
-  P().plan={}; saveP(); ST.planMsg=''; showPlan();
+function planReset(which){
+  if(!confirm('¿Empezar de nuevo? Se borrarán las casillas marcadas.'))return;
+  const pl=planGet(), days=which==='hoy'?[PLAN_HOY]:PLAN_DAYS;
+  days.forEach(d=>{ d.blocks.forEach(b=>delete pl[b.id]); delete pl['award_'+d.id]; });
+  saveP(); ST.planMsg='';
+  if(which==='hoy') showPlanHoy(); else showPlan();
 }
 function showPlan(){
   ST.curScreen='plan';
@@ -6510,7 +6722,7 @@ function showPlan(){
       ${ST.planMsg?`<div style="margin-top:8px;font-weight:900;color:var(--gr)">${ST.planMsg}</div>`:''}
     </div>
     ${days}
-    <button class="btn btn-gh btn-bl" onclick="planReset()">🔄 Empezar semana nueva</button>
+    <button class="btn btn-gh btn-bl" onclick="planReset('week')">🔄 Empezar semana nueva</button>
     <div style="height:8px"></div>
   </div>`);
 }
