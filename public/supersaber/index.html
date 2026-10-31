@@ -631,7 +631,8 @@ const COLE_LVS=[
   {"id":15,"nm":"Descomposición con llevadas 🚀","em":"🚀","df":4,"ds":"Sumas que se pasan y restas que piden prestado","tp":"cole","p":{"s":"h10","gen":"desc"},"free":true},
   {"id":16,"nm":"Sustantivos al detalle 🏷️","em":"🏷️","df":3,"ds":"Género, número, propios y comunes… ¡y un chiste!","tp":"cole","p":{"s":"h11"},"free":true},
   {"id":17,"nm":"La Tierra: giros, polos y líneas 🌐","em":"🌐","df":3,"ds":"Rotación, traslación, ecuador, paralelos y meridianos","tp":"cole","p":{"s":"h12"},"free":true},
-  {"id":18,"nm":"Mapas y paisajes 🗺️","em":"🗺️","df":3,"ds":"Tipos de mapas, relieve de costa y de interior, paisajes","tp":"cole","p":{"s":"h13"},"free":true}
+  {"id":18,"nm":"Mapas y paisajes 🗺️","em":"🗺️","df":3,"ds":"Tipos de mapas, relieve de costa y de interior, paisajes","tp":"cole","p":{"s":"h13"},"free":true},
+  {"id":19,"nm":"English Lab 2: Animal parts 🦘","em":"🦘","df":3,"ds":"Fur, horns, pouch, claws… ¡escribe y completa en inglés!","tp":"cole","p":{"s":"h14"},"free":true}
 ];
 /* Misiones del Cole: Francés, Alemán, Our World, Inglés, Mates. Retos cortos.
    k: quiz | chiste | sopa | sudoku | investiga | escribe | pinta   (tag:"🚦 Encrucijada" = quiz de lógica) */
@@ -854,7 +855,24 @@ const coleQ=[
   {"s":"h13","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[0,0,0,0],[0,0,3,4],[1,0,0,3],[4,0,1,0]],"sol":[[3,4,2,1],[2,1,3,4],[1,2,4,3],[4,3,1,2]]},
   {"s":"h13","k":"chiste","em":"🏝️","q":"¿Qué hace una isla en el mar?","a":"¡Nada! 🏝️🏊","x":"«Nada» puede ser «no hace nada» o «nada» del verbo nadar."},
   {"s":"h13","k":"escribe","em":"🌳","prompt":"Escribe un ejemplo de cambio del paisaje por causa natural y otro por causa artificial. Puedes hacer un dibujo o un croquis para explicarlo.","tip":"Natural: un volcán, una tormenta… Artificial: una carretera, una presa…"},
-  {"s":"h13","k":"pinta","em":"🎨","prompt":"Dibuja un paisaje de costa (con una isla, un golfo o un cabo) y otro de interior (con una montaña y una llanura). Usa colores distintos para el mar y para la tierra.","tip":"Escribe etiquetas con los nombres del relieve."}
+  {"s":"h13","k":"pinta","em":"🎨","prompt":"Dibuja un paisaje de costa (con una isla, un golfo o un cabo) y otro de interior (con una montaña y una llanura). Usa colores distintos para el mar y para la tierra.","tip":"Escribe etiquetas con los nombres del relieve."},
+  {"s":"h14","k":"quiz","em":"🎧","q":"Listen and choose the word.","opts":["giraffe","goat","kangaroo","ostrich"],"ans":"giraffe","fact":"Giraffe = jirafa. ¡Tiene el cuello más largo del mundo!","say":"giraffe","tag":"🎧 Listen"},
+  {"s":"h14","k":"quiz","em":"🪶","q":"I am the biggest bird in the world. I can’t fly, but I can run very fast. What am I?","opts":["ostrich","kangaroo","goat","giraffe"],"ans":"ostrich","fact":"Ostrich = avestruz."},
+  {"s":"h14","k":"quiz","em":"🐱","q":"What does «whiskers» mean?","opts":["bigotes","garras","cuernos","patas"],"ans":"bigotes","fact":"Whiskers = bigotes. Los gatos los usan para sentir lo que tienen cerca."},
+  {"s":"h14","k":"fill","em":"🐱","q":"A cat has long ___ (bigotes) on its face, next to its nose.","ans":"whiskers","fact":"Whiskers = bigotes. Se escribe con wh- al principio y acaba en -s."},
+  {"s":"h14","k":"fill","em":"🦘","q":"A kangaroo carries its baby in a ___ (bolsa).","ans":"pouch","fact":"Pouch = bolsa del canguro. Ojo con ou: p-o-u-c-h."},
+  {"s":"h14","k":"fill","em":"🐯","q":"Tigers and cats have sharp ___ (garras) to catch things.","ans":"claws","fact":"Claws = garras. C-L-A-W-S."},
+  {"s":"h14","k":"chiste","em":"🦘","q":"What kind of music does a kangaroo like?","a":"Hip-hop! 🦘🎶","x":"Los canguros saltan: «hop». Y «hip-hop» suena a eso. ¡Un chiste de saltos!"},
+  {"s":"h14","k":"fill","em":"🦒","q":"The ___ (jirafa) has a very long neck and brown spots.","ans":"giraffe","fact":"Giraffe = jirafa. Se escribe con dos f: g-i-r-a-f-f-e."},
+  {"s":"h14","k":"fill","em":"🐐","q":"A ___ (cabra) has horns and a small beard. It eats grass and climbs rocks.","ans":"goat","fact":"Goat = cabra. G-O-A-T."},
+  {"s":"h14","k":"fill","em":"🐰","q":"Rabbits have soft ___ (pelo, pelaje) that keeps them warm.","ans":"fur","fact":"Fur = pelo o pelaje de un animal. Solo tres letras: f-u-r."},
+  {"s":"h14","k":"fill","em":"🐶","q":"Dogs have four ___ (patas) and they use them to run and dig.","ans":"paws","fact":"Paws = patas de un animal (perro, gato, oso…). P-A-W-S."},
+  {"s":"h14","k":"fill","em":"🐂","q":"Goats and bulls have ___ (cuernos) on their heads.","ans":"horns","fact":"Horns = cuernos. H-O-R-N-S."},
+  {"s":"h14","k":"fill","em":"✍️","q":"Write in English: «canguro» → ___","ans":"kangaroo","fact":"Kangaroo = canguro. K-A-N-G-A-R-O-O: ¡dos oes al final!"},
+  {"s":"h14","k":"fill","em":"🔀","q":"Unscramble the letters: H C R I T S O → ___ (an enormous bird that runs very fast)","ans":"ostrich","fact":"Ostrich = avestruz. O-S-T-R-I-C-H."},
+  {"s":"h14","k":"sopa","em":"🔍","nm":"Animal words","size":7,"words":["GIRAFFE","OSTRICH","POUCH","CLAWS","GOAT"],"placements":[{"w":"GIRAFFE","r":0,"c":0,"dir":"h"},{"w":"OSTRICH","r":2,"c":0,"dir":"h"},{"w":"POUCH","r":4,"c":0,"dir":"h"},{"w":"CLAWS","r":6,"c":0,"dir":"h"},{"w":"GOAT","r":3,"c":6,"dir":"v"}]},
+  {"s":"h14","k":"escribe","em":"✍️","prompt":"Write 3 sentences in English about your favourite animal. Use at least 3 of these words: fur, horns, pouch, claws, paws, whiskers.","tip":"Example: My cat has soft fur and long whiskers."},
+  {"s":"h14","k":"pinta","em":"🎨","prompt":"Draw a crazy animal with the horns of a goat, the long neck of a giraffe, the pouch of a kangaroo and the claws of a tiger. Label every part in English!","tip":"Escribe junto a cada parte: horns, neck, pouch, claws, fur, paws, whiskers…"}
 ];
 const MEMORIA_LVS=[
   {id:1,nm:'Parejas fáciles',      em:'🃏',df:2,ds:'Encuentra las parejas iguales (4 parejas)',        tp:'pairs', p:{pairs:4,rounds:3}},
@@ -6476,7 +6494,7 @@ function ansSci(idx){
    GAME: MISIONES DEL COLE (Francés, Alemán, Our World, Inglés, Mates)
    Retos mezclados: quiz, escribir, investigar (YouTube) y pintar
 ══════════════════════════════════════ */
-const COLE_LANG={fr:'fr-FR',de:'de-DE',en:'en-GB',soc:'es-ES',mat:'es-ES'};
+const COLE_LANG={fr:'fr-FR',de:'de-DE',en:'en-GB',soc:'es-ES',mat:'es-ES',h14:'en-GB'};
 const COLE_TAG={quiz:'🧩 Pregunta',escribe:'✍️ Reto de escritura',investiga:'🔎 Misión de investigación',pinta:'🎨 Reto para pintar',chiste:'😂 Chiste del día',fill:'✍️ Completa la palabra',num:'🔢 Escribe el resultado',sil:'✂️ Separa en sílabas',desc:'🧱 Descompón y calcula',propio:'🔠 Nombre propio'};
 const COLE_STY={escribe:['#FFF7ED','#EA580C'],investiga:['#EFF6FF','#2563EB'],pinta:['#FDF4FF','#A21CAF']};
 function speakCole(){
