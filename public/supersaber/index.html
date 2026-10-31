@@ -626,7 +626,12 @@ const COLE_LVS=[
   {"id":10,"nm":"Problemas de detective 🔍","em":"🔍","df":4,"ds":"Problemas de varios pasos para resolver con el cerebro","tp":"cole","p":{"s":"h5"},"free":true},
   {"id":11,"nm":"Zoo de curiosidades 🕷️🐍🐦","em":"🦉","df":3,"ds":"Arañas, serpientes y pájaros: lee, deduce y ríete","tp":"cole","p":{"s":"h6"},"free":true},
   {"id":12,"nm":"Cuento de relax 📖","em":"📖","df":3,"ds":"Dos cuentos cortos, un chiste y mucha imaginación","tp":"cole","p":{"s":"h7"},"free":true},
-  {"id":13,"nm":"Vuelta al mundo 🌍","em":"🌍","df":3,"ds":"Océanos, montañas, ríos y España","tp":"cole","p":{"s":"h8"},"free":true}
+  {"id":13,"nm":"Vuelta al mundo 🌍","em":"🌍","df":3,"ds":"Océanos, montañas, ríos y España","tp":"cole","p":{"s":"h8"},"free":true},
+  {"id":14,"nm":"Sumo y resto descomponiendo 🧱","em":"🧱","df":3,"ds":"Centenas, decenas y unidades: sumas y restas por partes","tp":"cole","p":{"s":"h9","gen":"desc"},"free":true},
+  {"id":15,"nm":"Descomposición con llevadas 🚀","em":"🚀","df":4,"ds":"Sumas que se pasan y restas que piden prestado","tp":"cole","p":{"s":"h10","gen":"desc"},"free":true},
+  {"id":16,"nm":"Sustantivos al detalle 🏷️","em":"🏷️","df":3,"ds":"Género, número, propios y comunes… ¡y un chiste!","tp":"cole","p":{"s":"h11"},"free":true},
+  {"id":17,"nm":"La Tierra: giros, polos y líneas 🌐","em":"🌐","df":3,"ds":"Rotación, traslación, ecuador, paralelos y meridianos","tp":"cole","p":{"s":"h12"},"free":true},
+  {"id":18,"nm":"Mapas y paisajes 🗺️","em":"🗺️","df":3,"ds":"Tipos de mapas, relieve de costa y de interior, paisajes","tp":"cole","p":{"s":"h13"},"free":true}
 ];
 /* Misiones del Cole: Francés, Alemán, Our World, Inglés, Mates. Retos cortos.
    k: quiz | chiste | sopa | sudoku | investiga | escribe | pinta   (tag:"🚦 Encrucijada" = quiz de lógica) */
@@ -773,7 +778,83 @@ const coleQ=[
   {"s":"h8","k":"quiz","em":"🧊","q":"¿Dónde viven los osos polares?","opts":["En el Polo Norte","En el Polo Sur","En el Sahara","En el Amazonas"],"ans":"En el Polo Norte","fact":"Los osos polares son del Ártico.","txt":"El Polo Norte está en un océano helado, el Ártico, y no es tierra firme sino hielo flotante. El Polo Sur, en cambio, está sobre un continente: la Antártida, cubierta de hielo y rodeada de océano. En el Polo Norte viven los osos polares; en el Polo Sur, los pingüinos.","tag":"📖 Lectura"},
   {"s":"h8","k":"quiz","em":"🧊","q":"¿Por qué los osos polares y los pingüinos no se encuentran en libertad?","opts":["Porque viven en polos opuestos","Porque se llevan mal","Porque los pingüinos vuelan","Porque no existen"],"ans":"Porque viven en polos opuestos","fact":"Uno vive en el norte del planeta y otro en el sur.","txt":"El Polo Norte está en un océano helado, el Ártico, y no es tierra firme sino hielo flotante. El Polo Sur, en cambio, está sobre un continente: la Antártida, cubierta de hielo y rodeada de océano. En el Polo Norte viven los osos polares; en el Polo Sur, los pingüinos.","tag":"📖 Lectura"},
   {"s":"h8","k":"pinta","em":"🗺️","prompt":"Dibuja un mapamundi y pinta cada continente de un color distinto.","tip":"Escribe el nombre de cada continente que conozcas."},
-  {"s":"h4","k":"chiste","em":"🔢","q":"¿Qué le dice el 3 al 30?","a":"¡Para ser como yo tienes que ser sincero! 😄","x":"Sincero = «sin cero». ¡El 30 tiene un cero de más!"}
+  {"s":"h4","k":"chiste","em":"🔢","q":"¿Qué le dice el 3 al 30?","a":"¡Para ser como yo tienes que ser sincero! 😄","x":"Sincero = «sin cero». ¡El 30 tiene un cero de más!"},
+  {"s":"h9","k":"quiz","em":"🧱","q":"Descomponer el número 538 es escribirlo así…","opts":["500 + 30 + 8","5 + 3 + 8","50 + 30 + 80","538 + 0 + 0"],"ans":"500 + 30 + 8","fact":"538 son 5 centenas (500), 3 decenas (30) y 8 unidades."},
+  {"s":"h9","k":"num","em":"🔢","q":"En el número 574, ¿cuánto vale el 7? Escribe su valor.","ans":70,"fact":"El 7 está en las decenas: son 7 decenas, o sea 70."},
+  {"s":"h9","k":"desc","gen":"sE","em":"🧱"},
+  {"s":"h9","k":"desc","gen":"sE","em":"🧱"},
+  {"s":"h9","k":"desc","gen":"rE","em":"🧱"},
+  {"s":"h9","k":"desc","gen":"rE","em":"🧱"},
+  {"s":"h9","k":"quiz","em":"🔎","q":"Mira los resultados de las dos sumas y las dos restas de antes. ¿Qué relación hay entre ellos?","opts":["La primera resta da lo mismo que la primera suma, y la segunda igual que la segunda","Todos los resultados valen 100","No tienen nada que ver entre sí","Las restas siempre dan más que las sumas"],"ans":"La primera resta da lo mismo que la primera suma, y la segunda igual que la segunda","fact":"¡Son parejas! Es un truco para autocorregirte: si tu suma y tu resta no coinciden, revisa los cálculos paso a paso hasta encontrar el error.","tag":"🔎 ¡Autocorrígete!"},
+  {"s":"h9","k":"desc","gen":"sE","em":"🧱"},
+  {"s":"h9","k":"desc","gen":"sE","em":"🧱"},
+  {"s":"h9","k":"desc","gen":"rE","em":"🧱"},
+  {"s":"h9","k":"desc","gen":"rE","em":"🧱"},
+  {"s":"h9","k":"chiste","em":"3️⃣","q":"¿Qué le dijo el 3 al 30?","a":"¡Para ser como yo, tienes que ser sincero! (sin cero) 😄","x":"El 30 tiene un cero en las unidades; el 3 no. ¡Sin cero = sincero!"},
+  {"s":"h9","k":"escribe","em":"🧠","prompt":"Inventa tu pareja de operaciones: una suma de tres cifras y una resta que den el MISMO resultado. Escribe cada una descompuesta en centenas, decenas y unidades y comprueba que coinciden.","tip":"Pista: elige primero el resultado (por ejemplo 400) y piensa qué sumandos y qué resta lo dan."},
+  {"s":"h9","k":"pinta","em":"🎨","prompt":"Dibuja con bloques de base 10 la suma 243 + 125: cuadrados grandes para las centenas, barritas para las decenas y cubitos para las unidades. Luego dibuja el resultado.","tip":"Cada cuadrado grande vale 100, cada barra 10 y cada cubito 1."},
+  {"s":"h10","k":"quiz","em":"🚀","q":"Para sumar 478 + 356, las decenas son 70 + 50. ¿Cuánto da?","opts":["120","12","110","1200"],"ans":"120","fact":"70 + 50 = 120: son 12 decenas, o sea 1 centena y 2 decenas."},
+  {"s":"h10","k":"desc","gen":"sH","em":"🧱"},
+  {"s":"h10","k":"desc","gen":"sH","em":"🧱"},
+  {"s":"h10","k":"desc","gen":"sH","em":"🧱"},
+  {"s":"h10","k":"quiz","em":"🔁","q":"Para restar 62 − 28 no podemos quitar 8 unidades a 2 unidades. ¿Qué hacemos?","opts":["Cambiamos 1 decena por 10 unidades: 62 = 50 + 12","Quitamos al revés: 8 − 2","Decimos que no se puede","Sumamos 28 a 62"],"ans":"Cambiamos 1 decena por 10 unidades: 62 = 50 + 12","fact":"62 = 50 + 12 → 50 − 20 = 30 y 12 − 8 = 4 → 30 + 4 = 34."},
+  {"s":"h10","k":"desc","gen":"rH","em":"🧱"},
+  {"s":"h10","k":"desc","gen":"rH","em":"🧱"},
+  {"s":"h10","k":"desc","gen":"rH","em":"🧱"},
+  {"s":"h10","k":"chiste","em":"🧮","q":"¿Qué le dijo un múltiplo de 3 a otro múltiplo de 3?","a":"¡Qué bien que estemos en la misma tabla! 😄","x":"Los múltiplos de 3 están en la tabla del 3: 3, 6, 9, 12, 15…"},
+  {"s":"h10","k":"desc","gen":"rD","em":"🧱"},
+  {"s":"h10","k":"num","em":"🏫","q":"En el cole hay 245 niños en primaria y 138 en infantil. ¿Cuántos niños hay en total?","ans":383,"fact":"245 + 138 = 383"},
+  {"s":"h10","k":"num","em":"📚","q":"Un libro tiene 432 páginas. Marta ya ha leído 175. ¿Cuántas páginas le faltan por leer?","ans":257,"fact":"432 − 175 = 257"},
+  {"s":"h10","k":"num","em":"🐔","q":"Una granja tiene 346 gallinas y 275 patos. Hoy venden 190 aves. ¿Cuántas aves quedan?","ans":431,"fact":"346 + 275 = 621 y 621 − 190 = 431"},
+  {"s":"h10","k":"escribe","em":"🗣️","prompt":"Explica con tus palabras, paso a paso, cómo se resuelve 62 − 28 por descomposición, como si se lo enseñaras a un amigo.","tip":"Empieza así: «Primero descompongo el 62 en…»"},
+  {"s":"h11","k":"quiz","em":"🏷️","q":"¿Qué género y número tiene el sustantivo «leones»?","opts":["masculino singular","masculino plural","femenino singular","femenino plural"],"ans":"masculino plural","fact":"León es masculino (el león) y «leones» está en plural."},
+  {"s":"h11","k":"quiz","em":"🏷️","q":"¿Qué género y número tiene el sustantivo «gallina»?","opts":["masculino singular","masculino plural","femenino singular","femenino plural"],"ans":"femenino singular","fact":"La gallina: femenino y singular."},
+  {"s":"h11","k":"quiz","em":"🏷️","q":"¿Qué género y número tiene el sustantivo «mano»?","opts":["masculino singular","masculino plural","femenino singular","femenino plural"],"ans":"femenino singular","fact":"Acaba en -o pero es femenino: la mano. ¡Cuidado con las trampas!"},
+  {"s":"h11","k":"quiz","em":"💧","q":"¿De qué género es la palabra «agua»?","opts":["Femenino: «el agua fría», «las aguas»","Masculino: «el agua frío»","Masculino, porque lleva «el»","No tiene género"],"ans":"Femenino: «el agua fría», «las aguas»","fact":"Agua es femenina. Decimos «el agua» solo para que suene mejor, pero seguimos diciendo «agua fría» y «las aguas»."},
+  {"s":"h11","k":"fill","em":"✍️","q":"El plural de «lápiz» es ___.","ans":"lápices","fact":"Las palabras que acaban en z cambian la z por c en plural: lápiz → lápices."},
+  {"s":"h11","k":"fill","em":"✍️","q":"El femenino de «actor» es ___.","ans":"actriz","fact":"Actor → actriz. ¡No se dice «actora»!"},
+  {"s":"h11","k":"fill","em":"✍️","q":"El femenino de «caballo» es ___.","ans":"yegua","fact":"Hay palabras con femenino distinto: caballo → yegua, toro → vaca, padre → madre."},
+  {"s":"h11","k":"chiste","em":"🎩","q":"¿Qué le dijo el nombre común al nombre propio?","a":"¡Qué elegante vas con tu mayúscula! 🎩","x":"Los nombres propios (Lucía, Madrid, Teide) siempre empiezan con mayúscula."},
+  {"s":"h11","k":"quiz","em":"🏞️","q":"¿Cuál de estas palabras es un sustantivo propio?","opts":["Duero","río","montaña","playa"],"ans":"Duero","fact":"Duero es el nombre de un río concreto: sustantivo propio. «Río» es un sustantivo común."},
+  {"s":"h11","k":"quiz","em":"📝","q":"En la oración «Lucía y Pablo viajaron a Segovia en tren», ¿qué sustantivos son propios?","opts":["Lucía, Pablo y Segovia","Lucía y tren","Segovia y tren","Pablo y viajaron"],"ans":"Lucía, Pablo y Segovia","fact":"Son nombres de personas y de una ciudad concretas. «Tren» es común y «viajaron» es un verbo."},
+  {"s":"h11","k":"quiz","em":"🌋","q":"En la oración «El Teide es un volcán de Tenerife», ¿cuál es el sustantivo común?","opts":["volcán","Teide","Tenerife","Teide y Tenerife"],"ans":"volcán","fact":"Teide y Tenerife son nombres propios; volcán es común."},
+  {"s":"h11","k":"propio","em":"🏞️","q":"río","eg":"Ebro, Tajo o Duero","fact":"Un nombre propio nombra a una persona, un animal o un lugar concreto, y siempre empieza con mayúscula."},
+  {"s":"h11","k":"propio","em":"🏙️","q":"ciudad","eg":"Madrid, Sevilla o París","fact":"Un nombre propio nombra a una persona, un animal o un lugar concreto, y siempre empieza con mayúscula."},
+  {"s":"h11","k":"propio","em":"🐶","q":"mascota","eg":"Toby, Luna o Nube","fact":"Un nombre propio nombra a una persona, un animal o un lugar concreto, y siempre empieza con mayúscula."},
+  {"s":"h11","k":"escribe","em":"✍️","prompt":"Escribe 3 oraciones sobre tu familia o tus amigos. En cada una debe haber un nombre propio (con mayúscula) y un nombre común. Después, rodea los nombres propios.","tip":"Ejemplo: Mi hermano Pablo tiene un balón rojo."},
+  {"s":"h12","k":"investiga","em":"🔎","prompt":"Busca un vídeo que explique los movimientos de la Tierra. Descubre cuánto dura cada uno y qué provoca, y escríbelo con tus palabras.","yt":"movimientos de rotación y traslación de la Tierra para niños","tip":"Escribe una frase para la rotación y otra para la traslación.","fact":"Rotación: 24 horas → día y noche. Traslación: 365 días y unas 6 horas → estaciones."},
+  {"s":"h12","k":"fill","em":"🌍","q":"El movimiento de la Tierra girando sobre sí misma se llama ___.","ans":"rotación","fact":"Rotación: la Tierra gira sobre su eje y tarda 24 horas."},
+  {"s":"h12","k":"fill","em":"☀️","q":"El movimiento de la Tierra alrededor del Sol se llama ___.","ans":"traslación","fact":"Traslación: una vuelta completa alrededor del Sol dura un año."},
+  {"s":"h12","k":"quiz","em":"⏰","q":"¿Cuánto tarda la Tierra en dar una vuelta sobre sí misma (rotación)?","opts":["24 horas (un día)","365 días","1 hora","1 semana"],"ans":"24 horas (un día)","fact":"Una rotación completa dura 24 horas."},
+  {"s":"h12","k":"quiz","em":"📅","q":"¿Cuánto tarda la Tierra en dar una vuelta alrededor del Sol (traslación)?","opts":["365 días y unas 6 horas (un año)","24 horas","30 días","10 años"],"ans":"365 días y unas 6 horas (un año)","fact":"Esas 6 horas extra se van sumando: cada 4 años hay un año bisiesto de 366 días."},
+  {"s":"h12","k":"quiz","em":"🌗","q":"¿Qué consecuencia tiene la rotación de la Tierra?","opts":["Los días y las noches","Las estaciones del año","Los terremotos","Las nubes"],"ans":"Los días y las noches","fact":"Mientras la Tierra gira, la parte que mira al Sol tiene día y la parte contraria tiene noche."},
+  {"s":"h12","k":"quiz","em":"🍂","q":"¿Qué consecuencia tiene la traslación de la Tierra?","opts":["Las estaciones del año","Los días y las noches","La lluvia","Los volcanes"],"ans":"Las estaciones del año","fact":"Como el eje está inclinado, según dónde esté la Tierra en su órbita recibe más o menos luz: primavera, verano, otoño e invierno."},
+  {"s":"h12","k":"chiste","em":"🌍","q":"¿Qué le dijo la Tierra al Sol?","a":"¡Me tienes dando vueltas! 🌍☀️","x":"La Tierra da una vuelta alrededor del Sol cada año: es la traslación."},
+  {"s":"h12","k":"quiz","em":"🌐","q":"¿Qué usamos para representar la Tierra de la forma más precisa posible?","opts":["Un globo terráqueo","Un planisferio","El plano de una ciudad","Una brújula"],"ans":"Un globo terráqueo","fact":"El globo terráqueo es una esfera como la Tierra, así que no deforma los continentes."},
+  {"s":"h12","k":"quiz","em":"🗺️","q":"¿Qué podemos usar para ver toda la superficie de la Tierra en una sola hoja plana?","opts":["Un planisferio (mapamundi)","Un globo terráqueo","El plano de las calles","Una escala"],"ans":"Un planisferio (mapamundi)","fact":"El planisferio extiende la esfera sobre un plano, por eso deforma un poco los tamaños."},
+  {"s":"h12","k":"quiz","em":"📍","q":"¿Qué son los paralelos y los meridianos?","opts":["Líneas imaginarias que sirven para localizar lugares en la Tierra","Los mares que rodean los continentes","Los dos polos de la Tierra","Ríos muy largos"],"ans":"Líneas imaginarias que sirven para localizar lugares en la Tierra","fact":"Los paralelos rodean la Tierra de este a oeste (paralelos al ecuador) y los meridianos van de un polo a otro."},
+  {"s":"h12","k":"quiz","em":"🔴","q":"¿Cuál es el paralelo más importante, el que divide la Tierra en hemisferio norte y hemisferio sur?","opts":["El ecuador","El meridiano de Greenwich","El eje terrestre","El trópico"],"ans":"El ecuador","fact":"El ecuador es el paralelo 0°: arriba queda el hemisferio norte y abajo el hemisferio sur."},
+  {"s":"h12","k":"quiz","em":"🧭","q":"¿Qué es el eje terrestre?","opts":["Una línea imaginaria que une los polos y sobre la que gira la Tierra","El borde de un continente","La línea del ecuador","Un meridiano especial"],"ans":"Una línea imaginaria que une los polos y sobre la que gira la Tierra","fact":"El eje atraviesa la Tierra de polo a polo y está un poco inclinado."},
+  {"s":"h12","k":"quiz","em":"🇪🇸","q":"España está en el hemisferio…","opts":["norte","sur","ninguno","los dos a la vez"],"ans":"norte","fact":"España está por encima (al norte) del ecuador."},
+  {"s":"h12","k":"sopa","em":"🔍","nm":"Planeta Tierra","size":7,"words":["ECUADOR","EJE","GLOBO","POLO","TIERRA"],"placements":[{"w":"ECUADOR","r":0,"c":0,"dir":"h"},{"w":"GLOBO","r":2,"c":2,"dir":"h"},{"w":"POLO","r":4,"c":3,"dir":"h"},{"w":"EJE","r":2,"c":0,"dir":"v"},{"w":"TIERRA","r":6,"c":0,"dir":"h"}]},
+  {"s":"h12","k":"pinta","em":"🌎","prompt":"Dibuja la Tierra: el ecuador con lápiz rojo, el eje en azul y los dos polos (N y S). Pinta el hemisferio norte de amarillo, el sur de verde y añade una flecha para mostrar hacia dónde gira.","tip":"Ponle nombre a cada cosa que dibujes."},
+  {"s":"h13","k":"quiz","em":"🗺️","q":"¿Qué tipo de mapa muestra montañas, ríos, llanuras y otras formas del relieve?","opts":["Mapa físico","Mapa político","Mapa histórico","Mapa del tiempo"],"ans":"Mapa físico","fact":"El mapa físico enseña el relieve: montañas, llanuras, ríos…"},
+  {"s":"h13","k":"quiz","em":"🗺️","q":"¿Qué tipo de mapa muestra las comunidades autónomas de España con sus límites?","opts":["Mapa político","Mapa físico","Mapa histórico","Mapa de carreteras"],"ans":"Mapa político","fact":"El mapa político muestra la división de un territorio: países, comunidades, provincias…"},
+  {"s":"h13","k":"quiz","em":"🏰","q":"Un mapa que enseña cómo era la Península hace siglos, con reinos como Castilla, Aragón o Navarra, es un mapa…","opts":["histórico","físico","político","del tiempo"],"ans":"histórico","fact":"El mapa histórico representa lugares y fronteras de otras épocas."},
+  {"s":"h13","k":"quiz","em":"🔑","q":"En un mapa, ¿para qué sirve la leyenda?","opts":["Para explicar qué significan los colores y los signos","Para medir la distancia hasta el polo","Para saber qué hora es","Para ver el relieve en 3D"],"ans":"Para explicar qué significan los colores y los signos","fact":"La leyenda es como el diccionario del mapa: dice qué significa cada color y cada símbolo."},
+  {"s":"h13","k":"quiz","em":"📏","q":"En un mapa aparece una barra con «0 — 100 — 200 km». ¿Cómo se llama?","opts":["Escala","Leyenda","Meridiano","Título"],"ans":"Escala","fact":"La escala te dice cuántos kilómetros reales representa cada trozo del mapa."},
+  {"s":"h13","k":"quiz","em":"🏙️","q":"Un paisaje artificial es aquel que…","opts":["ha sido cambiado por las personas: casas, carreteras, cultivos…","no tiene ninguna planta","solo existe en los polos","tiene muchas montañas"],"ans":"ha sido cambiado por las personas: casas, carreteras, cultivos…","fact":"En un paisaje artificial se nota la mano humana. En uno natural, no."},
+  {"s":"h13","k":"quiz","em":"🌋","q":"¿Cuál es un cambio del paisaje por causas NATURALES?","opts":["Una erupción volcánica","Construir una autopista","Talar un bosque para hacer casas","Crear un pantano con una presa"],"ans":"Una erupción volcánica","fact":"Los volcanes, las inundaciones o la erosión del viento y del agua cambian el paisaje sin que intervengan las personas."},
+  {"s":"h13","k":"quiz","em":"🏗️","q":"¿Cuál es un cambio del paisaje por causas ARTIFICIALES?","opts":["Construir un pantano con una presa","Una avalancha de nieve","Un río que arrastra tierra","Un terremoto"],"ans":"Construir un pantano con una presa","fact":"Una presa y un pantano los hacen las personas."},
+  {"s":"h13","k":"quiz","em":"🏝️","q":"¿Cuál de estas formas del relieve es de COSTA?","opts":["Una isla","Una llanura","Una montaña","Un valle"],"ans":"Una isla","fact":"La isla (tierra rodeada de agua) es relieve de costa; llanura, montaña y valle son de interior."},
+  {"s":"h13","k":"quiz","em":"⛰️","q":"¿Cuál de estas formas del relieve es de INTERIOR?","opts":["Una llanura","Un cabo","Un golfo","Una playa"],"ans":"Una llanura","fact":"Cabo, golfo y playa están en la costa; la llanura está tierra adentro."},
+  {"s":"h13","k":"quiz","em":"🌊","q":"¿Qué es un golfo?","opts":["Una gran entrada del mar en la tierra","Un trozo de tierra rodeado de agua por todos lados","Una montaña con nieve","Una llanura muy alta"],"ans":"Una gran entrada del mar en la tierra","fact":"Es relieve de costa, como el golfo de Vizcaya o el golfo de Cádiz."},
+  {"s":"h13","k":"quiz","em":"🏝️","q":"Las Islas Canarias son muchas islas juntas. ¿Cómo se llama un conjunto de islas?","opts":["Archipiélago","Península","Cordillera","Meseta"],"ans":"Archipiélago","fact":"Canarias y Baleares son archipiélagos."},
+  {"s":"h13","k":"quiz","em":"🚦","q":"Ana, Beni y Cleo visitan una playa, una montaña y una llanura (cada uno un lugar distinto). Beni fue a la playa. Ana tiene vértigo y NO fue a la montaña. ¿Quién fue a la montaña?","opts":["Cleo","Ana","Beni","No se sabe"],"ans":"Cleo","fact":"Beni = playa. Ana no va a la montaña ni a la playa (ya es de Beni), así que Ana va a la llanura. A Cleo le toca la montaña.","tag":"🚦 Encrucijada"},
+  {"s":"h13","k":"sudoku","em":"🧩","nm":"Mini sudoku","puz":[[0,0,0,0],[0,0,3,4],[1,0,0,3],[4,0,1,0]],"sol":[[3,4,2,1],[2,1,3,4],[1,2,4,3],[4,3,1,2]]},
+  {"s":"h13","k":"chiste","em":"🏝️","q":"¿Qué hace una isla en el mar?","a":"¡Nada! 🏝️🏊","x":"«Nada» puede ser «no hace nada» o «nada» del verbo nadar."},
+  {"s":"h13","k":"escribe","em":"🌳","prompt":"Escribe un ejemplo de cambio del paisaje por causa natural y otro por causa artificial. Puedes hacer un dibujo o un croquis para explicarlo.","tip":"Natural: un volcán, una tormenta… Artificial: una carretera, una presa…"},
+  {"s":"h13","k":"pinta","em":"🎨","prompt":"Dibuja un paisaje de costa (con una isla, un golfo o un cabo) y otro de interior (con una montaña y una llanura). Usa colores distintos para el mar y para la tierra.","tip":"Escribe etiquetas con los nombres del relieve."}
 ];
 const MEMORIA_LVS=[
   {id:1,nm:'Parejas fáciles',      em:'🃏',df:2,ds:'Encuentra las parejas iguales (4 parejas)',        tp:'pairs', p:{pairs:4,rounds:3}},
@@ -5199,6 +5280,7 @@ function startLv(track,id){
   } else if(lv.tp==='cole'){
     let pool=coleQ.filter(x=>x.s===lv.p.s).map(x=>({...x}));
     if(lv.p.gen==='tablas'){ const g=genHoyTablas(), j=pool.filter(x=>x.k==='chiste'); pool=g.slice(0,7).concat(j,g.slice(7)); }
+    else if(lv.p.gen==='desc'){ pool=genDescPool(pool); }
     ST.gs={...base,probs:pool,total:pool.length,idx:0,curOpts:[],sopaState:null,sudState:null,nextRender:renderCole}; renderCole();
   } else if(lv.tp==='sci'){
     const all=lv.p.cat==='all'?sciQ:sciQ.filter(x=>x.cat===lv.p.cat);
@@ -6395,7 +6477,7 @@ function ansSci(idx){
    Retos mezclados: quiz, escribir, investigar (YouTube) y pintar
 ══════════════════════════════════════ */
 const COLE_LANG={fr:'fr-FR',de:'de-DE',en:'en-GB',soc:'es-ES',mat:'es-ES'};
-const COLE_TAG={quiz:'🧩 Pregunta',escribe:'✍️ Reto de escritura',investiga:'🔎 Misión de investigación',pinta:'🎨 Reto para pintar',chiste:'😂 Chiste del día',fill:'✍️ Completa la palabra',num:'🔢 Escribe el resultado',sil:'✂️ Separa en sílabas'};
+const COLE_TAG={quiz:'🧩 Pregunta',escribe:'✍️ Reto de escritura',investiga:'🔎 Misión de investigación',pinta:'🎨 Reto para pintar',chiste:'😂 Chiste del día',fill:'✍️ Completa la palabra',num:'🔢 Escribe el resultado',sil:'✂️ Separa en sílabas',desc:'🧱 Descompón y calcula',propio:'🔠 Nombre propio'};
 const COLE_STY={escribe:['#FFF7ED','#EA580C'],investiga:['#EFF6FF','#2563EB'],pinta:['#FDF4FF','#A21CAF']};
 function speakCole(){
   const gs=ST.gs, item=gs&&gs.probs&&gs.probs[gs.idx];
@@ -6422,6 +6504,66 @@ function genHoyTablas(){
   }
   return out;
 }
+/* Descomposición: sumas y restas por partes (se generan al jugar) */
+function descDigits(n){ return [Math.floor(n/100),Math.floor(n/10)%10,n%10]; }
+function descParts(op,a,b){
+  const A=descDigits(a), B=descDigits(b);
+  if(op==='+') return {parts:[(A[0]+B[0])*100,(A[1]+B[1])*10,A[2]+B[2]],reg:null,notes:[],borrows:0};
+  const x=A.slice(), notes=[];
+  if(x[2]<B[2]){ x[2]+=10; x[1]-=1; notes.push('1 decena por 10 unidades'); }
+  if(x[1]<B[1]){ x[1]+=10; x[0]-=1; notes.push('1 centena por 10 decenas'); }
+  return {parts:[(x[0]-B[0])*100,(x[1]-B[1])*10,x[2]-B[2]],reg:notes.length?`${a} = ${x[0]*100} + ${x[1]*10} + ${x[2]}`:null,notes,borrows:notes.length};
+}
+/* code: sE suma sin llevadas · sH suma con llevadas · rE resta sin reagrupar (con res = mismo resultado que una suma) · rH una reagrupación · rD dos reagrupaciones */
+function genDescItem(code,res){
+  const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+  let a=0,b=0,op='+',g=0;
+  while(g++<5000){
+    if(code==='sE'){
+      const d0=ri(1,7),e0=ri(1,8-d0),d1=ri(0,8),e1=ri(1,9-d1),d2=ri(1,8),e2=ri(1,9-d2);
+      a=d0*100+d1*10+d2; b=e0*100+e1*10+e2; op='+'; break;
+    }
+    if(code==='rE'){
+      const S=res||(ri(2,8)*100+ri(1,9)*10+ri(2,9)), sd=descDigits(S);
+      const b0=ri(1,9-sd[0]), b1=ri(0,9-sd[1]), b2=ri(0,9-sd[2]);
+      b=b0*100+b1*10+b2; a=S+b; op='-'; break;
+    }
+    if(code==='sH'){
+      a=ri(150,700); b=ri(150,Math.min(850,999-a));
+      const A=descDigits(a), B=descDigits(b);
+      if(A[2]===0||B[2]===0)continue;
+      if(A[2]+B[2]>=10||A[1]+B[1]>=10){ op='+'; break; }
+      continue;
+    }
+    if(code==='rH'||code==='rD'){
+      a=ri(301,999); b=ri(101,a-100);
+      const A=descDigits(a), p=descParts('-',a,b);
+      if(A[1]<1||p.parts[0]<100)continue;
+      if(code==='rH'&&p.borrows===1){ op='-'; break; }
+      if(code==='rD'&&p.borrows===2){ op='-'; break; }
+      continue;
+    }
+    throw new Error('desc code '+code);
+  }
+  const p=descParts(op,a,b), total=op==='+'?a+b:a-b;
+  if(p.parts[0]+p.parts[1]+p.parts[2]!==total)throw new Error('desc mismatch '+a+op+b);
+  return {k:'desc',em:'🧱',op,a,b,parts:p.parts,total,reg:p.reg,notes:p.notes,fact:`${p.parts[0]} + ${p.parts[1]} + ${p.parts[2]} = ${total}`};
+}
+function genDescPool(pool){
+  const sums=[];
+  return pool.map(it=>{
+    if(it.k!=='desc'||!it.gen)return it;
+    const paired=it.gen==='rE'&&sums.length>0;
+    const g=genDescItem(it.gen,paired?sums.shift():undefined);
+    if(it.gen==='sE')sums.push(g.total);
+    if(paired)g.fact+=' ¡Mira! Es el mismo resultado que una de las sumas de antes.';
+    return {...g,s:it.s};
+  });
+}
+function descNext(i){
+  if(i<3){ const n=document.getElementById('cole-d'+(i+1)); if(n&&n.focus)n.focus(); }
+  else ansColeDesc();
+}
 function renderCole(){
   const gs=ST.gs, item=gs.probs[gs.idx];
   // Sopas de letras y sudokus reutilizan los juegos de Lógica
@@ -6447,11 +6589,35 @@ function renderCole(){
     </div>`);
     return;
   }
-  if(item.k==='fill'||item.k==='num'||item.k==='sil'){
+  if(item.k==='desc'){
+    const dc=n=>{const d=descDigits(n); return `${d[0]*100} + ${d[1]*10} + ${d[2]}`;};
+    const sg=item.op==='+'?'+':'−';
+    const regBox=item.reg?`<div class="cole-box" style="background:#FEFCE8;border-left:4px solid #EAB308;font-size:13px;line-height:1.6;width:100%;box-sizing:border-box">🔁 Para poder restar, <b>cambia ${item.notes.join(' y ')}</b>:<br><b>${item.reg}</b></div>`:'';
+    const row=(lab,i)=>`<div style="display:flex;align-items:center;gap:8px;width:100%"><div style="flex:1;text-align:left;font-weight:800;font-size:14px">${lab}</div><input id="cole-d${i}" type="text" inputmode="numeric" autocomplete="off" placeholder="…" onkeydown="if(event.key==='Enter')descNext(${i})" style="width:110px;box-sizing:border-box;border:2px solid #E5E7EB;border-radius:10px;padding:8px;font-size:20px;text-align:center;font-family:inherit"></div>`;
+    render(`${head}
+    <div class="gw" style="overflow-y:auto">
+      ${progRow()}
+      <div class="qc" style="gap:10px;flex:none;padding:16px 14px">
+        <div class="ql">${COLE_TAG.desc}</div>
+        <div style="display:inline-block;text-align:right;font-size:34px;font-weight:900;line-height:1.15;letter-spacing:2px"><div>${item.a}</div><div style="border-bottom:4px solid #3B82F6">${sg} ${item.b}</div></div>
+        <div style="font-size:13px;color:var(--mu);line-height:1.6">${item.a} = ${dc(item.a)}<br>${item.b} = ${dc(item.b)}</div>
+        ${regBox}
+        <div class="cole-box" style="background:#F0FDF4;border-left:4px solid #16A34A;width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:8px">
+          ${row('Centenas',0)}${row('Decenas',1)}${row('Unidades',2)}${row('Total',3)}
+        </div>
+        <div style="font-size:12px;color:var(--mu)">Escribe el valor completo de cada parte (por ejemplo 500, no 5).</div>
+        <button class="btn btn-gr btn-bl" onclick="ansColeDesc()">✅ Comprobar</button>
+      </div>
+    </div>`);
+    setTimeout(()=>{const el=document.getElementById('cole-d0'); if(el&&el.focus)el.focus();},60);
+    return;
+  }
+  if(item.k==='fill'||item.k==='num'||item.k==='sil'||item.k==='propio'){
     let body='',ph='',mode='text';
     if(item.k==='fill'){ body=`<div class="qt" style="font-size:19px;line-height:1.6">${item.q.replace('___','<span style="border-bottom:3px solid #7C3AED;padding:0 18px">&nbsp;&nbsp;&nbsp;&nbsp;</span>')}</div>`; ph='Escribe la palabra…'; }
     if(item.k==='num'){ body=`<div class="qt" style="font-size:${item.q.length>14?'17':'28'}px;font-weight:900;line-height:1.5">${item.q}</div>`; ph='Escribe el número'; mode='numeric'; }
     if(item.k==='sil'){ body=`<div style="font-size:34px;font-weight:900;letter-spacing:1px">${item.w}</div><div style="font-size:13px;color:var(--mu)">Sepárala en sílabas con guiones. Ejemplo: ca-sa</div>`; ph='sí-la-bas'; }
+    if(item.k==='propio'){ body=`<div class="qt" style="font-size:19px;line-height:1.6">Escribe un <b>nombre propio</b> de…<br><span style="font-size:30px;font-weight:900;color:#7C3AED">${item.q}</span></div><div style="font-size:12px;color:var(--mu)">¡Recuerda la mayúscula del principio!</div>`; ph='Escribe un nombre propio…'; }
     render(`${head}
     <div class="gw" style="overflow-y:auto">
       ${progRow()}
@@ -6459,7 +6625,7 @@ function renderCole(){
         <div class="ql">${COLE_TAG[item.k]}</div>
         <div style="font-size:46px">${item.em}</div>
         ${body}
-        <input id="cole-in" type="text" inputmode="${mode}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="${ph}" onkeydown="if(event.key==='Enter')ansColeInput()" style="width:100%;box-sizing:border-box;border:2px solid #E5E7EB;border-radius:12px;padding:12px;font-size:20px;text-align:center;font-family:inherit">
+        <input id="cole-in" type="text" inputmode="${mode}" autocomplete="off" autocorrect="off" autocapitalize="${item.k==='propio'?'words':'none'}" spellcheck="false" placeholder="${ph}" onkeydown="if(event.key==='Enter')ansColeInput()" style="width:100%;box-sizing:border-box;border:2px solid #E5E7EB;border-radius:12px;padding:12px;font-size:20px;text-align:center;font-family:inherit">
         <button class="btn btn-gr btn-bl" onclick="ansColeInput()">✅ Comprobar</button>
       </div>
     </div>`);
@@ -6537,8 +6703,11 @@ function ansColeInput(){
   const raw=((el&&el.value)||'').trim();
   if(!raw){ if(el)el.style.borderColor='#EF4444'; return; }
   gs.lock=true;
-  let ok=false, near=false, shown='';
-  if(item.k==='fill'){
+  let ok=false, near=false, shown='', capital=true;
+  if(item.k==='propio'){
+    capital=/^[A-ZÁÉÍÓÚÑÜ]/.test(raw); shown=item.eg;
+    ok=capital&&raw.length>=2&&!/\d/.test(raw)&&norm(raw)!==norm(item.q);
+  } else if(item.k==='fill'){
     const want=[].concat(item.ans), val=raw.toLowerCase().replace(/\s+/g,' ');
     shown=want[0];
     ok=want.includes(val);
@@ -6556,8 +6725,28 @@ function ansColeInput(){
   if(ok){onCorrect();showFb(true,item.fact||'¡Correcto!',()=>nextOrEnd(renderCole),ST.gs.streak);}
   else{
     onWrong();
-    const lead=near?`¡Casi! Revisa las tildes y la ñ: se escribe «${shown}». `:(item.k==='num'?`Era ${shown}. `:`Era «${shown}». `);
+    const lead=item.k==='propio'?(capital?'Escribe un nombre propio de verdad. ':'Los nombres propios empiezan con mayúscula. ')+`Por ejemplo: ${shown}. `:near?`¡Casi! Revisa las tildes y la ñ: se escribe «${shown}». `:(item.k==='num'?`Era ${shown}. `:`Era «${shown}». `);
     showFb(false,lead+(item.fact||''),()=>nextOrEnd(renderCole),0);
+  }
+}
+function ansColeDesc(){
+  const gs=ST.gs; if(gs.lock)return;
+  const item=gs.probs[gs.idx];
+  const els=[0,1,2,3].map(i=>document.getElementById('cole-d'+i));
+  const vals=els.map(e=>((e&&e.value)||'').trim());
+  if(vals.some(v=>!v)){ els.forEach((e,i)=>{ if(e&&!vals[i])e.style.borderColor='#EF4444'; }); return; }
+  gs.lock=true;
+  const want=item.parts.concat([item.total]);
+  const num=v=>Number(v.replace(/[\s.]/g,''));
+  const oks=vals.map((v,i)=>num(v)===want[i]);
+  const ok=oks.every(Boolean);
+  els.forEach((e,i)=>{ if(e)e.style.borderColor=oks[i]?'#16A34A':'#EF4444'; });
+  if(ok){ onCorrect(); showFb(true,item.fact,()=>nextOrEnd(renderCole),ST.gs.streak); }
+  else{
+    onWrong();
+    const scale=[100,10,1];
+    const hint=[0,1,2].some(i=>!oks[i]&&num(vals[i])*scale[i]===want[i])?'Escribe el valor completo (500, no 5). ':'';
+    showFb(false,`${hint}Centenas ${want[0]}, decenas ${want[1]}, unidades ${want[2]} → total ${want[3]}. ${item.fact}`,()=>nextOrEnd(renderCole),0);
   }
 }
 function doneCole(){
