@@ -32,7 +32,7 @@ export const books: Book[] = [
     },
     isbn: '9798243436106',
     amazonUrl: 'https://www.amazon.es/dp/B0GV2D8BJB',
-    coverPlaceholder: '/images/mision-1/cover.png',
+    coverPlaceholder: '/images/mision-1/cover-cuadrada.png',
     color: 'from-indigo-600 to-blue-900',
   },
   {
