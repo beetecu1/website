@@ -20,12 +20,12 @@ const es = lang === 'es';
   </p>
   <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
     {[
-      { src: 'gallery/daniel-solo.png',          alt: es ? 'Daniel solo en su habitación por primera vez' : 'Daniel alone in his room for the first time' },
-      { src: 'gallery/reino-noche.png',          alt: es ? 'La puerta de los tres candados — Daniel en el Reino de la Noche' : 'The door of three locks — Daniel in the Kingdom of Night' },
-      { src: 'gallery/daniel-chispi-foguito.png',alt: es ? 'Daniel con Chispi y Foguito' : 'Daniel with Chispi and Foguito' },
-      { src: 'gallery/umbrak-llave.png',         alt: es ? 'Umbrak entrega la Llave del Castillo a Daniel' : 'Umbrak gives the Castle Key to Daniel' },
-      { src: 'gallery/daniel-duerme.png',        alt: es ? 'Daniel duerme en su castillo' : 'Daniel sleeps in his castle' },
-      { src: 'gallery/papa-roncando.png',        alt: es ? 'El misterio del pasillo: ¡era papá roncando!' : 'The mystery of the hallway: it was Dad snoring!' },
+      { src: 'gallery/daniel-solo-noche.png',    alt: es ? 'Daniel solo en su habitación por primera vez' : 'Daniel alone in his room for the first time' },
+      { src: 'gallery/daniel-reino-noche.png',   alt: es ? 'Daniel en el Reino de la Noche, con la caja de herramientas' : 'Daniel in the Kingdom of Night, with the toolbox' },
+      { src: 'gallery/daniel-chispi-foguito-2.png',alt: es ? 'Daniel con Chispi y Foguito' : 'Daniel with Chispi and Foguito' },
+      { src: 'gallery/umbrak-entrega-llave.png',         alt: es ? 'Umbrak entrega la Llave del Castillo a Daniel' : 'Umbrak gives the Castle Key to Daniel' },
+      { src: 'gallery/daniel-duerme-castillo.png',        alt: es ? 'Daniel duerme en su castillo' : 'Daniel sleeps in his castle' },
+      { src: 'gallery/papa-roncando-sofa.png',        alt: es ? 'El misterio del pasillo: ¡era papá roncando!' : 'The mystery of the hallway: it was Dad snoring!' },
       { src: 'gallery/mesita-llave.png',         alt: es ? 'La llave del castillo en la mesita de noche' : 'The castle key on the nightstand' },
     ].map((img) => (
       <div class="group relative overflow-hidden rounded-xl border border-night-700/30 bg-night-800/50">
@@ -51,7 +51,7 @@ const es = lang === 'es';
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <!-- Daniel -->
     <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
-      <img src={`${base}/images/mision-2/daniel.png`} alt="Daniel" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <img src={`${base}/images/mision-2/personajes/daniel.png`} alt="Daniel" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
       <div>
         <h3 class="font-title text-xl font-bold text-gold-300">Daniel</h3>
         <p class="text-night-300 text-sm mt-1">
@@ -63,7 +63,7 @@ const es = lang === 'es';
     </div>
     <!-- Sargento Calcetín -->
     <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
-      <img src={`${base}/images/mision-2/sargento-calcetin.png`} alt="Sargento Calcetín" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <img src={`${base}/images/mision-2/personajes/sargento-calcetin.png`} alt="Sargento Calcetín" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
       <div>
         <h3 class="font-title text-xl font-bold text-gold-300">{es ? 'Sargento Calcetín' : 'Sergeant Sock'}</h3>
         <p class="text-night-300 text-sm mt-1">
@@ -75,7 +75,7 @@ const es = lang === 'es';
     </div>
     <!-- Flarina -->
     <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
-      <img src={`${base}/images/mision-2/flarina.png`} alt="Flarina" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <img src={`${base}/images/mision-2/personajes/flarina.png`} alt="Flarina" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
       <div>
         <h3 class="font-title text-xl font-bold text-gold-300">Flarina</h3>
         <p class="text-night-300 text-sm mt-1">
@@ -87,7 +87,7 @@ const es = lang === 'es';
     </div>
     <!-- Trompín -->
     <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
-      <img src={`${base}/images/mision-2/trompin.png`} alt="Trompín" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <img src={`${base}/images/mision-2/personajes/trompin.png`} alt="Trompín" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
       <div>
         <h3 class="font-title text-xl font-bold text-gold-300">Trompín</h3>
         <p class="text-night-300 text-sm mt-1">
@@ -99,7 +99,7 @@ const es = lang === 'es';
     </div>
     <!-- Chispi -->
     <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
-      <img src={`${base}/images/mision-2/chispi.png`} alt="Chispi" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <img src={`${base}/images/mision-2/personajes/chispi.png`} alt="Chispi" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
       <div>
         <h3 class="font-title text-xl font-bold text-gold-300">Chispi</h3>
         <p class="text-night-300 text-sm mt-1">
@@ -111,7 +111,7 @@ const es = lang === 'es';
     </div>
     <!-- Foguito -->
     <div class="flex gap-4 items-start p-5 rounded-2xl bg-night-800/40 border border-night-700/30">
-      <img src={`${base}/images/mision-2/foguito.png`} alt="Foguito" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
+      <img src={`${base}/images/mision-2/personajes/foguito.png`} alt="Foguito" class="w-24 h-24 object-cover rounded-xl flex-shrink-0" loading="lazy" />
       <div>
         <h3 class="font-title text-xl font-bold text-gold-300">Foguito</h3>
         <p class="text-night-300 text-sm mt-1">
@@ -251,8 +251,8 @@ const es = lang === 'es';
   </p>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     {[
-      { src: 'resources/mision-calmante.png',  name: es ? 'Misión Calmante' : 'Calming Mission' },
-      { src: 'resources/mision-valentia.png',  name: es ? 'Misión Valentía' : 'Bravery Mission' },
+      { src: 'resources/mision-calmante-2.png',  name: es ? 'Misión Calmante' : 'Calming Mission' },
+      { src: 'resources/mision-valentia-2.png',  name: es ? 'Misión Valentía' : 'Bravery Mission' },
       { src: 'resources/tarjeta-heroe.png',    name: es ? 'Tarjeta de Héroe' : 'Hero Card' },
     ].map((img) => (
       <div class="rounded-xl border border-night-700/30 bg-night-800/50 overflow-hidden">
@@ -362,7 +362,7 @@ const es = lang === 'es';
 <!-- MEDAL -->
 <section class="mt-16 mb-8 text-center">
   <img
-    src={`${base}/images/mision-2/medallon.png`}
+    src={`${base}/images/mision-2/medallon-mision2.png`}
     alt={es ? 'Medallón Misión 2 Cumplida' : 'Mission 2 Complete Medal'}
     class="w-48 h-48 mx-auto object-contain"
     loading="lazy"
